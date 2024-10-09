@@ -5,13 +5,15 @@
 @tailwind utilities;
 
 body {
-  background:#020220;
+  background: #020220;
 }
 
 @layer utilities {
-
+  .padding-x {
+    @apply xl:px-36 lg:px-28 md:px-20 sm:px-12 px-2;
+  }
 
   .padding {
-    @apply p-32 
+    @apply xl:p-36 lg:p-28 md:p-20 sm:p-12 p-2;
   }
 }
