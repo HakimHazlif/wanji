@@ -1,9 +1,11 @@
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import API_URL from "./api";
-import instance from "./axios";
+import { options } from "./showsSlice";
+//import instance from "./axios";
 
-export const fetchShow = createAsyncThunk(shows/fetchShow, async ({ isMovie, showId },{ rejectWithValue }) => {
+export const fetchShow = createAsyncThunk('shows/fetchShow', async ({ isMovie, showId },{ rejectWithValue }) => {
   try {
     if (isMovie) {
 
@@ -19,9 +21,9 @@ export const fetchShow = createAsyncThunk(shows/fetchShow, async ({ isMovie, sho
       : API_URL.series.getSerie.getSerieSimilar.replace('serie_id', showId);
 
     const [showDetails, showCredite, showSimilar] = await axios.all([
-      instance.get(showDetailsUrl),
-      instance.get(showCrediteUrl),
-      instance.get(showSimilarUrl),
+      axios.get(showDetailsUrl, options),
+      axios.get(showCrediteUrl, options),
+      axios.get(showSimilarUrl, options),
     ])
 
     return {

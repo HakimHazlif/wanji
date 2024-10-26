@@ -1,13 +1,17 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from './pages/Home'
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Navbar from "./sections/Navbar";
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <div>
+      <header className="padding-x">
+        <Navbar />
+      </header>
       <Routes>
         <Route path="/" element={<Home />} />
       </Routes>
-    </BrowserRouter>
+    </div>
   );
 };
 

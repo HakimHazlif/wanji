@@ -1,49 +1,63 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import API_URL from "./api";
-import instance from "./axios";
+//import instance from "./axios";
 
-export const fetchShowsList = createAsyncThunk(shows/fetchShowsList, async (_,{ rejectWithValue }) => {
-  try {
-    const moviesListUrl = API_URL.movies.getMoviesList;
-    const seriesListUrl = API_URL.series.getSeriesList;
+export const options = {
+  headers: {
+    accept: "application/json",
+    Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
+  },
+};
 
-    const [moviesList, seriesList] = await axios.all([
-      instance.get(moviesListUrl),
-      instance.get(seriesListUrl),
-    ])
+export const fetchShowsList = createAsyncThunk(
+  "shows/fetchShowsList",
+  async (_, { rejectWithValue }) => {
+    try {
+      const moviesListUrl = API_URL.movies.getMoviesList;
+      const seriesListUrl = API_URL.series.getSeriesList;
 
-    return {
-      movies: moviesList.data,
-      series: seriesList.data
+      const [moviesList, seriesList] = await axios.all([
+        axios.get(moviesListUrl, options),
+        axios.get(seriesListUrl, options),
+      ]);
+
+      return {
+        movies: moviesList.data.results,
+        series: seriesList.data.results,
+      };
+    } catch (err) {
+      return rejectWithValue(err.response.data);
     }
-  } catch (err) {
-    return rejectWithValue(err.response.data);
   }
-})
+);
 
 const showsSlice = createSlice({
-  name: 'shows',
+  name: "shows",
   initialState: {
-    showsData: [],
-    status: 'idle',
+    data: [],
+    status: "idle",
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchShowsList.pending, (state) => {
-        state.status = 'loading';
+        state.status = "loading";
       })
       .addCase(fetchShowsList.fulfilled, (state, action) => {
-        state.status = 'succeeded'
-        state.showsData = action.payload;
+        state.status = "succeeded";
+        state.data = action.payload;
       })
       .addCase(fetchShowsList.rejected, (state, action) => {
-        state.status = 'failed'
-        state.error = action.payload
-      })
-  }
-})
+        state.status = "failed";
+        state.error = action.payload;
+      });
+  },
+});
 
-export default showsSlice.reducer
+export const moviesList = (state) => state.showsList.data.movies;
+export const seriesList = (state) => state.showsList.data.series;
+export const showsStatus = (state) => state.showsList.status;
+
+export default showsSlice.reducer;

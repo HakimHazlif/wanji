@@ -1,5 +1,5 @@
 
-
+/*
 function fetchData(url) {
   const options = {
     method: 'GET',
@@ -48,3 +48,4 @@ const getTvReviews = fetch('https://api.themoviedb.org/3/tv/series_id/reviews?la
 const person = fetch('https://api.themoviedb.org/3/person/person_id?language=en-US', options)
 const personMovies = fetch('https://api.themoviedb.org/3/person/person_id/movie_credits?language=en-US', options)
 const personTv = fetch('https://api.themoviedb.org/3/person/person_id/tv_credits?language=en-US', options)
+*/
