@@ -1,8 +1,13 @@
-import React, { createContext } from "react";
+import React, { createContext, useState } from "react";
 
 export const AppContext = createContext();
 const AppProvider = (props) => {
-  const valueProvider = {};
+  const [isMovie, setIsMovie] = useState(true)
+
+  const valueProvider = {
+    isMovie,
+    setIsMovie
+  };
   return (
     <AppContext.Provider value={valueProvider}>
       {props.children}

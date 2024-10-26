@@ -1,10 +1,23 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import RateCircle from './RateCircle';
+import { AppContext } from '../Context/AppProvider';
+import { Link } from 'react-router-dom';
 
 const ShowCard = (props) => {
-  const { id, title, image, releaseDate, rate } = props;
+  const {setIsMovie} = useContext(AppContext)
+  const { id, title, image, releaseDate, rate, type } = props;
+
+  const routeLink = type === 'movies' ? '/movie' : '/serie';
+  function handleClick() {
+    if (type === 'movies') {
+      setIsMovie(true)
+    } else {
+      setIsMovie(false)
+    }
+  }
+
   return (
-    <div className='w-60 bg-slate-100 rounded-lg overflow-hidden'>
+    <Link to={routeLink} className='w-60 bg-slate-100 rounded-lg overflow-hidden' onClick={handleClick}>
       <div className='relative'>
         <img src={image} alt="movie poster" className='relative'/>
         <div className='absolute bottom-[-16px] right-[15px]'>
@@ -15,7 +28,7 @@ const ShowCard = (props) => {
         <h2 className='text-lg font-medium'>{title}</h2>
         <h3 className='text-sm text-gray-700'>{releaseDate}</h3>
       </div>
-    </div>
+    </Link>
   )
 }
 

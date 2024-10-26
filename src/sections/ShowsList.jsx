@@ -21,6 +21,7 @@ const ShowsList = ({ type }) => {
                 image={getBackdrop(show.poster_path)}
                 releaseDate={updateDateFormat(show.release_date)}
                 rate={ratePercentage(show.vote_average)}
+                type={type}
               />
             ))
           }

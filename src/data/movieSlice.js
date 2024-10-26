@@ -7,9 +7,6 @@ import { options } from "./showsSlice";
 
 export const fetchShow = createAsyncThunk('shows/fetchShow', async ({ isMovie, showId },{ rejectWithValue }) => {
   try {
-    if (isMovie) {
-
-    }
     const showDetailsUrl = isMovie 
       ? API_URL.movies.getMovie.getMovieDetail.replace('movie_id', showId) 
       : API_URL.series.getSerie.getSerieDetail.replace('serie_id', showId);
@@ -59,5 +56,7 @@ const showSlice = createSlice({
       })
   }
 })
+
+
 
 export default showSlice.reducer
