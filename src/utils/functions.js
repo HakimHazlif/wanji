@@ -15,3 +15,9 @@ export function updateDateFormat(date) {
 
   return formattedDate
 }
+
+
+export function ratePercentage(rate) {
+  const rateNum = Math.round(Number(rate) * 10);
+  return rateNum
+}

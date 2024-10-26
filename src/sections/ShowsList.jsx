@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { moviesList, seriesList } from "../data/showsSlice";
 import ShowCard from "../components/ShowCard";
-import { getBackdrop, updateDateFormat } from "../utils/functions";
+import { getBackdrop, updateDateFormat, ratePercentage } from "../utils/functions";
 
 const ShowsList = ({ type }) => {
   const shows = type === 'movies' ? useSelector(moviesList) : useSelector(seriesList)
@@ -20,7 +20,7 @@ const ShowsList = ({ type }) => {
                 title={show.title}
                 image={getBackdrop(show.poster_path)}
                 releaseDate={updateDateFormat(show.release_date)}
-                rate={show.vote_average}
+                rate={ratePercentage(show.vote_average)}
               />
             ))
           }
