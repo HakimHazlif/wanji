@@ -1,14 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import API_URL from "./api";
-//import instance from "./axios";
+import { API_URL, options } from "./api.js";
 
-export const options = {
-  headers: {
-    accept: "application/json",
-    Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-  },
-};
+//import instance from "./axios";
 
 export const fetchShowsList = createAsyncThunk(
   "shows/fetchShowsList",
