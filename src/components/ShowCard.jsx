@@ -4,7 +4,7 @@ import { AppContext } from '../Context/AppProvider';
 import { Link } from 'react-router-dom';
 
 const ShowCard = (props) => {
-  const {setIsMovie} = useContext(AppContext)
+  const {setIsMovie, setShowId} = useContext(AppContext)
   const { id, title, image, releaseDate, rate, type } = props;
 
   const routeLink = type === 'movies' ? '/movie' : '/serie';
@@ -14,6 +14,7 @@ const ShowCard = (props) => {
     } else {
       setIsMovie(false)
     }
+    setShowId(id)
   }
 
   return (

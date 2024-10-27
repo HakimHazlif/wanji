@@ -4,6 +4,7 @@ import { fetchShowsList, moviesList, showsStatus } from "../data/showsSlice.js";
 import Discover from "../sections/Discover.jsx";
 import { getBackdrop } from "../utils/functions.js";
 import ShowsList from "../sections/ShowsList.jsx";
+import { resetStatus } from "../data/movieSlice";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ const Home = () => {
     if (showStatus === "idle") {
       dispatch(fetchShowsList());
     }
+    dispatch(resetStatus());
   }, [showStatus, dispatch]);
 
   let content;
@@ -24,8 +26,8 @@ const Home = () => {
   return (
     <main>
       <Discover content={content} />
-      <ShowsList type='movies'/>
-      <ShowsList type='series'/>
+      <ShowsList type="movies" />
+      <ShowsList type="series" />
     </main>
   );
 };
