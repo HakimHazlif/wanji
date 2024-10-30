@@ -1,67 +1,40 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL, options } from "./api.js";
-//import instance from "./axios";
 
 export const fetchShow = createAsyncThunk(
   "shows/fetchShow",
   async ({ isMovie, showId }) => {
     try {
-      let showDetailsUrl;
-      let showCrediteUrl;
-      let showSimilarUrl;
-      let showReviewsUrl;
+      const showDetailsUrl = isMovie
+        ? API_URL.movies.getMovie.getMovieDetail.replace("movie_id", showId)
+        : API_URL.series.getSerie.getSerieDetail.replace("series_id", showId);
+      const showCrediteUrl = isMovie
+        ? API_URL.movies.getMovie.getMovieCredite.replace("movie_id", showId)
+        : API_URL.series.getSerie.getSerieCredite.replace("series_id", showId);
+      const showSimilarUrl = isMovie
+        ? API_URL.movies.getMovie.getMovieSimilar.replace("movie_id", showId)
+        : API_URL.series.getSerie.getSerieSimilar.replace("series_id", showId);
+      const showReviewsUrl = isMovie
+        ? API_URL.movies.getMovie.getMovieReviews.replace("movie_id", showId)
+        : API_URL.series.getSerie.getSerieReviews.replace("series_id", showId);
 
-      if (isMovie) {
-        showDetailsUrl = API_URL.movies.getMovie.getMovieDetail.replace(
-          "movie_id",
-          showId
-        );
-        showCrediteUrl = API_URL.movies.getMovie.getMovieCredite.replace(
-          "movie_id",
-          showId
-        );
-        showSimilarUrl = API_URL.movies.getMovie.getMovieSimilar.replace(
-          "movie_id",
-          showId
-        );
-        showReviewsUrl = API_URL.movies.getMovie.getMovieReviews.replace(
-          "movie_id",
-          showId
-        );
-      } else {
-        showDetailsUrl = API_URL.series.getSerie.getSerieDetail.replace(
-          "series_id",
-          showId
-        );
-        showCrediteUrl = API_URL.series.getSerie.getSerieCredite.replace(
-          "series_id",
-          showId
-        );
-        showSimilarUrl = API_URL.series.getSerie.getSerieSimilar.replace(
-          "series_id",
-          showId
-        );
-        showReviewsUrl = API_URL.series.getSerie.getSerieReviews.replace(
-          "series_id",
-          showId
-        );
+      if (showId) {
+        const [showDetails, showCredite, showSimilar, showReviews] =
+          await axios.all([
+            axios.get(showDetailsUrl, options),
+            axios.get(showCrediteUrl, options),
+            axios.get(showSimilarUrl, options),
+            axios.get(showReviewsUrl, options),
+          ]);
+
+        return {
+          showDetails: showDetails.data,
+          showCredite: showCredite.data,
+          showSimilar: showSimilar.data.results,
+          showReviews: showReviews.data.results,
+        };
       }
-
-      const [showDetails, showCredite, showSimilar, showReviews] =
-        await axios.all([
-          axios.get(showDetailsUrl, options),
-          axios.get(showCrediteUrl, options),
-          axios.get(showSimilarUrl, options),
-          axios.get(showReviewsUrl, options),
-        ]);
-
-      return {
-        showDetails: showDetails.data,
-        showCredite: showCredite.data,
-        showSimilar: showSimilar.data.results,
-        showReviews: showReviews.data.results,
-      };
     } catch (err) {
       console.log(err.message);
     }

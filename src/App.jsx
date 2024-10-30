@@ -4,10 +4,10 @@ import Navbar from "./sections/Navbar";
 import { useContext } from "react";
 import { AppContext } from "./Context/AppProvider";
 import Show from "./pages/Show";
+import Movies from "./pages/Movies";
+import Series from "./pages/Series";
 
 const App = () => {
-  const {isMovie} = useContext(AppContext)
-
   return (
     <div>
       <header className="padding-x">
@@ -15,12 +15,8 @@ const App = () => {
       </header>
       <Routes>
         <Route path="/" element={<Home />} />
-        {
-          isMovie 
-          ? <Route path='/movie' element={<Show />} />
-          : <Route path='/serie' element={<Show />} />
-        }
-        
+        <Route path="/movie/:id" element={<Show isMovie={true} />} />
+        <Route path="/serie/:id" element={<Show isMovie={false} />} />
       </Routes>
     </div>
   );

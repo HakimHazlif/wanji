@@ -4,16 +4,16 @@ import { fetchShow, showData, showStatus } from "../data/movieSlice";
 import { AppContext } from "../Context/AppProvider";
 import ShowDetails from "../sections/ShowDetails";
 import ShowCredite from "../sections/ShowCredite";
-import ShowSimilar from "../sections/showSimilar";
+import ShowSimilar from "../sections/ShowSimilar";
 import ShowReviews from "../sections/ShowReviews";
+import { useParams } from "react-router-dom";
 
-const Show = () => {
-  const { isMovie, showId, setShowId } = useContext(AppContext);
+const Show = ({ isMovie }) => {
   const dispatch = useDispatch();
   const status = useSelector(showStatus);
-  const show = useSelector(showData);
 
-  console.log(isMovie, showId);
+  const { id } = useParams();
+  const showId = id;
 
   useEffect(() => {
     if (status === "idle") {
