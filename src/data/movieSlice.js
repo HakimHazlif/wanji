@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL, options } from "./api.js";
-import { replaceToShowId } from "../utils/functions.js";
 //import instance from "./axios";
 
 export const fetchShow = createAsyncThunk(
@@ -60,8 +59,8 @@ export const fetchShow = createAsyncThunk(
       return {
         showDetails: showDetails.data,
         showCredite: showCredite.data,
-        showSimilar: showSimilar.data,
-        showReviews: showReviews.data,
+        showSimilar: showSimilar.data.results,
+        showReviews: showReviews.data.results,
       };
     } catch (err) {
       console.log(err.message);

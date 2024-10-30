@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchShowsList, moviesList, showsStatus } from "../data/showsSlice.js";
 import Discover from "../sections/Discover.jsx";
-import { getBackdrop } from "../utils/functions.js";
+import { getImageViaPath } from "../utils/functions.js";
 import ShowsList from "../sections/ShowsList.jsx";
 import { resetStatus } from "../data/movieSlice";
 
@@ -20,7 +20,7 @@ const Home = () => {
 
   let content;
   if (showStatus === "succeeded") {
-    content = getBackdrop(shows[0].backdrop_path);
+    content = getImageViaPath(shows[0].backdrop_path, 1280);
   }
 
   return (

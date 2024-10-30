@@ -5,7 +5,9 @@
 @tailwind utilities;
 
 body {
-  background: #080840;
+  color: white;
+  background: linear-gradient(to bottom, rgb(13, 13, 42), rgb(14, 14, 107));
+  scroll-behavior: smooth;
 }
 
 @layer utilities {

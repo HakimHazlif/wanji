@@ -26,9 +26,8 @@ const Show = () => {
     content = <div>Loading...</div>;
   }
   if (status === "succeeded") {
-    console.log(show);
     content = (
-      <div>
+      <div className="padding-x">
         <ShowDetails />
         <ShowCredite />
         <ShowSimilar />
@@ -40,7 +39,7 @@ const Show = () => {
     content = <div>Database connection failed</div>;
   }
 
-  return <div>{content}</div>;
+  return <div className="py-10">{content}</div>;
 };
 
 export default Show;

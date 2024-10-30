@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
+import ProfilesScroll from "../components/ProfilesScroll";
 
 const ShowCredite = () => {
   return (
-    <div>ShowCredite</div>
-  )
-}
+    <section className="py-10">
+      <ProfilesScroll title="Casting" />
+      <ProfilesScroll title="Crew" />
+    </section>
+  );
+};
 
-export default ShowCredite
+export default ShowCredite;
