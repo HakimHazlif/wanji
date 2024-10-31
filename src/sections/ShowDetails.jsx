@@ -1,6 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { getImageViaPath, updateDateFormat } from "../utils/functions";
+import {
+  getImageViaPath,
+  getYearMonthFormat,
+  updateDateFormat,
+} from "../utils/functions";
 import { useState } from "react";
 import { showDetails } from "../data/movieSlice";
 import Rating from "@mui/material/Rating";
@@ -14,7 +18,7 @@ import {
 } from "../assets/icons";
 import { formatNumber } from "../utils/functions";
 
-const ShowDetails = () => {
+const ShowDetails = ({ isMovie }) => {
   const showDetail = useSelector(showDetails);
   const [colorChange, setColorChange] = useState({
     bookmark: false,
@@ -40,6 +44,12 @@ const ShowDetails = () => {
     }));
   }
 
+  const dateFormat = isMovie
+    ? updateDateFormat(showDetail.release_date)
+    : `${getYearMonthFormat(showDetail.first_air_date)} - ${getYearMonthFormat(
+        showDetail.last_air_date
+      )}`;
+
   return (
     <div className="flex felx-col gap-4 bg-slate-950 rounded-lg overflow-hidden">
       <div>
@@ -50,7 +60,7 @@ const ShowDetails = () => {
         />
       </div>
       <div className="px-4 py-5 pr-16">
-        <h2 className="text-4xl mb-4">{showDetail.title}</h2>
+        <h2 className="text-4xl mb-4">{showDetail.title || showDetail.name}</h2>
         <div className="flex gap-4">
           <Box>
             <Rating
@@ -71,10 +81,10 @@ const ShowDetails = () => {
           </Box>
           <p>{formatNumber(showDetail.vote_average)}</p>
         </div>
-        <ul className="flex gap-2 text-sm text-slate-400">
-          <li>{updateDateFormat(showDetail.release_date)}</li>
+        <ul className="flex gap-2 text-sm text-slate-400 whitespace-nowrap">
+          <li className="whitespace-nowrap">{dateFormat}</li>
           <div>&#x2022;</div>
-          <li>{showDetail.runtime}min</li>
+          <li>{showDetail.runtime || showDetail.episode_run_time}min</li>
           <div>&#x2022;</div>
           <li>
             <ul className="flex gap-1">

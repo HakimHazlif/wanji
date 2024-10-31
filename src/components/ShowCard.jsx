@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import RateCircle from "./RateCircle";
-import { AppContext } from "../Context/AppProvider";
 import { Link } from "react-router-dom";
 
 const ShowCard = (props) => {
@@ -11,10 +10,14 @@ const ShowCard = (props) => {
   return (
     <Link
       to={routeLink}
-      className="w-60 bg-slate-100 rounded-lg overflow-hidden"
+      className="w-60 bg-slate-100 rounded-lg overflow-hidden text-black"
     >
       <div className="relative">
-        <img src={image} alt="movie poster" className="relative" />
+        <img
+          src={image}
+          alt="movie poster"
+          className="relative h-[370px] object-cover"
+        />
         <div className="absolute bottom-[-16px] right-[15px]">
           <RateCircle rate={rate} />
         </div>

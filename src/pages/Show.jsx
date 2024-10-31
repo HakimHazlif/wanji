@@ -28,7 +28,7 @@ const Show = ({ isMovie }) => {
   if (status === "succeeded") {
     content = (
       <div className="padding-x">
-        <ShowDetails />
+        <ShowDetails isMovie={isMovie} />
         <ShowCredite />
         <ShowSimilar />
         <ShowReviews />

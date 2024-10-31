@@ -1,11 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Navbar from "./sections/Navbar";
-import { useContext } from "react";
-import { AppContext } from "./Context/AppProvider";
 import Show from "./pages/Show";
-import Movies from "./pages/Movies";
-import Series from "./pages/Series";
 
 const App = () => {
   return (

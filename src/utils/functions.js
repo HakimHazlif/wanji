@@ -16,6 +16,19 @@ export function updateDateFormat(date) {
   return formattedDate;
 }
 
+export function getYearMonthFormat(date) {
+  const newDate = new Date(date);
+
+  const options = {
+    year: "numeric",
+    month: "short",
+  };
+
+  const formattedDate = newDate.toLocaleDateString(undefined, options);
+
+  return formattedDate;
+}
+
 export function ratePercentage(rate) {
   const rateNum = Math.round(Number(rate) * 10);
   return rateNum;

@@ -5,6 +5,7 @@ import {
   getImageViaPath,
   updateDateFormat,
   ratePercentage,
+  getYearMonthFormat,
 } from "../utils/functions";
 
 const ShowsList = ({ type }) => {
@@ -19,17 +20,23 @@ const ShowsList = ({ type }) => {
       <div className="flex justify-center items-center">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 ">
           {shows &&
-            shows.map((show) => (
-              <ShowCard
-                key={show.id}
-                id={show.id}
-                title={show.title}
-                image={getImageViaPath(show.poster_path, 1280)}
-                releaseDate={updateDateFormat(show.release_date)}
-                rate={ratePercentage(show.vote_average)}
-                type={type}
-              />
-            ))}
+            shows.map((show) => {
+              const dateFormat =
+                type === "movies"
+                  ? updateDateFormat(show.release_date)
+                  : getYearMonthFormat(show.first_air_date);
+              return (
+                <ShowCard
+                  key={show.id}
+                  id={show.id}
+                  title={show.title || show.name}
+                  image={getImageViaPath(show.poster_path, 400)}
+                  releaseDate={dateFormat}
+                  rate={ratePercentage(show.vote_average)}
+                  type={type}
+                />
+              );
+            })}
         </div>
       </div>
     </section>
