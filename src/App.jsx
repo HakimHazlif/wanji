@@ -1,35 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Route, Routes } from "react-router";
+import AppLayout from "./components/AppLayout";
+import Home from "./pages/Home";
+import SignLog from "./pages/SignLog";
+import Show from "./pages/Show";
+import Profile from "./pages/Profile";
+import Watchlist from "./pages/Watchlist";
+import Lists from "./pages/List";
+import Favorites from "./pages/Favorite";
+import Settings from "./pages/Settings";
+import ResetPassword from "./pages/ResetPassword";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<AppLayout />}>
+          <Route index element={<Home />} />
+          <Route path="movie/:id" element={<Show isMovie={true} />} />
+          <Route path="serie/:id" element={<Show isMovie={false} />} />
+          <Route path={`/:user`} element={<Profile />}>
+            <Route path="watchlist" element={<Watchlist />} />
+            <Route path="lists" element={<Lists />} />
+            <Route path="favorites" element={<Favorites />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="reset-password" element={<ResetPassword />} />
+          </Route>
+        </Route>
+
+        <Route path="login" element={<SignLog />} />
+        <Route path="signup" element={<SignLog />} />
+
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
