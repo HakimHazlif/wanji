@@ -19,11 +19,12 @@ function App() {
           <Route index element={<Home />} />
           <Route path="movie/:id" element={<Show isMovie={true} />} />
           <Route path="serie/:id" element={<Show isMovie={false} />} />
-          <Route path={`/:user`} element={<Profile />}>
+          <Route path={`:user`}>
+            <Route index element={<Profile />} />
             <Route path="watchlist" element={<Watchlist />} />
             <Route path="lists" element={<Lists />} />
             <Route path="favorites" element={<Favorites />} />
-            <Route path="/settings" element={<Settings />} />
+            <Route path="settings" element={<Settings />} />
             <Route path="reset-password" element={<ResetPassword />} />
           </Route>
         </Route>
