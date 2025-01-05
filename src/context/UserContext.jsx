@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from "react";
 
 const SessionContext = createContext();
 
-const SessionContextProvider = ({ children }) => {
+function SessionContextProvider({ children }) {
   const [isLogin, setIsLogin] = useState(true);
 
   const [openProfileMenu, setOpenProfileMenu] = useState(false);
@@ -41,7 +41,7 @@ const SessionContextProvider = ({ children }) => {
       {children}
     </SessionContext.Provider>
   );
-};
+}
 
 export function useSession() {
   const context = useContext(SessionContext);
