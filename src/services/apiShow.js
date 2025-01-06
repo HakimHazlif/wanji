@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URLs, options } from "../constants/variables";
+import { API_URLs, options, URL_Base } from "../constants/variables";
 
 export async function getShow({ isMovie, showId }) {
   try {
@@ -37,21 +37,77 @@ export async function getShow({ isMovie, showId }) {
   }
 }
 
-export async function getShows() {
+export async function getMovies() {
   try {
-    const moviesListUrl = API_URLs.movies.getMoviesList;
-    const seriesListUrl = API_URLs.series.getSeriesList;
+    const moviesLists = ["popular", "top_rated", "now_playing", "upcoming"];
 
-    const [moviesList, seriesList] = await axios.all([
-      axios.get(moviesListUrl, options),
-      axios.get(seriesListUrl, options),
-    ]);
+    const urls = [];
+
+    moviesLists.forEach((list) => {
+      const url = `${URL_Base}movie/${list}?language=en-US&page=1`;
+      urls.push(url);
+    });
+
+    const [popularMovies, topRatedMovies, nowPlaynigMovies, upcomingMovies] =
+      await axios.all(urls.map((url) => axios.get(url, options)));
 
     return {
-      movies: moviesList.data.results,
-      series: seriesList.data.results,
+      popularMovies: popularMovies.data.results,
+      topRatedMovies: topRatedMovies.data.results,
+      nowPlaynigMovies: nowPlaynigMovies.data.results,
+      upcomingMovies: upcomingMovies.data.results,
     };
   } catch (err) {
-    throw new Error(err.response.data);
+    throw new Error(err.response?.data || "Something went wrong");
+  }
+}
+
+export async function getTrending() {
+  try {
+    const trendingLists = ["movie", "tv"];
+
+    const urls = [];
+
+    trendingLists.forEach((list) => {
+      const url = `${URL_Base}trending/${list}/day?language=en-US`;
+      urls.push(url);
+    });
+
+    const [trendingMovies, trendingTv] = await axios.all(
+      urls.map((url) => axios.get(url, options))
+    );
+
+    return {
+      trendingMovies: trendingMovies.data.results,
+      trendingTv: trendingTv.data.results,
+    };
+  } catch (err) {
+    throw new Error(err.response?.data || "Something went wrong");
+  }
+}
+
+export async function getTvShows() {
+  try {
+    const tvLists = ["popular", "top_rated", "on_the_air", "airing_today"];
+
+    const urls = [];
+
+    tvLists.forEach((list) => {
+      const url = `${URL_Base}tv/${list}?language=en-US&page=1`;
+      urls.push(url);
+    });
+
+    const [popularTv, topRatedTv, nowPlaynigTv, upcomingTv] = await axios.all(
+      urls.map((url) => axios.get(url, options))
+    );
+
+    return {
+      popularTv: popularTv.data.results,
+      topRatedTv: topRatedTv.data.results,
+      nowPlaynigTv: nowPlaynigTv.data.results,
+      upcomingTv: upcomingTv.data.results,
+    };
+  } catch (err) {
+    throw new Error(err.response?.data || "Something went wrong");
   }
 }
