@@ -1,4 +1,4 @@
-import Discover from "../features/Movies/Discover";
+import Discover from "../components/Discover";
 import Spinner from "../ui/Spinner";
 import { useMovies } from "../features/Movies/useMovies";
 import { getImageViaPath } from "../utils/helper";

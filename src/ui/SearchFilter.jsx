@@ -5,6 +5,7 @@ const SearchFilter = () => {
   const [openOpetions, setOpenOptions] = useState(false);
   const [selectedValue, setSelectedValue] = useState("all");
   const dropdownRef = useRef(null);
+  // const buttonRef = useRef(null);
 
   function handleSelectOpetion(value) {
     setSelectedValue(value);
@@ -27,6 +28,7 @@ const SearchFilter = () => {
         Filter
       </label>
       <div
+        ref={dropdownRef}
         className="w-[120px] relative z-20"
         onClick={() => setOpenOptions((prev) => !prev)}
       >
@@ -40,7 +42,6 @@ const SearchFilter = () => {
           className={`absolute top-11 left-1 bg-slate-200 z-50 rounded-md overflow-hidden w-[120px] capitalize ${
             openOpetions ? "block" : "hidden"
           }`}
-          ref={dropdownRef}
         >
           <div
             className="py-2 px-3 cursor-pointer transition-colors hover:bg-slate-300"
