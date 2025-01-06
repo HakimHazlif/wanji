@@ -37,3 +37,7 @@ export function ratePercentage(rate) {
 export function formatNumber(num) {
   return num % 1 !== 0 ? num.toFixed(1) : num;
 }
+
+export function getPictureUrlFormat(paramId, width) {
+  return `https://image.tmdb.org/t/p/w${width}${paramId}`;
+}

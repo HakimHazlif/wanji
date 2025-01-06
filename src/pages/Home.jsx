@@ -2,7 +2,7 @@ import Discover from "../features/Movies/Discover";
 import Spinner from "../ui/Spinner";
 import { useMovies } from "../features/Movies/useMovies";
 import { getImageViaPath } from "../utils/helper";
-import List from "../components/List";
+import MovieLists from "../features/Movies/MovieLists";
 
 const Home = () => {
   const { isLoading, movies, error } = useMovies();
@@ -17,9 +17,7 @@ const Home = () => {
   return (
     <main>
       <Discover image={image} />
-      <List title="Trending Movies">
-        <p>right here will be list of movies</p>
-      </List>
+      <MovieLists />
     </main>
   );
 };
