@@ -1,5 +1,7 @@
 const Lists = () => {
-  return <div>Lists</div>;
+  return <main>
+    
+  </main>;
 };
 
 export default Lists;

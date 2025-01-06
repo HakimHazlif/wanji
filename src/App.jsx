@@ -13,35 +13,47 @@ import PageNotFound from "./pages/PageNotFound";
 import SessionContextProvider from "./context/UserContext";
 import { Provider } from "react-redux";
 import store from "./store/store";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // staleTime: 60 * 1000, // 60 seconds * 1000 miliseconds
+      staleTime: 0,
+    },
+  },
+});
 
 function App() {
   return (
-    <Provider store={store}>
-      <SessionContextProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<AppLayout />}>
-              <Route index element={<Home />} />
-              <Route path="movie/:id" element={<Show isMovie={true} />} />
-              <Route path="serie/:id" element={<Show isMovie={false} />} />
-              <Route path={`:user`}>
-                <Route index element={<Profile />} />
-                <Route path="watchlist" element={<Watchlist />} />
-                <Route path="lists" element={<Lists />} />
-                <Route path="favorites" element={<Favorites />} />
-                <Route path="settings" element={<Settings />} />
-                <Route path="reset-password" element={<ResetPassword />} />
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <SessionContextProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<AppLayout />}>
+                <Route index element={<Home />} />
+                <Route path="movie/:id" element={<Show isMovie={true} />} />
+                <Route path="serie/:id" element={<Show isMovie={false} />} />
+                <Route path={`:user`}>
+                  <Route index element={<Profile />} />
+                  <Route path="watchlist" element={<Watchlist />} />
+                  <Route path="lists" element={<Lists />} />
+                  <Route path="favorites" element={<Favorites />} />
+                  <Route path="settings" element={<Settings />} />
+                  <Route path="reset-password" element={<ResetPassword />} />
+                </Route>
               </Route>
-            </Route>
 
-            <Route path="login" element={<SignLog />} />
-            <Route path="signup" element={<SignLog />} />
+              <Route path="login" element={<SignLog />} />
+              <Route path="signup" element={<SignLog />} />
 
-            <Route path="*" element={<PageNotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </SessionContextProvider>
-    </Provider>
+              <Route path="*" element={<PageNotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </SessionContextProvider>
+      </Provider>
+    </QueryClientProvider>
   );
 }
 
