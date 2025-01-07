@@ -2,19 +2,13 @@ import { getPictureUrlFormat } from "../utils/helper";
 import RateCircle from "./RateCircle";
 import { Link } from "react-router";
 
-const ShowCard = ({ movie }) => {
-  const {
-    id,
-    title,
-    poster_path: poster,
-    releaseDate,
-    vote_average: rate,
-  } = movie;
+const ShowCard = ({ show, title }) => {
+  const { id, poster_path: poster, releaseDate, vote_average: rate } = show;
 
   return (
     <Link
       to={`/movie/${id}`}
-      className="w-60 bg-slate-100 rounded-lg overflow-hidden text-black"
+      className="w-60 bg-slate-100 rounded-md overflow-hidden text-black"
     >
       <div className="relative">
         <img

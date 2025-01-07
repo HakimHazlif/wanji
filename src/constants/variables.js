@@ -1,12 +1,6 @@
 export const URL_Base = "https://api.themoviedb.org/3/";
 
 export const options = {
-  headers: {
-    accept: "application/json",
-    Authorization: `Bearer ${import.meta.env.VITE_API_TMDB_KEY}`,
-  },
-};
-export const optionsWithoutAxios = {
   method: "GET",
   headers: {
     accept: "application/json",
@@ -55,7 +49,7 @@ export const API_URLs = {
         images: `${URL_Base}tv/series_id/season/season_number/images`,
         videos: `${URL_Base}tv/series_id/season/season_number/videos?language=en-US`,
       },
-      episode: {},
+      episodes: {},
     },
   },
   people: {

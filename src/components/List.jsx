@@ -28,7 +28,7 @@ const List = ({ title, children }) => {
 
   return (
     <section className="padding-x">
-      <div className=" flex items-center justify-between mb-10">
+      <div className=" flex items-center justify-between mb-6">
         <h2 className="font-bold text-3xl">{title}</h2>
         <div className="flex gap-3 text-4xl text-slate-600 cursor-pointer">
           <IoIosArrowDropleftCircle
@@ -42,7 +42,7 @@ const List = ({ title, children }) => {
         </div>
       </div>
       <div
-        className="grid gap-10 grid-flow-col overflow-x-scroll scrollbar-hide space-x-2 "
+        className="grid gap-5 grid-flow-col overflow-x-scroll scrollbar-hide space-x-2 "
         ref={containerRef}
       >
         {children}

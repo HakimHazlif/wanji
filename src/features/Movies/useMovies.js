@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { getMovies } from "../../services/apiShow";
+import { getMovies } from "../../services/apiShows";
 
 export function useMovies() {
   const {
@@ -7,7 +7,7 @@ export function useMovies() {
     data: movies,
     error,
   } = useQuery({
-    queryKey: ["shows"],
+    queryKey: ["movies"],
     queryFn: getMovies,
   });
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import SearchFilter from "../../ui/SearchFilter";
-import { optionsWithoutAxios, URL_Base } from "../../constants/variables";
+import { options, URL_Base } from "../../constants/variables";
 import SearchItem from "../../ui/SearchItem";
 
 const SearchBar = () => {
@@ -27,7 +27,7 @@ const SearchBar = () => {
         try {
           const res = await fetch(
             `${URL_Base}search/${selectedValue}?query=${queryURI}&include_adult=false&language=en-US&page=1`,
-            optionsWithoutAxios
+            options
           );
           const data = await res.json();
 

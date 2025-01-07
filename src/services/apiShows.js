@@ -97,15 +97,15 @@ export async function getTvShows() {
       urls.push(url);
     });
 
-    const [popularTv, topRatedTv, nowPlaynigTv, upcomingTv] = await axios.all(
+    const [popularTv, topRatedTv, onTheAir, airingToday] = await axios.all(
       urls.map((url) => axios.get(url, options))
     );
 
     return {
       popularTv: popularTv.data.results,
       topRatedTv: topRatedTv.data.results,
-      nowPlaynigTv: nowPlaynigTv.data.results,
-      upcomingTv: upcomingTv.data.results,
+      onTheAir: onTheAir.data.results,
+      airingToday: airingToday.data.results,
     };
   } catch (err) {
     throw new Error(err.response?.data || "Something went wrong");

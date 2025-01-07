@@ -3,6 +3,7 @@ import Spinner from "../ui/Spinner";
 import { useMovies } from "../features/movies/useMovies";
 import { getImageViaPath } from "../utils/helper";
 import MovieLists from "../features/movies/MovieLists";
+import TvLists from "../features/tv/TvShowLists";
 
 const Home = () => {
   const { isLoading, movies, error } = useMovies();
@@ -15,10 +16,13 @@ const Home = () => {
     getImageViaPath(movies.popularMovies[0].backdrop_path, 1280) || null;
 
   return (
-    <main>
+    <>
       <Discover image={image} />
+      <div className="py-20"></div>
       <MovieLists />
-    </main>
+      <div className="py-20"></div>
+      <TvLists />
+    </>
   );
 };
 
