@@ -6,6 +6,13 @@ export const options = {
     Authorization: `Bearer ${import.meta.env.VITE_API_TMDB_KEY}`,
   },
 };
+export const optionsWithoutAxios = {
+  method: "GET",
+  headers: {
+    accept: "application/json",
+    Authorization: `Bearer ${import.meta.env.VITE_API_TMDB_KEY}`,
+  },
+};
 
 export const API_URLs = {
   movies: {

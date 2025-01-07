@@ -1,8 +1,8 @@
 import Discover from "../components/Discover";
 import Spinner from "../ui/Spinner";
-import { useMovies } from "../features/Movies/useMovies";
+import { useMovies } from "../features/movies/useMovies";
 import { getImageViaPath } from "../utils/helper";
-import MovieLists from "../features/Movies/MovieLists";
+import MovieLists from "../features/movies/MovieLists";
 
 const Home = () => {
   const { isLoading, movies, error } = useMovies();

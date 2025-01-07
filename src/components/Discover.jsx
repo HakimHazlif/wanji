@@ -1,4 +1,4 @@
-import SearchBar from "../ui/SearchBar";
+import SearchBar from "../features/search/SearchBar";
 
 const Discover = ({ image }) => {
   return (
