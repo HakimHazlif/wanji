@@ -5,14 +5,16 @@ const initialState = {
     uid: "",
     email: "",
     username: "",
+    avatar: "",
   },
   isLoggedIn: false,
   status: "idle",
   error: null,
+  message: "",
 };
 
 const authSlice = createSlice({
-  name: "session",
+  name: "user",
   initialState,
   reducers: {
     authStart: (state) => {
@@ -33,22 +35,29 @@ const authSlice = createSlice({
         uid: "",
         email: "",
         username: "",
+        avatar: "",
       };
       state.status = "idle";
       state.error = null;
       state.isLoggedIn = false;
     },
     setUser: (state, action) => {
-      state.user.uid = action.payload.uid;
-      state.user.email = action.payload.email;
-      state.user.username = state.isLoggedIn
-        ? state.user.username
-        : action.payload.username;
+      state.user = action.payload;
       state.status = action.payload ? "authenticated" : "idle";
+    },
+    resetPassword: (state, action) => {
+      state.status = "resetting";
+      state.message = action.payload;
     },
   },
 });
 
-export const { authStart, authSuccess, authFailure, logOutSuccess, setUser } =
-  authSlice.actions;
+export const {
+  authStart,
+  authSuccess,
+  authFailure,
+  logOutSuccess,
+  setUser,
+  resetPassword,
+} = authSlice.actions;
 export default authSlice.reducer;

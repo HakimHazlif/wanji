@@ -1,116 +1,133 @@
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
-  setPersistence,
-  browserSessionPersistence,
-  sendPasswordResetEmail,
-} from "firebase/auth";
-import { doc, setDoc, getDoc } from "firebase/firestore";
-import { auth, db } from "./firebaseConfig.js";
+import supabase from "./supabase";
 import {
   authFailure,
   authStart,
   authSuccess,
   logOutSuccess,
   setUser,
+  resetPassword,
 } from "../features/Authentication/authSlice.js";
 
-export const registerUser = (username, email, password) => async (dispatch) => {
-  dispatch(authStart());
-
+export const signup = (username, email, password) => async (dispatch) => {
   try {
-    await setPersistence(auth, browserSessionPersistence);
-
-    const userCredenial = await createUserWithEmailAndPassword(
-      auth,
+    dispatch(authStart());
+    const { data: user, error } = await supabase.auth.signUp({
       email,
-      password
-    );
-    const user = userCredenial.user;
-
-    // store user name in firebase
-    await setDoc(doc(db, "users", user.uid), {
-      username,
-      email,
-      uid: user.uid,
+      password,
+      options: {
+        data: {
+          username,
+          avatar: "",
+        },
+      },
     });
 
-    dispatch(authSuccess({ uid: user.uid, username, email }));
+    if (error) throw new Error(error.message);
+
+    dispatch(
+      authSuccess({
+        uid: user.UID,
+        username: user.username,
+        email: user.email,
+        avatar: user.avatar,
+      })
+    );
   } catch (err) {
-    dispatch(authFailure(err.message));
+    dispatch(authFailure(err));
   }
 };
 
-export const loginUser = (email, password) => async (dispatch) => {
-  dispatch(authStart());
-  //const auth = getAuth()
-  await setPersistence(auth, browserSessionPersistence);
-
+export const login = (email, password) => async (dispatch) => {
   try {
-    const userCredenial = await signInWithEmailAndPassword(
-      auth,
+    dispatch(authStart());
+
+    const { data: user, error } = await supabase.auth.signInWithPassword({
       email,
-      password
+      password,
+    });
+
+    if (error) throw new Error(error.message);
+
+    dispatch(
+      authSuccess({
+        uid: user.uid,
+        username: user.username,
+        email: user.email,
+        avatar: user.avatar,
+      })
     );
-    const user = userCredenial.user;
+  } catch (err) {
+    dispatch(authFailure(err));
+  }
+};
 
-    const userRef = doc(db, "users", user.uid);
-    const userDoc = await getDoc(userRef);
+export const logout = () => async (dispatch) => {
+  try {
+    dispatch(authStart());
 
-    if (userDoc.exists()) {
-      const userData = userDoc.data();
+    const { error } = await supabase.auth.signOut();
+
+    if (error) throw new Error(error.message);
+    dispatch(logOutSuccess());
+  } catch (err) {
+    dispatch(authFailure(err));
+  }
+};
+
+export const resetForgottenPassword = (email) => async (dispatch) => {
+  try {
+    dispatch(authStart());
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+
+    if (error) throw new Error(error.message);
+
+    dispatch(resetPassword(data));
+  } catch (err) {
+    dispatch(authFailure(err));
+  }
+};
+
+export const updateAuth =
+  (email, password, username, avatar) => async (dispatch) => {
+    try {
+      dispatch(authStart());
+      const { data: user, error } = await supabase.auth.updateUser({
+        email,
+        password,
+        data: { username, avatar },
+      });
+
+      if (error) throw new Error(error.message);
+
       dispatch(
         authSuccess({
           uid: user.uid,
-          username: userData.username,
+          username: user.username,
           email: user.email,
+          avatar: user.avatar,
         })
       );
+    } catch (err) {
+      dispatch(authFailure(err));
     }
-  } catch (err) {
-    dispatch(authFailure(err.message));
-  }
-};
+  };
 
-export const logoutUser = () => async (dispatch) => {
-  //const auth = getAuth();
+export const getUser = () => async (dispatch) => {
   try {
-    await signOut(auth);
-    dispatch(logOutSuccess());
+    dispatch(authStart());
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    dispatch(
+      setUser({
+        uid: user.uid,
+        email: user.email,
+        username: user.username,
+        avatar: user.avatar,
+      })
+    );
   } catch (err) {
-    dispatch(authFailure(err.message));
+    dispatch(authFailure(err));
   }
-};
-
-export const generatePasswordResetLink = (email) => async (dispatch) => {
-  try {
-    await sendPasswordResetEmail(auth, email);
-    dispatch();
-  } catch (err) {
-    dispatch(authFailure(err.message));
-  }
-};
-
-export const monitorAuthState = () => async (dispatch) => {
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      const userRef = doc(db, "users", user.uid);
-      const userDoc = await getDoc(userRef);
-
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        dispatch(
-          setUser({
-            uid: user.uid,
-            email: user.email,
-            username: userData.username,
-          })
-        );
-      }
-    } else {
-      dispatch(setUser({ uid: "", email: "", username: "" }));
-    }
-  });
 };
