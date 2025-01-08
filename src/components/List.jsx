@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { FaArrowRight } from "react-icons/fa";
 import {
   IoIosArrowDropleftCircle,
   IoIosArrowDroprightCircle,
@@ -9,6 +10,8 @@ const List = ({ title, children }) => {
 
   const [isScrolledLeft, setIsScrolledLeft] = useState(true);
   const [isScrolledRight, setIsScrolledRight] = useState(false);
+
+  const [isHoveredTitle, setIsHoveredTitle] = useState(false);
 
   const handleScroll = (direction) => {
     const container = containerRef.current;
@@ -29,7 +32,24 @@ const List = ({ title, children }) => {
   return (
     <section className="padding-x">
       <div className=" flex items-center justify-between mb-6">
-        <h2 className="font-bold text-3xl">{title}</h2>
+        <h2
+          className="font-bold text-3xl flex items-center gap-2 cursor-pointer group"
+          onMouseEnter={() => setIsHoveredTitle(true)}
+          onMouseLeave={() => setIsHoveredTitle(false)}
+        >
+          {title}
+          <span className="flex items-center gap-1 text-blue-maya mt-2 text-base  relative">
+            <p
+              className={`transition-all  ease-in duration-400 ${
+                isHoveredTitle ? "opacity-100 delay-300" : "opacity-0"
+              }`}
+            >
+              View all
+            </p>
+
+            <FaArrowRight className=" absolute transform translate-x-0 group-hover:translate-x-16 transition-transform duration-300 ease-linear text-sm" />
+          </span>
+        </h2>
         <div className="flex gap-3 text-4xl text-slate-600 cursor-pointer">
           <IoIosArrowDropleftCircle
             onClick={() => handleScroll("left")}

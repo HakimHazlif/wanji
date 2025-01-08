@@ -63,3 +63,13 @@
 .border-orange {
   border: 2px solid #ffbf00;
 }
+
+.view-btn {
+  opacity: 0;
+  animation: hovering 0.4s linear 0.3s;
+}
+@keyframes hovering {
+  to {
+    opacity: 1;
+  }
+}
