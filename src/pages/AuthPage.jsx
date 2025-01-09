@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import Spinner from "../ui/Spinner";
 
 const SignLog = ({ type }) => {
-  const navigate = useNavigate();
   const { removeAllAuthFields } = useSession();
   const isLogin = type === "login";
 
@@ -16,8 +15,6 @@ const SignLog = ({ type }) => {
   if (status === "loading") return <Spinner />;
 
   if (error) console.log(error);
-
-  if (isLoggedIn) navigate("/");
 
   return (
     <main className="h-screen w-full flex justify-center items-start pt-10">
