@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import AppLayout from "./components/AppLayout";
 import Home from "./pages/Home";
-import SignLog from "./pages/SignLog";
+import AuthPage from "./pages/AuthPage";
 import Show from "./pages/Show";
 import Profile from "./pages/Profile";
 import Watchlist from "./pages/Watchlist";
@@ -45,8 +45,8 @@ function App() {
                 </Route>
               </Route>
 
-              <Route path="login" element={<SignLog />} />
-              <Route path="signup" element={<SignLog />} />
+              <Route path="login" element={<AuthPage type="login" />} />
+              <Route path="signup" element={<AuthPage type="signup" />} />
 
               <Route path="*" element={<PageNotFound />} />
             </Routes>
