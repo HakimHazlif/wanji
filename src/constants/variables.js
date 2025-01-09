@@ -8,6 +8,8 @@ export const options = {
   },
 };
 
+export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export const API_URLs = {
   movies: {
     trending: `${URL_Base}trending/movie/day?language=en-US`,

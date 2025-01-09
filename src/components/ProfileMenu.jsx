@@ -1,9 +1,12 @@
 import ProfileElements from "./ProfileElement";
 import { profileMenuElements } from "../constants/uiElements";
 import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
 
 const ProfileMenu = ({ setHandle }) => {
-  const navigate = useNavigate();
+  const { isLoggedIn, user } = useSelector((state) => state.user);
+
+  const { avatar, username, email } = user;
 
   return (
     <div
@@ -13,12 +16,18 @@ const ProfileMenu = ({ setHandle }) => {
       <aside className="bg-white absolute right-28 top-16 z-40 text-black w-[300px] max-w-[380px] min-w-[200px]  rounded-lg py-3 px-3">
         <div className="flex gap-4 justify-start items-center px-3 pt-3 pb-4">
           <div className="bg-orange-coral w-11 h-11 rounded-full flex justify-center items-center relative">
-            <i className="fa-solid fa-user text-xl"></i>
-            <div className="absolute w-[10px] h-[10px] bg-green-500 rounded-full bottom-[4px] right-0"></div>
+            {avatar ? (
+              <img src={avatar} alt="avatar" />
+            ) : (
+              <i className="fa-solid fa-user text-xl"></i>
+            )}
+            {isLoggedIn && (
+              <div className="absolute w-[10px] h-[10px] bg-green-500 rounded-full bottom-[4px] right-0"></div>
+            )}
           </div>
           <div>
-            <p className="font-bold text-xl">{"fake user"}</p>
-            <p className="text-slate-500 font-medium text-sm">{"fake email"}</p>
+            <p className="font-bold text-xl">{username}</p>
+            <p className="text-slate-500 font-medium text-sm">{email}</p>
           </div>
         </div>
         <>
@@ -31,9 +40,8 @@ const ProfileMenu = ({ setHandle }) => {
                 <ProfileElements
                   key={element.id}
                   icon={element.iconSVG}
-                  linkTo={navigate("/")}
-                  itemName={element.label}
-                  onclick={element.label === "Sign out" ? null : null}
+                  route={element.route}
+                  itemName={element.name}
                 />
               ))}
             </ul>

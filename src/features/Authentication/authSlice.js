@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: {
     uid: "",
-    email: "",
     username: "",
+    email: "",
     avatar: "",
   },
   isLoggedIn: false,
@@ -33,8 +33,8 @@ const authSlice = createSlice({
     logOutSuccess: (state) => {
       state.user = {
         uid: "",
-        email: "",
         username: "",
+        email: "",
         avatar: "",
       };
       state.status = "idle";

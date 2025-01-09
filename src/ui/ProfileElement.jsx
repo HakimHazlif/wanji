@@ -1,13 +1,10 @@
-import { useSelector } from "react-redux";
-import { Link } from "react-router";
+import { Link, Outlet } from "react-router-dom";
 
-const ProfileElements = ({ icon, itemName, route }) => {
-  const { username } = useSelector((state) => state.user.user);
-
+const ProfileElements = ({ icon, itemName, linkTo, onclick }) => {
   return (
     <li>
       <Link
-        to={route === "Sign out" ? route() : route(username)}
+        to={linkTo}
         className="flex items-center justify-start gap-4 px-3 py-2 hover:text-orange-coral hover:border hover:border-orange-amber hover:bg-amber-50  rounded-md cursor-pointer"
         onClick={onclick}
       >
@@ -22,6 +19,7 @@ const ProfileElements = ({ icon, itemName, route }) => {
         </svg>
         <span>{itemName}</span>
       </Link>
+      <Outlet />
     </li>
   );
 };

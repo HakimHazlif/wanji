@@ -26,10 +26,10 @@ export const signup = (username, email, password) => async (dispatch) => {
 
     dispatch(
       authSuccess({
-        uid: user.UID,
-        username: user.username,
-        email: user.email,
-        avatar: user.avatar,
+        uid: user.user.id,
+        username: user.user.user_metadata.username,
+        email: user.user.email,
+        avatar: user.user.user_metadata.avatar,
       })
     );
   } catch (err) {
@@ -46,14 +46,17 @@ export const login = (email, password) => async (dispatch) => {
       password,
     });
 
-    if (error) throw new Error(error.message);
+    if (error) {
+      // console.log(error);
+      throw new Error(error.message);
+    }
 
     dispatch(
       authSuccess({
-        uid: user.uid,
-        username: user.username,
-        email: user.email,
-        avatar: user.avatar,
+        uid: user.user.id,
+        username: user.user.user_metadata.username,
+        email: user.user.email,
+        avatar: user.user.user_metadata.avatar,
       })
     );
   } catch (err) {
@@ -122,8 +125,8 @@ export const getUser = () => async (dispatch) => {
     dispatch(
       setUser({
         uid: user.uid,
-        email: user.email,
         username: user.username,
+        email: user.email,
         avatar: user.avatar,
       })
     );
