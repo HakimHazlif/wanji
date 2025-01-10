@@ -44,8 +44,8 @@ const authSlice = createSlice({
       state.user = action.payload;
       state.status = action.payload ? "authenticated" : "idle";
     },
-    resetPassword: (state, action) => {
-      state.status = "resetting";
+    resetPassword: (state) => {
+      state.status = "resetted";
     },
   },
 });

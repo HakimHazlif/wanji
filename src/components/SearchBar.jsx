@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import SearchFilter from "../../ui/SearchFilter";
-import { options, URL_Base } from "../../constants/variables";
-import SearchItem from "../../ui/SearchItem";
+import SearchFilter from "../ui/SearchFilter";
+import { options, URL_Base } from "../constants/variables";
+import SearchItem from "../ui/SearchItem";
 
 const SearchBar = () => {
   // const { searchData, getSearchData } = useSearch();

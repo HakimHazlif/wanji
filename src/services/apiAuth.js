@@ -80,13 +80,12 @@ export const logout = () => async (dispatch) => {
 export const resetForgottenPassword = (email) => async (dispatch) => {
   try {
     dispatch(authStart());
-    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: "http://localhost:5173/update-password",
     });
 
     if (error) throw new Error(error.message);
 
-    console.log(data);
     dispatch(resetPassword());
   } catch (err) {
     dispatch(authFailure(err));
