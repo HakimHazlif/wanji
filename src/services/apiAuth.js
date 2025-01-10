@@ -80,11 +80,14 @@ export const logout = () => async (dispatch) => {
 export const resetForgottenPassword = (email) => async (dispatch) => {
   try {
     dispatch(authStart());
-    const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: "http://localhost:5173/update-password",
+    });
 
     if (error) throw new Error(error.message);
 
-    dispatch(resetPassword(data));
+    console.log(data);
+    dispatch(resetPassword());
   } catch (err) {
     dispatch(authFailure(err));
   }
@@ -104,16 +107,40 @@ export const updateAuth =
 
       dispatch(
         authSuccess({
-          uid: user.uid,
-          username: user.username,
-          email: user.email,
-          avatar: user.avatar,
+          uid: user.user.id,
+          username: user.user.user_metadata.username,
+          email: user.user.email,
+          avatar: user.user.user_metadata.avatar,
         })
       );
     } catch (err) {
       dispatch(authFailure(err));
     }
   };
+
+export const updateAuthPassword = (password) => async (dispatch) => {
+  try {
+    dispatch(authStart());
+    const { data: user, error } = await supabase.auth.updateUser({
+      password,
+    });
+
+    if (error) throw new Error(error.message);
+
+    console.log(user);
+
+    dispatch(
+      authSuccess({
+        uid: user.user.id,
+        username: user.user.user_metadata.username,
+        email: user.user.email,
+        avatar: user.user.user_metadata.avatar,
+      })
+    );
+  } catch (err) {
+    dispatch(authFailure(err));
+  }
+};
 
 export const getUser = () => async (dispatch) => {
   try {
@@ -124,10 +151,10 @@ export const getUser = () => async (dispatch) => {
 
     dispatch(
       setUser({
-        uid: user.uid,
-        username: user.username,
-        email: user.email,
-        avatar: user.avatar,
+        uid: user.user.id,
+        username: user.user.user_metadata.username,
+        email: user.user.email,
+        avatar: user.user.user_metadata.avatar,
       })
     );
   } catch (err) {

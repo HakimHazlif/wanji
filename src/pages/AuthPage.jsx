@@ -5,12 +5,18 @@ import SignupForm from "../features/authentication/SignupForm";
 import { useSession } from "../context/UserContext";
 import { useSelector } from "react-redux";
 import Spinner from "../ui/Spinner";
+import { useEffect } from "react";
 
 const SignLog = ({ type }) => {
+  const navigate = useNavigate();
   const { removeAllAuthFields } = useSession();
   const isLogin = type === "login";
 
   const { status, isLoggedIn, error } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (isLoggedIn) navigate("/");
+  }, [navigate, isLoggedIn]);
 
   if (status === "loading") return <Spinner />;
 

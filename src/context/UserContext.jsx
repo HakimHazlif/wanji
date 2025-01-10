@@ -1,8 +1,8 @@
 import { createContext, useContext, useState } from "react";
 import { emailRegex } from "../constants/variables";
 import { useDispatch, useSelector } from "react-redux";
-import { login, signup } from "../services/apiAuth";
-import { useNavigate } from "react-router";
+import { login, signup, updateAuthPassword } from "../services/apiAuth";
+// import { useNavigate } from "react-router";
 
 const SessionContext = createContext();
 
@@ -129,6 +129,25 @@ function SessionContextProvider({ children }) {
     }
   };
 
+  const handleUpdatePassword = (e) => {
+    e.preventDefault();
+
+    if (user.password.length < 8) {
+      setIsValidLength(true);
+      return;
+    }
+
+    if (user.passwordConfirm !== user.password) {
+      setIsConfirmed(true);
+      return;
+    }
+
+    dispatch(updateAuthPassword(user.password));
+    if (isLoggedIn) {
+      removeAllAuthFields();
+    }
+  };
+
   return (
     <SessionContext.Provider
       value={{
@@ -145,6 +164,7 @@ function SessionContextProvider({ children }) {
         handleSignupSubmit,
         handleLoginSubmit,
         removeAllAuthFields,
+        handleUpdatePassword,
       }}
     >
       {children}

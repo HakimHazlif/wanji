@@ -14,6 +14,7 @@ import SessionContextProvider from "./context/UserContext";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import { QueryClient, QueryClientProvider } from "react-query";
+import UpdatePassword from "./pages/UpdatePassword";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,8 +42,9 @@ function App() {
                   <Route path="lists" element={<Lists />} />
                   <Route path="favorites" element={<Favorites />} />
                   <Route path="settings" element={<Settings />} />
-                  <Route path="reset-password" element={<ResetPassword />} />
                 </Route>
+                <Route path="reset-password" element={<ResetPassword />} />
+                <Route path="update-password" element={<UpdatePassword />} />
               </Route>
 
               <Route path="login" element={<AuthPage type="login" />} />

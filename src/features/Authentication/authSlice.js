@@ -10,7 +10,6 @@ const initialState = {
   isLoggedIn: false,
   status: "idle",
   error: null,
-  message: "",
 };
 
 const authSlice = createSlice({
@@ -47,7 +46,6 @@ const authSlice = createSlice({
     },
     resetPassword: (state, action) => {
       state.status = "resetting";
-      state.message = action.payload;
     },
   },
 });
