@@ -31,7 +31,7 @@ export async function insertShow({ id, listId }) {
   return { data, error };
 }
 
-export async function deleteShow(id, listId) {
+export async function deleteShow({ id, listId }) {
   const { error } = await supabase
     .from("items_list")
     .delete()

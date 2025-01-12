@@ -4,38 +4,47 @@ import { BsBookmarkCheckFill, BsBookmarkPlusFill } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { useAddShow } from "../features/lists/useAddShow";
 import SpinnerMini from "../ui/SpinnerMini";
+import { useDeleteShow } from "../features/lists/useDeleteShow";
 
 const WatchlistIcon = ({ id }) => {
   const [isWatched, setIsWatched] = useState();
   const { lists } = useLists();
   const { isLoggedIn } = useSelector((state) => state.user);
-  const { isLoading: isAdding, error, addShow } = useAddShow();
+  const { isLoading: isAdding, addShow } = useAddShow();
+  const { isLoading: isDeleting, deleteShow } = useDeleteShow();
 
-  const watchelist = lists
+  const watchlist = lists
     ? lists.filter((item) => item.name === "watchlist")[0]
     : null;
 
   function handleAddToWatchlist() {
-    if (isLoggedIn && watchelist) {
-      const listId = watchelist.id;
+    if (isLoggedIn && watchlist) {
+      const listId = watchlist.id;
       addShow({ id, listId });
+    }
+  }
+  function handleDeleteFromWatchlist() {
+    if (isLoggedIn && watchlist) {
+      const listId = watchlist.id;
+      deleteShow({ id, listId });
     }
   }
 
   useEffect(() => {
-    const watched = watchelist?.items_list.some((item) => item.item_id == id);
+    const watched = watchlist?.items_list.some((item) => item.item_id == id);
 
-    if (watched) {
-      setIsWatched(watched);
-    }
-  }, [setIsWatched, id, watchelist?.items_list]);
+    setIsWatched(watched);
+  }, [setIsWatched, id, watchlist?.items_list]);
 
-  if (isAdding) return <SpinnerMini />;
+  if (isAdding || isDeleting) return <SpinnerMini />;
 
   return (
     <>
       {isWatched ? (
-        <BsBookmarkCheckFill className=" text-transparent-amber hover:text-orange-amber text-5xl" />
+        <BsBookmarkCheckFill
+          className=" text-transparent-amber hover:text-orange-amber text-5xl"
+          onClick={handleDeleteFromWatchlist}
+        />
       ) : (
         <BsBookmarkPlusFill
           className="text-5xl text-transparent-amber hover:text-orange-amber"
