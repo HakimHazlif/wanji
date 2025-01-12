@@ -1,4 +1,9 @@
+import { useEffect } from "react";
 import SearchBar from "./SearchBar";
+import { getAllUserLists } from "../services/apiLists";
+import { useSelector } from "react-redux";
+import { useLists } from "../features/lists/useLists";
+import WatchlistIcon from "../ui/WatchlistIcon";
 
 const Discover = ({ image }) => {
   return (

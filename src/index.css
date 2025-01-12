@@ -22,6 +22,10 @@
   }
 }
 
+.spinner-mini {
+  animation: rotation 1.5s infinite linear;
+}
+
 @keyframes rotation {
   to {
     transform: rotate(1turn);

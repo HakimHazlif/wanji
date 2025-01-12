@@ -10,6 +10,8 @@ const TvLists = () => {
 
   if (error) return <p>{error}</p>;
 
+  // console.log(tvShows);
+
   const popularTv = tvShows.popularTv.filter(
     (tvShow, index) => index < 8 && tvShow
   );

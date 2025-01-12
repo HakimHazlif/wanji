@@ -10,6 +10,8 @@ const MovieLists = () => {
 
   if (error) return <p>{error}</p>;
 
+  // console.log(movies);
+
   const popularMovies = movies.popularMovies.filter(
     (movie, index) => index < 8 && movie
   );

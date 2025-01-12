@@ -14,6 +14,7 @@ export default {
         strawberry: "#ff1f1f",
         "blue-paresian": "#192bc2",
         "blue-maya": "#0000ff",
+        "transparent-amber": "#ffde05c3",
       },
     },
   },
