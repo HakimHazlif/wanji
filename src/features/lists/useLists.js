@@ -14,5 +14,12 @@ export function useLists() {
     queryFn: () => uid && getAllUserLists(uid),
   });
 
-  return { isLoading, lists, error };
+  const watchlist = lists
+    ? lists.filter((item) => item.name === "watchlist")[0]
+    : null;
+  const favoriteList = lists
+    ? lists.filter((item) => item.name === "favorite")[0]
+    : null;
+
+  return { isLoading, lists, watchlist, favoriteList, error };
 }

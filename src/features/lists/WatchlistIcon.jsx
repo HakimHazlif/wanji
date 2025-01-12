@@ -8,14 +8,10 @@ import { useDeleteShow } from "./useDeleteShow";
 
 const WatchlistIcon = ({ id }) => {
   const [isWatched, setIsWatched] = useState();
-  const { lists } = useLists();
+  const { watchlist, isLoading } = useLists();
   const { isLoggedIn } = useSelector((state) => state.user);
   const { isLoading: isAdding, addShow } = useAddShow();
   const { isLoading: isDeleting, deleteShow } = useDeleteShow();
-
-  const watchlist = lists
-    ? lists.filter((item) => item.name === "watchlist")[0]
-    : null;
 
   function handleAddToWatchlist() {
     if (isLoggedIn && watchlist) {
@@ -36,7 +32,7 @@ const WatchlistIcon = ({ id }) => {
     setIsWatched(watched);
   }, [setIsWatched, id, watchlist?.items_list]);
 
-  if (isAdding || isDeleting) return <SpinnerMini />;
+  if (isAdding || isDeleting || isLoading) return <SpinnerMini />;
 
   return (
     <>
