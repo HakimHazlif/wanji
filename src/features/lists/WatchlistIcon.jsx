@@ -1,10 +1,10 @@
-import { useLists } from "../features/lists/useLists";
+import { useLists } from "./useLists";
 import { useSelector } from "react-redux";
 import { BsBookmarkCheckFill, BsBookmarkPlusFill } from "react-icons/bs";
 import { useEffect, useState } from "react";
-import { useAddShow } from "../features/lists/useAddShow";
-import SpinnerMini from "../ui/SpinnerMini";
-import { useDeleteShow } from "../features/lists/useDeleteShow";
+import { useAddShow } from "./useAddShow";
+import SpinnerMini from "../../ui/SpinnerMini";
+import { useDeleteShow } from "./useDeleteShow";
 
 const WatchlistIcon = ({ id }) => {
   const [isWatched, setIsWatched] = useState();

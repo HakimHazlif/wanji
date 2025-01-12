@@ -4,6 +4,7 @@ import {
   IoIosArrowDropleftCircle,
   IoIosArrowDroprightCircle,
 } from "react-icons/io";
+import { Link } from "react-router";
 
 const List = ({ title, children }) => {
   const containerRef = useRef(null);
@@ -39,13 +40,13 @@ const List = ({ title, children }) => {
         >
           {title}
           <span className="flex items-center gap-1 text-blue-maya mt-2 text-base  relative">
-            <p
+            <Link
               className={`transition-all  ease-in duration-400 ${
                 isHoveredTitle ? "opacity-100 delay-300" : "opacity-0"
               }`}
             >
               View all
-            </p>
+            </Link>
 
             <FaArrowRight className=" absolute transform translate-x-0 group-hover:translate-x-16 transition-transform duration-300 ease-linear text-sm" />
           </span>

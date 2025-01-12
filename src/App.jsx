@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 import AuthPage from "./pages/AuthPage";
 import Show from "./pages/Show";
 import Profile from "./pages/Profile";
-import Watchlist from "./pages/Watchlist";
+import WatchlistPage from "./pages/WatchlistPage";
 import Lists from "./pages/Lists";
 import Favorites from "./pages/Favorites";
 import Settings from "./pages/Settings";
@@ -38,7 +38,7 @@ function App() {
                 <Route path="serie/:id" element={<Show isMovie={false} />} />
                 <Route path={`:user`}>
                   <Route index element={<Profile />} />
-                  <Route path="watchlist" element={<Watchlist />} />
+                  <Route path="watchlist" element={<WatchlistPage />} />
                   <Route path="lists" element={<Lists />} />
                   <Route path="favorites" element={<Favorites />} />
                   <Route path="settings" element={<Settings />} />

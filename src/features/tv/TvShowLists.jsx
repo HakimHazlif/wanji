@@ -1,5 +1,5 @@
 import { useTvShows } from "./useTvShows";
-import List from "../../components/List";
+import List from "../lists/List";
 import Spinner from "../../ui/Spinner";
 import ShowCard from "../../ui/ShowCard";
 

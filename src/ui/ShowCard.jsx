@@ -1,7 +1,7 @@
 import { getPictureUrlFormat } from "../utils/helper";
 import RateCircle from "./RateCircle";
 import { Link } from "react-router";
-import WatchlistIcon from "./WatchlistIcon";
+import WatchlistIcon from "../features/lists/WatchlistIcon";
 
 const ShowCard = ({ show, title }) => {
   const { id, poster_path: poster, releaseDate, vote_average: rate } = show;
