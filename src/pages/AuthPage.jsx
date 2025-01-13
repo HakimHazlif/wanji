@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router";
+import { Link, replace, useNavigate } from "react-router";
 
 import LoginForm from "../features/authentication/LoginForm";
 import SignupForm from "../features/authentication/SignupForm";
@@ -15,7 +15,7 @@ const SignLog = ({ type }) => {
   const { status, isLoggedIn, error } = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (isLoggedIn) navigate("/");
+    if (isLoggedIn) navigate("/", { replace: true });
   }, [navigate, isLoggedIn]);
 
   if (status === "loading") return <Spinner />;

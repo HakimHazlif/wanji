@@ -3,7 +3,7 @@ import { useSession } from "../context/UserContext";
 import Button from "../ui/Button";
 import ProfileMenu from "../components/ProfileMenu";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const styleClassName =
   "py-2 text-white font-medium font-roboto rounded-xl w-[100px] min-w-[70px] duration-200 transition-colors";

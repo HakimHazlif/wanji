@@ -5,8 +5,11 @@ import {
   formatNumber,
 } from "../../utils/helper";
 
+import WitchlistIcon from "../lists/WatchlistIcon";
+
 import Rating from "@mui/material/Rating";
 import { Box } from "@mui/material";
+import FavoriteIcon from "../lists/FavoriteIcon";
 
 const ShowDetails = ({ isMovie, details }) => {
   console.log(details);
@@ -91,6 +94,10 @@ const ShowDetails = ({ isMovie, details }) => {
         </div>
       </div>
       <hr className="border-1 border-slate-400 w-full my-4" />
+      <div className="flex gap-2 items-center">
+        <WitchlistIcon id={id} />
+        <FavoriteIcon id={id} />
+      </div>
     </div>
   );
 };

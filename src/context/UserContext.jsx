@@ -2,6 +2,7 @@ import { createContext, useContext, useState } from "react";
 import { emailRegex } from "../constants/variables";
 import { useDispatch, useSelector } from "react-redux";
 import { login, signup, updateAuthPassword } from "../services/apiAuth";
+import { useNavigate } from "react-router";
 // import { useNavigate } from "react-router";
 
 const SessionContext = createContext();
@@ -96,6 +97,7 @@ function SessionContextProvider({ children }) {
     }
 
     dispatch(signup(user.username, user.email, user.password));
+
     if (isLoggedIn) {
       removeAllAuthFields();
     }
@@ -124,6 +126,7 @@ function SessionContextProvider({ children }) {
     }
 
     dispatch(login(user.email, user.password));
+
     if (isLoggedIn) {
       removeAllAuthFields();
     }
@@ -143,6 +146,7 @@ function SessionContextProvider({ children }) {
     }
 
     dispatch(updateAuthPassword(user.password));
+
     if (isLoggedIn) {
       removeAllAuthFields();
     }
