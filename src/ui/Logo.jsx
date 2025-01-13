@@ -1,10 +1,11 @@
-import { logoLight } from "../assets/icons";
+import { Link } from "react-router";
+import { logoDark } from "../assets/icons";
 
 const Logo = () => {
   return (
-    <div className="text-center">
-      <img src={logoLight} alt="Logo" className="w-[100px] h-auto" />
-    </div>
+    <Link to="/" className="text-center">
+      <img src={logoDark} alt="Logo" className="w-[100px] h-auto" />
+    </Link>
   );
 };
 

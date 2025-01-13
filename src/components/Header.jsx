@@ -4,7 +4,7 @@ import ProfileSwitcher from "../ui/ProfileSwitcher";
 
 const Header = () => {
   return (
-    <header className="padding-x py-5 flex items-center justify-between">
+    <header className="padding-x py-5 flex items-center justify-between header-gradient">
       <Logo />
       <Navbar />
       <ProfileSwitcher />
