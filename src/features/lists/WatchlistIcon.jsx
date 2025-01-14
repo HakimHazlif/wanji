@@ -38,12 +38,12 @@ const WatchlistIcon = ({ id }) => {
     <>
       {isWatched ? (
         <BsBookmarkCheckFill
-          className=" text-transparent-amber hover:text-orange-amber text-5xl"
+          className=" text-transparent-amber hover:text-orange-amber text-5xl cursor-pointer duration-300 transition-colors ease-linear"
           onClick={handleDeleteFromWatchlist}
         />
       ) : (
         <BsBookmarkPlusFill
-          className="text-5xl text-transparent-amber hover:text-orange-amber"
+          className="text-5xl text-transparent-amber hover:text-orange-amber cursor-pointer duration-300 transition-colors ease-linear"
           onClick={handleAddToWatchlist}
         />
       )}

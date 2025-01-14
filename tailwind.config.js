@@ -15,6 +15,7 @@ export default {
         "blue-paresian": "#192bc2",
         "blue-maya": "#0000ff",
         "transparent-amber": "#ffde05c3",
+        "dark-page": "#1c1b21",
       },
     },
   },

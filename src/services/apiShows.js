@@ -5,6 +5,8 @@ export async function getShow({ isMovie, showId }) {
   try {
     const showParam = isMovie ? "movie" : "tv";
 
+    ("https://api.themoviedb.org/3/movie/movie_id/videos?language=en-US");
+
     const showLists = ["", "/credits", "/similar", "/reviews"];
 
     const urls = [];

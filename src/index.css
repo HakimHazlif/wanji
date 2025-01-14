@@ -4,6 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  background-color: #25242f;
+  scroll-behavior: smooth;
+}
+
 @layer components {
   .spinner {
     margin: 4.8rem auto;
@@ -19,6 +24,12 @@
       #000 0
     );
     animation: rotation 1.5s infinite linear;
+  }
+
+  .masking {
+    mask-image: linear-gradient(black, black, transparent);
+    -webkit-mask-image: linear-gradient(black, black, transparent);
+    filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.5));
   }
 }
 
@@ -50,6 +61,7 @@
       to bottom,
       #000000c1,
       #00000070,
+      #0000003e,
       transparent
     );
   }
@@ -85,4 +97,8 @@
   to {
     opacity: 1;
   }
+}
+
+.fh {
+  color: #070709;
 }

@@ -42,12 +42,12 @@ const FavoriteIcon = ({ id }) => {
     <>
       {isFavorited ? (
         <FaHeart
-          className=" text-strawberry text-5xl"
+          className=" text-strawberry text-5xl cursor-pointer"
           onClick={handleDeleteFromWatchlist}
         />
       ) : (
         <CiHeart
-          className="text-6xl text-gray-300"
+          className="text-6xl text-gray-300 cursor-pointer hover:text-red-500 duration-300 transition-colors ease-linear"
           onClick={handleAddToWatchlist}
         />
       )}

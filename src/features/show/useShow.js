@@ -12,6 +12,8 @@ export function useShow(isMovie, showId) {
   });
   if (error) throw new Error(error);
 
+  console.log(show);
+
   const details = show?.showDetails || null;
   const credits = show?.showCredits || null;
   const similar = show?.showSimilar || null;

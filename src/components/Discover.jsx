@@ -11,13 +11,13 @@ const Discover = ({ image }) => {
         <SearchBar />
       </div>
 
-      <div className="absolute top-0 right-0 w-full -z-50 h-[550px]">
+      <div className="absolute top-0 right-0 w-full -z-10 ">
         <img
           src={image}
           alt="backdrop of movie"
-          className="h-full w-full object-cover"
+          className="h-[550px] w-full object-cover masking"
         />
-        <div className="bg-[#3575f54f] h-full w-full absolute top-0 right-0 z-10"></div>
+        <div className="bg-dark h-1/5 w-full absolute bottom-0 right-0 z-10"></div>
       </div>
     </section>
   );

@@ -41,3 +41,11 @@ export function formatNumber(num) {
 export function getPictureUrlFormat(paramId, width) {
   return `https://image.tmdb.org/t/p/w${width}${paramId}`;
 }
+
+export function getMainCrewRulls(arr) {
+  const directing = arr?.filter((item) => item["job"] === "Director");
+  const writing = arr?.filter((item) => item["job"] === "Screenplay");
+  const production = arr?.filter((item) => item["job"] === "Producer");
+
+  return { directing, writing, production };
+}
