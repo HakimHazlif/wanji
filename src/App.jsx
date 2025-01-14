@@ -11,10 +11,12 @@ import Settings from "./pages/Settings";
 import ResetPassword from "./pages/ResetPassword";
 import PageNotFound from "./pages/PageNotFound";
 import SessionContextProvider from "./context/UserContext";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import store from "./store/store";
 import { QueryClient, QueryClientProvider } from "react-query";
 import UpdatePassword from "./pages/UpdatePassword";
+import { useEffect } from "react";
+import { getUser } from "./services/apiAuth";
 
 const queryClient = new QueryClient({
   defaultOptions: {

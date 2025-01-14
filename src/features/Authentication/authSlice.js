@@ -42,7 +42,8 @@ const authSlice = createSlice({
     },
     setUser: (state, action) => {
       state.user = action.payload;
-      state.status = action.payload ? "authenticated" : "idle";
+      state.isLoggedIn = true;
+      state.status = "authenticated";
     },
     resetPassword: (state) => {
       state.status = "resetted";
