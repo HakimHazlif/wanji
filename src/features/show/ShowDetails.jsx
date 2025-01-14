@@ -25,7 +25,6 @@ const ShowDetails = ({ isMovie, details, crew }) => {
     vote_average,
   } = details;
   const { directing, writing, production } = crew;
-  console.log(crew);
 
   const title = details.title || details.name;
   const originalTitle = details.original_title || details.original_name;
@@ -138,10 +137,6 @@ const ShowDetails = ({ isMovie, details, crew }) => {
           <WitchlistIcon id={id} />
           <FavoriteIcon id={id} />
           <MdAddToPhotos className="text-5xl text-slate-200 hover:text-orange-amber cursor-pointer duration-300 transition-colors ease-linear" />
-        </div>
-        <div className="py-4 px-4 rounded-lg bg-black/20 backdrop-blur-lg text-white font-medium text-sm flex items-center gap-2 hover:text-orange-amber duration-300 ease-linear transition-colors cursor-pointer">
-          <span>Add your rate</span>
-          <IoStarOutline className="text-xl" />
         </div>
       </div>
     </div>

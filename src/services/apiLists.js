@@ -22,7 +22,6 @@ export async function getAllUserLists(id) {
 }
 
 export async function insertShow({ id, listId }) {
-  console.log(id, listId);
   const { data, error } = await supabase
     .from("items_list")
     .insert([{ item_id: id, list_id: listId }]);

@@ -6,8 +6,6 @@ const ProfilesScroll = ({ title, credit }) => {
   const [isScrolledLeft, setIsScrolledLeft] = useState(true);
   const [isScrolledRight, setIsScrolledRight] = useState(false);
 
-  console.log(credit);
-
   const newCredit = credit.filter((item, index) => index < 20);
 
   const handleScroll = (direction) => {
