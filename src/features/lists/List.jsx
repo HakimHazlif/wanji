@@ -55,10 +55,12 @@ const List = ({ title, children }) => {
           <IoIosArrowDropleftCircle
             onClick={() => handleScroll("left")}
             disabled={isScrolledLeft}
+            className="hover:text-white duration-300 transition-colors"
           />
           <IoIosArrowDroprightCircle
             onClick={() => handleScroll("right")}
             disabled={isScrolledRight}
+            className="hover:text-white duration-300 transition-colors"
           />
         </div>
       </div>
