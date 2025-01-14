@@ -19,6 +19,7 @@ const Home = () => {
     <>
       <Discover image={image} />
       <div className="py-20"></div>
+
       <MovieLists />
       <div className="py-20"></div>
       <TvLists />

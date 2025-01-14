@@ -26,7 +26,7 @@ const TvLists = () => {
   );
 
   return (
-    <section className="flex flex-col gap-20">
+    <section className="flex flex-col gap-20 padding-x">
       <List title="Trending TV Shows">
         {popularTv.map((tvShow) => (
           <ShowCard key={tvShow.id} show={tvShow} title={tvShow.name} />

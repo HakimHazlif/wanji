@@ -20,4 +20,7 @@ export default {
     },
   },
   plugins: [require("tailwind-scrollbar-hide")],
+  variants: {
+    scrollbar: ["rounded"],
+  },
 };

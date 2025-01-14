@@ -31,7 +31,7 @@ const List = ({ title, children }) => {
   };
 
   return (
-    <section className="padding-x">
+    <section className="">
       <div className=" flex items-center justify-between mb-6">
         <h2
           className="font-bold text-3xl flex items-center gap-2 cursor-pointer group"

@@ -26,7 +26,7 @@ const MovieLists = () => {
   );
 
   return (
-    <section className="flex flex-col gap-20">
+    <section className="flex flex-col gap-20 padding-x">
       <List title="Trending Movies">
         {popularMovies.map((movie) => (
           <ShowCard key={movie.id} show={movie} title={movie.title} />

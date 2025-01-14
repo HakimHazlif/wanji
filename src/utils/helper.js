@@ -49,3 +49,22 @@ export function getMainCrewRulls(arr) {
 
   return { directing, writing, production };
 }
+
+export function formatHugeNumber(num) {
+  const units = [
+    { value: 1000000000, symbol: "B" },
+    { value: 1000000, symbol: "M" },
+    { value: 1000, symbol: "K" },
+  ];
+
+  for (const unit of units) {
+    if (num >= unit.value) {
+      const formatted = (num / unit.value).toFixed(2);
+      return formatted.endsWith(".00")
+        ? Math.round(num / unit.value) + unit.symbol
+        : formatted + unit.symbol;
+    }
+  }
+
+  return num.toString();
+}
