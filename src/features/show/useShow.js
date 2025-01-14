@@ -13,9 +13,10 @@ export function useShow(isMovie, showId) {
   if (error) throw new Error(error);
 
   const details = show?.showDetails || null;
+  const images = show?.showImages || null;
   const credits = show?.showCredits || null;
   const similar = show?.showSimilar || null;
   const reviews = show?.showReviews || null;
 
-  return { show, details, credits, similar, reviews, isLoading };
+  return { show, details, images, credits, similar, reviews, isLoading };
 }

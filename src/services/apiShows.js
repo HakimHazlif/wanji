@@ -5,25 +5,23 @@ export async function getShow({ isMovie, showId }) {
   try {
     const showParam = isMovie ? "movie" : "tv";
 
-    ("https://api.themoviedb.org/3/movie/movie_id/videos?language=en-US");
+    // ("https://api.themoviedb.org/3/movie/558449/images");
 
-    const showLists = ["", "/credits", "/similar", "/reviews"];
+    const showLists = ["", "/images", "/credits", "/similar", "/reviews"];
 
-    const urls = [];
-
-    showLists.forEach((list, index) => {
-      const url = `${URL_Base}${showParam}/${showId}${list}?language=en-US${
-        index >= 2 && "&page=1"
+    const urls = showLists.map((list, index) => {
+      return `${URL_Base}${showParam}/${showId}${list}${
+        index === 1 ? "" : `?language=en-US${index >= 3 ? "&page=1" : ""}`
       }`;
-      urls.push(url);
     });
 
     if (showId) {
-      const [showDetails, showCredits, showSimilar, showReviews] =
+      const [showDetails, showImages, showCredits, showSimilar, showReviews] =
         await axios.all(urls.map((url) => axios.get(url, options)));
 
       return {
         showDetails: showDetails.data,
+        showImages: showImages.data.backdrops,
         showCredits: showCredits.data,
         showSimilar: showSimilar.data.results,
         showReviews: showReviews.data.results,

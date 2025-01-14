@@ -10,17 +10,16 @@ import List from "../features/lists/List";
 import Spinner from "../ui/Spinner";
 import { getMainCrewRulls, getPictureUrlFormat } from "../utils/helper";
 import ShowCard from "../ui/ShowCard";
+import ShowImages from "../features/show/ShowImages";
 
 const Show = ({ isMovie }) => {
   const { id } = useParams();
   const showId = id;
 
-  const { isLoading, details, credits, similar, reviews } = useShow(
+  const { isLoading, details, images, credits, similar, reviews } = useShow(
     isMovie,
     showId
   );
-
-  console.log(details);
 
   const crew = getMainCrewRulls(credits?.crew);
 
@@ -32,11 +31,12 @@ const Show = ({ isMovie }) => {
         <ShowIntroDetails isMovie={isMovie} details={details} />
         <ShowMoreDetails isMovie={isMovie} details={details} crew={crew} />
         <ShowCredits isMovie={isMovie} credits={credits} />
-        <List title="Trending Movies">
+        <List title="More like this">
           {similar.map((show) => (
             <ShowCard key={show.id} show={show} title={show.title} />
           ))}
         </List>
+        <ShowImages images={images} />
         {/* 
         <ShowSimilar similar={similar} />
         <ShowReviews reviews={reviews} /> */}

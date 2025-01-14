@@ -38,7 +38,8 @@ export function formatNumber(num) {
   return num % 1 !== 0 ? num.toFixed(1) : num;
 }
 
-export function getPictureUrlFormat(paramId, width) {
+export function getPictureUrlFormat(paramId, width = 1280) {
+  // width should be 400, 1280,
   return `https://image.tmdb.org/t/p/w${width}${paramId}`;
 }
 
