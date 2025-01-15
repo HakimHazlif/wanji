@@ -11,12 +11,11 @@ import Settings from "./pages/Settings";
 import ResetPassword from "./pages/ResetPassword";
 import PageNotFound from "./pages/PageNotFound";
 import SessionContextProvider from "./context/UserContext";
-import { Provider, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import store from "./store/store";
 import { QueryClient, QueryClientProvider } from "react-query";
 import UpdatePassword from "./pages/UpdatePassword";
-import { useEffect } from "react";
-import { getUser } from "./services/apiAuth";
+import Person from "./pages/Person";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,8 +35,8 @@ function App() {
             <Routes>
               <Route path="/" element={<AppLayout />}>
                 <Route index element={<Home />} />
-                <Route path="movie/:id" element={<Show isMovie={true} />} />
-                <Route path="serie/:id" element={<Show isMovie={false} />} />
+                <Route path="/:category/:id" element={<Show />} />
+                <Route path="person/:id" element={<Person />} />
                 <Route path={`:user`}>
                   <Route index element={<Profile />} />
                   <Route path="watchlist" element={<WatchlistPage />} />

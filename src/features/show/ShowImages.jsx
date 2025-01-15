@@ -1,76 +1,55 @@
 import { getPictureUrlFormat } from "../../utils/helper";
+import { useShow } from "./useShow";
 
-const ShowImages = ({ images }) => {
-  const newEmages = images.filter((image, index) => index <= 20);
-
-  console.log(images);
+const ShowImages = () => {
+  const { images } = useShow();
+  // const newEmages = images.filter((image, index) => index <= 20);
 
   return (
-    <div className="px-40 py-28">
-      <div className="flex flex-col gap-2">
-        <div className="flex gap-2">
-          <div className="flex flex-col gap-2">
-            <div className="aspect-w-16 aspect-h-9">
+    <section>
+      <div className="py-28 grid-flow-row grid gap-2">
+        <div className="grid grid-flow-col gap-2">
+          {images.slice(0, 3).map((image) => (
+            <div
+              className="aspect-w-16 aspect-h-9 overflow-hidden  cursor-pointer rounded-md"
+              key={image.id}
+            >
               <img
-                src={getPictureUrlFormat(images[1].file_path, 1280)}
+                src={getPictureUrlFormat(image?.file_path, 1280)}
                 alt="backdrop"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="flex gap-2">
-              <div className="aspect-w-16 aspect-h-9">
-                <img
-                  src={getPictureUrlFormat(images[2].file_path, 1280)}
-                  alt="backdrop"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="aspect-w-16 aspect-h-9">
-                <img
-                  src={getPictureUrlFormat(images[3].file_path, 1280)}
-                  alt="backdrop"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-col gap-1">
-            <div className="aspect-w-16 aspect-h-9">
-              <img
-                src={getPictureUrlFormat(images[0].file_path, 1280)}
-                alt="backdrop"
-                className="w-full h-full object-contain"
-              />
-            </div>
-            <div className="aspect-w-16 aspect-h-9">
-              <img
-                src={getPictureUrlFormat(images[10].file_path, 1280)}
-                alt="backdrop"
-                className="w-full h-full object-contain"
-              />
-            </div>
-            <div className="aspect-w-16 aspect-h-9">
-              <img
-                src={getPictureUrlFormat(images[11].file_path, 1280)}
-                alt="backdrop"
-                className="w-full h-full object-contain"
-              />
-            </div>
-          </div>
-        </div>
-        <div className="grid grid-cols-4 gap-2">
-          {images.slice(5, 9).map((img) => (
-            <div key={img.file_path} className="aspect-w-16 aspect-h-9">
-              <img
-                src={getPictureUrlFormat(img.file_path, 1280)}
-                alt="backdrop"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover hover:scale-110 duration-300 transform transition-transform"
               />
             </div>
           ))}
         </div>
+        <div className="grid grid-flow-col gap-2">
+          {images.slice(3, 6).map((image) => (
+            <div
+              className="aspect-w-16 aspect-h-9 overflow-hidden  cursor-pointer rounded-md"
+              key={image.id}
+            >
+              <img
+                src={getPictureUrlFormat(image?.file_path, 1280)}
+                alt="backdrop"
+                className="w-full h-full object-cover hover:scale-110 duration-300 transform transition-transform"
+              />
+            </div>
+          ))}
+          <div className=" cursor-pointer rounded-md relative ">
+            <div className="absolute top-0 left-0 w-full h-full bg-[#00000073] flex justify-center items-center">
+              <span className="opacity-100 text-white text-4xl">
+                +{images.length - 6}
+              </span>
+            </div>
+            <img
+              src={getPictureUrlFormat(images[6]?.file_path, 1280)}
+              alt="backdrop"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

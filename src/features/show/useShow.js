@@ -1,22 +1,25 @@
 import { useQuery } from "react-query";
+import { useParams } from "react-router";
 import { getShow } from "../../services/apiShows";
 
-export function useShow(isMovie, showId) {
-  const {
-    data: show,
-    error,
-    isLoading,
-  } = useQuery({
-    queryKey: ["show", isMovie, showId],
-    queryFn: () => getShow({ isMovie, showId }),
-  });
-  if (error) throw new Error(error);
+export function useShow() {
+  const { category, id } = useParams();
 
-  const details = show?.showDetails || null;
-  const images = show?.showImages || null;
-  const credits = show?.showCredits || null;
-  const similar = show?.showSimilar || null;
-  const reviews = show?.showReviews || null;
+  const { data: show = {}, isLoading } = useQuery({
+    queryKey: ["show", category, id],
+    queryFn: () => getShow({ category, id }),
+    onError: (error) => {
+      console.error("Error fetching show:", error.message);
+    },
+  });
+
+  console.log(show);
+
+  const details = show.showDetails || null;
+  const images = show.showImages || null;
+  const credits = show.showCredits || null;
+  const similar = show.showSimilar || null;
+  const reviews = show.showReviews || null;
 
   return { show, details, images, credits, similar, reviews, isLoading };
 }

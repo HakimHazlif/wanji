@@ -5,6 +5,7 @@ import ShowCard from "../../ui/ShowCard";
 
 const MovieLists = () => {
   const { isLoading, movies, error } = useMovies();
+  const category = "movie";
 
   if (isLoading) return <Spinner />;
 
@@ -29,22 +30,42 @@ const MovieLists = () => {
     <section className="flex flex-col gap-20 padding-x">
       <List title="Trending Movies">
         {popularMovies.map((movie) => (
-          <ShowCard key={movie.id} show={movie} title={movie.title} />
+          <ShowCard
+            key={movie.id}
+            show={movie}
+            title={movie.title}
+            category={category}
+          />
         ))}
       </List>
       <List title="Top Rated Movies">
         {topRatedMovies.map((movie) => (
-          <ShowCard key={movie.id} show={movie} title={movie.title} />
+          <ShowCard
+            key={movie.id}
+            show={movie}
+            title={movie.title}
+            category={category}
+          />
         ))}
       </List>
       <List title="Now Playnig Movies">
         {nowPlaynigMovies.map((movie) => (
-          <ShowCard key={movie.id} show={movie} title={movie.title} />
+          <ShowCard
+            key={movie.id}
+            show={movie}
+            title={movie.title}
+            category={category}
+          />
         ))}
       </List>
       <List title="Upcoming Movies">
         {upcomingMovies.map((movie) => (
-          <ShowCard key={movie.id} show={movie} title={movie.title} />
+          <ShowCard
+            key={movie.id}
+            show={movie}
+            title={movie.title}
+            category={category}
+          />
         ))}
       </List>
     </section>

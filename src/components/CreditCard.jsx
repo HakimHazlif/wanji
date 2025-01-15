@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { profile } from "../assets/icons";
 import { getImageViaPath } from "../utils/helper";
 
@@ -6,7 +7,7 @@ const CreditCard = (props) => {
 
   const profilePath = image ? getImageViaPath(image, 400) : null;
   return (
-    <div className="w-full text-center cursor-pointer">
+    <Link to={`person/${id}`} className="text-center cursor-pointer">
       <div className="w-40 overflow-hidden flex items-center justify-center">
         <img
           src={profilePath || profile}
@@ -18,7 +19,7 @@ const CreditCard = (props) => {
         <h2 className="text-sm font-medium mb-1">{name}</h2>
         <h3 className="text-[11px] font-medium text-slate-600">{character}</h3>
       </div>
-    </div>
+    </Link>
   );
 };
 

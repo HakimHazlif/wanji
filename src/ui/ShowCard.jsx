@@ -2,13 +2,18 @@ import { getPictureUrlFormat } from "../utils/helper";
 import RateCircle from "./RateCircle";
 import { Link } from "react-router";
 import WatchlistIcon from "../features/lists/WatchlistIcon";
+import { useSession } from "../context/UserContext";
 
-const ShowCard = ({ show, title }) => {
+const ShowCard = ({ show }) => {
   const { id, poster_path: poster, releaseDate, vote_average: rate } = show;
+  const title = show?.title || show?.name;
+  const isMovie = "title" in show;
+
+  // const { setIsMovie } = useSession();
 
   return (
     <div className="w-60 bg-slate-100 rounded-md overflow-hidden text-black relative">
-      <Link to={`/movie/${id}`} className="">
+      <Link to={`/${isMovie ? "movie" : "tv"}/${id}`}>
         <img
           src={getPictureUrlFormat(poster, 500)}
           alt="movie poster"

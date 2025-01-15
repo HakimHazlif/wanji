@@ -1,21 +1,19 @@
 import axios from "axios";
 import { options, URL_Base } from "../constants/variables";
 
-export async function getShow({ isMovie, showId }) {
+export async function getShow({ category, id }) {
   try {
-    const showParam = isMovie ? "movie" : "tv";
-
-    // ("https://api.themoviedb.org/3/movie/558449/images");
-
     const showLists = ["", "/images", "/credits", "/similar", "/reviews"];
 
     const urls = showLists.map((list, index) => {
-      return `${URL_Base}${showParam}/${showId}${list}${
+      return `${URL_Base}${category}/${id}${list}${
         index === 1 ? "" : `?language=en-US${index >= 3 ? "&page=1" : ""}`
       }`;
     });
 
-    if (showId) {
+    console.log(category, id);
+
+    if (id) {
       const [showDetails, showImages, showCredits, showSimilar, showReviews] =
         await axios.all(urls.map((url) => axios.get(url, options)));
 

@@ -1,4 +1,3 @@
-import { useParams } from "react-router";
 import { useShow } from "../features/show/useShow";
 import ShowIntroDetails from "../features/show/ShowIntroDetails";
 import ShowMoreDetails from "../features/show/ShowMoreDetails";
@@ -12,40 +11,35 @@ import { getMainCrewRulls, getPictureUrlFormat } from "../utils/helper";
 import ShowCard from "../ui/ShowCard";
 import ShowImages from "../features/show/ShowImages";
 
-const Show = ({ isMovie }) => {
-  const { id } = useParams();
-  const showId = id;
+const Show = () => {
+  const { isLoading, show, details, similar } = useShow();
+  console.log(show);
 
-  const { isLoading, details, images, credits, similar, reviews } = useShow(
-    isMovie,
-    showId
-  );
-
-  const crew = getMainCrewRulls(credits?.crew);
+  const path = details?.backdrop_path || details?.poster_path;
 
   if (isLoading) return <Spinner />;
 
   return (
     <div className="py-10">
       <div className="padding-x">
-        <ShowIntroDetails isMovie={isMovie} details={details} />
-        <ShowMoreDetails isMovie={isMovie} details={details} crew={crew} />
-        <ShowCredits isMovie={isMovie} credits={credits} />
+        <ShowIntroDetails />
+        <ShowMoreDetails />
+        <ShowCredits />
         <List title="More like this">
-          {similar.map((show) => (
-            <ShowCard key={show.id} show={show} title={show.title} />
+          {similar?.map((show) => (
+            <ShowCard key={show.id} show={show} />
           ))}
         </List>
-        <ShowImages images={images} />
+        <ShowImages />
         {/* 
         <ShowSimilar similar={similar} />
         <ShowReviews reviews={reviews} /> */}
       </div>
       <div className="absolute top-0 right-0 w-full -z-10 ">
         <img
-          src={getPictureUrlFormat(details.backdrop_path, 1280)}
+          src={getPictureUrlFormat(path, 1280)}
           alt="backdrop of movie"
-          className="h-[600px] w-full object-cover object-top masking"
+          className="h-[600px] w-full object-cover object-center masking"
         />
         <div className="bg-[#272831] opacity-60 masking h-[600px] w-full absolute bottom-0 right-0 z-10"></div>
       </div>

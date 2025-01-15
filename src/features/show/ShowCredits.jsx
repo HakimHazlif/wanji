@@ -1,12 +1,11 @@
-import AboutShow from "../../components/AboutShow";
 import ProfilesScroll from "../../components/ProfilesScroll";
 
 import { getMainCrewRulls } from "../../utils/helper";
+import { useShow } from "./useShow";
 
-const ShowCredite = ({ isMovie, credits }) => {
+const ShowCredite = () => {
   // console.log(credits);
-
-  const crew = getMainCrewRulls(credits.crew);
+  const { credits } = useShow();
 
   return (
     <section className="py-10">

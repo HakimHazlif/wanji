@@ -47,8 +47,9 @@ export function getMainCrewRulls(arr) {
   const directing = arr?.filter((item) => item["job"] === "Director");
   const writing = arr?.filter((item) => item["job"] === "Screenplay");
   const production = arr?.filter((item) => item["job"] === "Producer");
+  const creator = arr?.filter((item) => item["job"] === "Executive Producer");
 
-  return { directing, writing, production };
+  return { directing, writing, production, creator };
 }
 
 export function formatHugeNumber(num) {
@@ -67,5 +68,5 @@ export function formatHugeNumber(num) {
     }
   }
 
-  return num.toString();
+  return num;
 }

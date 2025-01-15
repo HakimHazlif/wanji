@@ -12,10 +12,15 @@ import { Box } from "@mui/material";
 import FavoriteIcon from "../lists/FavoriteIcon";
 import { IoStarOutline } from "react-icons/io5";
 import { MdAddToPhotos } from "react-icons/md";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
+import { useSession } from "../../context/UserContext";
+import { useShow } from "./useShow";
 
-const ShowIntroDetails = ({ isMovie, details }) => {
+const ShowIntroDetails = () => {
   // console.log(details);
+  const { details } = useShow();
+  const { category } = useParams();
+
   const {
     id,
     genres,
@@ -23,16 +28,20 @@ const ShowIntroDetails = ({ isMovie, details }) => {
     poster_path,
     production_companies,
     vote_average,
+    status,
   } = details;
 
-  const title = details.title || details.name;
-  const originalTitle = details.original_title || details.original_name;
-  const runtime = details.runtime || details.episode_run_time;
-  const dateFormat = isMovie
-    ? updateDateFormat(details.release_date)
-    : `${getYearMonthFormat(details.first_air_date)} - ${getYearMonthFormat(
-        details.last_air_date
-      )}`;
+  const title = details?.title || details?.name;
+  const originalTitle = details?.original_title || details?.original_name;
+  const runtime = details?.runtime || details?.episode_run_time;
+  const dateFormat =
+    category === "movie"
+      ? updateDateFormat(details.release_date)
+      : `${getYearMonthFormat(details.first_air_date)} - ${
+          status === "Returning Series"
+            ? "Present"
+            : getYearMonthFormat(details.last_air_date)
+        }`;
 
   return (
     <div>
@@ -52,11 +61,13 @@ const ShowIntroDetails = ({ isMovie, details }) => {
             )}
           </div>
           <ul className="flex items-center gap-2 text-sm whitespace-nowrap my-2 text-white">
-            <li>{details.release_date ? "Movie" : "Serie"}</li>
+            <li>{category === "movie" ? "Movie" : "TV Show"}</li>
             <span>&#x2022;</span>
             <li className="whitespace-nowrap">{dateFormat}</li>
             <span>&#x2022;</span>
-            <li>{runtime}min</li>
+            <li>
+              {runtime}min <span>{category === "tv" && "per episode"}</span>
+            </li>
           </ul>
           <div className="flex items-center gap-2 mb-2">
             <Box>
