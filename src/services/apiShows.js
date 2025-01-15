@@ -11,8 +11,6 @@ export async function getShow({ category, id }) {
       }`;
     });
 
-    console.log(category, id);
-
     if (id) {
       const [showDetails, showImages, showCredits, showSimilar, showReviews] =
         await axios.all(urls.map((url) => axios.get(url, options)));
@@ -102,5 +100,33 @@ export async function getTvShows() {
     };
   } catch (err) {
     throw new Error(err.response?.data || "Something went wrong");
+  }
+}
+
+export async function getSeasonData({ id, seasonNum }) {
+  const seasonApiUrl = `https://api.themoviedb.org/3/tv/${id}/season/${seasonNum}?language=en-US`;
+  const imagesApiUrl = `https://api.themoviedb.org/3/tv/${id}/season/${seasonNum}/images`;
+
+  try {
+    const [seasonDetails, seasonImage] = await axios.all([
+      axios.get(seasonApiUrl, options),
+      axios.get(imagesApiUrl, options),
+    ]);
+
+    return {
+      seasonDetails: {
+        name: seasonDetails.data.name,
+        id: seasonDetails.data.id,
+        poster_path: seasonDetails.data.poster_path,
+        season_number: seasonDetails.data.season_number,
+        vote_average: seasonDetails.data.vote_average,
+        overview: seasonDetails.data.overview,
+        air_date: seasonDetails.data.air_date,
+      },
+      episodes: seasonDetails.data.episodes,
+      seasonImages: seasonImage.data,
+    };
+  } catch (err) {
+    throw new Error(err);
   }
 }

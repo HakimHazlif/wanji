@@ -64,10 +64,14 @@ const ShowIntroDetails = () => {
             <li>{category === "movie" ? "Movie" : "TV Show"}</li>
             <span>&#x2022;</span>
             <li className="whitespace-nowrap">{dateFormat}</li>
-            <span>&#x2022;</span>
-            <li>
-              {runtime}min <span>{category === "tv" && "per episode"}</span>
-            </li>
+            {runtime && (
+              <>
+                <span>&#x2022;</span>
+                <li>
+                  {runtime}min <span>{category === "tv" && "per episode"}</span>
+                </li>
+              </>
+            )}
           </ul>
           <div className="flex items-center gap-2 mb-2">
             <Box>

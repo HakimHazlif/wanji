@@ -16,6 +16,7 @@ import store from "./store/store";
 import { QueryClient, QueryClientProvider } from "react-query";
 import UpdatePassword from "./pages/UpdatePassword";
 import Person from "./pages/Person";
+import Season from "./pages/Season";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,6 +37,10 @@ function App() {
               <Route path="/" element={<AppLayout />}>
                 <Route index element={<Home />} />
                 <Route path="/:category/:id" element={<Show />} />
+                <Route
+                  path="/:category/:id/season/:seasonNum"
+                  element={<Season />}
+                />
                 <Route path="person/:id" element={<Person />} />
                 <Route path={`:user`}>
                   <Route index element={<Profile />} />

@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import { FaArrowRight } from "react-icons/fa";
 import {
   IoIosArrowDropleftCircle,
   IoIosArrowDroprightCircle,

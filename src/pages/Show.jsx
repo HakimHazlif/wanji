@@ -10,10 +10,13 @@ import Spinner from "../ui/Spinner";
 import { getMainCrewRulls, getPictureUrlFormat } from "../utils/helper";
 import ShowCard from "../ui/ShowCard";
 import ShowImages from "../features/show/ShowImages";
+import SeasonsList from "../features/lists/SeasonsList";
+import { useParams } from "react-router";
 
 const Show = () => {
   const { isLoading, show, details, similar } = useShow();
   console.log(show);
+  const { category } = useParams();
 
   const path = details?.backdrop_path || details?.poster_path;
 
@@ -23,6 +26,8 @@ const Show = () => {
     <div className="py-10">
       <div className="padding-x">
         <ShowIntroDetails />
+        {category === "tv" && <SeasonsList />}
+
         <section className="flex gap-10 py-32">
           <ShowImages />
           <ShowMoreDetails />

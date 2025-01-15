@@ -13,8 +13,6 @@ export function useShow() {
     },
   });
 
-  console.log(show);
-
   const details = show.showDetails || null;
   const images = show.showImages || null;
   const credits = show.showCredits || null;
