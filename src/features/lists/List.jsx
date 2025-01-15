@@ -3,6 +3,7 @@ import { FaArrowRight } from "react-icons/fa";
 import {
   IoIosArrowDropleftCircle,
   IoIosArrowDroprightCircle,
+  IoIosArrowForward,
 } from "react-icons/io";
 import { Link } from "react-router";
 
@@ -34,12 +35,12 @@ const List = ({ title, children }) => {
     <section className="">
       <div className=" flex items-center justify-between mb-6">
         <h2
-          className="font-bold text-3xl flex items-center gap-2 cursor-pointer group"
+          className="font-bold text-3xl flex items-center gap-4 cursor-pointer group text-white"
           onMouseEnter={() => setIsHoveredTitle(true)}
           onMouseLeave={() => setIsHoveredTitle(false)}
         >
           {title}
-          <span className="flex items-center gap-1 text-blue-maya mt-2 text-base  relative">
+          <span className="flex items-center gap-1 text-blue-400 text-base relative">
             <Link
               className={`transition-all  ease-in duration-400 ${
                 isHoveredTitle ? "opacity-100 delay-300" : "opacity-0"
@@ -47,8 +48,7 @@ const List = ({ title, children }) => {
             >
               View all
             </Link>
-
-            <FaArrowRight className=" absolute transform translate-x-0 group-hover:translate-x-16 transition-transform duration-300 ease-linear text-sm" />
+            <IoIosArrowForward className=" absolute transform translate-x-0 group-hover:translate-x-16 transition-transform duration-300 ease-linear text-3xl" />
           </span>
         </h2>
         <div className="flex gap-3 text-4xl text-slate-600 cursor-pointer">

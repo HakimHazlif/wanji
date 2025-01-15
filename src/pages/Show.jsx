@@ -23,14 +23,17 @@ const Show = () => {
     <div className="py-10">
       <div className="padding-x">
         <ShowIntroDetails />
-        <ShowMoreDetails />
+        <section className="flex gap-10 py-32">
+          <ShowImages />
+          <ShowMoreDetails />
+        </section>
         <ShowCredits />
         <List title="More like this">
           {similar?.map((show) => (
             <ShowCard key={show.id} show={show} />
           ))}
         </List>
-        <ShowImages />
+
         {/* 
         <ShowSimilar similar={similar} />
         <ShowReviews reviews={reviews} /> */}
