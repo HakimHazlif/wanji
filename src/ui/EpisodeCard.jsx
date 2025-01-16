@@ -29,7 +29,7 @@ const EpisodeCard = ({ episode }) => {
   const { directing, writing, production, creator } = mainCrewRolls;
 
   return (
-    <div className="flex rounded-2xl bg-bluish-black overflow-hidden">
+    <section className="flex rounded-2xl bg-bluish-black overflow-hidden">
       <img
         src={getPictureUrlFormat(still_path)}
         alt="backdrop episode"
@@ -40,7 +40,6 @@ const EpisodeCard = ({ episode }) => {
           )
         }
       />
-
       <div className="p-5">
         <div className="flex justify-between items-start mb-4">
           <div className="w-full flex-1 flex flex-col gap-2">
@@ -128,7 +127,7 @@ const EpisodeCard = ({ episode }) => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

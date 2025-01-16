@@ -1,11 +1,11 @@
 import { Link } from "react-router";
 import { profile } from "../assets/icons";
-import { getImageViaPath } from "../utils/helper";
+import { getImageViaPath, getPictureUrlFormat } from "../utils/helper";
 
-const CreditCard = (props) => {
-  const { id, name, character, image } = props;
+const CreditCard = ({ person }) => {
+  const { id, name, character, image } = person;
 
-  const profilePath = image ? getImageViaPath(image, 400) : null;
+  const profilePath = getPictureUrlFormat(image, 400);
   return (
     <Link to={`person/${id}`} className="text-center cursor-pointer">
       <div className="w-40 overflow-hidden flex items-center justify-center">

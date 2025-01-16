@@ -31,13 +31,7 @@ const ProfilesScroll = ({ title, credit }) => {
         <div className="relative flex items-center px-2 py-4 rounded-lg overflow-hidden text-white">
           <div className="rounded-md bg-[#1d1d26] py-5 w-full px-5 space-x-2 flex gap-2 overflow-x-scroll  scrollbar-custom">
             {newCredit?.map((profile) => (
-              <CreditCard
-                key={profile.id}
-                id={profile.id}
-                name={profile.name}
-                character={profile.character || profile.job}
-                image={profile.profile_path}
-              />
+              <CreditCard key={profile.id} person={profile} />
             ))}
           </div>
         </div>

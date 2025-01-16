@@ -39,6 +39,7 @@ export function formatNumber(num) {
 }
 
 export function getPictureUrlFormat(paramId, width = 1280) {
+  if (!paramId) return;
   // width should be 400, 1280,
   return `https://image.tmdb.org/t/p/w${width}${paramId}`;
 }

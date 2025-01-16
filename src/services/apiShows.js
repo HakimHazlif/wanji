@@ -115,7 +115,7 @@ export async function getSeasonData({ id, seasonNum }) {
       axios.get(imagesApiUrl, options),
     ]);
 
-    if (serieData) console.log(seasonDetails);
+    // if (serieData) console.log(seasonDetails);
 
     return {
       seasonDetails: {
@@ -138,4 +138,31 @@ export async function getSeasonData({ id, seasonNum }) {
   } catch (err) {
     throw new Error(err);
   }
+}
+
+export async function getEpisodeData({ id, seasonNum, episodeNum }) {
+  const queries = ["", "/credits", "/images"];
+
+  const urls = [];
+
+  queries.forEach((query, index) => {
+    const url = `${URL_Base}tv/${id}/season/${seasonNum}/episode/${episodeNum}${query}${
+      index !== queries.length - 1 ? "?language=en-US" : ""
+    }`;
+    urls.push(url);
+  });
+
+  const [episodeDetails, episodeCredits, episodeImage] = await axios.all(
+    urls.map((url) => axios.get(url, options))
+  );
+
+  console.log(episodeDetails);
+  console.log(episodeCredits);
+  console.log(episodeImage);
+
+  return {
+    episodeDetails: episodeDetails.data,
+    episodeCredits: episodeCredits.data,
+    episodeImage: episodeImage.data.stills,
+  };
 }

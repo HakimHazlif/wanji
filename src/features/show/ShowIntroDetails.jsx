@@ -5,7 +5,7 @@ import {
   formatNumber,
 } from "../../utils/helper";
 
-import WitchlistIcon from "../lists/WatchlistIcon";
+import WatchlistIcon from "../lists/WatchlistIcon";
 
 import Rating from "@mui/material/Rating";
 import { Box } from "@mui/material";
@@ -115,7 +115,7 @@ const ShowIntroDetails = () => {
       <hr className="border-1 border-slate-400 w-full my-4" />
       <div className="flex justify-between items-center">
         <div className="flex gap-2 items-center">
-          <WitchlistIcon id={id} />
+          <WatchlistIcon id={id} />
           <FavoriteIcon id={id} />
           <MdAddToPhotos className="text-5xl text-slate-200 hover:text-orange-amber cursor-pointer duration-300 transition-colors ease-linear" />
         </div>

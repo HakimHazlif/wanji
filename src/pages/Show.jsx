@@ -14,7 +14,8 @@ import SeasonsList from "../features/lists/SeasonsList";
 import { useParams } from "react-router";
 
 const Show = () => {
-  const { isLoading, show, details, similar } = useShow();
+  const { isLoading, show, details, similar, images } = useShow();
+
   console.log(show);
   const { category } = useParams();
 
@@ -23,13 +24,13 @@ const Show = () => {
   if (isLoading) return <Spinner />;
 
   return (
-    <div className="py-10">
+    <main className="py-10">
       <div className="padding-x">
         <ShowIntroDetails />
         {category === "tv" && <SeasonsList />}
 
         <section className="flex gap-10 py-32">
-          <ShowImages />
+          <ShowImages images={images} />
           <ShowMoreDetails />
         </section>
         <ShowCredits />
@@ -51,7 +52,7 @@ const Show = () => {
         />
         <div className="bg-[#272831] opacity-60 masking h-[600px] w-full absolute bottom-0 right-0 z-10"></div>
       </div>
-    </div>
+    </main>
   );
 };
 
