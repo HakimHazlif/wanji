@@ -16,6 +16,7 @@ export default {
         "blue-maya": "#0000ff",
         "transparent-amber": "#ffde05c3",
         "dark-page": "#1c1b21",
+        "bluish-black": "#181325",
       },
     },
   },

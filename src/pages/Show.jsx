@@ -7,7 +7,7 @@ import List from "../features/lists/List";
 // import ShowReviews from "../features/show/ShowReviews";
 
 import Spinner from "../ui/Spinner";
-import { getMainCrewRulls, getPictureUrlFormat } from "../utils/helper";
+import { getMainCrewRolls, getPictureUrlFormat } from "../utils/helper";
 import ShowCard from "../ui/ShowCard";
 import ShowImages from "../features/show/ShowImages";
 import SeasonsList from "../features/lists/SeasonsList";

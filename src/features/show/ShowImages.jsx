@@ -13,10 +13,10 @@ const ShowImages = () => {
       </div>
       <div className="grid-flow-row grid gap-2">
         <div className="grid grid-flow-col gap-2">
-          {images.slice(6, 8).map((image) => (
+          {images.slice(6, 8).map((image, index) => (
             <div
               className="aspect-w-16 aspect-h-9 overflow-hidden  cursor-pointer rounded-md"
-              key={image.id}
+              key={image.id || index}
             >
               <img
                 src={getPictureUrlFormat(image?.file_path, 1280)}

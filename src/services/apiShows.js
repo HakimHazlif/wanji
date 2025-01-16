@@ -104,19 +104,28 @@ export async function getTvShows() {
 }
 
 export async function getSeasonData({ id, seasonNum }) {
-  const seasonApiUrl = `https://api.themoviedb.org/3/tv/${id}/season/${seasonNum}?language=en-US`;
-  const imagesApiUrl = `https://api.themoviedb.org/3/tv/${id}/season/${seasonNum}/images`;
+  const serieApiUrl = `${URL_Base}tv/${id}?language=en-US`;
+  const seasonApiUrl = `${URL_Base}tv/${id}/season/${seasonNum}?language=en-US`;
+  const imagesApiUrl = `${URL_Base}tv/${id}/season/${seasonNum}/images`;
 
   try {
-    const [seasonDetails, seasonImage] = await axios.all([
+    const [serieData, seasonDetails, seasonImage] = await axios.all([
+      axios.get(serieApiUrl, options),
       axios.get(seasonApiUrl, options),
       axios.get(imagesApiUrl, options),
     ]);
 
+    if (serieData) console.log(seasonDetails);
+
     return {
       seasonDetails: {
+        title: serieData.data.name,
         name: seasonDetails.data.name,
-        id: seasonDetails.data.id,
+        showId: serieData.data.id,
+        seasonId: seasonDetails.data.id,
+        status: serieData.data.status,
+        genres: serieData.data.genres,
+        seasons: serieData.data.seasons,
         poster_path: seasonDetails.data.poster_path,
         season_number: seasonDetails.data.season_number,
         vote_average: seasonDetails.data.vote_average,

@@ -1,6 +1,6 @@
 import ProfilesScroll from "../../components/ProfilesScroll";
 
-import { getMainCrewRulls } from "../../utils/helper";
+import { getMainCrewRolls } from "../../utils/helper";
 import { useShow } from "./useShow";
 
 const ShowCredite = () => {

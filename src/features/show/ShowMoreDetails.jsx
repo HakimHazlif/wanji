@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import {
   formatHugeNumber,
-  getMainCrewRulls,
+  getMainCrewRolls,
   getPictureUrlFormat,
 } from "../../utils/helper";
 import { useShow } from "./useShow";
@@ -14,13 +14,14 @@ const ShowMoreDetails = () => {
     budget,
     revenue,
     production_companies: companies,
+    created_by,
   } = details;
 
-  const crew = getMainCrewRulls(credits?.crew);
+  const crew = getMainCrewRolls(credits?.crew);
   const { directing, writing, production, creator } = crew;
 
   return (
-    <aside className="w-[300px] rounded-lg py-7 px-5 flex-shrink-0  text-white flex flex-col gap-4 bg-[#181325]">
+    <aside className="w-[300px] rounded-lg py-7 px-5 flex-shrink-0  text-white flex flex-col gap-4 bg-bluish-black">
       <div className="font-semibold">
         {tagline && (
           <>
@@ -74,11 +75,11 @@ const ShowMoreDetails = () => {
         )}
       </div>
       <div className="font-semibold">
-        {creator.length > 0 && (
+        {created_by && (
           <>
             <h3 className="w-[80px]">Creator:</h3>
             <ul className="">
-              {creator.map((person, index) => (
+              {created_by.map((person, index) => (
                 <li key={person.id}>
                   <span className="mr-2">&#x2022;</span>
                   <Link
