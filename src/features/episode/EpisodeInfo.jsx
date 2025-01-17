@@ -26,29 +26,18 @@ const EpisodeInfo = () => {
 
   return (
     <section>
-      <div className="flex gap-4 items-end">
-        <div>
-          <img
-            src={getPictureUrlFormat(still_path, 1280)}
-            alt="movie poster"
-            className="rounded-xl min-w-[400px] w-[800px]"
-          />
-        </div>
-        <div>
-          <div>
-            <div className="mb-2 text-white flex items-end gap-3 font-bold">
-              <h2 className="text-4xl">{name}</h2>
-              <h3 className="text-2xl">
-                ({`Episode ${episode_number} of season ${season_number}`})
-              </h3>
-            </div>
-          </div>
-          <ul className="flex gap-2 text-sm font-semibold text-slate-400">
+      <div className="flex gap-10 items-end">
+        <div className="flex flex-col gap-2">
+          <h2 className="text-5xl font-bold mb-3">{name}</h2>
+          <h3 className="text-xl font-semibold text-slate-200">
+            {`Episode ${episode_number} - season ${season_number}`}
+          </h3>
+          <ul className="flex gap-2 text-sm font-semibold text-slate-300">
             <li>{updateDateFormat(air_date)}</li>
             <span>&#x2022;</span>
             <li>{runtime}min</li>
           </ul>
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center gap-2">
             <Box>
               <Rating
                 name="percentage-rating"
@@ -72,7 +61,14 @@ const EpisodeInfo = () => {
               {formatNumber(vote_average)}
             </p>
           </div>
-          <p className="font-semibold text-slate-100 mt-7">{overview}</p>
+          <p className="font-semibold text-slate-100 mt-2">{overview}</p>
+        </div>
+        <div>
+          <img
+            src={getPictureUrlFormat(still_path, 1280)}
+            alt="movie poster"
+            className="rounded-xl min-w-[400px] w-[800px]"
+          />
         </div>
       </div>
       <hr className="border-1 border-slate-400 w-full my-4" />

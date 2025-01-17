@@ -24,7 +24,7 @@ const Show = () => {
   if (isLoading) return <Spinner />;
 
   return (
-    <main className="py-10">
+    <main className="pt-32 pb-20">
       <div className="padding-x">
         <ShowIntroDetails />
         {category === "tv" && <SeasonsList />}
