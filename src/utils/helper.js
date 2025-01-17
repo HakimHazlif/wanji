@@ -44,6 +44,11 @@ export function getPictureUrlFormat(paramId, width = 1280) {
   return `https://image.tmdb.org/t/p/w${width}${paramId}`;
 }
 
+export function getProfileImageUrl(path) {
+  if (!path) return;
+  return `https://media.themoviedb.org/t/p/w300_and_h450_bestv2${path}`;
+}
+
 export function getMainCrewRolls(arr) {
   const directing = arr?.filter((item) => item["job"] === "Director");
   const writing = arr?.filter((item) => item["job"] === "Screenplay");

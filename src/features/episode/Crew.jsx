@@ -1,5 +1,5 @@
 import { profile } from "../../assets/icons";
-import { getPictureUrlFormat } from "../../utils/helper";
+import { getPictureUrlFormat, getProfileImageUrl } from "../../utils/helper";
 import { useEpisode } from "./useEpisode";
 
 const Crew = () => {
@@ -10,14 +10,14 @@ const Crew = () => {
     <section className="max-w-[500px] min-w-[300px] py-7 px-5 bg-bluish-black rounded-xl">
       <h3 className="text-xl font-bold mb-5">Crew</h3>
       <ul className="grid grid-flow-row gap-5">
-        {crew?.map((crewer) => (
-          <li key={crewer.id} className="">
+        {crew?.map((crewer, index) => (
+          <li key={`${crewer.id}-${index}`} className="">
             <p className="mb-2 font-medium">{crewer.job}:</p>
             <div className="flex gap-3 items-center group cursor-pointer">
               <img
                 src={
                   crewer.profile_path
-                    ? getPictureUrlFormat(crewer.profile_path)
+                    ? getProfileImageUrl(crewer.profile_path)
                     : profile
                 }
                 alt=""

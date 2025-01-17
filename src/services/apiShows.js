@@ -143,6 +143,8 @@ export async function getSeasonData({ id, seasonNum }) {
 export async function getEpisodeData({ id, seasonNum, episodeNum }) {
   const queries = ["", "/credits", "/images"];
 
+  const seasonApiUrl = `${URL_Base}tv/${id}/season/${seasonNum}?language=en-US`;
+
   const urls = [];
 
   queries.forEach((query, index) => {
@@ -152,17 +154,15 @@ export async function getEpisodeData({ id, seasonNum, episodeNum }) {
     urls.push(url);
   });
 
-  const [episodeDetails, episodeCredits, episodeImage] = await axios.all(
-    urls.map((url) => axios.get(url, options))
-  );
+  urls.push(seasonApiUrl);
 
-  console.log(episodeDetails);
-  console.log(episodeCredits);
-  console.log(episodeImage);
+  const [episodeDetails, episodeCredits, episodeImage, seasonData] =
+    await axios.all(urls.map((url) => axios.get(url, options)));
 
   return {
     episodeDetails: episodeDetails.data,
     episodeCredits: episodeCredits.data,
     episodeImage: episodeImage.data.stills,
+    episodesList: seasonData.data.episodes,
   };
 }

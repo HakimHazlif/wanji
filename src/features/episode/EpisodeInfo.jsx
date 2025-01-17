@@ -31,7 +31,7 @@ const EpisodeInfo = () => {
           <img
             src={getPictureUrlFormat(still_path, 1280)}
             alt="movie poster"
-            className="rounded-xl min-w-[250px] w-[800px]"
+            className="rounded-xl min-w-[400px] w-[800px]"
           />
         </div>
         <div>

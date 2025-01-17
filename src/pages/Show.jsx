@@ -16,7 +16,7 @@ import { useParams } from "react-router";
 const Show = () => {
   const { isLoading, show, details, similar, images } = useShow();
 
-  console.log(show);
+  // console.log(show);
   const { category } = useParams();
 
   const path = details?.backdrop_path || details?.poster_path;

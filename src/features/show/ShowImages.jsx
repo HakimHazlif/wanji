@@ -28,10 +28,10 @@ const ShowImages = ({ images }) => {
         </div>
         <div className="grid grid-flow-col gap-2">
           {images.length >= 3 &&
-            images?.slice(0, 3).map((image) => (
+            images?.slice(0, 3).map((image, index) => (
               <div
                 className="aspect-w-16 aspect-h-9 overflow-hidden  cursor-pointer rounded-md"
-                key={image.id}
+                key={image.id || index}
               >
                 <img
                   src={getPictureUrlFormat(image?.file_path, 1280)}
@@ -43,10 +43,10 @@ const ShowImages = ({ images }) => {
         </div>
         <div className="grid grid-flow-col gap-2">
           {images.length >= 6 &&
-            images?.slice(3, 6).map((image) => (
+            images?.slice(3, 6).map((image, index) => (
               <div
                 className="aspect-w-16 aspect-h-9 overflow-hidden  cursor-pointer rounded-md"
-                key={image.id}
+                key={image.id || index}
               >
                 <img
                   src={getPictureUrlFormat(image?.file_path, 1280)}

@@ -6,8 +6,9 @@ const Casting = () => {
   const { cast, guest_stars } = episodeCredits;
 
   return (
-    <section>
+    <section className="py-20">
       <CastList cast={cast} title="The main cast" />
+      <hr className="my-20 border-slate-500" />
       <CastList cast={guest_stars} title="The guest cast" />
     </section>
   );
