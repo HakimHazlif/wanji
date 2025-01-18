@@ -1,0 +1,113 @@
+import { useEffect, useRef, useState } from "react";
+import { useLists } from "./useLists";
+import { FaInfoCircle, FaPlus } from "react-icons/fa";
+import { LuListPlus } from "react-icons/lu";
+import { useShow } from "../show/useShow";
+import { useParams } from "react-router";
+import { useAddShow } from "./useAddShow";
+import { useSelector } from "react-redux";
+import Spinner from "../../ui/Spinner";
+import ItemsList from "./ItemsList";
+import { useCreateList } from "./useCreateList";
+
+const ListsMenu = ({ isPopupOpen, setIsPopupOpen }) => {
+  const [newListName, setNewListName] = useState("");
+  const popupRef = useRef();
+  const { category } = useParams();
+  const { isLoggedIn } = useSelector((state) => state.user);
+  const { uid } = useSelector((state) => state.user.user);
+
+  const { isLoading, remainLists, watchlist } = useLists();
+  const { details } = useShow();
+  const { addShow, isLoading: isAdding } = useAddShow();
+  const { creatList, isLoading: isCreating } = useCreateList();
+  console.log(remainLists);
+
+  async function handleCreateList(e) {
+    e.preventDefault();
+
+    if (!newListName) return;
+
+    if (isLoggedIn && uid)
+      creatList({
+        userId: uid,
+        name: newListName,
+        itemId: details.id,
+        type: category,
+      });
+  }
+
+  function handleAddToList(listId) {
+    if (isLoggedIn && listId)
+      addShow({ id: details.id, listId: listId, type: category });
+  }
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (popupRef.current && !popupRef.current.contains(e.target))
+        setIsPopupOpen(false);
+    }
+
+    if (isPopupOpen) document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setIsPopupOpen, isPopupOpen]);
+
+  if (isLoading || isCreating || isAdding) return <Spinner />;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-20">
+      <div className="w-full h-full flex justify-center items-center">
+        <div
+          className="w-[600px] h-[400px] rounded-xl bg-bluish-black py-4 px-5 absolute z-50"
+          ref={popupRef}
+        >
+          <div className="p-4 border-b border-slate-700">
+            <h2 className="text-xl font-semibold text-white">Save to...</h2>
+            <div className="mt-2 flex items-center gap-2 text-slate-400 text-sm">
+              <FaInfoCircle />
+
+              <p>
+                Select a list or create a new one to save{" "}
+                <span className="font-bold">
+                  {details.title || details.name}
+                </span>
+              </p>
+            </div>
+          </div>
+          <form
+            onSubmit={handleCreateList}
+            className="p-4 border-b border-slate-700"
+          >
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={newListName}
+                onChange={(e) => setNewListName(e.target.value)}
+                placeholder="Create new list"
+                className="flex-1 px-3 py-2 bg-slate-800 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <button
+                type="submit"
+                disabled={!newListName.trim()}
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <FaPlus />
+              </button>
+            </div>
+          </form>
+
+          <div className="max-h-[300px] overflow-y-auto">
+            {remainLists.map((list) => (
+              <ItemsList list={list} key={list.id} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ListsMenu;

@@ -4,16 +4,15 @@ import { Link } from "react-router";
 import WatchlistIcon from "../features/lists/WatchlistIcon";
 import { useSession } from "../context/UserContext";
 
-const ShowCard = ({ show }) => {
+const ShowCard = ({ show, category }) => {
   const { id, poster_path: poster, releaseDate, vote_average: rate } = show;
   const title = show?.title || show?.name;
-  const isMovie = "title" in show;
 
   // const { setIsMovie } = useSession();
 
   return (
     <div className="w-60 bg-slate-100 rounded-md overflow-hidden text-black relative">
-      <Link to={`/${isMovie ? "movie" : "tv"}/${id}`}>
+      <Link to={`/${category}/${id}`}>
         <img
           src={getPictureUrlFormat(poster, 500)}
           alt="movie poster"
@@ -29,7 +28,7 @@ const ShowCard = ({ show }) => {
       </Link>
 
       <div className="absolute top-0 left-0 z-50 cursor-pointer ">
-        <WatchlistIcon id={id} />
+        <WatchlistIcon id={id} type={category} />
       </div>
     </div>
   );

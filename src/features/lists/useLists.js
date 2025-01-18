@@ -20,6 +20,14 @@ export function useLists() {
   const favoriteList = lists
     ? lists.filter((item) => item.name === "favorite")[0]
     : null;
+  const remainLists = lists
+    ? lists.filter(
+        (item) =>
+          item.name !== "watchlist" &&
+          item.name !== "favorite" &&
+          item.name !== "rated"
+      )
+    : null;
 
-  return { isLoading, lists, watchlist, favoriteList, error };
+  return { isLoading, remainLists, watchlist, favoriteList, error };
 }

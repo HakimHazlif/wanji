@@ -6,7 +6,7 @@ import { useAddShow } from "./useAddShow";
 import SpinnerMini from "../../ui/SpinnerMini";
 import { useDeleteShow } from "./useDeleteShow";
 
-const WatchlistIcon = ({ id }) => {
+const WatchlistIcon = ({ id, type }) => {
   const [isWatched, setIsWatched] = useState();
   const { watchlist, isLoading } = useLists();
   const { isLoggedIn } = useSelector((state) => state.user);
@@ -16,7 +16,7 @@ const WatchlistIcon = ({ id }) => {
   function handleAddToWatchlist() {
     if (isLoggedIn && watchlist) {
       const listId = watchlist.id;
-      addShow({ id, listId });
+      addShow({ id, listId, type: type });
     }
   }
   function handleDeleteFromWatchlist() {

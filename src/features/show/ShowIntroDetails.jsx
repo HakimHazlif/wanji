@@ -15,6 +15,9 @@ import { MdAddToPhotos } from "react-icons/md";
 import { Link, useParams } from "react-router";
 import { useSession } from "../../context/UserContext";
 import { useShow } from "./useShow";
+import { RiPlayListAddFill } from "react-icons/ri";
+import ListsIcon from "../lists/ListsIcon";
+import RateUser from "../lists/RateUser";
 
 const ShowIntroDetails = () => {
   // console.log(details);
@@ -115,14 +118,11 @@ const ShowIntroDetails = () => {
       <hr className="border-1 border-slate-400 w-full my-4" />
       <div className="flex justify-between items-center">
         <div className="flex gap-2 items-center">
-          <WatchlistIcon id={id} />
-          <FavoriteIcon id={id} />
-          <MdAddToPhotos className="text-5xl text-slate-200 hover:text-orange-amber cursor-pointer duration-300 transition-colors ease-linear" />
+          <WatchlistIcon id={id} type={category} />
+          <FavoriteIcon id={id} type={category} />
+          <ListsIcon id={id} type={category} />
         </div>
-        <div className="py-4 px-4 rounded-lg bg-black/20 backdrop-blur-lg text-white font-medium text-sm flex items-center gap-2 hover:text-orange-amber duration-300 ease-linear transition-colors cursor-pointer">
-          <span>Add your rate</span>
-          <IoStarOutline className="text-xl" />
-        </div>
+        <RateUser id={id} type={category} />
       </div>
     </div>
   );

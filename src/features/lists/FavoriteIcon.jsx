@@ -8,20 +8,22 @@ import { useDeleteShow } from "./useDeleteShow";
 import { FaHeart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 
-const FavoriteIcon = ({ id }) => {
-  const [isFavorited, setIsFavorited] = useState();
-  const { favoriteList, isLoading } = useLists();
+const FavoriteIcon = ({ id, type }) => {
   const { isLoggedIn } = useSelector((state) => state.user);
+  const [isFavorited, setIsFavorited] = useState();
+
+  const { favoriteList, isLoading } = useLists();
+
   const { isLoading: isAdding, addShow } = useAddShow();
   const { isLoading: isDeleting, deleteShow } = useDeleteShow();
 
-  function handleAddToWatchlist() {
+  function handleAddToFavorite() {
     if (isLoggedIn && favoriteList) {
       const listId = favoriteList.id;
-      addShow({ id, listId });
+      addShow({ id, listId, type: type });
     }
   }
-  function handleDeleteFromWatchlist() {
+  function handleDeleteFromFavorite() {
     if (isLoggedIn && favoriteList) {
       const listId = favoriteList.id;
       deleteShow({ id, listId });
@@ -43,12 +45,12 @@ const FavoriteIcon = ({ id }) => {
       {isFavorited ? (
         <FaHeart
           className=" text-strawberry text-5xl cursor-pointer"
-          onClick={handleDeleteFromWatchlist}
+          onClick={handleDeleteFromFavorite}
         />
       ) : (
         <CiHeart
           className="text-6xl text-gray-300 cursor-pointer hover:text-red-500 duration-300 transition-colors ease-linear"
-          onClick={handleAddToWatchlist}
+          onClick={handleAddToFavorite}
         />
       )}
     </>
