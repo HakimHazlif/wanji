@@ -28,7 +28,7 @@ const ShowCard = ({ show, category }) => {
       </Link>
 
       <div className="absolute top-0 left-0 z-50 cursor-pointer ">
-        <WatchlistIcon id={id} type={category} />
+        <WatchlistIcon itemId={id} type={category} />
       </div>
     </div>
   );

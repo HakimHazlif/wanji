@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 import { useAddShow } from "./useAddShow";
 import SpinnerMini from "../../ui/SpinnerMini";
 import { useDeleteShow } from "./useDeleteShow";
+import { useParams } from "react-router";
 
-const WatchlistIcon = ({ id, type }) => {
+const WatchlistIcon = ({ itemId, type, parentId = null }) => {
+  const { id } = useParams();
   const [isWatched, setIsWatched] = useState();
   const { watchlist, isLoading } = useLists();
   const { isLoggedIn } = useSelector((state) => state.user);
@@ -16,21 +18,23 @@ const WatchlistIcon = ({ id, type }) => {
   function handleAddToWatchlist() {
     if (isLoggedIn && watchlist) {
       const listId = watchlist.id;
-      addShow({ id, listId, type: type });
+      addShow({ id: itemId, listId, type: type, parentId: parentId });
     }
   }
   function handleDeleteFromWatchlist() {
     if (isLoggedIn && watchlist) {
       const listId = watchlist.id;
-      deleteShow({ id, listId });
+      deleteShow({ id: itemId, listId, parentId: parentId });
     }
   }
 
   useEffect(() => {
-    const watched = watchlist?.items_list.some((item) => item.item_id == id);
+    const watched = watchlist?.items_list.some(
+      (item) => item.item_id == itemId
+    );
 
     setIsWatched(watched);
-  }, [setIsWatched, id, watchlist?.items_list]);
+  }, [setIsWatched, itemId, watchlist?.items_list]);
 
   if (isAdding || isDeleting || isLoading) return <SpinnerMini />;
 

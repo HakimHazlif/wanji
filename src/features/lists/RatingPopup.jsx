@@ -6,20 +6,26 @@ import { useAddRating } from "./useAddRating";
 import { useRating } from "./useRating";
 import { useSelector } from "react-redux";
 
-const RatingPopup = ({ setClosePopup, id, type }) => {
-  const { updateRating, isLoading: isUpdating } = useUpadetRating();
-  const { addRating, isLoading: isAdding } = useAddRating();
+const RatingPopup = ({ setClosePopup, itemId, type, parentId = null }) => {
+  const { updateRating } = useUpadetRating();
+  const { addRating } = useAddRating();
   const { showRate } = useRating();
   const { uid } = useSelector((state) => state.user.user);
 
-  const [rating, setRating] = useState(showRate?.rate || 0);
+  const [rating, setRating] = useState(showRate || 0);
   const [hover, setHover] = useState(0);
 
   const handleSubmit = async () => {
     try {
       if (!uid) throw new Error("You should log in first");
 
-      const rowQuery = { itemId: id, type: type, rating: rating, userId: uid };
+      const rowQuery = {
+        itemId,
+        type: type,
+        rating,
+        userId: uid,
+        parentId,
+      };
 
       if (!showRate) addRating(rowQuery);
       else updateRating(rowQuery);

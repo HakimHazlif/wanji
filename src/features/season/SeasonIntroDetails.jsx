@@ -5,15 +5,13 @@ import {
   updateDateFormat,
 } from "../../utils/helper";
 import { useSeason } from "./useSeason";
-import WatchlistIcon from "../lists/WatchlistIcon";
-import FavoriteIcon from "../lists/FavoriteIcon";
-import { MdAddToPhotos } from "react-icons/md";
-import { IoStarOutline } from "react-icons/io5";
+
+import { useParams } from "react-router";
 
 const SeasonIntroDetails = () => {
+  const { id } = useParams();
   const { seasonDetails, episodes } = useSeason();
   const {
-    id,
     title,
     name,
     overview,
@@ -24,6 +22,7 @@ const SeasonIntroDetails = () => {
     genres,
     status,
   } = seasonDetails;
+
   return (
     <div>
       <div className="flex gap-4 items-end">
@@ -86,17 +85,6 @@ const SeasonIntroDetails = () => {
         </div>
       </div>
       <hr className="border-1 border-slate-400 w-full my-4" />
-      <div className="flex justify-between items-center">
-        <div className="flex gap-2 items-center">
-          <WatchlistIcon id={id} />
-          <FavoriteIcon id={id} />
-          <MdAddToPhotos className="text-5xl text-slate-200 hover:text-orange-amber cursor-pointer duration-300 transition-colors ease-linear" />
-        </div>
-        <div className="py-4 px-4 rounded-lg bg-black/20 backdrop-blur-lg text-white font-medium text-sm flex items-center gap-2 hover:text-orange-amber duration-300 ease-linear transition-colors cursor-pointer">
-          <span>Add your rate</span>
-          <IoStarOutline className="text-xl" />
-        </div>
-      </div>
     </div>
   );
 };

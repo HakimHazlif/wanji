@@ -8,7 +8,7 @@ import { useAddRating } from "./useAddRating";
 import { useUpadetRating } from "./useUpadetRating";
 import { CiStar } from "react-icons/ci";
 
-const RateUser = ({ id, type }) => {
+const RateUser = ({ itemId, type }) => {
   const { showRate, isLoading } = useRating();
   const { isLoading: isAdding } = useAddRating();
   const { isLoading: isUpdating } = useUpadetRating();
@@ -26,7 +26,7 @@ const RateUser = ({ id, type }) => {
         {showRate ? (
           <>
             <FaStar className="text-xl text-orange-amber" />
-            <p className="font-bold text-xl">{showRate.rate}/10</p>
+            <p className="font-bold text-xl">{showRate}/10</p>
           </>
         ) : (
           <>
@@ -39,7 +39,7 @@ const RateUser = ({ id, type }) => {
         <RatingPopup
           isPopupOpen={isPopupOpen}
           setClosePopup={() => setIsPopupOpen(false)}
-          id={id}
+          itemId={itemId}
           type={type}
         />
       )}

@@ -5,14 +5,24 @@ import { useEffect, useState } from "react";
 import { useAddShow } from "./useAddShow";
 import SpinnerMini from "../../ui/SpinnerMini";
 import { useDeleteShow } from "./useDeleteShow";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
+import { LuHeart } from "react-icons/lu";
+import { useParams } from "react-router";
 
-const FavoriteIcon = ({ id, type }) => {
+const FavoriteIcon = ({ itemId, type, parentId = null }) => {
+  const { id } = useParams();
   const { isLoggedIn } = useSelector((state) => state.user);
   const [isFavorited, setIsFavorited] = useState();
 
   const { favoriteList, isLoading } = useLists();
+
+  // console.log({
+  //   id: id,
+  //   listId: favoriteList?.id,
+  //   type: type,
+  //   parentId: parentId,
+  // });
 
   const { isLoading: isAdding, addShow } = useAddShow();
   const { isLoading: isDeleting, deleteShow } = useDeleteShow();
@@ -20,23 +30,23 @@ const FavoriteIcon = ({ id, type }) => {
   function handleAddToFavorite() {
     if (isLoggedIn && favoriteList) {
       const listId = favoriteList.id;
-      addShow({ id, listId, type: type });
+      addShow({ id: itemId, listId, type: type, parentId: parentId });
     }
   }
   function handleDeleteFromFavorite() {
     if (isLoggedIn && favoriteList) {
       const listId = favoriteList.id;
-      deleteShow({ id, listId });
+      deleteShow({ id: itemId, listId, parentId: parentId });
     }
   }
 
   useEffect(() => {
     const favorited = favoriteList?.items_list.some(
-      (item) => item.item_id == id
+      (item) => item.item_id == itemId
     );
 
     setIsFavorited(favorited);
-  }, [setIsFavorited, id, favoriteList?.items_list]);
+  }, [setIsFavorited, itemId, favoriteList?.items_list]);
 
   if (isAdding || isDeleting || isLoading) return <SpinnerMini />;
 
@@ -48,8 +58,8 @@ const FavoriteIcon = ({ id, type }) => {
           onClick={handleDeleteFromFavorite}
         />
       ) : (
-        <CiHeart
-          className="text-6xl text-gray-300 cursor-pointer hover:text-red-500 duration-300 transition-colors ease-linear"
+        <LuHeart
+          className="text-5xl text-gray-300 cursor-pointer hover:text-red-500 duration-300 transition-colors ease-linear"
           onClick={handleAddToFavorite}
         />
       )}

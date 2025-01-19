@@ -11,7 +11,8 @@ export async function getAllUserLists(id) {
         list_id,
         item_id,
         created_at,
-        type
+        type, 
+        parent_id
       )
     `
     )
@@ -22,22 +23,26 @@ export async function getAllUserLists(id) {
   return lists;
 }
 
-export async function insertShow({ id, listId, type }) {
+export async function insertShow({ id, listId, type, parentId = null }) {
+  // console.log({ id, listId, type, parentId });
   const { data, error } = await supabase
     .from("items_list")
-    .insert([{ item_id: id, list_id: listId, type: type }]);
+    .insert([
+      { item_id: id, list_id: listId, type: type, parent_id: parentId },
+    ]);
 
   if (error) throw new Error(error);
 
   return { data, error };
 }
 
-export async function deleteShow({ id, listId }) {
+export async function deleteShow({ id, listId, parentId = null }) {
   const { error } = await supabase
     .from("items_list")
     .delete()
     .eq("item_id", id)
-    .eq("list_id", listId);
+    .eq("list_id", listId)
+    .eq("parent_id", parentId);
 
   if (error) throw new Error(error);
 }
@@ -52,25 +57,46 @@ export async function getShowRating({ itemId, type, userId }) {
 
   if (error) throw new Error(error);
 
-  return { rate };
+  return rate;
 }
 
-export async function addRateToShow({ itemId, type, rating, userId }) {
+export async function addRateToShow({
+  itemId,
+  type,
+  rating,
+  userId,
+  parentId = null,
+}) {
   const { data, error } = await supabase
     .from("rating")
-    .insert([{ item_id: itemId, type: type, user_id: userId, rate: rating }])
+    .insert([
+      {
+        item_id: itemId,
+        type: type,
+        user_id: userId,
+        rate: rating,
+        parent_id: parentId,
+      },
+    ])
     .select();
 
   return { data, error };
 }
 
-export async function updateShowRate({ itemId, type, rating, userId }) {
+export async function updateShowRate({
+  itemId,
+  type,
+  rating,
+  userId,
+  parentId = null,
+}) {
   const { data, error } = await supabase
     .from("rating")
     .update({ rate: rating })
     .eq("user_id", userId)
     .eq("item_id", itemId)
     .eq("type", type)
+    .eq(" parent_id", parentId)
     .select("*");
 
   if (error) throw new Error(error);

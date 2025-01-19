@@ -10,14 +10,15 @@ export function useRating() {
   const { data, isLoading } = useQuery({
     queryKey: ["rating", category, id, uid],
     queryFn: () => getShowRating({ itemId: id, type: category, userId: uid }),
-    enabled: Boolean(id && category && uid),
-    retry: false,
     onError: (err) => {
       throw new Error(err);
     },
   });
 
-  const showRate = data?.rate?.[0] ?? null;
+  if (data) console.log(data);
+
+  const showRate = data?.[0]?.rate ?? null;
+  if (showRate) console.log(showRate);
 
   return { showRate, isLoading };
 }

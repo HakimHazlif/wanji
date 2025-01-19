@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import EpisodeCard from "../../ui/EpisodeCard";
+import EpisodeCard from "../episode/EpisodeCard";
 import { useSeason } from "./useSeason";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 

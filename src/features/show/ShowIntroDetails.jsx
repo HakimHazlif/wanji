@@ -118,11 +118,11 @@ const ShowIntroDetails = () => {
       <hr className="border-1 border-slate-400 w-full my-4" />
       <div className="flex justify-between items-center">
         <div className="flex gap-2 items-center">
-          <WatchlistIcon id={id} type={category} />
-          <FavoriteIcon id={id} type={category} />
+          <WatchlistIcon itemId={id} type={category} />
+          <FavoriteIcon itemId={id} type={category} />
           <ListsIcon id={id} type={category} />
         </div>
-        <RateUser id={id} type={category} />
+        <RateUser itemId={id} type={category} />
       </div>
     </div>
   );

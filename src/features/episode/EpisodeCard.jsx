@@ -4,9 +4,9 @@ import {
   getMainCrewRolls,
   getPictureUrlFormat,
   updateDateFormat,
-} from "../utils/helper";
-import WatchlistIcon from "../features/lists/WatchlistIcon";
-import FavoriteIcon from "../features/lists/FavoriteIcon";
+} from "../../utils/helper";
+import WatchlistIcon from "../lists/WatchlistIcon";
+import FavoriteIcon from "../lists/FavoriteIcon";
 import { Link, useNavigate } from "react-router";
 
 const EpisodeCard = ({ episode }) => {
@@ -81,8 +81,8 @@ const EpisodeCard = ({ episode }) => {
             </div>
           </div>
           <div className="flex items-start gap-2 h-10">
-            <WatchlistIcon />
-            <FavoriteIcon />
+            <WatchlistIcon itemId={id} type="episode" parentId={show_id} />
+            <FavoriteIcon itemId={id} type="episode" parentId={show_id} />
           </div>
         </div>
         <div className="w-full flex-1 flex flex-col gap-2 pr-5">
