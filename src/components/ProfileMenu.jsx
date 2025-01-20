@@ -2,17 +2,26 @@ import ProfileElements from "./ProfileElement";
 import { profileMenuElements } from "../constants/uiElements";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
+import { useEffect, useRef } from "react";
 
-const ProfileMenu = ({ setHandle }) => {
+const ProfileMenu = ({ setHandle, onClose }) => {
+  const menuRef = useRef();
   const { isLoggedIn, user } = useSelector((state) => state.user);
 
   const { avatar, username, email } = user;
 
+  useEffect(() => {
+    function handleDropMenu(e) {
+      if (menuRef.current && !menuRef.current.contains(e.target)) onClose();
+    }
+
+    document.addEventListener("mousedown", handleDropMenu);
+
+    return () => document.removeEventListener("mousedown", handleDropMenu);
+  }, [menuRef, onClose]);
+
   return (
-    <div
-      className="absolute z-30 right-0 top-0 w-screen h-screen cursor-default transparental-black"
-      onClick={setHandle}
-    >
+    <div className="absolute z-40 right-0 top-0 cursor-default" ref={menuRef}>
       <aside className="bg-white absolute right-28 top-16 z-40 text-black w-[300px] max-w-[380px] min-w-[200px]  rounded-lg py-3 px-3">
         <div className="flex gap-4 justify-start items-center px-3 pt-3 pb-4">
           <div className="bg-orange-coral w-11 h-11 rounded-full flex justify-center items-center relative">

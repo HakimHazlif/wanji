@@ -11,7 +11,7 @@ import {
 export const signup = (username, email, password) => async (dispatch) => {
   try {
     dispatch(authStart());
-    const { data: user, error } = await supabase.auth.signUp({
+    const { data: user, error: signupError } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -22,7 +22,22 @@ export const signup = (username, email, password) => async (dispatch) => {
       },
     });
 
-    if (error) throw new Error(error.message);
+    if (signupError) throw new Error(signupError.message);
+
+    if (user) {
+      const watchlistId = crypto.randomUUID();
+      const favoriteId = crypto.randomUUID();
+
+      const { error } = await supabase
+        .from("lists")
+        .insert([
+          { id: watchlistId, user_id: user.user.id, name: "watchlist" },
+          { some_column: favoriteId, user_id: user.user.id, name: "favorite" },
+        ])
+        .select();
+
+      if (error) throw new Error(error.message);
+    }
 
     dispatch(
       authSuccess({
@@ -30,6 +45,9 @@ export const signup = (username, email, password) => async (dispatch) => {
         username: user.user.user_metadata.username,
         email: user.user.email,
         avatar: user.user.user_metadata.avatar,
+        createdAt: user.user.created_at,
+        lastSignin: user.user.last_sign_in_at,
+        lastUpdate: user.user.updated_at,
       })
     );
   } catch (err) {
@@ -51,12 +69,17 @@ export const login = (email, password) => async (dispatch) => {
       throw new Error(error.message);
     }
 
+    console.log(user);
+
     dispatch(
       authSuccess({
         uid: user.user.id,
         username: user.user.user_metadata.username,
         email: user.user.email,
         avatar: user.user.user_metadata.avatar,
+        createdAt: user.user.created_at,
+        lastSignin: user.user.last_sign_in_at,
+        lastUpdate: user.user.updated_at,
       })
     );
   } catch (err) {
@@ -110,6 +133,9 @@ export const updateAuth =
           username: user.user.user_metadata.username,
           email: user.user.email,
           avatar: user.user.user_metadata.avatar,
+          createdAt: user.user.created_at,
+          lastSignin: user.user.last_sign_in_at,
+          lastUpdate: user.user.updated_at,
         })
       );
     } catch (err) {
@@ -126,14 +152,15 @@ export const updateAuthPassword = (password) => async (dispatch) => {
 
     if (error) throw new Error(error.message);
 
-    console.log(user);
-
     dispatch(
       authSuccess({
         uid: user.user.id,
         username: user.user.user_metadata.username,
         email: user.user.email,
         avatar: user.user.user_metadata.avatar,
+        createdAt: user.user.created_at,
+        lastSignin: user.user.last_sign_in_at,
+        lastUpdate: user.user.updated_at,
       })
     );
   } catch (err) {
@@ -155,6 +182,9 @@ export const getUser = () => async (dispatch) => {
           username: user.user_metadata.username,
           email: user.email,
           avatar: user.user_metadata.avatar,
+          createdAt: user.created_at,
+          lastSignin: user.last_sign_in_at,
+          lastUpdate: user.updated_at,
         })
       );
     else dispatch(logOutSuccess());

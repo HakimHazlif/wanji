@@ -1,3 +1,4 @@
+import { URL_Base } from "../constants/variables";
 import supabase from "./supabase";
 
 export async function getAllUserLists(id) {
@@ -23,13 +24,27 @@ export async function getAllUserLists(id) {
   return lists;
 }
 
-export async function insertShow({ id, listId, type, parentId = null }) {
-  // console.log({ id, listId, type, parentId });
-  const { data, error } = await supabase
-    .from("items_list")
-    .insert([
-      { item_id: id, list_id: listId, type: type, parent_id: parentId },
-    ]);
+export async function insertShow({
+  id,
+  listId,
+  type,
+  title,
+  date,
+  season = null,
+  parentId = null,
+}) {
+  console.log({ id, listId, type, title, date });
+  const { data, error } = await supabase.from("items_list").insert([
+    {
+      item_id: id,
+      list_id: listId,
+      type: type,
+      title: title,
+      year: date,
+      season_number: season,
+      parent_id: parentId,
+    },
+  ]);
 
   if (error) throw new Error(error);
 
@@ -162,3 +177,16 @@ export async function updateListName({ userId, listId, newName }) {
 
   return { data, error };
 }
+
+// export async function getShowsList(shows = [], startPoint = 0, type = "movie") {
+//   if (!shows) return;
+//   const showsList = [];
+
+//   shows.slice(startPoint, startPoint + 20).forEach((show) => {
+//     const url =
+//       show.type === type
+//         ? `${URL_Base}${show.type}/${show.item_id}?language=en-US`
+//         : null;
+//     if (!url) return;
+//   });
+// }

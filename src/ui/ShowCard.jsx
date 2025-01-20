@@ -1,34 +1,49 @@
-import { getPictureUrlFormat } from "../utils/helper";
+import { getPictureUrlFormat, getYearFormat } from "../utils/helper";
 import RateCircle from "./RateCircle";
 import { Link } from "react-router";
 import WatchlistIcon from "../features/lists/WatchlistIcon";
 import { useSession } from "../context/UserContext";
+import { FaStar } from "react-icons/fa";
 
 const ShowCard = ({ show, category }) => {
-  const { id, poster_path: poster, releaseDate, vote_average: rate } = show;
+  const { id, poster_path: poster, release_date, vote_average: rate } = show;
   const title = show?.title || show?.name;
+  const date = show?.release_date || show?.first_air_date;
+  const year = getYearFormat(show?.release_date || show?.first_air_date);
 
   // const { setIsMovie } = useSession();
 
+  const item = {
+    itemId: id,
+    type: category,
+    title,
+    date: year,
+    season: null,
+    parentId: null,
+  };
+
   return (
-    <div className="w-60 bg-slate-100 rounded-md overflow-hidden text-black relative">
-      <Link to={`/${category}/${id}`}>
+    <div className="w-52 relative">
+      <Link to={`/${category}/${id}`} className="">
         <img
           src={getPictureUrlFormat(poster, 500)}
           alt="movie poster"
-          className="relative h-[370px] object-cover"
+          className="relative h-[300px] object-cover rounded-md shadow-2xl"
         />
-        <div className="absolute bottom-[80px] right-[15px]">
-          <RateCircle rate={rate} />
+        <div className="absolute top-[265px] right-[15px] rounded-md bg-orange-amber px-2 py-1 flex items-center gap-1 text-sm font-bold">
+          <FaStar />
+          <p>{rate.toFixed(1)}</p>
         </div>
-        <div className="flex flex-col gap-2 px-3 my-4">
-          <h2 className="text-lg font-medium">{title}</h2>
-          <h3 className="text-sm text-gray-700">{releaseDate}</h3>
+        <div className="flex flex-col gap-1 px-3 mt-2">
+          <span className="text-[12px] text-slate-400 font-medium">
+            {getYearFormat(date)}
+          </span>
+          <h2 className="text-sm font-medium">{title}</h2>
         </div>
       </Link>
 
-      <div className="absolute top-0 left-0 z-50 cursor-pointer ">
-        <WatchlistIcon itemId={id} type={category} />
+      <div className="absolute top-0 left-0 z-10 cursor-pointer ">
+        <WatchlistIcon item={item} />
       </div>
     </div>
   );

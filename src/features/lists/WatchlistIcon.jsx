@@ -7,7 +7,8 @@ import SpinnerMini from "../../ui/SpinnerMini";
 import { useDeleteShow } from "./useDeleteShow";
 import { useParams } from "react-router";
 
-const WatchlistIcon = ({ itemId, type, parentId = null }) => {
+const WatchlistIcon = ({ item }) => {
+  const { itemId, type, title, date, season, parentId } = item;
   const { id } = useParams();
   const [isWatched, setIsWatched] = useState();
   const { watchlist, isLoading } = useLists();
@@ -18,7 +19,15 @@ const WatchlistIcon = ({ itemId, type, parentId = null }) => {
   function handleAddToWatchlist() {
     if (isLoggedIn && watchlist) {
       const listId = watchlist.id;
-      addShow({ id: itemId, listId, type: type, parentId: parentId });
+      addShow({
+        id: itemId,
+        listId,
+        type,
+        title,
+        date,
+        season,
+        parentId,
+      });
     }
   }
   function handleDeleteFromWatchlist() {
@@ -29,9 +38,7 @@ const WatchlistIcon = ({ itemId, type, parentId = null }) => {
   }
 
   useEffect(() => {
-    const watched = watchlist?.items_list.some(
-      (item) => item.item_id == itemId
-    );
+    const watched = watchlist?.items_list.some((el) => el.item_id == itemId);
 
     setIsWatched(watched);
   }, [setIsWatched, itemId, watchlist?.items_list]);
@@ -47,7 +54,7 @@ const WatchlistIcon = ({ itemId, type, parentId = null }) => {
         />
       ) : (
         <BsBookmarkPlusFill
-          className="text-5xl text-transparent-amber hover:text-orange-amber cursor-pointer duration-300 transition-colors ease-linear"
+          className="text-5xl text-slate-300 hover:text-orange-amber cursor-pointer duration-300 transition-colors ease-linear"
           onClick={handleAddToWatchlist}
         />
       )}

@@ -3,6 +3,7 @@ import {
   getYearMonthFormat,
   updateDateFormat,
   formatNumber,
+  getYearFormat,
 } from "../../utils/helper";
 
 import WatchlistIcon from "../lists/WatchlistIcon";
@@ -10,12 +11,9 @@ import WatchlistIcon from "../lists/WatchlistIcon";
 import Rating from "@mui/material/Rating";
 import { Box } from "@mui/material";
 import FavoriteIcon from "../lists/FavoriteIcon";
-import { IoStarOutline } from "react-icons/io5";
-import { MdAddToPhotos } from "react-icons/md";
-import { Link, useParams } from "react-router";
-import { useSession } from "../../context/UserContext";
+
+import { useParams } from "react-router";
 import { useShow } from "./useShow";
-import { RiPlayListAddFill } from "react-icons/ri";
 import ListsIcon from "../lists/ListsIcon";
 import RateUser from "../lists/RateUser";
 
@@ -37,6 +35,19 @@ const ShowIntroDetails = () => {
   const title = details?.title || details?.name;
   const originalTitle = details?.original_title || details?.original_name;
   const runtime = details?.runtime || details?.episode_run_time;
+  const yearFormat = getYearFormat(
+    details.release_date || details.first_air_date
+  );
+
+  const item = {
+    itemId: id,
+    type: category,
+    title,
+    date: yearFormat,
+    season: null,
+    parentId: null,
+  };
+
   const dateFormat =
     category === "movie"
       ? updateDateFormat(details.release_date)
@@ -112,15 +123,19 @@ const ShowIntroDetails = () => {
             ))}
           </ul>
 
-          <p className="font-semibold text-slate-100 mt-7">{overview}</p>
+          <div className="h-14">
+            <p className="font-semibold max-h-20 text-slate-100 mt-7 text-ellipsis ">
+              {overview}
+            </p>
+          </div>
         </div>
       </div>
       <hr className="border-1 border-slate-400 w-full my-4" />
       <div className="flex justify-between items-center">
         <div className="flex gap-2 items-center">
-          <WatchlistIcon itemId={id} type={category} />
-          <FavoriteIcon itemId={id} type={category} />
-          <ListsIcon id={id} type={category} />
+          <WatchlistIcon item={item} />
+          <FavoriteIcon item={item} />
+          <ListsIcon />
         </div>
         <RateUser itemId={id} type={category} />
       </div>

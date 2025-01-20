@@ -46,7 +46,7 @@ function App() {
                   path="/:category/:id/season/:seasonNum/episode/:episodeNum"
                   element={<Episode />}
                 />
-                <Route path="person/:id" element={<Person />} />
+                <Route path="person/:personId" element={<Person />} />
                 <Route path={`:user`}>
                   <Route index element={<Profile />} />
                   <Route path="watchlist" element={<WatchlistPage />} />

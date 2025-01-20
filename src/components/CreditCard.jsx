@@ -24,7 +24,7 @@ const CreditCard = ({ person, direction = "col", size = "big" }) => {
 
   return (
     <Link
-      to={`person/${id}`}
+      to={`/person/${id}`}
       className={`flex gap-3 ${
         direction === "row"
           ? "flex-row justify-center items-center text-start"

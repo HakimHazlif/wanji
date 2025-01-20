@@ -11,7 +11,7 @@ const SearchItem = ({ id, image, title, originalTitle, mediaType }) => {
   return (
     <Link
       to={linkToNavigate || "/"}
-      className="flex justify-between px-6 items-center w-full cursor-pointer hover:bg-slate-300 py-3"
+      className="flex justify-between px-6 items-center w-full cursor-pointer hover:bg-slate-300 py-3 text-black"
     >
       <div className="flex gap-2 items-center w-[90%]">
         <img

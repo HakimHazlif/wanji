@@ -1,7 +1,14 @@
+import { useLists } from "../features/lists/useLists";
+
 const Lists = () => {
-  return <main>
-    
-  </main>;
+  const { remainLists, watchlist, favoriteList } = useLists();
+  console.log(remainLists);
+
+  return (
+    <main>
+      <section>hfhghhhhh</section>
+    </main>
+  );
 };
 
 export default Lists;

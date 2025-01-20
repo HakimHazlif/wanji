@@ -10,7 +10,8 @@ import { CiHeart } from "react-icons/ci";
 import { LuHeart } from "react-icons/lu";
 import { useParams } from "react-router";
 
-const FavoriteIcon = ({ itemId, type, parentId = null }) => {
+const FavoriteIcon = ({ item }) => {
+  const { itemId, type, title, date, season, parentId } = item;
   const { id } = useParams();
   const { isLoggedIn } = useSelector((state) => state.user);
   const [isFavorited, setIsFavorited] = useState();
@@ -30,7 +31,15 @@ const FavoriteIcon = ({ itemId, type, parentId = null }) => {
   function handleAddToFavorite() {
     if (isLoggedIn && favoriteList) {
       const listId = favoriteList.id;
-      addShow({ id: itemId, listId, type: type, parentId: parentId });
+      addShow({
+        id: itemId,
+        listId,
+        type,
+        title,
+        date,
+        season,
+        parentId,
+      });
     }
   }
   function handleDeleteFromFavorite() {
@@ -42,7 +51,7 @@ const FavoriteIcon = ({ itemId, type, parentId = null }) => {
 
   useEffect(() => {
     const favorited = favoriteList?.items_list.some(
-      (item) => item.item_id == itemId
+      (el) => el.item_id == itemId
     );
 
     setIsFavorited(favorited);

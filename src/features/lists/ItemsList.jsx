@@ -7,6 +7,7 @@ import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { useDeleteShow } from "./useDeleteShow";
 import { LuListCheck } from "react-icons/lu";
+import { getYearFormat } from "../../utils/helper";
 
 const ItemsList = ({ list }) => {
   const [isAdded, setIsAdded] = useState(false);
@@ -14,12 +15,25 @@ const ItemsList = ({ list }) => {
   const { details } = useShow();
   const { category } = useParams();
 
+  const title = details.title || details.name;
+  const date = getYearFormat(details.release_date || details.first_air_date);
+
   const { addShow, isLoading: isAdding } = useAddShow();
   const { deleteShow, isLoading: isDeleting } = useDeleteShow();
 
+  const row = {
+    id: details.id,
+    listId: list.id,
+    type: category,
+    title: title,
+    date: date,
+  };
+  console.log(row);
+
   function handleAddToList() {
-    if (isLoggedIn && list)
-      addShow({ id: details.id, listId: list.id, type: category });
+    if (isLoggedIn && list && details) {
+      addShow(row);
+    }
   }
 
   function handleDeleteFromList() {

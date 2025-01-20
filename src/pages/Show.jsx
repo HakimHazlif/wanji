@@ -36,7 +36,7 @@ const Show = () => {
         <ShowCredits />
         <List title="More like this">
           {similar?.map((show) => (
-            <ShowCard key={show.id} show={show} />
+            <ShowCard key={show.id} show={show} category={category} />
           ))}
         </List>
 

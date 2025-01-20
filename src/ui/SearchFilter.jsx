@@ -24,7 +24,7 @@ const SearchFilter = ({ selectedValue, handleSelectOpetion }) => {
       </label>
       <div
         ref={dropdownRef}
-        className="w-[120px] relative z-20"
+        className="w-[120px] relative z-40"
         onClick={() => setOpenOptions((prev) => !prev)}
       >
         <div className="flex justify-between items-center bg-slate-200 border-none rounded-t-3xl rounded-b-3xl py-2 px-3 text-black cursor-pointer">

@@ -3,30 +3,40 @@ export function getImageViaPath(path, width) {
 }
 
 export function updateDateFormat(date) {
-  const newDate = new Date(date);
-
-  const options = {
+  return new Date(date).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",
-  };
+  });
+}
 
-  const formattedDate = newDate.toLocaleDateString(undefined, options);
-
-  return formattedDate;
+export function formatDate(date) {
+  return new Date(date).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
 }
 
 export function getYearMonthFormat(date) {
-  const newDate = new Date(date);
-
-  const options = {
+  return new Date(date).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
-  };
+  });
+}
+export function getYearFormat(date) {
+  return new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+  });
+}
 
-  const formattedDate = newDate.toLocaleDateString(undefined, options);
-
-  return formattedDate;
+export function calculateAge(birthday, deathday) {
+  const birthDate = new Date(birthday);
+  const endDate = deathday ? new Date(deathday) : new Date();
+  const age = Math.floor(
+    (endDate - birthDate) / (365.25 * 24 * 60 * 60 * 1000)
+  );
+  return age;
 }
 
 export function ratePercentage(rate) {

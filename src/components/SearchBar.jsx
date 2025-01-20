@@ -73,14 +73,14 @@ const SearchBar = () => {
           id="search-input"
           name="search"
           placeholder="Search here..."
-          className="border-none py-2 px-4 flex-1 rounded-r-3xl rounded-l-3xl outline-none"
+          className="border-none py-2 px-4 flex-1 rounded-r-3xl rounded-l-3xl outline-none text-black"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
 
         <button
           type="submit"
-          className="bg-orange-amber hover:bg-orange-coral border-none text-white py-2 px-5 text-lg cursor-pointer rounded-t-3xl rounded-b-3xl transition-all duration-300 ease-linear w-[150px] font-semibold"
+          className="bg-orange-amber hover:bg-orange-coral border-none  py-2 px-5 text-lg cursor-pointer rounded-t-3xl rounded-b-3xl transition-all duration-300 ease-linear w-[150px] font-semibold"
         >
           Search
         </button>

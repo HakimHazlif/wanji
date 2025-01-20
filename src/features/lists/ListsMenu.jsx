@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useLists } from "./useLists";
 import { FaInfoCircle, FaPlus } from "react-icons/fa";
-import { LuListPlus } from "react-icons/lu";
 import { useShow } from "../show/useShow";
 import { useParams } from "react-router";
 import { useAddShow } from "./useAddShow";
@@ -9,6 +8,7 @@ import { useSelector } from "react-redux";
 import Spinner from "../../ui/Spinner";
 import ItemsList from "./ItemsList";
 import { useCreateList } from "./useCreateList";
+import { getYearFormat } from "../../utils/helper";
 
 const ListsMenu = ({ isPopupOpen, setIsPopupOpen }) => {
   const [newListName, setNewListName] = useState("");
@@ -19,9 +19,11 @@ const ListsMenu = ({ isPopupOpen, setIsPopupOpen }) => {
 
   const { isLoading, remainLists, watchlist } = useLists();
   const { details } = useShow();
-  const { addShow, isLoading: isAdding } = useAddShow();
+  const { isLoading: isAdding } = useAddShow();
   const { creatList, isLoading: isCreating } = useCreateList();
-  console.log(remainLists);
+
+  const title = details?.title || details?.name;
+  const year = getYearFormat(details?.release_date || details?.first_air_date);
 
   async function handleCreateList(e) {
     e.preventDefault();
@@ -34,12 +36,9 @@ const ListsMenu = ({ isPopupOpen, setIsPopupOpen }) => {
         name: newListName,
         itemId: details.id,
         type: category,
+        title,
+        date: year,
       });
-  }
-
-  function handleAddToList(listId) {
-    if (isLoggedIn && listId)
-      addShow({ id: details.id, listId: listId, type: category });
   }
 
   useEffect(() => {

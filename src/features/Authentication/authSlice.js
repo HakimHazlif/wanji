@@ -6,6 +6,9 @@ const initialState = {
     username: "",
     email: "",
     avatar: "",
+    createdAt: "",
+    lastSignin: "",
+    lastUpdate: "",
   },
   isLoggedIn: false,
   status: "idle",
@@ -24,6 +27,7 @@ const authSlice = createSlice({
       state.status = "succeeded";
       state.user = action.payload;
       state.isLoggedIn = true;
+      state.error = null;
     },
     authFailure: (state, action) => {
       state.status = "failed";
@@ -35,6 +39,9 @@ const authSlice = createSlice({
         username: "",
         email: "",
         avatar: "",
+        createdAt: "",
+        lastSignin: "",
+        lastUpdate: "",
       };
       state.status = "idle";
       state.error = null;
@@ -44,6 +51,7 @@ const authSlice = createSlice({
       state.user = action.payload;
       state.isLoggedIn = true;
       state.status = "authenticated";
+      state.error = null;
     },
     resetPassword: (state) => {
       state.status = "resetted";

@@ -3,6 +3,7 @@ import {
   formatNumber,
   getMainCrewRolls,
   getPictureUrlFormat,
+  getYearFormat,
   updateDateFormat,
 } from "../../utils/helper";
 import WatchlistIcon from "../lists/WatchlistIcon";
@@ -24,6 +25,17 @@ const EpisodeCard = ({ episode }) => {
     vote_average,
     crew,
   } = episode;
+
+  const airYear = getYearFormat(air_date);
+
+  const item = {
+    itemId: id,
+    type: "episode",
+    title: name,
+    date: airYear,
+    season: season_number,
+    parentId: show_id,
+  };
 
   const mainCrewRolls = getMainCrewRolls(crew);
   const { directing, writing, production, creator } = mainCrewRolls;
@@ -81,8 +93,8 @@ const EpisodeCard = ({ episode }) => {
             </div>
           </div>
           <div className="flex items-start gap-2 h-10">
-            <WatchlistIcon itemId={id} type="episode" parentId={show_id} />
-            <FavoriteIcon itemId={id} type="episode" parentId={show_id} />
+            <WatchlistIcon item={item} />
+            <FavoriteIcon item={item} />
           </div>
         </div>
         <div className="w-full flex-1 flex flex-col gap-2 pr-5">

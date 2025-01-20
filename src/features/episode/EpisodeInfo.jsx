@@ -3,6 +3,7 @@ import { useEpisode } from "./useEpisode";
 import {
   formatNumber,
   getPictureUrlFormat,
+  getYearFormat,
   updateDateFormat,
 } from "../../utils/helper";
 import { Box, Rating } from "@mui/material";
@@ -19,10 +20,22 @@ const EpisodeInfo = () => {
     season_number,
     episode_number,
     air_date,
+    show_id,
     runtime,
     vote_average,
     overview,
   } = episodeDetails;
+
+  const airYear = getYearFormat(air_date);
+
+  const item = {
+    itemId: id,
+    type: "episode",
+    title: name,
+    date: airYear,
+    season: season_number,
+    parentId: show_id,
+  };
 
   return (
     <section>
@@ -74,8 +87,8 @@ const EpisodeInfo = () => {
       <hr className="border-1 border-slate-400 w-full my-4" />
       <div className="flex justify-between items-center">
         <div className="flex gap-2 items-center">
-          <WatchlistIcon itemId={id} />
-          <FavoriteIcon itemId={id} />
+          <WatchlistIcon item={item} />
+          <FavoriteIcon item={item} />
           <MdAddToPhotos className="text-5xl text-slate-200 hover:text-orange-amber cursor-pointer duration-300 transition-colors ease-linear" />
         </div>
         <div className="py-4 px-4 rounded-lg bg-black/20 backdrop-blur-lg text-white font-medium text-sm flex items-center gap-2 hover:text-orange-amber duration-300 ease-linear transition-colors cursor-pointer">

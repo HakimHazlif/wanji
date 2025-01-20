@@ -40,7 +40,10 @@ const ProfileSwitcher = () => {
             )}
           </button>
           {openProfileMenu ? (
-            <ProfileMenu setHandle={toggleProfileMenu} />
+            <ProfileMenu
+              setHandle={toggleProfileMenu}
+              onClose={() => setOpenProfileMenu(false)}
+            />
           ) : null}
         </>
       ) : (
