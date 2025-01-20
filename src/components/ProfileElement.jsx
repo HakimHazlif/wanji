@@ -18,7 +18,7 @@ const ProfileElements = ({ icon, itemName, route }) => {
   return (
     <li>
       <Link
-        to={route === "Sign out" ? route() : route(username)}
+        to={route(username)}
         className="flex items-center justify-start gap-4 px-3 py-2 hover:text-orange-coral hover:border hover:border-orange-amber hover:bg-amber-50  rounded-md cursor-pointer"
         onClick={handleLogout}
       >

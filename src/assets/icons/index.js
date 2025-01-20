@@ -9,6 +9,7 @@ import redHeart from "./heart-red.svg";
 import profile from "./profile.svg";
 import rightArrow from "./right-arrow.svg";
 import leftArrow from "./left-arrow.svg";
+import bgPopcorn from "../bg-popcorn.jpg";
 
 export {
   logoDark,
@@ -21,4 +22,5 @@ export {
   profile,
   rightArrow,
   leftArrow,
+  bgPopcorn,
 };

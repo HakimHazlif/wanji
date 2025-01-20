@@ -47,11 +47,8 @@ function App() {
                   element={<Episode />}
                 />
                 <Route path="person/:personId" element={<Person />} />
-                <Route path={`:user`}>
-                  <Route index element={<Profile />} />
-                  <Route path="watchlist" element={<WatchlistPage />} />
+                <Route path={`u/:user`} element={<Profile />}>
                   <Route path="lists" element={<Lists />} />
-                  <Route path="favorites" element={<Favorites />} />
                   <Route path="settings" element={<Settings />} />
                 </Route>
                 <Route path="reset-password" element={<ResetPassword />} />

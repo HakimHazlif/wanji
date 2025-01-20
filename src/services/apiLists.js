@@ -13,7 +13,9 @@ export async function getAllUserLists(id) {
         item_id,
         created_at,
         type, 
-        parent_id
+        parent_id,
+        title,
+        year,
       )
     `
     )
@@ -30,6 +32,7 @@ export async function insertShow({
   type,
   title,
   date,
+  tvName = null,
   season = null,
   parentId = null,
 }) {
@@ -41,6 +44,7 @@ export async function insertShow({
       type: type,
       title: title,
       year: date,
+      tv_name: tvName,
       season_number: season,
       parent_id: parentId,
     },
