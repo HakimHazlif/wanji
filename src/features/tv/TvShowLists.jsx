@@ -28,22 +28,22 @@ const TvLists = () => {
 
   return (
     <section className="flex flex-col gap-20 padding-x">
-      <List title="Trending TV Shows">
+      <List title="Trending TV Shows" viewAll={true}>
         {popularTv.map((tvShow) => (
           <ShowCard key={tvShow.id} show={tvShow} category={category} />
         ))}
       </List>
-      <List title="Top Rated TV Shows">
+      <List title="Top Rated TV Shows" viewAll={true}>
         {topRatedTv.map((tvShow) => (
           <ShowCard key={tvShow.id} show={tvShow} category={category} />
         ))}
       </List>
-      <List title="TV Shows on the Air">
+      <List title="TV Shows on the Air" viewAll={true}>
         {onTheAir.map((tvShow) => (
           <ShowCard key={tvShow.id} show={tvShow} category={category} />
         ))}
       </List>
-      <List title="TV Shows Airing Today">
+      <List title="TV Shows Airing Today" viewAll={true}>
         {airingToday.map((tvShow) => (
           <ShowCard key={tvShow.id} show={tvShow} category={category} />
         ))}

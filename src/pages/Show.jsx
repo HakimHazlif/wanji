@@ -34,7 +34,7 @@ const Show = () => {
           <ShowMoreDetails />
         </section>
         <ShowCredits />
-        <List title="More like this">
+        <List title="More like this" viewAll={true}>
           {similar?.map((show) => (
             <ShowCard key={show.id} show={show} category={category} />
           ))}

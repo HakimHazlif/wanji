@@ -9,7 +9,7 @@ const SeasonsList = () => {
 
   return (
     <section className="py-32">
-      <List title="Seasons">
+      <List title="Seasons" viewAll={true}>
         {seasons.map((season) => (
           <div
             key={season.id}

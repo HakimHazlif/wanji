@@ -21,22 +21,22 @@ const MovieLists = () => {
 
   return (
     <section className="flex flex-col gap-20 padding-x">
-      <List title="Trending Movies">
+      <List title="Trending Movies" viewAll={true}>
         {popularMovies.map((movie) => (
           <ShowCard key={movie.id} show={movie} category={category} />
         ))}
       </List>
-      <List title="Top Rated Movies">
+      <List title="Top Rated Movies" viewAll={true}>
         {topRatedMovies.map((movie) => (
           <ShowCard key={movie.id} show={movie} category={category} />
         ))}
       </List>
-      <List title="Now Playnig Movies">
+      <List title="Now Playnig Movies" viewAll={true}>
         {nowPlaynigMovies.map((movie) => (
           <ShowCard key={movie.id} show={movie} category={category} />
         ))}
       </List>
-      <List title="Upcoming Movies">
+      <List title="Upcoming Movies" viewAll={true}>
         {upcomingMovies.map((movie) => (
           <ShowCard key={movie.id} show={movie} category={category} />
         ))}
