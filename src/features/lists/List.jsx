@@ -6,7 +6,7 @@ import {
 } from "react-icons/io";
 import { Link } from "react-router";
 
-const List = ({ title, children }) => {
+const List = ({ title, path, children }) => {
   const containerRef = useRef(null);
 
   const [isScrolledLeft, setIsScrolledLeft] = useState(true);
@@ -41,6 +41,7 @@ const List = ({ title, children }) => {
           {title}
           <span className="flex items-center gap-1 text-blue-400 text-base relative">
             <Link
+              to={path}
               className={`transition-all  ease-in duration-400 ${
                 isHoveredTitle ? "opacity-100 delay-300" : "opacity-0"
               }`}

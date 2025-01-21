@@ -4,9 +4,7 @@ import Home from "./pages/Home";
 import AuthPage from "./pages/AuthPage";
 import Show from "./pages/Show";
 import Profile from "./pages/Profile";
-import WatchlistPage from "./pages/WatchlistPage";
 import Lists from "./pages/Lists";
-import Favorites from "./pages/Favorites";
 import Settings from "./pages/Settings";
 import ResetPassword from "./pages/ResetPassword";
 import PageNotFound from "./pages/PageNotFound";
@@ -18,6 +16,8 @@ import UpdatePassword from "./pages/UpdatePassword";
 import Person from "./pages/Person";
 import Season from "./pages/Season";
 import Episode from "./pages/Episode";
+import TvShows from "./pages/TvShows";
+import Movies from "./pages/Movies";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -37,6 +37,8 @@ function App() {
             <Routes>
               <Route path="/" element={<AppLayout />}>
                 <Route index element={<Home />} />
+                <Route path="movies" element={<Movies />} />
+                <Route path="tv-shows" element={<TvShows />} />
                 <Route path="/:category/:id" element={<Show />} />
                 <Route
                   path="/:category/:id/season/:seasonNum"
@@ -51,6 +53,7 @@ function App() {
                   <Route path="lists" element={<Lists />} />
                   <Route path="settings" element={<Settings />} />
                 </Route>
+
                 <Route path="reset-password" element={<ResetPassword />} />
                 <Route path="update-password" element={<UpdatePassword />} />
               </Route>

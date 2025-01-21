@@ -13,37 +13,41 @@ const TvLists = () => {
 
   // console.log(tvShows);
 
-  const popularTv = tvShows.popularTv.filter(
-    (tvShow, index) => index < 8 && tvShow
-  );
-  const topRatedTv = tvShows.topRatedTv.filter(
-    (tvShow, index) => index < 8 && tvShow
-  );
-  const onTheAir = tvShows.onTheAir.filter(
-    (tvShow, index) => index < 8 && tvShow
-  );
-  const airingToday = tvShows.airingToday.filter(
-    (tvShow, index) => index < 8 && tvShow
-  );
+  const popularTv = tvShows.popularTv.slice(0, 9);
+  const topRatedTv = tvShows.topRatedTv.slice(0, 9);
+  const onTheAir = tvShows.onTheAir.slice(0, 9);
+  const airingToday = tvShows.airingToday.slice(0, 9);
 
   return (
     <section className="flex flex-col gap-20 padding-x">
-      <List title="Trending TV Shows" viewAll={true}>
+      <List title="Trending TV Shows" path="tv-shows" viewAll={true}>
         {popularTv.map((tvShow) => (
           <ShowCard key={tvShow.id} show={tvShow} category={category} />
         ))}
       </List>
-      <List title="Top Rated TV Shows" viewAll={true}>
+      <List
+        title="Top Rated TV Shows"
+        path="tv-shows?tvTag=top-rated-shows"
+        viewAll={true}
+      >
         {topRatedTv.map((tvShow) => (
           <ShowCard key={tvShow.id} show={tvShow} category={category} />
         ))}
       </List>
-      <List title="TV Shows on the Air" viewAll={true}>
+      <List
+        title="TV Shows on the Air"
+        path="tv-shows?tvTag=tv-on-the-air"
+        viewAll={true}
+      >
         {onTheAir.map((tvShow) => (
           <ShowCard key={tvShow.id} show={tvShow} category={category} />
         ))}
       </List>
-      <List title="TV Shows Airing Today" viewAll={true}>
+      <List
+        title="TV Shows Airing Today"
+        path="tv-shows?tvTag=tv-airing-today"
+        viewAll={true}
+      >
         {airingToday.map((tvShow) => (
           <ShowCard key={tvShow.id} show={tvShow} category={category} />
         ))}
