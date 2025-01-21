@@ -10,6 +10,7 @@ import { Box, Rating } from "@mui/material";
 import WatchlistIcon from "../lists/WatchlistIcon";
 import FavoriteIcon from "../lists/FavoriteIcon";
 import { MdAddToPhotos } from "react-icons/md";
+import Ellipsis from "../../ui/Ellipsis";
 
 const EpisodeInfo = () => {
   const { episodeDetails } = useEpisode();
@@ -74,7 +75,7 @@ const EpisodeInfo = () => {
               {formatNumber(vote_average)}
             </p>
           </div>
-          <p className="font-semibold text-slate-100 mt-2">{overview}</p>
+          <Ellipsis text={overview} />
         </div>
         <div>
           <img

@@ -16,6 +16,7 @@ import { useParams } from "react-router";
 import { useShow } from "./useShow";
 import ListsIcon from "../lists/ListsIcon";
 import RateUser from "../lists/RateUser";
+import Ellipsis from "../../ui/Ellipsis";
 
 const ShowIntroDetails = () => {
   // console.log(details);
@@ -34,7 +35,7 @@ const ShowIntroDetails = () => {
 
   const title = details?.title || details?.name;
   const originalTitle = details?.original_title || details?.original_name;
-  const runtime = details?.runtime || details?.episode_run_time;
+  const runtime = details?.runtime || details?.[0]?.episode_run_time;
   const yearFormat = getYearFormat(
     details.release_date || details.first_air_date
   );
@@ -123,11 +124,7 @@ const ShowIntroDetails = () => {
             ))}
           </ul>
 
-          <div className="h-14">
-            <p className="font-semibold max-h-20 text-slate-100 mt-7 text-ellipsis ">
-              {overview}
-            </p>
-          </div>
+          <Ellipsis text={overview} />
         </div>
       </div>
       <hr className="border-1 border-slate-400 w-full my-4" />

@@ -7,6 +7,7 @@ import {
 import { useSeason } from "./useSeason";
 
 import { useParams } from "react-router";
+import Ellipsis from "../../ui/Ellipsis";
 
 const SeasonIntroDetails = () => {
   const { id } = useParams();
@@ -34,8 +35,13 @@ const SeasonIntroDetails = () => {
           />
         </div>
         <div>
-          <div className="mb-2 text-white flex items-end gap-3 font-bold">
-            <h2 className="text-4xl">{title}</h2>
+          <div className="mb-2 text-white font-bold">
+            <h2 className="text-4xl mb-2">
+              {title}{" "}
+              <span className="text-2xl text-slate-200">
+                {season_number !== 0 && `(Season ${season_number})`}
+              </span>
+            </h2>
             <h3 className="text-2xl">{name}</h3>
           </div>
           <ul className="flex items-center gap-2 text-sm whitespace-nowrap my-2 text-white">
@@ -81,7 +87,7 @@ const SeasonIntroDetails = () => {
             ))}
           </ul>
 
-          <p className="font-semibold text-slate-100 mt-7">{overview}</p>
+          <Ellipsis text={overview} />
         </div>
       </div>
       <hr className="border-1 border-slate-400 w-full my-4" />

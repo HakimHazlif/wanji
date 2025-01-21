@@ -2,7 +2,6 @@ import { useMovies } from "./useMovies";
 import List from "../lists/List";
 import Spinner from "../../ui/Spinner";
 import ShowCard from "../../ui/ShowCard";
-import ShowCard2 from "../../ui/ShowCard2";
 
 const MovieLists = () => {
   const { isLoading, movies, error } = useMovies();

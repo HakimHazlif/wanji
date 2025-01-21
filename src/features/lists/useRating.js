@@ -15,8 +15,6 @@ export function useRating() {
     },
   });
 
-  if (data) console.log(data);
-
   const showRate = data?.[0]?.rate ?? null;
   if (showRate) console.log(showRate);
 

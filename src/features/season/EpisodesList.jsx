@@ -5,12 +5,13 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const EpisodesList = () => {
   const { episodes, seasonDetails } = useSeason();
-  const { season_number, showId } = seasonDetails;
+  const { season_number, showId, seasons } = seasonDetails;
+  console.log(seasonDetails);
 
   return (
     <div className="py-32">
-      <div className="flex gap-2 items-end mb-10">
-        <h2 className="text-4xl font-bold">{seasonDetails.name}</h2>
+      <div className="mb-10">
+        <h2 className="mb-2 text-4xl font-bold">{seasonDetails.name}</h2>
         <p>({episodes.length} episodes)</p>
       </div>
       <div className="grid grid-flow-row gap-8">
@@ -28,29 +29,26 @@ const EpisodesList = () => {
           </div>
         )}
       </div>
-      <div
-        className={`flex items-center py-10 ${
-          season_number === 1 ? "justify-end" : "justify-between"
-        } `}
-      >
-        {season_number !== 1 && (
-          <Link
-            to={`/tv/${showId}/season/${season_number - 1}`}
-            className="flex gap-2 items-center text-xl font-bold hover:text-orange-coral"
-          >
-            <IoIosArrowBack className="text-2xl" />
-            <h2>Go back to season{season_number - 1}</h2>
-          </Link>
-        )}
-        {season_number < seasonDetails.seasons.length && (
-          <Link
-            to={`/tv/${showId}/season/${season_number + 1}`}
-            className="flex gap-2 items-center text-xl font-bold hover:text-orange-coral"
-          >
-            <h2>Go to season {season_number + 1}</h2>
-            <IoIosArrowForward className="text-2xl" />
-          </Link>
-        )}
+      <div className="flex items-end justify-center mt-20">
+        <div className="flex gap-4 items-center">
+          <p className="text-slate-300 font-bold text-xl">Seasons</p>
+          {seasons.map(
+            (season) =>
+              season.season_number !== 0 && (
+                <Link
+                  to={`/tv/${showId}/season/${season.season_number}`}
+                  key={season.id}
+                  className={`h-12 w-12 text-xl font-bold rounded-full flex justify-center items-center duration-300 transition-colors  ${
+                    season.season_number === season_number
+                      ? "bg-orange-amber cursor-not-allowed"
+                      : "bg-slate-600 hover:bg-bluish-black"
+                  }`}
+                >
+                  {season.season_number}
+                </Link>
+              )
+          )}
+        </div>
       </div>
     </div>
   );
