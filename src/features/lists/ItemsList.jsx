@@ -28,7 +28,6 @@ const ItemsList = ({ list }) => {
     title: title,
     date: date,
   };
-  console.log(row);
 
   function handleAddToList() {
     if (isLoggedIn && list && details) {

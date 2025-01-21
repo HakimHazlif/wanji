@@ -9,7 +9,7 @@ import { useParams } from "react-router";
 
 const WatchlistIcon = ({ item }) => {
   const { itemId, type, title, date, season, parentId } = item;
-  const { id } = useParams();
+  // const { id } = useParams();
   const [isWatched, setIsWatched] = useState();
   const { watchlist, isLoading } = useLists();
   const { isLoggedIn } = useSelector((state) => state.user);

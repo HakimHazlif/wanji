@@ -6,7 +6,7 @@ import { useSession } from "../context/UserContext";
 import { FaStar } from "react-icons/fa";
 
 const ShowCard = ({ show, category }) => {
-  const { id, poster_path: poster, release_date, vote_average: rate } = show;
+  const { id, poster_path: poster, vote_average: rate } = show;
   const title = show?.title || show?.name;
   const date = show?.release_date || show?.first_air_date;
   const year = getYearFormat(show?.release_date || show?.first_air_date);

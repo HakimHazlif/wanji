@@ -26,6 +26,8 @@ const EpisodeCard = ({ episode }) => {
     crew,
   } = episode;
 
+  console.log(episode);
+
   const airYear = getYearFormat(air_date);
 
   const item = {

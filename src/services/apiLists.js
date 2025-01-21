@@ -8,15 +8,7 @@ export async function getAllUserLists(id) {
       `
       id,
       name,
-      items_list (
-        list_id,
-        item_id,
-        created_at,
-        type, 
-        parent_id,
-        title,
-        year,
-      )
+      items_list (*)
     `
     )
     .eq("user_id", id);
@@ -32,7 +24,6 @@ export async function insertShow({
   type,
   title,
   date,
-  tvName = null,
   season = null,
   parentId = null,
 }) {
@@ -44,7 +35,6 @@ export async function insertShow({
       type: type,
       title: title,
       year: date,
-      tv_name: tvName,
       season_number: season,
       parent_id: parentId,
     },

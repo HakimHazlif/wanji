@@ -12,20 +12,12 @@ const MovieLists = () => {
 
   if (error) return <p>{error}</p>;
 
-  console.log(movies);
+  // console.log(movies);
 
-  const popularMovies = movies.popularMovies.filter(
-    (movie, index) => index < 8 && movie
-  );
-  const topRatedMovies = movies.topRatedMovies.filter(
-    (movie, index) => index < 8 && movie
-  );
-  const nowPlaynigMovies = movies.nowPlaynigMovies.filter(
-    (movie, index) => index < 8 && movie
-  );
-  const upcomingMovies = movies.upcomingMovies.filter(
-    (movie, index) => index < 8 && movie
-  );
+  const popularMovies = movies.popularMovies.slice(0, 9);
+  const topRatedMovies = movies.topRatedMovies.slice(0, 9);
+  const nowPlaynigMovies = movies.nowPlaynigMovies.slice(0, 9);
+  const upcomingMovies = movies.upcomingMovies.slice(0, 9);
 
   return (
     <section className="flex flex-col gap-20 padding-x">
