@@ -19,10 +19,9 @@ const ShowCard = ({ show, category, additions = true }) => {
   const item = {
     itemId: id,
     type: category,
-    title,
-    date: yearFormat,
-    season: null,
     parentId: null,
+    episode: null,
+    season: null,
   };
 
   return (

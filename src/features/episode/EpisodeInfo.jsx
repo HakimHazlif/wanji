@@ -27,15 +27,12 @@ const EpisodeInfo = () => {
     overview,
   } = episodeDetails;
 
-  const airYear = getYearFormat(air_date);
-
   const item = {
     itemId: id,
     type: "episode",
-    title: name,
-    date: airYear,
-    season: season_number,
     parentId: show_id,
+    episode: episode_number,
+    season: season_number,
   };
 
   return (

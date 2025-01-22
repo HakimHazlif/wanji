@@ -11,8 +11,8 @@ import { LuHeart } from "react-icons/lu";
 import { useParams } from "react-router";
 
 const FavoriteIcon = ({ item }) => {
-  const { itemId, type, title, date, season, parentId } = item;
-  const { id } = useParams();
+  const { itemId, type, parentId, episode, season } = item;
+  // const { id } = useParams();
   const { isLoggedIn } = useSelector((state) => state.user);
   const [isFavorited, setIsFavorited] = useState();
 
@@ -35,10 +35,9 @@ const FavoriteIcon = ({ item }) => {
         id: itemId,
         listId,
         type,
-        title,
-        date,
-        season,
         parentId,
+        episode,
+        season,
       });
     }
   }

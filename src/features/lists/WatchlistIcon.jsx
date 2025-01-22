@@ -8,7 +8,7 @@ import { useDeleteShow } from "./useDeleteShow";
 import { useParams } from "react-router";
 
 const WatchlistIcon = ({ item }) => {
-  const { itemId, type, title, date, season, parentId } = item;
+  const { itemId, type, parentId, episode, season } = item;
   // const { id } = useParams();
   const [isWatched, setIsWatched] = useState();
   const { watchlist, isLoading } = useLists();
@@ -23,10 +23,9 @@ const WatchlistIcon = ({ item }) => {
         id: itemId,
         listId,
         type,
-        title,
-        date,
-        season,
         parentId,
+        episode,
+        season,
       });
     }
   }

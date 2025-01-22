@@ -1,4 +1,5 @@
-import { URL_Base } from "../constants/variables";
+import axios from "axios";
+import { options, URL_Base } from "../constants/variables";
 import supabase from "./supabase";
 
 export async function getAllUserLists(id) {
@@ -22,21 +23,19 @@ export async function insertShow({
   id,
   listId,
   type,
-  title,
-  date,
-  season = null,
   parentId = null,
+  episode = null,
+  season = null,
 }) {
-  console.log({ id, listId, type, title, date });
+  // console.log({ id, listId, type, title, date });
   const { data, error } = await supabase.from("items_list").insert([
     {
       item_id: id,
       list_id: listId,
       type: type,
-      title: title,
-      year: date,
-      season_number: season,
       parent_id: parentId,
+      episode_number: episode,
+      season_number: season,
     },
   ]);
 
@@ -174,13 +173,38 @@ export async function updateListName({ userId, listId, newName }) {
 
 // export async function getShowsList(shows = [], startPoint = 0, type = "movie") {
 //   if (!shows) return;
-//   const showsList = [];
+//   const showsUrl = [];
 
 //   shows.slice(startPoint, startPoint + 20).forEach((show) => {
-//     const url =
-//       show.type === type
-//         ? `${URL_Base}${show.type}/${show.item_id}?language=en-US`
-//         : null;
-//     if (!url) return;
+//     if (show.type !== type) return;
+//     const url = `${URL_Base}${show.type}/${show.item_id}?language=en-US`;
+
+//     showsUrl.push(url);
 //   });
 // }
+
+export async function getWatchlist(shows, startPoint = 0) {
+  if (!shows?.items_list?.length) return;
+
+  try {
+    const showsUrl = [];
+
+    shows?.items_list?.slice(startPoint, startPoint + 20).forEach((show) => {
+      let url;
+      if (show.type === "movie" || show.type === "tv")
+        url = `${URL_Base}${show.type}/${show.item_id}?language=en-US`;
+      if (show.type === "episode")
+        url = `${URL_Base}${show.type}/${show.parent_id}/season/${show.season_number}/episode/${show.episode_number}?language=en-US`;
+
+      showsUrl.push(url);
+    });
+
+    const results = await axios.all(
+      showsUrl.map((url) => axios.get(url, options))
+    );
+
+    return results;
+  } catch (err) {
+    throw new Error(err);
+  }
+}

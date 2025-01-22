@@ -31,14 +31,13 @@ const EpisodeCard = ({ episode }) => {
   const item = {
     itemId: id,
     type: "episode",
-    title: name,
-    date: airYear,
-    season: season_number,
     parentId: show_id,
+    episode: episode_number,
+    season: season_number,
   };
 
   const mainCrewRolls = getMainCrewRolls(crew);
-  const { directing, writing, production, creator } = mainCrewRolls;
+  const { directing, writing } = mainCrewRolls;
 
   return (
     <section className="flex rounded-2xl bg-bluish-black overflow-hidden">

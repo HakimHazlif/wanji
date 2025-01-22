@@ -1,22 +1,19 @@
-import { BiHeart, BiSolidGrid } from "react-icons/bi";
 import { useLists } from "../features/lists/useLists";
 import { FaListUl } from "react-icons/fa";
 import { BsBookmarkCheckFill } from "react-icons/bs";
 import { IoIosHeart } from "react-icons/io";
-import { useNavigate, useParams, useSearchParams } from "react-router";
-import MediaCard from "../ui/MediaCard";
-import List from "../features/lists/List";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSearchParams } from "react-router";
+
 import ShowCard from "../ui/ShowCard";
 import CustomLists from "../ui/CustomLists";
-import { IoListSharp } from "react-icons/io5";
 
 const Lists = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const list = searchParams.get("list");
 
   const { remainLists, watchlist, favoriteList } = useLists();
+
+  // console.log(watchlist);
 
   function handleNavigate(newList, newListId = null) {
     searchParams.set("list", newList);
