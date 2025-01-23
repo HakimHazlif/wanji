@@ -49,13 +49,13 @@ export async function insertShow({
   return { data, error };
 }
 
-export async function deleteShow({ id, listId, parentId = null }) {
+export async function deleteShow({ id, listId, type }) {
   const { error } = await supabase
     .from("items_list")
     .delete()
     .eq("item_id", id)
     .eq("list_id", listId)
-    .eq("parent_id", parentId);
+    .eq("type", type);
 
   if (error) throw new Error(error);
 }

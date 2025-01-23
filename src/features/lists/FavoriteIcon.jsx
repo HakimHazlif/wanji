@@ -39,7 +39,7 @@ const FavoriteIcon = ({ item }) => {
   function handleDeleteFromFavorite() {
     if (isLoggedIn && favoriteList) {
       const listId = favoriteList.id;
-      deleteShow({ id: itemId, listId, parentId: parentId });
+      deleteShow({ id: itemId, listId, type });
 
       dispatch(clearLists());
     }

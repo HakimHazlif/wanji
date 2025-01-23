@@ -36,7 +36,7 @@ const WatchlistIcon = ({ item }) => {
   function handleDeleteFromWatchlist() {
     if (isLoggedIn && watchlist) {
       const listId = watchlist.id;
-      deleteShow({ id: itemId, listId, parentId: parentId });
+      deleteShow({ id: itemId, listId: listId, type });
 
       dispatch(clearLists());
     }

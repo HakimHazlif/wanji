@@ -38,7 +38,7 @@ const ItemsList = ({ list }) => {
 
   function handleDeleteFromList() {
     if (isLoggedIn && list && details.id) {
-      deleteShow({ id: details.id, listId: list.id });
+      deleteShow({ id: details.id, listId: list.id, type: category });
       dispatch(clearLists());
     }
   }

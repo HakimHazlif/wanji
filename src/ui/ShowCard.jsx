@@ -13,11 +13,6 @@ const ShowCard = ({ show, category, additions = true }) => {
   const id = show?.id || show?.item_id;
   const title = show?.title || show?.name;
   const poster = show?.poster_path || show?.still_path;
-  const yearFormat = year
-    ? year
-    : getYearFormat(
-        show?.release_date || show?.first_air_date || show?.air_date
-      );
 
   function handleDate() {
     if (show["release_date"]) return getYearFormat(show?.release_date);
