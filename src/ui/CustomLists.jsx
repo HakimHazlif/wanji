@@ -3,6 +3,7 @@ import { useLists } from "../features/lists/useLists";
 import { useSelector } from "react-redux";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import ShowCard from "./ShowCard";
+import { useEffect } from "react";
 
 const CustomLists = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -15,8 +16,12 @@ const CustomLists = () => {
 
   const { remainLists } = useLists();
 
-  const targetList = remainLists.filter((list) => list.id === listId)?.[0]
-    ?.items_list;
+  // console.log(remainLists);
+
+  useEffect(() => {
+    const firstList = remainLists?.[0]?.id;
+    handleNavigate(firstList);
+  }, []);
 
   return (
     <div className="w-full ">
@@ -46,18 +51,6 @@ const CustomLists = () => {
           </button>
         ))}
       </div>
-      {targetList && (
-        <div className="grid grid-cols-4 gap-10 py-14">
-          {targetList.map((item) => (
-            <ShowCard
-              show={item}
-              key={item.item_id}
-              additions={false}
-              category={item.type}
-            />
-          ))}
-        </div>
-      )}
     </div>
   );
 };

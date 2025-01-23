@@ -1,18 +1,32 @@
-import { getPictureUrlFormat, getYearFormat } from "../utils/helper";
-import RateCircle from "./RateCircle";
+import {
+  getPictureUrlFormat,
+  getYearFormat,
+  updateDateFormat,
+} from "../utils/helper";
 import { Link } from "react-router";
 import WatchlistIcon from "../features/lists/WatchlistIcon";
-import { useSession } from "../context/UserContext";
+
 import { FaStar } from "react-icons/fa";
 
 const ShowCard = ({ show, category, additions = true }) => {
-  const { poster_path: poster, vote_average: rate, year } = show;
+  const { vote_average: rate, year } = show;
   const id = show?.id || show?.item_id;
   const title = show?.title || show?.name;
-  const date = show?.release_date || show?.first_air_date;
+  const poster = show?.poster_path || show?.still_path;
   const yearFormat = year
     ? year
-    : getYearFormat(show?.release_date || show?.first_air_date);
+    : getYearFormat(
+        show?.release_date || show?.first_air_date || show?.air_date
+      );
+
+  function handleDate() {
+    if (show["release_date"]) return getYearFormat(show?.release_date);
+    else if (show["first_air_date"])
+      return `${getYearFormat(show?.first_air_date)} - ${getYearFormat(
+        show?.last_air_date
+      )}`;
+    else if (show["air_date"]) return updateDateFormat(show?.air_date);
+  }
 
   // const { setIsMovie } = useSession();
 
@@ -26,7 +40,14 @@ const ShowCard = ({ show, category, additions = true }) => {
 
   return (
     <div className="w-52 relative">
-      <Link to={`/${category}/${id}`} className="">
+      <Link
+        to={
+          category === "movie" || category === "tv"
+            ? `/${category}/${id}`
+            : `/${category}/${id}`
+        }
+        className=""
+      >
         <img
           src={
             getPictureUrlFormat(poster, 500) ||
@@ -41,7 +62,7 @@ const ShowCard = ({ show, category, additions = true }) => {
         </div>
         <div className="flex flex-col gap-1 px-3 mt-2">
           <span className="text-[12px] text-slate-400 font-medium">
-            {yearFormat}
+            {handleDate()}
           </span>
           <h2 className="text-sm font-medium">{title}</h2>
         </div>

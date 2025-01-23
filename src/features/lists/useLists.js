@@ -29,5 +29,5 @@ export function useLists() {
       )
     : null;
 
-  return { isLoading, remainLists, watchlist, favoriteList, error };
+  return { isLoading, lists, remainLists, watchlist, favoriteList, error };
 }

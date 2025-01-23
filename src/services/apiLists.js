@@ -1,6 +1,11 @@
 import axios from "axios";
 import { options, URL_Base } from "../constants/variables";
 import supabase from "./supabase";
+import {
+  fetchItemsFailure,
+  fetchItemsStart,
+  fetchItemsSuccess,
+} from "../features/lists/listsSlice";
 
 export async function getAllUserLists(id) {
   const { data: lists, error } = await supabase
@@ -183,28 +188,32 @@ export async function updateListName({ userId, listId, newName }) {
 //   });
 // }
 
-export async function getWatchlist(shows, startPoint = 0) {
-  if (!shows?.items_list?.length) return;
+export const fetchItemsList =
+  (listId, list, startPoint = 0) =>
+  async (dispatch) => {
+    if (!list?.length || list?.length < startPoint) return;
 
-  try {
-    const showsUrl = [];
+    try {
+      // dispatch(fetchItemsStart());
+      const showsUrl = [];
 
-    shows?.items_list?.slice(startPoint, startPoint + 20).forEach((show) => {
-      let url;
-      if (show.type === "movie" || show.type === "tv")
-        url = `${URL_Base}${show.type}/${show.item_id}?language=en-US`;
-      if (show.type === "episode")
-        url = `${URL_Base}${show.type}/${show.parent_id}/season/${show.season_number}/episode/${show.episode_number}?language=en-US`;
+      list.slice(startPoint, startPoint + 20).forEach((show) => {
+        let url;
+        if (show.type === "movie" || show.type === "tv")
+          url = `${URL_Base}${show.type}/${show.item_id}?append_to_response=credits&language=en-US`;
+        if (show.type === "episode")
+          url = `${URL_Base}tv/${show.parent_id}/season/${show.season_number}/episode/${show.episode_number}?language=en-US`;
 
-      showsUrl.push(url);
-    });
+        showsUrl.push(url);
+      });
 
-    const results = await axios.all(
-      showsUrl.map((url) => axios.get(url, options))
-    );
+      const results = await axios.all(
+        showsUrl.map((url) => axios.get(url, options))
+      );
+      const items = results.map((result) => result.data);
 
-    return results;
-  } catch (err) {
-    throw new Error(err);
-  }
-}
+      dispatch(fetchItemsSuccess({ listId, items }));
+    } catch (err) {
+      dispatch(fetchItemsFailure(err));
+    }
+  };

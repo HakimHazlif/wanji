@@ -4,8 +4,9 @@ import { BsBookmarkCheckFill } from "react-icons/bs";
 import { IoIosHeart } from "react-icons/io";
 import { useSearchParams } from "react-router";
 
-import ShowCard from "../ui/ShowCard";
 import CustomLists from "../ui/CustomLists";
+import ListView from "../components/ListView";
+import { useEffect } from "react";
 
 const Lists = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -13,16 +14,9 @@ const Lists = () => {
 
   const { remainLists, watchlist, favoriteList } = useLists();
 
-  // console.log(watchlist);
-
-  function handleNavigate(newList, newListId = null) {
+  function handleNavigate(newList, newListId) {
     searchParams.set("list", newList);
-
-    if (newList === "my-lists" && newListId) {
-      searchParams.set("listId", newListId);
-    } else {
-      searchParams.delete("listId");
-    }
+    searchParams.set("listId", newListId);
 
     setSearchParams(searchParams);
   }
@@ -33,29 +27,34 @@ const Lists = () => {
       title: "Watchlist",
       icon: <BsBookmarkCheckFill />,
       iconColor: "text-orange-amber",
-      listNum: watchlist.items_list.length,
+      listNum: watchlist?.items_list?.length,
       itemType: ["titles", "title"],
-      handleClick: () => handleNavigate(`watchlist`),
+      handleClick: () => handleNavigate(`watchlist`, watchlist?.id),
     },
     {
       keyword: "favorites",
       title: "Favorites",
       icon: <IoIosHeart />,
       iconColor: "text-strawberry",
-      listNum: favoriteList.items_list.length,
+      listNum: favoriteList?.items_list?.length,
       itemType: ["titles", "title"],
-      handleClick: () => handleNavigate(`favorites`),
+      handleClick: () => handleNavigate(`favorites`, favoriteList?.id),
     },
     {
       keyword: "my-lists",
       title: "My lists",
       icon: <FaListUl />,
       iconColor: "text-orange-coral",
-      listNum: remainLists.length,
+      listNum: remainLists?.length,
       itemType: ["lists", "list"],
-      handleClick: () => handleNavigate(`my-lists`, remainLists[0].id),
+      handleClick: () => handleNavigate(`my-lists`, remainLists?.[0]?.id),
     },
   ];
+
+  useEffect(() => {
+    const newListId = list === "watchlist" ? watchlist?.id : favoriteList?.id;
+    handleNavigate(list, newListId);
+  }, [list]);
 
   return (
     <section className="padding-x py-32">
@@ -79,7 +78,7 @@ const Lists = () => {
                 </div>
 
                 <p>
-                  Watchlist{" "}
+                  {item.title}{" "}
                   <span className="text-sm text-slate-500 font-medium">
                     ({item.listNum}{" "}
                     {item.listNum > 1 ? item.itemType[0] : item.itemType[1]})
@@ -91,32 +90,9 @@ const Lists = () => {
         </div>
       </section>
       <section className="py-4">
-        {list === "watchlist" && (
-          <div className="grid grid-cols-4 gap-10 py-14">
-            {watchlist?.items_list.map((item) => (
-              <ShowCard
-                show={item}
-                key={item.item_id}
-                additions={false}
-                category={item.type}
-              />
-            ))}
-          </div>
-        )}
-        {list === "favorites" && (
-          <div className="grid grid-cols-4 gap-10 py-14">
-            {favoriteList?.items_list.map((item) => (
-              <ShowCard
-                show={item}
-                key={item.item_id}
-                additions={false}
-                category={item.type}
-              />
-            ))}
-          </div>
-        )}
         {list === "my-lists" && <CustomLists />}
       </section>
+      <ListView />
     </section>
   );
 };

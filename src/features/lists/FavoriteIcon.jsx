@@ -62,12 +62,12 @@ const FavoriteIcon = ({ item }) => {
     <>
       {isFavorited ? (
         <FaHeart
-          className=" text-strawberry text-5xl cursor-pointer"
+          className=" text-strawberry w-10 h-10 cursor-pointer"
           onClick={handleDeleteFromFavorite}
         />
       ) : (
         <LuHeart
-          className="text-5xl text-gray-300 cursor-pointer hover:text-red-500 duration-300 transition-colors ease-linear"
+          className="w-10 h-10 text-gray-300 cursor-pointer hover:text-red-500 duration-300 transition-colors ease-linear"
           onClick={handleAddToFavorite}
         />
       )}
