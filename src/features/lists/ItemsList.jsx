@@ -1,6 +1,6 @@
 import { FaPlus } from "react-icons/fa";
 import { useAddShow } from "./useAddShow";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SpinnerMini from "../../ui/SpinnerMini";
 import { useShow } from "../show/useShow";
 import { useParams } from "react-router";
@@ -8,8 +8,10 @@ import { useEffect, useState } from "react";
 import { useDeleteShow } from "./useDeleteShow";
 import { LuListCheck } from "react-icons/lu";
 import { getYearFormat } from "../../utils/helper";
+import { clearLists } from "./listsSlice";
 
 const ItemsList = ({ list }) => {
+  const dispatch = useDispatch();
   const [isAdded, setIsAdded] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.user);
   const { details } = useShow();
@@ -25,19 +27,20 @@ const ItemsList = ({ list }) => {
     id: details.id,
     listId: list.id,
     type: category,
-    title: title,
-    date: date,
   };
 
   function handleAddToList() {
     if (isLoggedIn && list && details) {
       addShow(row);
+      dispatch(clearLists());
     }
   }
 
   function handleDeleteFromList() {
-    if (isLoggedIn && list && details.id)
+    if (isLoggedIn && list && details.id) {
       deleteShow({ id: details.id, listId: list.id });
+      dispatch(clearLists());
+    }
   }
 
   useEffect(() => {

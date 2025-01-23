@@ -1,29 +1,22 @@
 import { useLists } from "./useLists";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useEffect, useState } from "react";
 import { useAddShow } from "./useAddShow";
 import SpinnerMini from "../../ui/SpinnerMini";
 import { useDeleteShow } from "./useDeleteShow";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { CiHeart } from "react-icons/ci";
+import { FaHeart } from "react-icons/fa";
 import { LuHeart } from "react-icons/lu";
-import { useParams } from "react-router";
+import { clearLists } from "./listsSlice";
 
 const FavoriteIcon = ({ item }) => {
+  const dispatch = useDispatch();
   const { itemId, type, parentId, episode, season } = item;
   // const { id } = useParams();
   const { isLoggedIn } = useSelector((state) => state.user);
   const [isFavorited, setIsFavorited] = useState();
 
   const { favoriteList, isLoading } = useLists();
-
-  // console.log({
-  //   id: id,
-  //   listId: favoriteList?.id,
-  //   type: type,
-  //   parentId: parentId,
-  // });
 
   const { isLoading: isAdding, addShow } = useAddShow();
   const { isLoading: isDeleting, deleteShow } = useDeleteShow();
@@ -39,12 +32,16 @@ const FavoriteIcon = ({ item }) => {
         episode,
         season,
       });
+
+      dispatch(clearLists());
     }
   }
   function handleDeleteFromFavorite() {
     if (isLoggedIn && favoriteList) {
       const listId = favoriteList.id;
       deleteShow({ id: itemId, listId, parentId: parentId });
+
+      dispatch(clearLists());
     }
   }
 

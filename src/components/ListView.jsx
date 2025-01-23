@@ -17,7 +17,7 @@ const ListView = () => {
   ) || {
     items: [],
     nextStartPoint: 0,
-    hasMore: false,
+    hasMore: true,
   };
 
   const { lists } = useLists();
@@ -25,21 +25,17 @@ const ListView = () => {
   const targetList =
     lists && lists?.filter((list) => list.id === listId)?.[0]?.items_list;
 
-  // render if lists not exist
-
   const loadMore = () => {
     if (hasMore && !loading) {
       dispatch(fetchItemsList(listId, targetList, nextStartPoint));
     }
   };
 
-  // console.log(episodeParentId);
-
   useEffect(() => {
-    if (items?.length !== targetList?.length) {
+    if (hasMore && !loading) {
       dispatch(fetchItemsList(listId, targetList, 0));
     }
-  }, [listId, targetList, dispatch, items?.length]);
+  }, [listId, targetList, dispatch, hasMore, loading]);
 
   if (!listId) return <p>Empty</p>;
 

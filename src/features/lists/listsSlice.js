@@ -13,8 +13,8 @@ const listsSlice = createSlice({
       state.error = null;
     },
     fetchItemsSuccess(state, action) {
-      const { listId, items } = action.payload;
-      console.log({ listId, items });
+      const { listId, items, list: listItems } = action.payload;
+      console.log({ listId, items, listItems });
 
       if (!state.lists[listId]) {
         state.lists[listId] = {
@@ -27,7 +27,8 @@ const listsSlice = createSlice({
       const list = state.lists[listId];
       list.items.push(...items);
       list.nextStartPoint += items.length;
-      list.hasMore = items.length === 20;
+      list.hasMore = list.items.length < listItems.length;
+      console.log(list.hasMore);
       state.loading = false;
       state.error = null;
     },
@@ -35,10 +36,19 @@ const listsSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    clearLists(state) {
+      state.lists = {};
+      state.loading = false;
+      state.error = null;
+    },
   },
 });
 
-export const { fetchItemsStart, fetchItemsSuccess, fetchItemsFailure } =
-  listsSlice.actions;
+export const {
+  fetchItemsStart,
+  fetchItemsSuccess,
+  fetchItemsFailure,
+  clearLists,
+} = listsSlice.actions;
 
 export default listsSlice.reducer;

@@ -4,41 +4,41 @@ import { FaInfoCircle, FaPlus } from "react-icons/fa";
 import { useShow } from "../show/useShow";
 import { useParams } from "react-router";
 import { useAddShow } from "./useAddShow";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../ui/Spinner";
 import ItemsList from "./ItemsList";
 import { useCreateList } from "./useCreateList";
 import { getYearFormat } from "../../utils/helper";
+import { clearLists } from "./listsSlice";
 
 const ListsMenu = ({ isPopupOpen, setIsPopupOpen }) => {
+  const dispatch = useDispatch();
   const [newListName, setNewListName] = useState("");
   const popupRef = useRef();
   const { category } = useParams();
   const { isLoggedIn } = useSelector((state) => state.user);
   const { uid } = useSelector((state) => state.user.user);
 
-  const { isLoading, remainLists, watchlist } = useLists();
+  const { isLoading, remainLists } = useLists();
   const { details } = useShow();
   const { isLoading: isAdding } = useAddShow();
   const { creatList, isLoading: isCreating } = useCreateList();
-
-  const title = details?.title || details?.name;
-  const year = getYearFormat(details?.release_date || details?.first_air_date);
 
   async function handleCreateList(e) {
     e.preventDefault();
 
     if (!newListName) return;
 
-    if (isLoggedIn && uid)
+    if (isLoggedIn && uid) {
       creatList({
         userId: uid,
         name: newListName,
         itemId: details.id,
         type: category,
-        title,
-        date: year,
       });
+
+      dispatch(clearLists());
+    }
   }
 
   useEffect(() => {

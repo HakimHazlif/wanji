@@ -194,7 +194,7 @@ export const fetchItemsList =
     if (!list?.length || list?.length < startPoint) return;
 
     try {
-      // dispatch(fetchItemsStart());
+      dispatch(fetchItemsStart());
       const showsUrl = [];
 
       list.slice(startPoint, startPoint + 20).forEach((show) => {
@@ -212,8 +212,27 @@ export const fetchItemsList =
       );
       const items = results.map((result) => result.data);
 
-      dispatch(fetchItemsSuccess({ listId, items }));
+      dispatch(fetchItemsSuccess({ listId, items, list }));
     } catch (err) {
       dispatch(fetchItemsFailure(err));
     }
   };
+
+// export const fetchItem = (listId, item) => async (dispatch) => {
+//   const { type, item_id, parent_id, season_number, episode_number } = item;
+
+//   try {
+//     dispatch(fetchItemsStart());
+//     let url;
+//     if (type === "movie" || type === "tv")
+//       url = `${URL_Base}${type}/${item_id}?append_to_response=credits&language=en-US`;
+//     if (type === "episode")
+//       url = `${URL_Base}tv/${parent_id}/season/${season_number}/episode/${episode_number}?language=en-US`;
+
+//     const result = await axios.get(url, options);
+
+//     dispatch(fetchOneItemSuccess({ listId, item: result?.data?.[0] }));
+//   } catch (err) {
+//     dispatch(fetchItemsFailure(err));
+//   }
+// };

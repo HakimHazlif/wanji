@@ -1,13 +1,15 @@
 import { useLists } from "./useLists";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BsBookmarkCheckFill, BsBookmarkPlusFill } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { useAddShow } from "./useAddShow";
 import SpinnerMini from "../../ui/SpinnerMini";
 import { useDeleteShow } from "./useDeleteShow";
-import { useParams } from "react-router";
+
+import { clearLists } from "./listsSlice";
 
 const WatchlistIcon = ({ item }) => {
+  const dispatch = useDispatch();
   const { itemId, type, parentId, episode, season } = item;
   // const { id } = useParams();
   const [isWatched, setIsWatched] = useState();
@@ -27,12 +29,16 @@ const WatchlistIcon = ({ item }) => {
         episode,
         season,
       });
+
+      dispatch(clearLists());
     }
   }
   function handleDeleteFromWatchlist() {
     if (isLoggedIn && watchlist) {
       const listId = watchlist.id;
       deleteShow({ id: itemId, listId, parentId: parentId });
+
+      dispatch(clearLists());
     }
   }
 
