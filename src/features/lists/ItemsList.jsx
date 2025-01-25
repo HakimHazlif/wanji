@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import { useDeleteShow } from "./useDeleteShow";
 import { LuListCheck } from "react-icons/lu";
 import { getYearFormat } from "../../utils/helper";
-import { clearLists } from "./listsSlice";
 
 const ItemsList = ({ list }) => {
   const dispatch = useDispatch();
@@ -32,14 +31,12 @@ const ItemsList = ({ list }) => {
   function handleAddToList() {
     if (isLoggedIn && list && details) {
       addShow(row);
-      dispatch(clearLists());
     }
   }
 
   function handleDeleteFromList() {
     if (isLoggedIn && list && details.id) {
       deleteShow({ id: details.id, listId: list.id, type: category });
-      dispatch(clearLists());
     }
   }
 

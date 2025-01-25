@@ -1,5 +1,5 @@
 import { useMovies } from "./useMovies";
-import List from "../lists/List";
+import ListScroll from "../lists/ListScroll";
 import Spinner from "../../ui/Spinner";
 import ShowCard from "../../ui/ShowCard";
 
@@ -20,12 +20,12 @@ const MovieLists = () => {
 
   return (
     <section className="flex flex-col gap-20 padding-x">
-      <List title="Trending Movies" path="movies" viewAll={true}>
+      <ListScroll title="Trending Movies" path="movies" viewAll={true}>
         {popularMovies.map((movie) => (
           <ShowCard key={movie.id} show={movie} category={category} />
         ))}
-      </List>
-      <List
+      </ListScroll>
+      <ListScroll
         title="Top Rated Movies"
         path="movies?movieTag=top-rated-movies"
         viewAll={true}
@@ -33,8 +33,8 @@ const MovieLists = () => {
         {topRatedMovies.map((movie) => (
           <ShowCard key={movie.id} show={movie} category={category} />
         ))}
-      </List>
-      <List
+      </ListScroll>
+      <ListScroll
         title="Now Playnig Movies"
         path="movies?movieTag=now-playing-movies"
         viewAll={true}
@@ -42,8 +42,8 @@ const MovieLists = () => {
         {nowPlaynigMovies.map((movie) => (
           <ShowCard key={movie.id} show={movie} category={category} />
         ))}
-      </List>
-      <List
+      </ListScroll>
+      <ListScroll
         title="Upcoming Movies"
         path="movies?movieTag=upcoming-movies"
         viewAll={true}
@@ -51,7 +51,7 @@ const MovieLists = () => {
         {upcomingMovies.map((movie) => (
           <ShowCard key={movie.id} show={movie} category={category} />
         ))}
-      </List>
+      </ListScroll>
     </section>
   );
 };

@@ -2,7 +2,6 @@ import EpisodesList from "../features/season/EpisodesList";
 import SeasonCredits from "../features/season/SeasonCredits";
 import SeasonImages from "../features/season/SeasonImages";
 import SeasonIntroDetails from "../features/season/SeasonIntroDetails";
-import SeasonMoreDetails from "../features/season/SeasonMoreDetails";
 import { useSeason } from "../features/season/useSeason";
 import Spinner from "../ui/Spinner";
 import { getPictureUrlFormat } from "../utils/helper";

@@ -1,0 +1,85 @@
+import { useSelector } from "react-redux";
+import { Link, useParams } from "react-router";
+import { useLists } from "../features/lists/useLists";
+
+import { formatDistanceToNow } from "date-fns";
+import { useMemo } from "react";
+import { bgPopcorn } from "../assets/icons";
+import ListView from "../components/ListView";
+import CreateListButton from "../ui/CreateListButton";
+import CustomLists from "../ui/CustomLists";
+
+const List = () => {
+  const { user } = useSelector((state) => state.user);
+  const { username } = user;
+  const { list } = useParams();
+
+  const { watchlist, favoriteList, remainLists } = useLists();
+  console.log(remainLists);
+
+  const createdDate = useMemo(() => {
+    let createdAt;
+    if (list === "Watchlist") createdAt = watchlist?.created_at;
+    else if (list === "Favorites") createdAt = favoriteList?.created_at;
+    return createdAt;
+  }, [list, watchlist?.created_at, favoriteList?.created_at]);
+
+  return (
+    <main className="padding-x py-32 w-full">
+      <div className="absolute top-0 right-0 w-full -z-10 ">
+        <img
+          src={bgPopcorn}
+          alt="backdrop of movie"
+          className="h-[400px] w-full object-cover object-center masking"
+        />
+        <div className="bg-[#272831] opacity-60 masking h-[600px] w-full absolute bottom-0 right-0 z-10"></div>
+      </div>
+
+      <section className="border-b border-slate-600 pb-8 flex justify-between items-center">
+        <div>
+          <h2 className="font-bold text-6xl leading-relaxed">My {list}</h2>
+          <div className="flex gap-1 font-semibold">
+            {createdDate && (
+              <p className="">
+                Created{" "}
+                <span className="">{formatDistanceToNow(createdDate)}</span> ago
+              </p>
+            )}
+            <p>
+              by{" "}
+              <Link to={`/u/${username}`} className="font-bold text-blue-700">
+                {username}
+              </Link>
+            </p>
+          </div>
+          <p className="mt-10 w-4/5">
+            {list === "Watchlist" &&
+              "A space to track the titles you're interested in. Organize and manage them in the order that suits your preferences, ensuring you never lose track of what matters to you."}
+            {list === "Favorites" &&
+              "A collection of your most-loved titles. Save and revisit your favorites anytime, creating a personal library of content you enjoy the most."}
+            {list === "Lists" &&
+              "Create and customize lists to organize your content however you like. Whether it's by genre, mood, or theme, these lists give you full control over curating and managing your selections."}
+          </p>
+        </div>
+        <div className="flex-1 flex justify-center items-center">
+          <CreateListButton />
+        </div>
+      </section>
+      {list === "Watchlist" && (
+        <div>
+          {/*if there no films or shows*/}
+          <ListView listId={watchlist?.id} />
+        </div>
+      )}
+      {list === "Favorites" && (
+        <div>
+          {/*if there no films or shows*/}
+          <ListView listId={favoriteList?.id} />
+        </div>
+      )}
+      {list === "Lists" && <CustomLists />}
+    </main>
+  );
+};
+
+export default List;

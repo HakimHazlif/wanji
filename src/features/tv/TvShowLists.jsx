@@ -1,5 +1,5 @@
 import { useTvShows } from "./useTvShows";
-import List from "../lists/List";
+import ListScroll from "../lists/ListScroll";
 import Spinner from "../../ui/Spinner";
 import ShowCard from "../../ui/ShowCard";
 
@@ -20,12 +20,12 @@ const TvLists = () => {
 
   return (
     <section className="flex flex-col gap-20 padding-x">
-      <List title="Trending TV Shows" path="tv-shows" viewAll={true}>
+      <ListScroll title="Trending TV Shows" path="tv-shows" viewAll={true}>
         {popularTv.map((tvShow) => (
           <ShowCard key={tvShow.id} show={tvShow} category={category} />
         ))}
-      </List>
-      <List
+      </ListScroll>
+      <ListScroll
         title="Top Rated TV Shows"
         path="tv-shows?tvTag=top-rated-shows"
         viewAll={true}
@@ -33,8 +33,8 @@ const TvLists = () => {
         {topRatedTv.map((tvShow) => (
           <ShowCard key={tvShow.id} show={tvShow} category={category} />
         ))}
-      </List>
-      <List
+      </ListScroll>
+      <ListScroll
         title="TV Shows on the Air"
         path="tv-shows?tvTag=tv-on-the-air"
         viewAll={true}
@@ -42,8 +42,8 @@ const TvLists = () => {
         {onTheAir.map((tvShow) => (
           <ShowCard key={tvShow.id} show={tvShow} category={category} />
         ))}
-      </List>
-      <List
+      </ListScroll>
+      <ListScroll
         title="TV Shows Airing Today"
         path="tv-shows?tvTag=tv-airing-today"
         viewAll={true}
@@ -51,7 +51,7 @@ const TvLists = () => {
         {airingToday.map((tvShow) => (
           <ShowCard key={tvShow.id} show={tvShow} category={category} />
         ))}
-      </List>
+      </ListScroll>
     </section>
   );
 };

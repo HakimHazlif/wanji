@@ -6,7 +6,7 @@ import {
 } from "react-icons/io";
 import { Link } from "react-router";
 
-const List = ({ title, path, children }) => {
+const ListScroll = ({ title, path, children }) => {
   const containerRef = useRef(null);
 
   const [isScrolledLeft, setIsScrolledLeft] = useState(true);
@@ -74,4 +74,4 @@ const List = ({ title, path, children }) => {
   );
 };
 
-export default List;
+export default ListScroll;

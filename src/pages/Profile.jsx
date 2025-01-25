@@ -60,7 +60,6 @@ const Profile = () => {
           </div>
         </div>
       </section>
-      <Outlet />
       <div className="absolute top-0 right-0 w-full -z-10 ">
         <img
           src={bgPopcorn}

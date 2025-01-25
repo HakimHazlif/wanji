@@ -2,12 +2,12 @@ import { useShow } from "../features/show/useShow";
 import ShowIntroDetails from "../features/show/ShowIntroDetails";
 import ShowMoreDetails from "../features/show/ShowMoreDetails";
 import ShowCredits from "../features/show/ShowCredits";
-import List from "../features/lists/List";
+import ListScroll from "../features/lists/ListScroll";
 // import ShowSimilar from "../features/show/ShowSimilar";
 // import ShowReviews from "../features/show/ShowReviews";
 
 import Spinner from "../ui/Spinner";
-import { getMainCrewRolls, getPictureUrlFormat } from "../utils/helper";
+import { getPictureUrlFormat } from "../utils/helper";
 import ShowCard from "../ui/ShowCard";
 import ShowImages from "../features/show/ShowImages";
 import SeasonsList from "../features/lists/SeasonsList";
@@ -34,11 +34,11 @@ const Show = () => {
           <ShowMoreDetails />
         </section>
         <ShowCredits />
-        <List title="More like this" viewAll={true}>
+        <ListScroll title="More like this" viewAll={true}>
           {similar?.map((show) => (
             <ShowCard key={show.id} show={show} category={category} />
           ))}
-        </List>
+        </ListScroll>
 
         {/* 
         <ShowSimilar similar={similar} />

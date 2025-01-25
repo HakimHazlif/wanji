@@ -6,9 +6,8 @@ import { useSearchParams } from "react-router";
 
 import CustomLists from "../ui/CustomLists";
 import ListView from "../components/ListView";
-import { useEffect } from "react";
 
-const Lists = () => {
+const List = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const list = searchParams.get("list");
 
@@ -20,6 +19,8 @@ const Lists = () => {
 
     setSearchParams(searchParams);
   }
+
+  console.log("render from lists");
 
   const mediaLists = [
     {
@@ -51,10 +52,10 @@ const Lists = () => {
     },
   ];
 
-  useEffect(() => {
-    const newListId = list === "watchlist" ? watchlist?.id : favoriteList?.id;
-    handleNavigate(list, newListId);
-  }, [list]);
+  // useEffect(() => {
+  //   const newListId = list === "watchlist" ? watchlist?.id : favoriteList?.id;
+  //   handleNavigate(list, newListId);
+  // }, [list, favoriteList?.id, watchlist?.id]);
 
   return (
     <section className="padding-x py-32">
@@ -97,4 +98,4 @@ const Lists = () => {
   );
 };
 
-export default Lists;
+export default List;

@@ -1,7 +1,7 @@
 import { useShow } from "../show/useShow";
 import { Link } from "react-router";
 import { getPictureUrlFormat } from "../../utils/helper";
-import List from "./List";
+import ListScroll from "./ListScroll";
 
 const SeasonsList = () => {
   const { details } = useShow();
@@ -9,7 +9,7 @@ const SeasonsList = () => {
 
   return (
     <section className="py-32">
-      <List title="Seasons" viewAll={true}>
+      <ListScroll title="Seasons" viewAll={true}>
         {seasons.map((season) => (
           <div
             key={season.id}
@@ -31,7 +31,7 @@ const SeasonsList = () => {
             </Link>
           </div>
         ))}
-      </List>
+      </ListScroll>
     </section>
   );
 };

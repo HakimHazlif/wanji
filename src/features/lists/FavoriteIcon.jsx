@@ -7,7 +7,6 @@ import SpinnerMini from "../../ui/SpinnerMini";
 import { useDeleteShow } from "./useDeleteShow";
 import { FaHeart } from "react-icons/fa";
 import { LuHeart } from "react-icons/lu";
-import { clearLists } from "./listsSlice";
 
 const FavoriteIcon = ({ item }) => {
   const dispatch = useDispatch();
@@ -32,16 +31,12 @@ const FavoriteIcon = ({ item }) => {
         episode,
         season,
       });
-
-      dispatch(clearLists());
     }
   }
   function handleDeleteFromFavorite() {
     if (isLoggedIn && favoriteList) {
       const listId = favoriteList.id;
       deleteShow({ id: itemId, listId, type });
-
-      dispatch(clearLists());
     }
   }
 

@@ -1,11 +1,6 @@
 import axios from "axios";
 import { options, URL_Base } from "../constants/variables";
 import supabase from "./supabase";
-import {
-  fetchItemsFailure,
-  fetchItemsStart,
-  fetchItemsSuccess,
-} from "../features/lists/listsSlice";
 
 export async function getAllUserLists(id) {
   const { data: lists, error } = await supabase
@@ -14,6 +9,7 @@ export async function getAllUserLists(id) {
       `
       id,
       name,
+      created_at,
       items_list (*)
     `
     )
@@ -188,35 +184,27 @@ export async function updateListName({ userId, listId, newName }) {
 //   });
 // }
 
-export const fetchItemsList =
-  (listId, list, startPoint = 0) =>
-  async (dispatch) => {
-    if (!list?.length || list?.length < startPoint) return;
+export const fetchItemsList = async (listId, list, startPoint = 0) => {
+  if (!list?.length || list?.length < startPoint) {
+    return { items: [], listId, nextPoint: null };
+  }
 
-    try {
-      dispatch(fetchItemsStart());
-      const showsUrl = [];
+  const showsUrl = list.slice(startPoint, startPoint + 20).map((show) => {
+    if (show.type === "movie" || show.type === "tv")
+      return `${URL_Base}${show.type}/${show.item_id}?append_to_response=credits&language=en-US`;
+    if (show.type === "episode")
+      return `${URL_Base}tv/${show.parent_id}/season/${show.season_number}/episode/${show.episode_number}?language=en-US`;
+  });
 
-      list.slice(startPoint, startPoint + 20).forEach((show) => {
-        let url;
-        if (show.type === "movie" || show.type === "tv")
-          url = `${URL_Base}${show.type}/${show.item_id}?append_to_response=credits&language=en-US`;
-        if (show.type === "episode")
-          url = `${URL_Base}tv/${show.parent_id}/season/${show.season_number}/episode/${show.episode_number}?language=en-US`;
+  console.log(startPoint);
 
-        showsUrl.push(url);
-      });
+  const results = await axios.all(
+    showsUrl.map((url) => axios.get(url, options))
+  );
+  const items = results.map((result) => result.data);
 
-      const results = await axios.all(
-        showsUrl.map((url) => axios.get(url, options))
-      );
-      const items = results.map((result) => result.data);
-
-      dispatch(fetchItemsSuccess({ listId, items, list }));
-    } catch (err) {
-      dispatch(fetchItemsFailure(err));
-    }
-  };
+  return { items: items, listId, nextPoint: startPoint + items.length };
+};
 
 // export const fetchItem = (listId, item) => async (dispatch) => {
 //   const { type, item_id, parent_id, season_number, episode_number } = item;

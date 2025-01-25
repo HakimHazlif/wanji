@@ -1,14 +1,25 @@
 import ProfileElements from "./ProfileElement";
 import { profileMenuElements } from "../constants/uiElements";
 import { useNavigate } from "react-router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
+import { FaRegUser } from "react-icons/fa";
+import { useLists } from "../features/lists/useLists";
+import { BsBookmarkCheck } from "react-icons/bs";
+import { IoMdHeartEmpty } from "react-icons/io";
+import { MdChecklistRtl } from "react-icons/md";
+import { IoLogOutOutline, IoSettingsOutline } from "react-icons/io5";
+import { fetchItemsList } from "../services/apiLists";
+import { logout } from "../services/apiAuth";
 
 const ProfileMenu = ({ setHandle, onClose }) => {
+  const dispatch = useDispatch();
   const menuRef = useRef();
   const { isLoggedIn, user } = useSelector((state) => state.user);
 
   const { avatar, username, email } = user;
+
+  const { watchlist, favoriteList, remainLists } = useLists();
 
   useEffect(() => {
     function handleDropMenu(e) {
@@ -39,23 +50,46 @@ const ProfileMenu = ({ setHandle, onClose }) => {
             <p className="text-slate-500 font-medium text-sm">{email}</p>
           </div>
         </div>
-        <>
-          {profileMenuElements.map((item, index) => (
-            <ul key={index}>
-              {index < profileMenuElements.length && (
-                <hr className="border-[1.5px] my-2" />
-              )}
-              {item.map((element) => (
-                <ProfileElements
-                  key={element.id}
-                  icon={element.iconSVG}
-                  route={element.route}
-                  itemName={element.name}
-                />
-              ))}
-            </ul>
-          ))}
-        </>
+        <ul>
+          <ProfileElements
+            route={`/u/${username}`}
+            itemName="View Profile"
+            icon={<FaRegUser />}
+          />
+        </ul>
+        <hr className="border-[1.5px] my-2" />
+
+        <ul>
+          <ProfileElements
+            itemName="Watchlist"
+            route={`/u/${username}/Watchlist`}
+            icon={<BsBookmarkCheck />}
+          />
+          <ProfileElements
+            itemName="Favorites"
+            route={`/u/${username}/Favorites`}
+            icon={<IoMdHeartEmpty />}
+          />
+          <ProfileElements
+            itemName="My Lists"
+            route={`/u/${username}/Lists`}
+            icon={<MdChecklistRtl />}
+          />
+        </ul>
+        <hr className="border-[1.5px] my-2" />
+        <ul>
+          <ProfileElements
+            itemName="Settings"
+            route={`/u/${username}/settings`}
+            icon={<IoSettingsOutline />}
+          />
+          <ProfileElements
+            itemName="Log out"
+            route="/"
+            icon={<IoLogOutOutline />}
+            onClick={() => dispatch(logout())}
+          />
+        </ul>
       </aside>
     </div>
   );

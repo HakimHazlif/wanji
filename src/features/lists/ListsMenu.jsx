@@ -9,7 +9,6 @@ import Spinner from "../../ui/Spinner";
 import ItemsList from "./ItemsList";
 import { useCreateList } from "./useCreateList";
 import { getYearFormat } from "../../utils/helper";
-import { clearLists } from "./listsSlice";
 
 const ListsMenu = ({ isPopupOpen, setIsPopupOpen }) => {
   const dispatch = useDispatch();
@@ -36,8 +35,6 @@ const ListsMenu = ({ isPopupOpen, setIsPopupOpen }) => {
         itemId: details.id,
         type: category,
       });
-
-      dispatch(clearLists());
     }
   }
 

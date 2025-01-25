@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 import AuthPage from "./pages/AuthPage";
 import Show from "./pages/Show";
 import Profile from "./pages/Profile";
-import Lists from "./pages/Lists";
+import List from "./pages/List";
 import Settings from "./pages/Settings";
 import ResetPassword from "./pages/ResetPassword";
 import PageNotFound from "./pages/PageNotFound";
@@ -50,9 +50,9 @@ function App() {
                 />
                 <Route path="person/:personId" element={<Person />} />
                 <Route path={`u/:user`} element={<Profile />}>
-                  <Route path="lists" element={<Lists />} />
                   <Route path="settings" element={<Settings />} />
                 </Route>
+                <Route path="u/:user/:list" element={<List />} />
 
                 <Route path="reset-password" element={<ResetPassword />} />
                 <Route path="update-password" element={<UpdatePassword />} />

@@ -6,8 +6,6 @@ import { useAddShow } from "./useAddShow";
 import SpinnerMini from "../../ui/SpinnerMini";
 import { useDeleteShow } from "./useDeleteShow";
 
-import { clearLists } from "./listsSlice";
-
 const WatchlistIcon = ({ item }) => {
   const dispatch = useDispatch();
   const { itemId, type, parentId, episode, season } = item;
@@ -29,16 +27,12 @@ const WatchlistIcon = ({ item }) => {
         episode,
         season,
       });
-
-      dispatch(clearLists());
     }
   }
   function handleDeleteFromWatchlist() {
     if (isLoggedIn && watchlist) {
       const listId = watchlist.id;
       deleteShow({ id: itemId, listId: listId, type });
-
-      dispatch(clearLists());
     }
   }
 
