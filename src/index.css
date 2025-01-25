@@ -101,6 +101,24 @@ html {
 }
 
 .scrollbar-custom {
-  scrollbar-width: thin;
-  scrollbar-color: #4b5563 #1f2937;
+  overflow-y: auto;
+}
+
+.scrollbar-custom::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: 0#4b5563;
+  border-radius: 10px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background: #1f2937;
+  border-radius: 10px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-button {
+  display: none;
 }
