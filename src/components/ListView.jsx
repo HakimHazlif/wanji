@@ -12,6 +12,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { useState } from "react";
 import EmptyList from "../ui/EmptyList";
 import ShowCardRow from "./ShowCardRow";
+import SortBy from "../ui/SortBy";
 
 const ListView = ({ listId }) => {
   const [isGridView, setIsGridView] = useState(true);
@@ -40,6 +41,21 @@ const ListView = ({ listId }) => {
     }
   };
 
+  const sortOptions = [
+    "List order",
+    "Alphabetical",
+    "TMDB rating",
+    "Popularity",
+    "Release date",
+    "Runtime",
+    "Your rating",
+    "Date added",
+  ];
+
+  const handleSortChange = (selectedOption) => {
+    console.log("Sorting by:", selectedOption);
+  };
+
   if (isLoading) return <Spinner />;
 
   if (!listId || !itemsList || !itemsList.items.length) return <EmptyList />;
@@ -55,13 +71,8 @@ const ListView = ({ listId }) => {
           </h3>
         </div>
         <div className="flex items-center gap-5">
-          <div className="flex items-center gap-2">
-            <span>Sort by</span>
-            <button className="text-white bg-slate-700 text-lg px-4 py-1 rounded-full  font-medium justify-center flex items-center gap-3">
-              <span>List order</span>
-              <IoMdArrowDropdown />
-            </button>
-          </div>
+          <SortBy options={sortOptions} onSortChange={handleSortChange} />
+
           <button
             className={`w-8 h-8 rounded-full flex justify-center items-center cursor-pointer ${
               isGridView ? "bg-slate-200 text-blue-600" : "hover:bg-slate-600"
