@@ -6,10 +6,16 @@ import {
 } from "../features/userLists/useFetchItemsList ";
 import Spinner from "../ui/Spinner";
 import SpinnerMini from "../ui/SpinnerMini";
-import { RiMovie2AiFill, RiMovie2AiLine } from "react-icons/ri";
-import { BiMoviePlay, BiSolidMoviePlay } from "react-icons/bi";
+import { BsFillGrid3X3GapFill } from "react-icons/bs";
+import { FaListUl } from "react-icons/fa";
+import { IoMdArrowDropdown } from "react-icons/io";
+import { useState } from "react";
+import EmptyList from "../ui/EmptyList";
+import ShowCardRow from "./ShowCardRow";
 
 const ListView = ({ listId }) => {
+  const [isGridView, setIsGridView] = useState(true);
+
   const { lists } = useLists();
 
   const targetList =
@@ -36,43 +42,85 @@ const ListView = ({ listId }) => {
 
   if (isLoading) return <Spinner />;
 
-  if (!listId || !itemsList || !itemsList.items.length) {
-    return (
-      <section className="mt-5 flex flex-col items-center justify-center h-screen text-center bg-gradient-to-b from-gray-900 to-gray-800 text-white">
-        <div className="flex flex-col items-center gap-6">
-          <div className="bg-gray-700 p-6 rounded-full shadow-lg">
-            <RiMovie2AiLine className="h-20 w-20 text-purple-600" />
-          </div>
-
-          <h2 className="text-2xl font-bold ">No Movies or Shows Found</h2>
-          <p className="text-gray-400 max-w-md">
-            We couldn&apos;t find any content in your list. Start exploring new
-            movies, TV shows, or episodes to fill it up. 🎥🍿
-          </p>
-
-          <button
-            onClick={() => console.log("Redirect to explore page")}
-            className="px-6 py-3 bg-orange-amber rounded-lg shadow-md hover:bg-orange-coral transition text-gray-800 font-semibold"
-          >
-            Explore Movies & Shows
-          </button>
-        </div>
-      </section>
-    );
-  }
+  if (!listId || !itemsList || !itemsList.items.length) return <EmptyList />;
 
   return (
-    <section>
-      <div className="grid grid-cols-4 gap-10 py-14">
-        {itemsList?.items.map((item) => {
-          return (
-            <ShowCard
-              show={item}
-              key={item.id}
-              category={item["title"] ? "movie" : "tv"}
-            />
-          );
-        })}
+    <section className="mt-5">
+      <div className="flex justify-between items-center">
+        <div>
+          <h3 className="bg-slate-200 text-blue-600 text-lg px-5 py-2 rounded-full w-[160px] font-medium text-center">
+            {" "}
+            Has {targetList.length}{" "}
+            {targetList.length <= 1 ? "title" : "titles"}
+          </h3>
+        </div>
+        <div className="flex items-center gap-5">
+          <div className="flex items-center gap-2">
+            <span>Sort by</span>
+            <button className="text-white bg-slate-700 text-lg px-4 py-1 rounded-full  font-medium justify-center flex items-center gap-3">
+              <span>List order</span>
+              <IoMdArrowDropdown />
+            </button>
+          </div>
+          <button
+            className={`w-8 h-8 rounded-full flex justify-center items-center cursor-pointer ${
+              isGridView ? "bg-slate-200 text-blue-600" : "hover:bg-slate-600"
+            }`}
+            onClick={() => setIsGridView(true)}
+            disabled={isGridView}
+          >
+            <BsFillGrid3X3GapFill className="w-5 h-5" />
+          </button>
+          <button
+            className={`w-8 h-8 rounded-full flex justify-center items-center cursor-pointer ${
+              !isGridView ? "bg-slate-200 text-blue-600" : "hover:bg-slate-600"
+            }`}
+            onClick={() => setIsGridView(false)}
+            disabled={!isGridView}
+          >
+            <FaListUl className="w-5 h-5" />
+          </button>
+        </div>
+      </div>
+
+      <div>
+        {isGridView ? (
+          <div className="grid grid-cols-4 gap-10 py-14">
+            {itemsList?.items.map((item) => {
+              return (
+                <ShowCard
+                  key={item.id}
+                  show={item}
+                  category={
+                    item["title"]
+                      ? "movie"
+                      : item["air_date"]
+                      ? "episode"
+                      : "tv"
+                  }
+                />
+              );
+            })}
+          </div>
+        ) : (
+          <div className="grid grid-flow-row gap-10 py-14">
+            {itemsList?.items.map((item) => {
+              return (
+                <ShowCardRow
+                  key={item.id}
+                  show={item}
+                  category={
+                    item["title"]
+                      ? "movie"
+                      : item["air_date"]
+                      ? "episode"
+                      : "tv"
+                  }
+                />
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {targetList?.length > itemsList?.items.length && (

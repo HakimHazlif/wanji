@@ -3,7 +3,7 @@ import {
   getYearFormat,
   updateDateFormat,
 } from "../utils/helper";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import WatchlistIcon from "../features/lists/WatchlistIcon";
 
 import { FaStar } from "react-icons/fa";
@@ -14,6 +14,8 @@ const ShowCard = ({ show, category, additions = true }) => {
   const title = show?.title || show?.name;
   const poster = show?.poster_path || show?.still_path;
 
+  const navigate = useNavigate();
+
   function handleDate() {
     if (show["release_date"]) return getYearFormat(show?.release_date);
     else if (show["first_air_date"])
@@ -23,6 +25,13 @@ const ShowCard = ({ show, category, additions = true }) => {
     else if (show["air_date"]) return updateDateFormat(show?.air_date);
   }
 
+  function handleNavigate() {
+    if (category === "episode")
+      navigate(
+        `/tv/${show_id}/season/${season_number}/episode/${episode_number}`
+      );
+    else navigate(`/${category}/${id}`);
+  }
   // const { setIsMovie } = useSession();
 
   const item = {
@@ -35,21 +44,15 @@ const ShowCard = ({ show, category, additions = true }) => {
 
   return (
     <div className="w-52 relative">
-      <Link
-        to={
-          category === "movie" || category === "tv"
-            ? `/${category}/${id}`
-            : `/${category}/${id}`
-        }
-        className=""
-      >
+      <div className="">
         <img
           src={
             getPictureUrlFormat(poster, 500) ||
             "https://image.tmdb.org/t/p/w300_and_h450_bestv2/5vV52TSEIhe4ZZLWwv3i7nfv8we.jpg"
           }
           alt="movie poster"
-          className="relative h-[300px] object-cover rounded-md shadow-2xl"
+          className="relative h-[300px] object-cover rounded-md shadow-2xl cursor-pointer"
+          onClick={handleNavigate}
         />
         <div className="absolute top-[265px] right-[15px] rounded-md bg-orange-amber px-2 py-1 flex items-center gap-1 text-sm font-bold">
           <FaStar />
@@ -59,9 +62,14 @@ const ShowCard = ({ show, category, additions = true }) => {
           <span className="text-[12px] text-slate-400 font-medium">
             {handleDate()}
           </span>
-          <h2 className="text-sm font-medium">{title}</h2>
+          <h2
+            onClick={handleNavigate}
+            className="text-sm font-medium cursor-pointer"
+          >
+            {title}
+          </h2>
         </div>
-      </Link>
+      </div>
 
       {additions && (
         <div className="absolute top-0 left-0 z-10 cursor-pointer ">

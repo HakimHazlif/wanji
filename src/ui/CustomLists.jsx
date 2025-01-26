@@ -39,22 +39,26 @@ const CustomLists = () => {
       <div className="flex justify-between items-center mb-10">
         <h3 className="text-2xl font-bold text-gray-300 flex items-center gap-2">
           <FaFolderOpen />
-          {remainLists?.length} {remainLists?.length === 1 ? "list" : "lists"}
+          {remainLists?.length} {remainLists?.length <= 1 ? "list" : "lists"}
         </h3>
       </div>
       <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         {remainLists?.map((list) => (
           <li
             key={list.id}
-            onClick={() => handleNavigate(list.id)}
             className="bg-bluish-black rounded-xl shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 border border-gray-700 overflow-hidden"
           >
             <div className="p-5">
               <div className="flex justify-between items-center mb-3">
-                <h3 className="text-xl font-semibold ">{list.name}</h3>{" "}
+                <h3
+                  className="text-xl font-semibold hover:text-orange-amber cursor-pointer"
+                  onClick={() => handleNavigate(list.id)}
+                >
+                  {list.name}
+                </h3>{" "}
                 <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded-full">
                   Has {list.items_list.length}{" "}
-                  {list.items_list.length === 1 ? "title" : "titles"}
+                  {list.items_list.length <= 1 ? "title" : "titles"}
                 </span>
               </div>
 
@@ -94,7 +98,7 @@ const CustomLists = () => {
                 </div>
               ) : (
                 <p className="text-gray-500 text-sm italic">
-                  Has no movie, tv show or episode yet
+                  Has no movie, tv show, or episode yet
                 </p>
               )}
               <div className="flex justify-between items-center border-t pt-3 mt-3 border-gray-600">
