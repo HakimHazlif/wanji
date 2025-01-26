@@ -22,8 +22,6 @@ const ListView = ({ listId }) => {
 
   const { loadMoreItems, isLoadingMore } = useLoadMoreItems(listId);
 
-  console.log(itemsList);
-
   const loadMore = () => {
     if (itemsList?.nextPoint !== null) {
       loadMoreItems({
@@ -34,9 +32,9 @@ const ListView = ({ listId }) => {
     }
   };
 
-  if (isLoading) return <Spinner />;
+  if (!listId || !itemsList || !itemsList.items.length) return <p>Empty</p>;
 
-  if (!listId) return <p>Empty</p>;
+  if (isLoading) return <Spinner />;
 
   return (
     <section>

@@ -29,7 +29,7 @@ const Profile = () => {
 
   return (
     <main>
-      <section className="pt-60 padding-x">
+      <section className="pt-32 padding-x">
         <div className="flex items-end gap-5">
           <div className="bg-orange-coral w-60 h-60 flex justify-center items-center rounded-full">
             {avatar ? (
@@ -64,7 +64,7 @@ const Profile = () => {
         <img
           src={bgPopcorn}
           alt="backdrop of movie"
-          className="h-[600px] w-full object-cover object-center masking"
+          className="h-[400px] w-full object-cover object-center masking"
         />
         <div className="bg-[#272831] opacity-60 masking h-[600px] w-full absolute bottom-0 right-0 z-10"></div>
       </div>

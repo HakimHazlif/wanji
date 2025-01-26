@@ -185,7 +185,7 @@ export async function updateListName({ userId, listId, newName }) {
 // }
 
 export const fetchItemsList = async (listId, list, startPoint = 0) => {
-  if (!list?.length || list?.length < startPoint) {
+  if (!list?.length || list?.length <= startPoint) {
     return { items: [], listId, nextPoint: null };
   }
 
@@ -195,8 +195,6 @@ export const fetchItemsList = async (listId, list, startPoint = 0) => {
     if (show.type === "episode")
       return `${URL_Base}tv/${show.parent_id}/season/${show.season_number}/episode/${show.episode_number}?language=en-US`;
   });
-
-  console.log(startPoint);
 
   const results = await axios.all(
     showsUrl.map((url) => axios.get(url, options))

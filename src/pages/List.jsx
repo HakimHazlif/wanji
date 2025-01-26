@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Link, useParams } from "react-router";
+import { Link, useLocation, useParams } from "react-router";
 import { useLists } from "../features/lists/useLists";
 
 import { formatDistanceToNow } from "date-fns";
@@ -13,16 +13,42 @@ const List = () => {
   const { user } = useSelector((state) => state.user);
   const { username } = user;
   const { list } = useParams();
+  const location = useLocation();
 
   const { watchlist, favoriteList, remainLists } = useLists();
-  console.log(remainLists);
+
+  const searchParams = new URLSearchParams(location.search);
+  const selectedListId = searchParams.get("listId");
 
   const createdDate = useMemo(() => {
     let createdAt;
     if (list === "Watchlist") createdAt = watchlist?.created_at;
     else if (list === "Favorites") createdAt = favoriteList?.created_at;
+    else if (list === "Lists" && selectedListId) {
+      const customList = remainLists?.find(
+        (list) => list.id === selectedListId
+      );
+      createdAt = customList?.created_at;
+    }
     return createdAt;
-  }, [list, watchlist?.created_at, favoriteList?.created_at]);
+  }, [
+    list,
+    watchlist?.created_at,
+    favoriteList?.created_at,
+    selectedListId,
+    remainLists,
+  ]);
+
+  const listName = useMemo(() => {
+    if (list === "Watchlist" || list === "Favorites") return list;
+    if (list === "Lists" && selectedListId) {
+      const customList = remainLists?.find(
+        (list) => list.id === selectedListId
+      );
+      return customList?.name || "Custom List";
+    }
+    return list;
+  }, [list, selectedListId, remainLists]);
 
   return (
     <main className="padding-x py-32 w-full">
@@ -37,7 +63,9 @@ const List = () => {
 
       <section className="border-b border-slate-600 pb-8 flex justify-between items-center">
         <div>
-          <h2 className="font-bold text-6xl leading-relaxed">My {list}</h2>
+          <h2 className="font-bold text-6xl leading-relaxed">
+            {!selectedListId && "My"} {listName}
+          </h2>
           <div className="flex gap-1 font-semibold">
             {createdDate && (
               <p className="">
@@ -77,7 +105,12 @@ const List = () => {
           <ListView listId={favoriteList?.id} />
         </div>
       )}
-      {list === "Lists" && <CustomLists />}
+      {list === "Lists" && !selectedListId && <CustomLists />}
+      {list === "Lists" && selectedListId && (
+        <div>
+          <ListView listId={selectedListId} />
+        </div>
+      )}
     </main>
   );
 };
