@@ -8,10 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../ui/Spinner";
 import ItemsList from "./ItemsList";
 import { useCreateList } from "./useCreateList";
-import { getYearFormat } from "../../utils/helper";
+import { getPictureUrlFormat, getYearFormat } from "../../utils/helper";
 
 const ListsMenu = ({ isPopupOpen, setIsPopupOpen }) => {
-  const dispatch = useDispatch();
   const [newListName, setNewListName] = useState("");
   const popupRef = useRef();
   const { category } = useParams();
@@ -54,23 +53,34 @@ const ListsMenu = ({ isPopupOpen, setIsPopupOpen }) => {
   if (isLoading || isCreating || isAdding) return <Spinner />;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-20">
+    <div className="fixed z-30 inset-0 bg-black bg-opacity-20">
       <div className="w-full h-full flex justify-center items-center">
         <div
-          className="w-[600px] h-[400px] rounded-xl bg-bluish-black py-4 px-5 absolute z-50"
+          className="w-[600px] h-[460px] rounded-xl bg-bluish-black py-4 px-5 absolute z-50"
           ref={popupRef}
         >
-          <div className="p-4 border-b border-slate-700">
-            <h2 className="text-xl font-semibold text-white">Save to...</h2>
-            <div className="mt-2 flex items-center gap-2 text-slate-400 text-sm">
-              <FaInfoCircle />
+          <div className="p-4 border-b border-slate-700 flex items-end gap-4">
+            <div>
+              <img
+                src={getPictureUrlFormat(
+                  details.poster_path || details.still_path
+                )}
+                alt="poster"
+                className="w-16 rounded-md"
+              />
+            </div>
+            <div>
+              <h2 className="text-xl font-semibold text-white">Save to...</h2>
+              <div className="mt-2 flex items-center gap-2 text-slate-400 text-sm">
+                <FaInfoCircle />
 
-              <p>
-                Select a list or create a new one to save{" "}
-                <span className="font-bold">
-                  {details.title || details.name}
-                </span>
-              </p>
+                <p>
+                  Select a list or create a new one to save{" "}
+                  <span className="font-bold text-orange-amber">
+                    {details.title || details.name}
+                  </span>
+                </p>
+              </div>
             </div>
           </div>
           <form
@@ -95,7 +105,7 @@ const ListsMenu = ({ isPopupOpen, setIsPopupOpen }) => {
             </div>
           </form>
 
-          <div className="max-h-[300px] overflow-y-auto">
+          <div className="mt-5 h-[210px] scrollbar-custom overflow-y-scroll">
             {remainLists.map((list) => (
               <ItemsList list={list} key={list.id} />
             ))}

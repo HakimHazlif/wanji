@@ -34,6 +34,8 @@ const ListView = ({ listId }) => {
     }
   };
 
+  if (isLoading) return <Spinner />;
+
   if (!listId || !itemsList || !itemsList.items.length) {
     return (
       <section className="mt-5 flex flex-col items-center justify-center h-screen text-center bg-gradient-to-b from-gray-900 to-gray-800 text-white">
@@ -58,8 +60,6 @@ const ListView = ({ listId }) => {
       </section>
     );
   }
-
-  if (isLoading) return <Spinner />;
 
   return (
     <section>

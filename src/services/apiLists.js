@@ -142,15 +142,22 @@ export async function insertNewList({ userId, name, itemId, type }) {
 export async function deleteList({ userId, listId }) {
   if (!userId || !listId) throw new Error("the user_id or list_id is undefind");
 
-  const { error } = await supabase
+  const { error: errorItems } = await supabase
+    .from("items_list")
+    .delete()
+    .eq("list_id", listId);
+
+  if (errorItems) throw new Error(errorItems);
+
+  const { error: errorList } = await supabase
     .from("lists")
     .delete()
     .eq("id", listId)
     .eq("user_id", userId);
 
-  if (error) throw new Error(error);
+  if (errorList) throw new Error(errorList);
 
-  return { error };
+  return { errorList };
 }
 
 export async function updateListName({ userId, listId, newName }) {
