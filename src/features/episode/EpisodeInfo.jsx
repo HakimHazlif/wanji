@@ -5,6 +5,7 @@ import {
   getPictureUrlFormat,
   getYearFormat,
   updateDateFormat,
+  updateRuntime,
 } from "../../utils/helper";
 import { Box, Rating } from "@mui/material";
 import WatchlistIcon from "../lists/WatchlistIcon";
@@ -46,7 +47,7 @@ const EpisodeInfo = () => {
           <ul className="flex gap-2 text-sm font-semibold text-slate-300">
             <li>{updateDateFormat(air_date)}</li>
             <span>&#x2022;</span>
-            <li>{runtime}min</li>
+            <li>{updateRuntime(runtime)}</li>
           </ul>
           <div className="flex items-center gap-2">
             <Box>

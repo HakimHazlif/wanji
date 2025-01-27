@@ -5,6 +5,7 @@ import {
   getPictureUrlFormat,
   getYearFormat,
   updateDateFormat,
+  updateRuntime,
 } from "../../utils/helper";
 import WatchlistIcon from "../lists/WatchlistIcon";
 import FavoriteIcon from "../lists/FavoriteIcon";
@@ -62,7 +63,7 @@ const EpisodeCard = ({ episode }) => {
             <ul className="flex gap-2 text-sm font-semibold text-slate-400">
               <li>{updateDateFormat(air_date)}</li>
               <span>&#x2022;</span>
-              <li>{runtime}min</li>
+              <li>{updateRuntime(runtime)}</li>
             </ul>
             <div className="flex items-center gap-2">
               <Box>

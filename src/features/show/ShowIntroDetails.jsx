@@ -4,6 +4,7 @@ import {
   updateDateFormat,
   formatNumber,
   getYearFormat,
+  updateRuntime,
 } from "../../utils/helper";
 
 import WatchlistIcon from "../lists/WatchlistIcon";
@@ -23,22 +24,11 @@ const ShowIntroDetails = () => {
   const { details } = useShow();
   const { category } = useParams();
 
-  const {
-    id,
-    genres,
-    overview,
-    poster_path,
-    production_companies,
-    vote_average,
-    status,
-  } = details;
+  const { id, genres, overview, poster_path, vote_average, status } = details;
 
   const title = details?.title || details?.name;
   const originalTitle = details?.original_title || details?.original_name;
   const runtime = details?.runtime || details?.[0]?.episode_run_time;
-  const yearFormat = getYearFormat(
-    details.release_date || details.first_air_date
-  );
 
   const item = {
     itemId: id,
@@ -53,7 +43,7 @@ const ShowIntroDetails = () => {
       ? updateDateFormat(details.release_date)
       : `${getYearMonthFormat(details.first_air_date)} - ${
           status === "Returning Series"
-            ? "Present"
+            ? "Continuous"
             : getYearMonthFormat(details.last_air_date)
         }`;
 
@@ -82,7 +72,8 @@ const ShowIntroDetails = () => {
               <>
                 <span>&#x2022;</span>
                 <li>
-                  {runtime}min <span>{category === "tv" && "per episode"}</span>
+                  {updateRuntime(runtime)}{" "}
+                  <span>{category === "tv" && "per episode"}</span>
                 </li>
               </>
             )}
@@ -123,7 +114,9 @@ const ShowIntroDetails = () => {
             ))}
           </ul>
 
-          <Ellipsis text={overview} />
+          <div className="mt-8">
+            <Ellipsis text={overview} />
+          </div>
         </div>
       </div>
       <hr className="border-1 border-slate-400 w-full my-4" />
