@@ -8,6 +8,7 @@ html {
   background-color: #25242f;
   scroll-behavior: smooth;
   color: white;
+  box-sizing: border-box;
 }
 
 @layer components {

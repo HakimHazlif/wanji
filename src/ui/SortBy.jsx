@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { useListsContext } from "../context/ListsContext";
 
-const SortBy = ({ options, onSortChange }) => {
+const SortBy = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(options[0]);
+  const { sortOptions, handleSortChange } = useListsContext();
+  const [selectedOption, setSelectedOption] = useState(sortOptions[0]);
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
-    onSortChange(option);
+    handleSortChange(option);
     setIsOpen(false);
   };
 
@@ -25,8 +27,8 @@ const SortBy = ({ options, onSortChange }) => {
       </button>
 
       {isOpen && (
-        <div className="absolute top-full right-0 mt-2 bg-slate-700 shadow-lg rounded-lg w-40">
-          {options.map((option, index) => (
+        <div className="absolute z-20 top-full right-0 mt-2 bg-slate-700 shadow-lg rounded-lg w-40">
+          {sortOptions.map((option, index) => (
             <div
               key={index}
               className="px-4 py-2 hover:bg-slate-800 cursor-pointer text-white"

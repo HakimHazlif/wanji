@@ -200,7 +200,7 @@ export const fetchItemsList = async (listId, list, startPoint = 0) => {
     if (show.type === "movie" || show.type === "tv")
       return `${URL_Base}${show.type}/${show.item_id}?append_to_response=credits&language=en-US`;
     if (show.type === "episode")
-      return `${URL_Base}tv/${show.parent_id}/season/${show.season_number}/episode/${show.episode_number}?language=en-US`;
+      return `${URL_Base}tv/${show.parent_id}/season/${show.season_number}/episode/${show.episode_number}?append_to_response=credits&language=en-US`;
   });
 
   const results = await axios.all(

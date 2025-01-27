@@ -180,7 +180,7 @@ export function useSession() {
   const context = useContext(SessionContext);
 
   if (!context)
-    throw new Error("DarkModeContext was used outside of DatkModeProvider");
+    throw new Error("SessionContext was used outside of SessionProvider");
 
   return context;
 }

@@ -86,3 +86,12 @@ export function formatHugeNumber(num) {
 
   return num;
 }
+
+export function updateRuntime(runtime) {
+  const hours = Math.floor(runtime / 60);
+  const remainingMinutes = runtime % 60;
+
+  if (!hours) return `${runtime}min`;
+
+  return `${hours}h ${remainingMinutes}min`;
+}

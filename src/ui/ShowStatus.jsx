@@ -4,8 +4,8 @@ const ShowStatus = ({ status }) => {
       case "Released":
         return "bg-[#4CAF50]";
       case "Ended":
-        return "bg-[#B0BEC5]";
-      case "Returning serie":
+        return "bg-[#ed8631]";
+      case "Returning Series":
         return "bg-[#2196F3]";
       default:
         return "bg-[#90A4AE]";
@@ -13,7 +13,11 @@ const ShowStatus = ({ status }) => {
   }
 
   return (
-    <p className={`py-1 px-3 rounded-md ${getBeautyBackground()}`}>{status}</p>
+    <p
+      className={`py-1 px-1.5 text-center rounded-md text-white text-sm font-semibold text-nowrap ${getBeautyBackground()}`}
+    >
+      {status}
+    </p>
   );
 };
 

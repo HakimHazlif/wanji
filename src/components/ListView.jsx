@@ -13,11 +13,11 @@ import { useState } from "react";
 import EmptyList from "../ui/EmptyList";
 import ShowCardRow from "./ShowCardRow";
 import SortBy from "../ui/SortBy";
+import { useListsContext } from "../context/ListsContext";
 
 const ListView = ({ listId }) => {
-  const [isGridView, setIsGridView] = useState(true);
-
   const { lists } = useLists();
+  const { isGridView, setIsGridView } = useListsContext();
 
   const targetList =
     lists && lists?.filter((list) => list.id === listId)?.[0]?.items_list;
@@ -29,6 +29,8 @@ const ListView = ({ listId }) => {
     startPoint
   );
 
+  console.log(itemsList);
+
   const { loadMoreItems, isLoadingMore } = useLoadMoreItems(listId);
 
   const loadMore = () => {
@@ -39,21 +41,6 @@ const ListView = ({ listId }) => {
         nextPoint: itemsList.nextPoint,
       });
     }
-  };
-
-  const sortOptions = [
-    "List order",
-    "Alphabetical",
-    "TMDB rating",
-    "Popularity",
-    "Release date",
-    "Runtime",
-    "Your rating",
-    "Date added",
-  ];
-
-  const handleSortChange = (selectedOption) => {
-    console.log("Sorting by:", selectedOption);
   };
 
   if (isLoading) return <Spinner />;
@@ -71,7 +58,7 @@ const ListView = ({ listId }) => {
           </h3>
         </div>
         <div className="flex items-center gap-5">
-          <SortBy options={sortOptions} onSortChange={handleSortChange} />
+          <SortBy />
 
           <button
             className={`w-8 h-8 rounded-full flex justify-center items-center cursor-pointer ${
