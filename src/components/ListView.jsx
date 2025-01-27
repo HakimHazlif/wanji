@@ -8,8 +8,6 @@ import Spinner from "../ui/Spinner";
 import SpinnerMini from "../ui/SpinnerMini";
 import { BsFillGrid3X3GapFill } from "react-icons/bs";
 import { FaListUl } from "react-icons/fa";
-import { IoMdArrowDropdown } from "react-icons/io";
-import { useState } from "react";
 import EmptyList from "../ui/EmptyList";
 import ShowCardRow from "./ShowCardRow";
 import SortBy from "../ui/SortBy";
@@ -28,8 +26,6 @@ const ListView = ({ listId }) => {
     targetList,
     startPoint
   );
-
-  console.log(itemsList);
 
   const { loadMoreItems, isLoadingMore } = useLoadMoreItems(listId);
 
@@ -89,6 +85,11 @@ const ListView = ({ listId }) => {
                 <ShowCard
                   key={item.id}
                   show={item}
+                  parentShowId={
+                    item["air_date"] &&
+                    targetList.filter((show) => show.item_id == item.id)?.[0]
+                      ?.parent_id
+                  }
                   category={
                     item["title"]
                       ? "movie"
@@ -107,6 +108,11 @@ const ListView = ({ listId }) => {
                 <ShowCardRow
                   key={item.id}
                   show={item}
+                  parentShowId={
+                    item["air_date"] &&
+                    targetList.filter((show) => show.item_id == item.id)?.[0]
+                      ?.parent_id
+                  }
                   category={
                     item["title"]
                       ? "movie"

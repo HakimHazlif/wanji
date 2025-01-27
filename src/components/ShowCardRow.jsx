@@ -14,14 +14,13 @@ import Ellipsis from "../ui/Ellipsis";
 import { IoMdStar } from "react-icons/io";
 import CreditView from "../ui/CreditView";
 
-const ShowCardRow = ({ show, category }) => {
+const ShowCardRow = ({ show, category, parentShowId = null }) => {
   const navigate = useNavigate();
 
   const {
     vote_average: rate,
     episode_number,
     season_number,
-    show_id,
     overview,
     status,
     runtime,
@@ -67,7 +66,7 @@ const ShowCardRow = ({ show, category }) => {
         onClick={() => {
           if (category === "episode")
             navigate(
-              `/tv/${show_id}/season/${season_number}/episode/${episode_number}`
+              `/tv/${parentShowId}/season/${season_number}/episode/${episode_number}`
             );
           else navigate(`/${category}/${id}`);
         }}
@@ -78,7 +77,7 @@ const ShowCardRow = ({ show, category }) => {
             <Link
               to={
                 category === "episode"
-                  ? `/tv/${show_id}/season/${season_number}/episode/${episode_number}`
+                  ? `/tv/${parentShowId}}/season/${season_number}/episode/${episode_number}`
                   : `/${category}/${id}`
               }
               className="flex gap-2 font-bold text-2xl items-center"
@@ -99,7 +98,7 @@ const ShowCardRow = ({ show, category }) => {
                       <span>&#x2022;</span>
                       <li>
                         {number_of_seasons}{" "}
-                        {number_of_seasons === 1 ? "season" : "season"}
+                        {number_of_seasons === 1 ? "season" : "seasons"}
                       </li>
                     </>
                   )}

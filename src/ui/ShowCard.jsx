@@ -8,7 +8,12 @@ import WatchlistIcon from "../features/lists/WatchlistIcon";
 
 import { FaStar } from "react-icons/fa";
 
-const ShowCard = ({ show, category, additions = true }) => {
+const ShowCard = ({
+  show,
+  category,
+  additions = true,
+  parentShowId = null,
+}) => {
   const { vote_average: rate, year } = show;
   const id = show?.id || show?.item_id;
   const title = show?.title || show?.name;
@@ -28,7 +33,7 @@ const ShowCard = ({ show, category, additions = true }) => {
   function handleNavigate() {
     if (category === "episode")
       navigate(
-        `/tv/${show_id}/season/${season_number}/episode/${episode_number}`
+        `/tv/${parentShowId}}/season/${season_number}/episode/${episode_number}`
       );
     else navigate(`/${category}/${id}`);
   }
