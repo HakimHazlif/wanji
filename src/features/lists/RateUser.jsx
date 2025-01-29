@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { IoStarOutline } from "react-icons/io5";
 import RatingPopup from "./RatingPopup";
 import { useRating } from "./useRating";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import SpinnerMini from "../../ui/SpinnerMini";
 import { useAddRating } from "./useAddRating";
 import { useUpadetRating } from "./useUpadetRating";
-import { CiStar } from "react-icons/ci";
 
 const RateUser = ({ itemId, type }) => {
   const { showRate, isLoading } = useRating();
@@ -41,6 +39,7 @@ const RateUser = ({ itemId, type }) => {
           setClosePopup={() => setIsPopupOpen(false)}
           itemId={itemId}
           type={type}
+          showRate={showRate}
         />
       )}
     </>

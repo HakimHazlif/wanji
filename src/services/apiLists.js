@@ -87,7 +87,9 @@ export async function addRateToShow({
         parent_id: parentId,
       },
     ])
-    .select();
+    .select("*");
+
+  console.log(data);
 
   return { data, error };
 }
@@ -105,12 +107,24 @@ export async function updateShowRate({
     .eq("user_id", userId)
     .eq("item_id", itemId)
     .eq("type", type)
-    .eq(" parent_id", parentId)
     .select("*");
 
   if (error) throw new Error(error);
 
   return { data, error };
+}
+
+export async function getRatingList({ userId }) {
+  if (userId) {
+    const { data: rating, error } = await supabase
+      .from("rating")
+      .select("*")
+      .eq("user_id", userId);
+
+    if (error) throw new Error(error);
+
+    return { rating };
+  }
 }
 
 export async function insertNewList({ userId, name, itemId, type }) {

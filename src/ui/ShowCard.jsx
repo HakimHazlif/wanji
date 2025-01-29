@@ -3,10 +3,15 @@ import {
   getYearFormat,
   updateDateFormat,
 } from "../utils/helper";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import WatchlistIcon from "../features/lists/WatchlistIcon";
+import WatchlistButton from "../features/lists/WatchlistButton";
 
 import { FaStar } from "react-icons/fa";
+import FavoriteButton from "../features/lists/FavoriteButton";
+import UserRateMini from "../features/lists/UserRateMini";
+import Ellipsis from "./Ellipsis";
+import { Tooltip } from "@mui/material";
 
 const ShowCard = ({
   show,
@@ -23,10 +28,7 @@ const ShowCard = ({
 
   function handleDate() {
     if (show["release_date"]) return getYearFormat(show?.release_date);
-    else if (show["first_air_date"])
-      return `${getYearFormat(show?.first_air_date)} - ${getYearFormat(
-        show?.last_air_date
-      )}`;
+    else if (show["first_air_date"]) return getYearFormat(show?.first_air_date);
     else if (show["air_date"]) return updateDateFormat(show?.air_date);
   }
 
@@ -56,31 +58,39 @@ const ShowCard = ({
             "https://image.tmdb.org/t/p/w300_and_h450_bestv2/5vV52TSEIhe4ZZLWwv3i7nfv8we.jpg"
           }
           alt="movie poster"
-          className="relative h-[300px] object-cover rounded-md shadow-2xl cursor-pointer"
+          className="relative w-full h-[300px] object-cover rounded-md shadow-2xl cursor-pointer"
           onClick={handleNavigate}
         />
-        <div className="absolute top-[265px] right-[15px] rounded-md bg-orange-amber px-2 py-1 flex items-center gap-1 text-sm font-bold">
-          <FaStar />
-          <p>{rate?.toFixed(1)}</p>
-        </div>
-        <div className="flex flex-col gap-1 px-3 mt-2">
-          <span className="text-[12px] text-slate-400 font-medium">
-            {handleDate()}
-          </span>
-          <h2
-            onClick={handleNavigate}
-            className="text-sm font-medium cursor-pointer"
-          >
-            {title}
-          </h2>
+        <div className="px-3 mt-2">
+          <div className="flex gap-4">
+            <div className="rounded-md bg-orange-amber w-[45px] h-6  flex items-center justify-center gap-1 text-xs font-bold">
+              <FaStar />
+              <p>{rate?.toFixed(1)}</p>
+            </div>
+            <UserRateMini type={category} itemId={id} />
+          </div>
+
+          <div className="flex flex-col gap-1 mt-2">
+            <span className="text-[12px] text-slate-400 font-medium">
+              {handleDate()}
+            </span>
+            <Tooltip title={title}>
+              <h2
+                onClick={handleNavigate}
+                className="text-sm font-medium cursor-pointer hover:text-orange-amber inline-block"
+              >
+                <Ellipsis text={title} lines="line-clamp-1" />
+              </h2>
+            </Tooltip>
+          </div>
+          {additions && (
+            <div className="flex justify-center gap-2 mt-4">
+              <WatchlistButton item={item} />
+              <FavoriteButton item={item} />
+            </div>
+          )}
         </div>
       </div>
-
-      {additions && (
-        <div className="absolute top-0 left-0 z-10 cursor-pointer ">
-          <WatchlistIcon item={item} />
-        </div>
-      )}
     </div>
   );
 };

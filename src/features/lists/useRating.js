@@ -3,20 +3,25 @@ import { getShowRating } from "../../services/apiLists";
 import { useParams } from "react-router";
 import { useSelector } from "react-redux";
 
-export function useRating() {
+export function useRating(type = null, itemId = null) {
   const { category, id } = useParams();
   const { uid } = useSelector((state) => state.user.user);
 
+  const item = {
+    itemId: id || itemId,
+    type: category || type,
+    userId: uid,
+  };
+
   const { data, isLoading } = useQuery({
     queryKey: ["rating", category, id, uid],
-    queryFn: () => getShowRating({ itemId: id, type: category, userId: uid }),
+    queryFn: () => getShowRating(item),
     onError: (err) => {
       throw new Error(err);
     },
   });
 
   const showRate = data?.[0]?.rate ?? null;
-  if (showRate) console.log(showRate);
 
   return { showRate, isLoading };
 }

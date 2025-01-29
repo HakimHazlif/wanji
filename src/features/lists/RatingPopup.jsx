@@ -1,19 +1,26 @@
 import { Rating } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { useUpadetRating } from "./useUpadetRating";
 import { useAddRating } from "./useAddRating";
 import { useRating } from "./useRating";
 import { useSelector } from "react-redux";
 
-const RatingPopup = ({ setClosePopup, itemId, type, parentId = null }) => {
-  const { updateRating } = useUpadetRating();
-  const { addRating } = useAddRating();
-  const { showRate } = useRating();
+const RatingPopup = ({
+  setClosePopup,
+  itemId,
+  type,
+  showRate = 0,
+  parentId = null,
+}) => {
   const { uid } = useSelector((state) => state.user.user);
 
-  const [rating, setRating] = useState(showRate || 0);
+  const [rating, setRating] = useState(showRate);
   const [hover, setHover] = useState(0);
+  const popupRef = useRef();
+
+  const { updateRating } = useUpadetRating();
+  const { addRating } = useAddRating();
 
   const handleSubmit = async () => {
     try {
@@ -36,14 +43,33 @@ const RatingPopup = ({ setClosePopup, itemId, type, parentId = null }) => {
     }
   };
 
+  useEffect(() => {
+    function handleClosePopup(event) {
+      if (popupRef.current && !popupRef.current.contains(event.target)) {
+        event.stopPropagation();
+
+        setClosePopup();
+      }
+    }
+
+    document.addEventListener("mousedown", handleClosePopup);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClosePopup);
+    };
+  }, [setClosePopup]);
+
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="w-[400px] bg-slate-900 rounded-xl p-6 relative">
+    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-40">
+      <div
+        className="w-[400px] bg-slate-900 rounded-xl p-6 relative"
+        ref={popupRef}
+      >
         <button
-          onClick={setClosePopup}
-          className="absolute top-4 right-4 text-slate-400 hover:text-white"
+          onClick={() => setClosePopup()}
+          className="absolute z-[100] top-4 right-4 text-slate-400 hover:text-white"
         >
-          <IoClose size={24} />
+          <IoClose className="text-2xl" />
         </button>
 
         <div className="text-center">
@@ -74,7 +100,7 @@ const RatingPopup = ({ setClosePopup, itemId, type, parentId = null }) => {
             />
 
             <div className="text-lg font-medium text-white">
-              {hover !== -1 ? hover : rating}/10
+              {hover > 0 ? hover : rating}/10
             </div>
 
             <button

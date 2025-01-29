@@ -7,12 +7,13 @@ import SpinnerMini from "../../ui/SpinnerMini";
 import { useDeleteShow } from "./useDeleteShow";
 
 const WatchlistIcon = ({ item }) => {
-  const dispatch = useDispatch();
   const { itemId, type, parentId, episode, season } = item;
-  // const { id } = useParams();
-  const [isWatched, setIsWatched] = useState();
-  const { watchlist, isLoading } = useLists();
+
   const { isLoggedIn } = useSelector((state) => state.user);
+
+  const [isWatched, setIsWatched] = useState();
+
+  const { watchlist, isLoading } = useLists();
   const { isLoading: isAdding, addShow } = useAddShow();
   const { isLoading: isDeleting, deleteShow } = useDeleteShow();
 
