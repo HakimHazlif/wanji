@@ -19,7 +19,7 @@ const MovieLists = () => {
   const upcomingMovies = movies.upcomingMovies.slice(0, 9);
 
   return (
-    <section className="flex flex-col gap-20 padding-x">
+    <section className="flex flex-col gap-20 padding-x pt-28">
       <ListScroll title="Trending Movies" path="movies" viewAll={true}>
         {popularMovies.map((movie) => (
           <ShowCard key={movie.id} show={movie} category={category} />

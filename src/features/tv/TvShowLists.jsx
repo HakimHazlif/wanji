@@ -19,7 +19,7 @@ const TvLists = () => {
   const airingToday = tvShows.airingToday.slice(0, 9);
 
   return (
-    <section className="flex flex-col gap-20 padding-x">
+    <section className="flex flex-col gap-20 padding-x py-28">
       <ListScroll title="Trending TV Shows" path="tv-shows" viewAll={true}>
         {popularTv.map((tvShow) => (
           <ShowCard key={tvShow.id} show={tvShow} category={category} />

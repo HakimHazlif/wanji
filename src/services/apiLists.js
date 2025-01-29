@@ -94,13 +94,7 @@ export async function addRateToShow({
   return { data, error };
 }
 
-export async function updateShowRate({
-  itemId,
-  type,
-  rating,
-  userId,
-  parentId = null,
-}) {
+export async function updateShowRate({ itemId, type, rating, userId }) {
   const { data, error } = await supabase
     .from("rating")
     .update({ rate: rating })
@@ -193,18 +187,6 @@ export async function updateListName({ userId, listId, newName }) {
   return { data, error };
 }
 
-// export async function getShowsList(shows = [], startPoint = 0, type = "movie") {
-//   if (!shows) return;
-//   const showsUrl = [];
-
-//   shows.slice(startPoint, startPoint + 20).forEach((show) => {
-//     if (show.type !== type) return;
-//     const url = `${URL_Base}${show.type}/${show.item_id}?language=en-US`;
-
-//     showsUrl.push(url);
-//   });
-// }
-
 export const fetchItemsList = async (listId, list, startPoint = 0) => {
   if (!list?.length || list?.length <= startPoint) {
     return { items: [], listId, nextPoint: null };
@@ -224,22 +206,3 @@ export const fetchItemsList = async (listId, list, startPoint = 0) => {
 
   return { items: items, listId, nextPoint: startPoint + items.length };
 };
-
-// export const fetchItem = (listId, item) => async (dispatch) => {
-//   const { type, item_id, parent_id, season_number, episode_number } = item;
-
-//   try {
-//     dispatch(fetchItemsStart());
-//     let url;
-//     if (type === "movie" || type === "tv")
-//       url = `${URL_Base}${type}/${item_id}?append_to_response=credits&language=en-US`;
-//     if (type === "episode")
-//       url = `${URL_Base}tv/${parent_id}/season/${season_number}/episode/${episode_number}?language=en-US`;
-
-//     const result = await axios.get(url, options);
-
-//     dispatch(fetchOneItemSuccess({ listId, item: result?.data?.[0] }));
-//   } catch (err) {
-//     dispatch(fetchItemsFailure(err));
-//   }
-// };

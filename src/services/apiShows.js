@@ -191,3 +191,52 @@ export async function getPersonData(personId) {
     images: personData?.data?.images?.profiles,
   };
 }
+
+export async function getUserInterests(movieId, tvId) {
+  let moviesUrl, tvShowsUrl;
+
+  if (movieId && tvId) {
+    moviesUrl = `${URL_Base}movie/${movieId}/similar?language=en-US&page=1`;
+    tvShowsUrl = `${URL_Base}tv/${tvId}/similar?language=en-US&page=1`;
+
+    const [movies, tvShows] = await axios.all([
+      axios.get(moviesUrl, options),
+      axios.get(tvShowsUrl, options),
+    ]);
+
+    console.log({ movies, tvShows });
+
+    return {
+      moviesInterest: movies?.data,
+      tvShowsInterest: tvShows?.data,
+    };
+  }
+
+  if (movieId) {
+    tvShowsUrl = `${URL_Base}tv/${tvId}/similar?language=en-US&page=1`;
+
+    const movies = await axios.get(tvShowsUrl, options);
+
+    console.log(movies);
+
+    return {
+      moviesInterest: movies?.data?.results,
+      tvShowsInterest: null,
+    };
+  }
+
+  if (tvId) {
+    moviesUrl = `${URL_Base}movie/${movieId}/similar?language=en-US&page=1`;
+
+    const tvShows = await axios.get(moviesUrl, options);
+
+    console.log(tvShows);
+
+    return {
+      moviesInterest: null,
+      tvShowsInterest: tvShows?.data?.results,
+    };
+  }
+
+  if (!movieId && !tvId) console.log("movieId, tvId are undefinded");
+}

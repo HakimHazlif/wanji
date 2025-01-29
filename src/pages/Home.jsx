@@ -4,9 +4,13 @@ import { useMovies } from "../features/movies/useMovies";
 import { getImageViaPath } from "../utils/helper";
 import MovieLists from "../features/movies/MovieLists";
 import TvLists from "../features/tv/TvShowLists";
+import { useLists } from "../features/lists/useLists";
+import Interests from "../components/Interests";
 
 const Home = () => {
   const { isLoading, movies, error } = useMovies();
+
+  const { favoriteList } = useLists();
 
   if (isLoading) return <Spinner />;
 
@@ -18,10 +22,10 @@ const Home = () => {
   return (
     <>
       <Discover image={image} />
-      <div className="py-20"></div>
+
+      {favoriteList?.items_list?.length > 0 && <Interests />}
 
       <MovieLists />
-      <div className="py-20"></div>
       <TvLists />
     </>
   );
