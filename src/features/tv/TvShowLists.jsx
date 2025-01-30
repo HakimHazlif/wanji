@@ -20,14 +20,18 @@ const TvLists = () => {
 
   return (
     <section className="flex flex-col gap-20 padding-x py-28">
-      <ListScroll title="Trending TV Shows" path="tv-shows" viewAll={true}>
+      <ListScroll
+        title="Popular TV Shows"
+        path="tv-shows?tv-tag=popular&page=1"
+        viewAll={true}
+      >
         {popularTv.map((tvShow) => (
           <ShowCard key={tvShow.id} show={tvShow} category={category} />
         ))}
       </ListScroll>
       <ListScroll
         title="Top Rated TV Shows"
-        path="tv-shows?tvTag=top-rated-shows"
+        path="tv-shows?tv-tag=top_rated&page=1"
         viewAll={true}
       >
         {topRatedTv.map((tvShow) => (
@@ -36,7 +40,7 @@ const TvLists = () => {
       </ListScroll>
       <ListScroll
         title="TV Shows on the Air"
-        path="tv-shows?tvTag=tv-on-the-air"
+        path="tv-shows?tv-tag=on_the_air&page=1"
         viewAll={true}
       >
         {onTheAir.map((tvShow) => (
@@ -45,7 +49,7 @@ const TvLists = () => {
       </ListScroll>
       <ListScroll
         title="TV Shows Airing Today"
-        path="tv-shows?tvTag=tv-airing-today"
+        path="tv-shows?tv-tag=airing_today&page=1"
         viewAll={true}
       >
         {airingToday.map((tvShow) => (

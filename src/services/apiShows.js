@@ -95,6 +95,21 @@ export async function getTvShows() {
   }
 }
 
+export async function getTvByList(list, page, id) {
+  const url =
+    list === "for_you"
+      ? `${URL_Base}tv/${id}/similar?language=en-US&page=${page}`
+      : `${URL_Base}tv/${list}?language=en-US&page=${page}`;
+
+  try {
+    const moviesList = await axios.get(url, options);
+
+    return moviesList ? moviesList.data : [];
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export async function getSeasonData({ id, seasonNum }) {
   const serieApiUrl = `${URL_Base}tv/${id}?language=en-US`;
   const seasonApiUrl = `${URL_Base}tv/${id}/season/${seasonNum}?language=en-US`;

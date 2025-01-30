@@ -13,19 +13,18 @@ import Pagination from "../components/Pagination";
 const Movies = () => {
   const category = "movie";
   const [title, setTitle] = useState("Popular Movies");
-  const [description, setDescription] = useState("Trending Movies");
+  const [description, setDescription] = useState("");
   const { interestsIds } = useListsContext();
 
   const [searchParams] = useSearchParams();
   const movieTag = searchParams.get("movie-tag");
 
   const { isLoading, moviesList } = useSpecificMovies(interestsIds.movieId);
-  // const { interestMovie } = useUserInterests(interestsIds);
 
   useEffect(() => {
     switch (movieTag) {
       case "top_rated":
-        setTitle("Top Reated Movies");
+        setTitle("Top Rated Movies");
         setDescription(
           "Movies with the highest ratings from critics and viewers, showcasing the best in quality, according to TMDB."
         );
@@ -72,7 +71,7 @@ const Movies = () => {
           <p className="mt-5 text-base text-slate-400">{description}</p>
         </div>
 
-        <div className="w-full grid grid-cols-4 gap-16 pt-10">
+        <div className="w-full grid grid-cols-4 gap-16 pt-20">
           {moviesList?.results?.map((movie) => (
             <ShowCard key={movie.id} show={movie} category={category} />
           ))}

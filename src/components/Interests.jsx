@@ -27,7 +27,7 @@ const Interests = () => {
       {interestTv && (
         <ListScroll
           title="TV Shows You Might Like"
-          path="tv-shows?tvTag=for-you"
+          path="tv-shows?tv-tag=for_you&page=1"
           viewAll={true}
         >
           {interestTv?.results?.slice(0, 8).map((tv) => (
