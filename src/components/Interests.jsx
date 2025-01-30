@@ -15,8 +15,8 @@ const Interests = () => {
     <section className="flex flex-col gap-20 padding-x pt-28">
       {interestMovie && (
         <ListScroll
-          title="Movies specially selected for you"
-          path="movies?movieTag=for-you"
+          title="Movies You Might Like"
+          path="movies?movie-tag=for_you&page=1"
           viewAll={true}
         >
           {interestMovie?.results?.slice(0, 8).map((movie) => (
@@ -26,7 +26,7 @@ const Interests = () => {
       )}
       {interestTv && (
         <ListScroll
-          title="Series specially selected for you"
+          title="TV Shows You Might Like"
           path="tv-shows?tvTag=for-you"
           viewAll={true}
         >

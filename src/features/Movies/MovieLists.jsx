@@ -20,14 +20,18 @@ const MovieLists = () => {
 
   return (
     <section className="flex flex-col gap-20 padding-x pt-28">
-      <ListScroll title="Trending Movies" path="movies" viewAll={true}>
+      <ListScroll
+        title="Popular Movies"
+        path="movies?movie-tag=popular&page=1"
+        viewAll={true}
+      >
         {popularMovies.map((movie) => (
           <ShowCard key={movie.id} show={movie} category={category} />
         ))}
       </ListScroll>
       <ListScroll
         title="Top Rated Movies"
-        path="movies?movieTag=top-rated-movies"
+        path="movies?movie-tag=top_rated&page=1"
         viewAll={true}
       >
         {topRatedMovies.map((movie) => (
@@ -36,7 +40,7 @@ const MovieLists = () => {
       </ListScroll>
       <ListScroll
         title="Now Playnig Movies"
-        path="movies?movieTag=now-playing-movies"
+        path="movies?movie-tag=now_playing&page=1"
         viewAll={true}
       >
         {nowPlaynigMovies.map((movie) => (
@@ -45,7 +49,7 @@ const MovieLists = () => {
       </ListScroll>
       <ListScroll
         title="Upcoming Movies"
-        path="movies?movieTag=upcoming-movies"
+        path="movies?movie-tag=upcoming&page=1"
         viewAll={true}
       >
         {upcomingMovies.map((movie) => (

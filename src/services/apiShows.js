@@ -54,27 +54,18 @@ export async function getMovies() {
   }
 }
 
-export async function getTrending() {
+export async function getMoviesByList(list, page, id) {
+  const url =
+    list === "for_you"
+      ? `${URL_Base}movie/${id}/similar?language=en-US&page=${page}`
+      : `${URL_Base}movie/${list}?language=en-US&page=${page}`;
+
   try {
-    const trendingLists = ["movie", "tv"];
+    const moviesList = await axios.get(url, options);
 
-    const urls = [];
-
-    trendingLists.forEach((list) => {
-      const url = `${URL_Base}trending/${list}/day?language=en-US`;
-      urls.push(url);
-    });
-
-    const [trendingMovies, trendingTv] = await axios.all(
-      urls.map((url) => axios.get(url, options))
-    );
-
-    return {
-      trendingMovies: trendingMovies.data.results,
-      trendingTv: trendingTv.data.results,
-    };
+    return moviesList ? moviesList.data : [];
   } catch (err) {
-    throw new Error(err.response?.data || "Something went wrong");
+    console.log(err);
   }
 }
 
@@ -229,3 +220,5 @@ export async function getUserInterests(movieId, tvId) {
 
   if (!movieId && !tvId) console.log("movieId, tvId are undefinded");
 }
+
+export async function getUserInterestsByPage(id, type) {}
