@@ -2,10 +2,12 @@ import Discover from "../components/Discover";
 import Spinner from "../ui/Spinner";
 import { useMovies } from "../features/movies/useMovies";
 import { getImageViaPath } from "../utils/helper";
-import MovieLists from "../features/movies/MovieLists";
-import TvLists from "../features/tv/TvShowLists";
 import { useLists } from "../features/lists/useLists";
-import Interests from "../components/Interests";
+import { lazy, Suspense } from "react";
+
+const Interests = lazy(() => import("../components/Interests"));
+const MovieLists = lazy(() => import("../features/movies/MovieLists"));
+const TvLists = lazy(() => import("../features/tv/TvShowLists"));
 
 const Home = () => {
   const { isLoading, movies, error } = useMovies();
@@ -23,10 +25,18 @@ const Home = () => {
     <>
       <Discover image={image} />
 
-      {favoriteList?.items_list?.length > 0 && <Interests />}
-
-      <MovieLists />
-      <TvLists />
+      {favoriteList?.items_list?.length > 0 ? (
+        <Suspense fallback={<Spinner />}>
+          <Interests />
+          <MovieLists />
+          <TvLists />
+        </Suspense>
+      ) : (
+        <Suspense fallback={<Spinner />}>
+          <MovieLists />
+          <TvLists />
+        </Suspense>
+      )}
     </>
   );
 };

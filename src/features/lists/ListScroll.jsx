@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import {
   IoIosArrowDropleftCircle,
   IoIosArrowDroprightCircle,
@@ -14,21 +14,28 @@ const ListScroll = ({ title, path, children }) => {
 
   const [isHoveredTitle, setIsHoveredTitle] = useState(false);
 
-  const handleScroll = (direction) => {
+  const handleScroll = useCallback((direction) => {
     const container = containerRef.current;
     const scrollAmount = 240;
+    if (!container) return;
 
-    if (direction === "left") {
-      container.scrollLeft -= scrollAmount;
-    } else {
-      container.scrollLeft += scrollAmount;
-    }
+    const newScrollLeft =
+      direction === "left"
+        ? container.scrollLeft - scrollAmount
+        : container.scrollLeft + scrollAmount;
 
-    setIsScrolledLeft(container.scrollLeft <= 0);
-    setIsScrolledRight(
-      container.scrollLeft + container.offsetWidth >= container.scrollWidth
-    );
-  };
+    container.scrollTo({
+      left: newScrollLeft,
+      behavior: "smooth",
+    });
+
+    requestAnimationFrame(() => {
+      setIsScrolledLeft(container.scrollLeft <= 0);
+      setIsScrolledRight(
+        container.scrollLeft + container.offsetWidth >= container.scrollWidth
+      );
+    });
+  }, []);
 
   return (
     <section className="">

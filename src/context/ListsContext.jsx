@@ -5,7 +5,6 @@ const ListsContext = createContext();
 
 function ListsContextProvider({ children }) {
   const { favoriteList } = useLists();
-  console.log(favoriteList);
 
   const favoriteMovies = favoriteList?.items_list?.filter(
     (movie) => movie.type === "movie"

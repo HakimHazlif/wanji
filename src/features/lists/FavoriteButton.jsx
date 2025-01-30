@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLists } from "./useLists";
 import { useAddShow } from "./useAddShow";
@@ -12,8 +12,6 @@ const FavoriteButton = ({ item }) => {
   const { itemId, type, parentId, episode, season } = item;
 
   const { isLoggedIn } = useSelector((state) => state.user);
-
-  const [isFavorited, setIsFavorited] = useState();
 
   const { favoriteList, isLoading } = useLists();
   const { isLoading: isAdding, addShow } = useAddShow();
@@ -39,16 +37,12 @@ const FavoriteButton = ({ item }) => {
     }
   }
 
+  const isFavorited = useMemo(
+    () => favoriteList?.items_list.some((el) => el.item_id == itemId),
+    [itemId, favoriteList?.items_list]
+  );
+
   let content;
-
-  useEffect(() => {
-    const favorited = favoriteList?.items_list.some(
-      (el) => el.item_id == itemId
-    );
-
-    setIsFavorited(favorited);
-  }, [setIsFavorited, itemId, favoriteList?.items_list]);
-
   if (isAdding || isDeleting || isLoading) {
     content = <SpinnerMini />;
   } else {

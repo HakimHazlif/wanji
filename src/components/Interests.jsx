@@ -9,8 +9,6 @@ const Interests = () => {
   const { interestMovie, interestTv, isLoading } =
     useUserInterests(interestsIds);
 
-  console.log({ interestMovie, interestTv });
-
   if (isLoading) return <Spinner />;
 
   return (
@@ -21,7 +19,7 @@ const Interests = () => {
           path="movies?movieTag=for-you"
           viewAll={true}
         >
-          {interestMovie?.results?.map((movie) => (
+          {interestMovie?.results?.slice(0, 8).map((movie) => (
             <ShowCard key={movie.id} show={movie} category="movie" />
           ))}
         </ListScroll>
@@ -32,7 +30,7 @@ const Interests = () => {
           path="tv-shows?tvTag=for-you"
           viewAll={true}
         >
-          {interestTv?.results?.map((tv) => (
+          {interestTv?.results?.slice(0, 8).map((tv) => (
             <ShowCard key={tv.id} show={tv} category="tv" />
           ))}
         </ListScroll>

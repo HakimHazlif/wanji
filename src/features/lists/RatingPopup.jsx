@@ -15,7 +15,7 @@ const RatingPopup = ({
 }) => {
   const { uid } = useSelector((state) => state.user.user);
 
-  const [rating, setRating] = useState(showRate);
+  const [rating, setRating] = useState(Number(showRate));
   const [hover, setHover] = useState(0);
   const popupRef = useRef();
 

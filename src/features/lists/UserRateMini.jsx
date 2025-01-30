@@ -1,5 +1,5 @@
 import { FaStar } from "react-icons/fa";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import RatingPopup from "./RatingPopup";
 import { useRatingList } from "./useRatingList";
 import SpinnerMini from "../../ui/SpinnerMini";
@@ -8,10 +8,9 @@ import { useUpadetRating } from "./useUpadetRating";
 import { useAddRating } from "./useAddRating";
 
 const UserRateMini = ({ type, itemId }) => {
-  const [rating, setRating] = useState(0);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  const { ratingList, isLoading } = useRatingList();
+  const { ratingList } = useRatingList();
   const { isLoading: isUpading } = useUpadetRating();
   const { isLoading: isAdding } = useAddRating();
 
@@ -25,17 +24,13 @@ const UserRateMini = ({ type, itemId }) => {
     setIsPopupOpen(false);
   };
 
+  const rating = useMemo(
+    () =>
+      ratingList?.rating?.filter((el) => el.item_id == itemId)?.[0]?.rate || 0,
+    [itemId, ratingList]
+  );
+
   let content;
-
-  useEffect(() => {
-    const rate = ratingList?.rating?.filter((el) => el.item_id == itemId)?.[0]
-      ?.rate;
-
-    if (rate) {
-      setRating(rate);
-    }
-  }, [itemId, type, ratingList]);
-
   if (isAdding || isUpading) content = <SpinnerMini />;
   else
     content = (

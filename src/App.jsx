@@ -23,8 +23,7 @@ import ListsContextProvider from "./context/ListsContext";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      // staleTime: 60 * 1000, // 60 seconds * 1000 miliseconds
-      staleTime: 0,
+      staleTime: 60 * 1000,
     },
   },
 });

@@ -4,14 +4,14 @@ import {
   updateDateFormat,
 } from "../utils/helper";
 import { useNavigate } from "react-router";
-import WatchlistIcon from "../features/lists/WatchlistIcon";
-import WatchlistButton from "../features/lists/WatchlistButton";
-
 import { FaStar } from "react-icons/fa";
-import FavoriteButton from "../features/lists/FavoriteButton";
-import UserRateMini from "../features/lists/UserRateMini";
 import Ellipsis from "./Ellipsis";
 import { Tooltip } from "@mui/material";
+import { lazy, Suspense } from "react";
+
+const WatchlistButton = lazy(() => import("../features/lists/WatchlistButton"));
+const FavoriteButton = lazy(() => import("../features/lists/FavoriteButton"));
+const UserRateMini = lazy(() => import("../features/lists/UserRateMini"));
 
 const ShowCard = ({
   show,
@@ -53,13 +53,11 @@ const ShowCard = ({
     <div className="w-52 relative">
       <div className="">
         <img
-          src={
-            getPictureUrlFormat(poster, 500) ||
-            "https://image.tmdb.org/t/p/w300_and_h450_bestv2/5vV52TSEIhe4ZZLWwv3i7nfv8we.jpg"
-          }
+          src={getPictureUrlFormat(poster, 500)}
           alt="movie poster"
           className="relative w-full h-[300px] object-cover rounded-md shadow-2xl cursor-pointer"
           onClick={handleNavigate}
+          loading="lazy"
         />
         <div className="px-3 mt-2">
           <div className="flex gap-4">
@@ -67,7 +65,15 @@ const ShowCard = ({
               <FaStar />
               <p>{rate?.toFixed(1)}</p>
             </div>
-            <UserRateMini type={category} itemId={id} />
+            <Suspense
+              fallback={
+                <div className="rounded-md bg-orange-coral w-[45px] h-6  flex items-center justify-center gap-1 text-xs font-bold">
+                  <FaStar />
+                </div>
+              }
+            >
+              <UserRateMini type={category} itemId={id} />
+            </Suspense>
           </div>
 
           <div className="flex flex-col gap-1 mt-2">
@@ -84,10 +90,12 @@ const ShowCard = ({
             </Tooltip>
           </div>
           {additions && (
-            <div className="flex justify-center gap-2 mt-4">
-              <WatchlistButton item={item} />
-              <FavoriteButton item={item} />
-            </div>
+            <Suspense fallback={<div>Loading</div>}>
+              <div className="flex justify-center gap-2 mt-4">
+                <WatchlistButton item={item} />
+                <FavoriteButton item={item} />
+              </div>
+            </Suspense>
           )}
         </div>
       </div>

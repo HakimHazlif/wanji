@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLists } from "./useLists";
 import { useAddShow } from "./useAddShow";
@@ -11,8 +11,6 @@ const WatchlistButton = ({ item }) => {
   const { itemId, type, parentId, episode, season } = item;
 
   const { isLoggedIn } = useSelector((state) => state.user);
-
-  const [isWatchlist, setIsWatchlist] = useState();
 
   const { watchlist, isLoading } = useLists();
   const { isLoading: isAdding, addShow } = useAddShow();
@@ -38,14 +36,12 @@ const WatchlistButton = ({ item }) => {
     }
   }
 
+  const isWatchlist = useMemo(
+    () => watchlist?.items_list.some((el) => el.item_id == itemId),
+    [itemId, watchlist?.items_list]
+  );
+
   let content;
-
-  useEffect(() => {
-    const watched = watchlist?.items_list.some((el) => el.item_id == itemId);
-
-    setIsWatchlist(watched);
-  }, [setIsWatchlist, itemId, watchlist?.items_list]);
-
   if (isAdding || isDeleting || isLoading) {
     content = <SpinnerMini />;
   } else {

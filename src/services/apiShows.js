@@ -1,5 +1,6 @@
 import axios from "axios";
 import { options, URL_Base } from "../constants/variables";
+import supabase from "./supabase";
 
 export async function getShow({ category, id }) {
   try {
@@ -193,18 +194,14 @@ export async function getPersonData(personId) {
 }
 
 export async function getUserInterests(movieId, tvId) {
-  let moviesUrl, tvShowsUrl;
+  const moviesUrl = `${URL_Base}movie/${movieId}/similar?language=en-US&page=1`;
+  const tvShowsUrl = `${URL_Base}tv/${tvId}/similar?language=en-US&page=1`;
 
   if (movieId && tvId) {
-    moviesUrl = `${URL_Base}movie/${movieId}/similar?language=en-US&page=1`;
-    tvShowsUrl = `${URL_Base}tv/${tvId}/similar?language=en-US&page=1`;
-
     const [movies, tvShows] = await axios.all([
       axios.get(moviesUrl, options),
       axios.get(tvShowsUrl, options),
     ]);
-
-    console.log({ movies, tvShows });
 
     return {
       moviesInterest: movies?.data,
@@ -213,11 +210,7 @@ export async function getUserInterests(movieId, tvId) {
   }
 
   if (movieId) {
-    tvShowsUrl = `${URL_Base}tv/${tvId}/similar?language=en-US&page=1`;
-
     const movies = await axios.get(tvShowsUrl, options);
-
-    console.log(movies);
 
     return {
       moviesInterest: movies?.data?.results,
@@ -226,11 +219,7 @@ export async function getUserInterests(movieId, tvId) {
   }
 
   if (tvId) {
-    moviesUrl = `${URL_Base}movie/${movieId}/similar?language=en-US&page=1`;
-
     const tvShows = await axios.get(moviesUrl, options);
-
-    console.log(tvShows);
 
     return {
       moviesInterest: null,
