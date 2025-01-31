@@ -52,19 +52,24 @@ const ShowCard = ({
   return (
     <div className="w-52 relative">
       <div className="">
-        <img
-          src={getPictureUrlFormat(poster, 500)}
-          alt="movie poster"
-          className="relative w-full h-[300px] object-cover rounded-md shadow-2xl cursor-pointer"
-          onClick={handleNavigate}
-          loading="lazy"
-        />
+        <Tooltip title={title}>
+          <img
+            src={getPictureUrlFormat(poster, 500)}
+            alt="movie poster"
+            className="relative w-full h-[300px] object-cover rounded-md shadow-2xl cursor-pointer"
+            onClick={handleNavigate}
+            loading="lazy"
+          />
+        </Tooltip>
         <div className="px-3 mt-2">
           <div className="flex gap-4">
-            <div className="rounded-md bg-orange-amber w-[45px] h-6  flex items-center justify-center gap-1 text-xs font-bold">
-              <FaStar />
-              <p>{rate?.toFixed(1)}</p>
-            </div>
+            <Tooltip title="TMDB rate">
+              <div className="rounded-md bg-orange-amber w-[45px] h-6  flex items-center justify-center gap-1 text-xs font-bold">
+                <FaStar />
+                <p>{rate?.toFixed(1)}</p>
+              </div>
+            </Tooltip>
+
             <Suspense
               fallback={
                 <div className="rounded-md bg-orange-coral w-[45px] h-6  flex items-center justify-center gap-1 text-xs font-bold">

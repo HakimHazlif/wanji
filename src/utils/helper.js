@@ -62,11 +62,11 @@ export function getProfileImageUrl(path) {
 
 export function getMainCrewRolls(arr) {
   const directing = arr?.filter((item) => item["job"] === "Director");
-  const writing = arr?.filter((item) => item["job"] === "Screenplay");
-  const production = arr?.filter((item) => item["job"] === "Producer");
-  const creator = arr?.filter((item) => item["job"] === "Executive Producer");
+  const writing = arr?.filter(
+    (item) => item["job"] === "Screenplay" || item["job"] === "Writer"
+  );
 
-  return { directing, writing, production, creator };
+  return { directing, writing };
 }
 
 export function formatHugeNumber(num) {

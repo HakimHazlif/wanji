@@ -7,7 +7,7 @@ import { BsBookmarkCheckFill, BsBookmarkPlusFill } from "react-icons/bs";
 import { Tooltip } from "@mui/material";
 import SpinnerMini from "../../ui/SpinnerMini";
 
-const WatchlistButton = ({ item }) => {
+const WatchlistButton = ({ item, size = 20 }) => {
   const { itemId, type, parentId, episode, season } = item;
 
   const { isLoggedIn } = useSelector((state) => state.user);
@@ -43,18 +43,18 @@ const WatchlistButton = ({ item }) => {
 
   let content;
   if (isAdding || isDeleting || isLoading) {
-    content = <SpinnerMini />;
+    content = <SpinnerMini size={size} />;
   } else {
     if (isWatchlist) {
       content = (
         <>
-          <BsBookmarkCheckFill className="h-5 w-5 text-orange-amber" />
+          <BsBookmarkCheckFill size={size} className=" text-orange-amber" />
         </>
       );
     } else {
       content = (
         <>
-          <BsBookmarkPlusFill className="h-5 w-5 text-gray-200" />
+          <BsBookmarkPlusFill size={size} className="text-gray-200" />
         </>
       );
     }
@@ -64,7 +64,7 @@ const WatchlistButton = ({ item }) => {
     <Tooltip title={isWatchlist ? "Delete from Watchlist" : "Add to Watchlist"}>
       <span>
         <button
-          className="bg-slate-700 w-24 px-4 py-2 font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-slate-500"
+          className={`bg-slate-700 px-4 py-2 w-24   font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-slate-500`}
           onClick={
             isWatchlist ? handleDeleteFromWatchlist : handleAddToWatchlist
           }

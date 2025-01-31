@@ -5,9 +5,9 @@ const ShowImages = ({ images }) => {
   // const newEmages = images.filter((image, index) => index <= 20);
 
   return (
-    <section className="">
-      <div className="flex items-end gap-3 mb-6">
-        <h2 className="text-4xl text-white">Photos </h2>
+    <section className="py-16 mb-20">
+      <div className="flex items-end gap-3 mb-6 border-b border-slate-700 pb-3">
+        <h2 className="text-4xl font-semibold ">Photos </h2>
         <span className="text-xl text-slate-400">{images.length}</span>
       </div>
       <div className="grid-flow-row grid gap-2">

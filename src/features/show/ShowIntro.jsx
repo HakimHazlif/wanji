@@ -15,16 +15,27 @@ import FavoriteIcon from "../lists/FavoriteIcon";
 
 import { useParams } from "react-router";
 import { useShow } from "./useShow";
-import ListsIcon from "../lists/ListsIcon";
 import RateUser from "../lists/RateUser";
 import Ellipsis from "../../ui/Ellipsis";
+import WatchlistButton from "../lists/WatchlistButton";
+import FavoriteButton from "../lists/FavoriteButton";
+import ButtonAddToList from "../lists/ButtonAddToList";
 
-const ShowIntroDetails = () => {
+const ShowIntro = () => {
   // console.log(details);
   const { details } = useShow();
   const { category } = useParams();
 
-  const { id, genres, overview, poster_path, vote_average, status } = details;
+  const {
+    id,
+    genres,
+    overview,
+    poster_path,
+    vote_average,
+    status,
+    number_of_seasons,
+    number_of_episodes,
+  } = details;
 
   const title = details?.title || details?.name;
   const originalTitle = details?.original_title || details?.original_name;
@@ -77,6 +88,21 @@ const ShowIntroDetails = () => {
                 </li>
               </>
             )}
+            {number_of_seasons && (
+              <>
+                <span>&#x2022;</span>
+                <li>
+                  {number_of_seasons}{" "}
+                  {number_of_seasons === 1 ? "season" : "seasons"}
+                </li>
+              </>
+            )}
+            {number_of_episodes && (
+              <>
+                <span>&#x2022;</span>
+                <li>{number_of_episodes} episodes</li>
+              </>
+            )}
           </ul>
           <div className="flex items-center gap-2 mb-2">
             <Box>
@@ -98,7 +124,7 @@ const ShowIntroDetails = () => {
                 }}
               />
             </Box>
-            <p className="px-2 py-0.5 rounded-sm bg-orange-amber text-white font-semibold">
+            <p className="px-2 py-0.5 rounded-sm bg-orange-amber text-gray-800 font-semibold">
               {formatNumber(vote_average)}
             </p>
           </div>
@@ -107,7 +133,7 @@ const ShowIntroDetails = () => {
             {genres.map((genre) => (
               <li
                 key={genre.id}
-                className="py-2 px-4 rounded-lg bg-black/20 backdrop-blur-lg text-white font-medium text-sm"
+                className="py-2 px-4 rounded-lg bg-black/20 backdrop-blur-md text-white font-medium text-sm"
               >
                 {genre.name}
               </li>
@@ -122,9 +148,9 @@ const ShowIntroDetails = () => {
       <hr className="border-1 border-slate-400 w-full my-4" />
       <div className="flex justify-between items-center">
         <div className="flex gap-2 items-center">
-          <WatchlistIcon item={item} />
-          <FavoriteIcon item={item} />
-          <ListsIcon />
+          <WatchlistButton item={item} size={30} />
+          <FavoriteButton item={item} size={30} />
+          <ButtonAddToList />
         </div>
         <RateUser itemId={id} type={category} />
       </div>
@@ -132,4 +158,4 @@ const ShowIntroDetails = () => {
   );
 };
 
-export default ShowIntroDetails;
+export default ShowIntro;

@@ -1,6 +1,6 @@
 import { useShow } from "../features/show/useShow";
-import ShowIntroDetails from "../features/show/ShowIntroDetails";
-import ShowMoreDetails from "../features/show/ShowMoreDetails";
+import ShowIntro from "../features/show/ShowIntro";
+import ShowDetails from "../features/show/ShowDetails";
 import ShowCredits from "../features/show/ShowCredits";
 import ListScroll from "../features/lists/ListScroll";
 // import ShowSimilar from "../features/show/ShowSimilar";
@@ -14,27 +14,26 @@ import SeasonsList from "../features/lists/SeasonsList";
 import { useParams } from "react-router";
 
 const Show = () => {
-  const { isLoading, show, details, similar, images } = useShow();
+  const { isLoading, show, details, similar, images, credits } = useShow();
 
-  // console.log(show);
+  console.log(show);
   const { category } = useParams();
-
-  const path = details?.backdrop_path || details?.poster_path;
 
   if (isLoading) return <Spinner />;
 
   return (
     <main className="pt-32 pb-20">
       <div className="padding-x">
-        <ShowIntroDetails />
-        {category === "tv" && <SeasonsList />}
+        <ShowIntro />
+        <ShowDetails />
 
-        <section className="flex gap-10 py-32">
-          <ShowImages images={images} />
-          <ShowMoreDetails />
-        </section>
-        <ShowCredits />
-        <ListScroll title="More like this" viewAll={true}>
+        {category === "tv" && <SeasonsList />}
+        <ShowCredits title="Cast" creditsList={credits?.cast} />
+        <ShowCredits title="Crew" creditsList={credits?.crew} />
+
+        <ShowImages images={images} />
+
+        <ListScroll title="More like this">
           {similar?.map((show) => (
             <ShowCard key={show.id} show={show} category={category} />
           ))}
@@ -46,7 +45,10 @@ const Show = () => {
       </div>
       <div className="absolute top-0 right-0 w-full -z-10 ">
         <img
-          src={getPictureUrlFormat(path, 1280)}
+          src={getPictureUrlFormat(
+            details?.backdrop_path || details?.poster_path,
+            1280
+          )}
           alt="backdrop of movie"
           className="h-[600px] w-full object-cover object-center masking"
         />

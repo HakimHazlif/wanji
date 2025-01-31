@@ -8,7 +8,7 @@ import { LuHeart } from "react-icons/lu";
 import { Tooltip } from "@mui/material";
 import SpinnerMini from "../../ui/SpinnerMini";
 
-const FavoriteButton = ({ item }) => {
+const FavoriteButton = ({ item, size = 20 }) => {
   const { itemId, type, parentId, episode, season } = item;
 
   const { isLoggedIn } = useSelector((state) => state.user);
@@ -44,18 +44,18 @@ const FavoriteButton = ({ item }) => {
 
   let content;
   if (isAdding || isDeleting || isLoading) {
-    content = <SpinnerMini />;
+    content = <SpinnerMini size={size} />;
   } else {
     if (isFavorited) {
       content = (
         <>
-          <FaHeart className="h-5 w-5 text-strawberry" />
+          <FaHeart size={size} className=" text-strawberry" />
         </>
       );
     } else {
       content = (
         <>
-          <LuHeart className="h-5 w-5 text-gray-200" />
+          <LuHeart size={size} className=" text-gray-200" />
         </>
       );
     }

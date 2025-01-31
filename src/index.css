@@ -111,12 +111,12 @@ html {
 }
 
 .scrollbar-custom::-webkit-scrollbar-track {
-  background: 0#4b5563;
+  background: #6f7d90;
   border-radius: 10px;
 }
 
 .scrollbar-custom::-webkit-scrollbar-thumb {
-  background: #1f2937;
+  background: #213857;
   border-radius: 10px;
 }
 

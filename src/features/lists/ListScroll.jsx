@@ -6,7 +6,7 @@ import {
 } from "react-icons/io";
 import { Link } from "react-router";
 
-const ListScroll = ({ title, path, children }) => {
+const ListScroll = ({ title, path = "", children }) => {
   const containerRef = useRef(null);
 
   const [isScrolledLeft, setIsScrolledLeft] = useState(true);
@@ -42,21 +42,25 @@ const ListScroll = ({ title, path, children }) => {
       <div className=" flex items-center justify-between mb-6">
         <Link
           to={path}
-          className="font-bold text-3xl flex items-end gap-4 cursor-pointer group text-white"
+          className={`text-4xl font-semibold flex items-end gap-4 group text-white ${
+            path !== "" ? "cursor-pointer" : "cursor-default"
+          }`}
           onMouseEnter={() => setIsHoveredTitle(true)}
           onMouseLeave={() => setIsHoveredTitle(false)}
         >
           {title}
-          <span className="flex items-center gap-1 text-blue-400 text-base relative">
-            <span
-              className={`transition-all  ease-in duration-400 ${
-                isHoveredTitle ? "opacity-100 delay-300" : "opacity-0"
-              }`}
-            >
-              View all
+          {path && (
+            <span className="flex items-center gap-1 text-blue-400 text-base relative">
+              <span
+                className={`transition-all  ease-in duration-400 ${
+                  isHoveredTitle ? "opacity-100 delay-300" : "opacity-0"
+                }`}
+              >
+                View all
+              </span>
+              <IoIosArrowForward className=" absolute transform translate-x-0 group-hover:translate-x-16 transition-transform duration-300 ease-linear text-2xl" />
             </span>
-            <IoIosArrowForward className=" absolute transform translate-x-0 group-hover:translate-x-16 transition-transform duration-300 ease-linear text-2xl" />
-          </span>
+          )}
         </Link>
         <div className="flex gap-3 text-4xl text-slate-600 cursor-pointer">
           <IoIosArrowDropleftCircle

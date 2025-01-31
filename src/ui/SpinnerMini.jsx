@@ -1,7 +1,7 @@
 import { BiLoaderAlt } from "react-icons/bi";
 
-const SpinnerMini = () => {
-  return <BiLoaderAlt className="w-[20px] h-[20px] spinner-mini" />;
+const SpinnerMini = ({ size = 20 }) => {
+  return <BiLoaderAlt size={size} className=" spinner-mini" />;
 };
 
 export default SpinnerMini;
