@@ -3,8 +3,7 @@ import ShowIntro from "../features/show/ShowIntro";
 import ShowDetails from "../features/show/ShowDetails";
 import ShowCredits from "../features/show/ShowCredits";
 import ListScroll from "../features/lists/ListScroll";
-// import ShowSimilar from "../features/show/ShowSimilar";
-// import ShowReviews from "../features/show/ShowReviews";
+import ShowReviews from "../features/show/ShowReviews";
 
 import Spinner from "../ui/Spinner";
 import { getPictureUrlFormat } from "../utils/helper";
@@ -14,7 +13,8 @@ import SeasonsList from "../features/lists/SeasonsList";
 import { useParams } from "react-router";
 
 const Show = () => {
-  const { isLoading, show, details, similar, images, credits } = useShow();
+  const { isLoading, show, details, similar, images, credits, reviews } =
+    useShow();
 
   console.log(show);
   const { category } = useParams();
@@ -31,7 +31,7 @@ const Show = () => {
         <ShowCredits title="Cast" creditsList={credits?.cast} />
         <ShowCredits title="Crew" creditsList={credits?.crew} />
 
-        <ShowImages images={images} />
+        {images?.length > 0 && <ShowImages images={images} />}
 
         <ListScroll title="More like this">
           {similar?.map((show) => (
@@ -39,9 +39,7 @@ const Show = () => {
           ))}
         </ListScroll>
 
-        {/* 
-        <ShowSimilar similar={similar} />
-        <ShowReviews reviews={reviews} /> */}
+        {reviews?.length > 0 && <ShowReviews />}
       </div>
       <div className="absolute top-0 right-0 w-full -z-10 ">
         <img

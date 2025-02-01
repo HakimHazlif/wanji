@@ -4,7 +4,13 @@ import supabase from "./supabase";
 
 export async function getShow({ category, id }) {
   try {
-    const showLists = ["", "/images", "/credits", "/similar", "/reviews"];
+    const showLists = [
+      "",
+      "/images",
+      "/credits",
+      "/recommendations",
+      "/reviews",
+    ];
 
     const urls = showLists.map((list, index) => {
       return `${URL_Base}${category}/${id}${list}${
@@ -57,7 +63,7 @@ export async function getMovies() {
 export async function getMoviesByList(list, page, id) {
   const url =
     list === "for_you"
-      ? `${URL_Base}movie/${id}/similar?language=en-US&page=${page}`
+      ? `${URL_Base}movie/${id}/recommendations?language=en-US&page=${page}`
       : `${URL_Base}movie/${list}?language=en-US&page=${page}`;
 
   try {
@@ -98,7 +104,7 @@ export async function getTvShows() {
 export async function getTvByList(list, page, id) {
   const url =
     list === "for_you"
-      ? `${URL_Base}tv/${id}/similar?language=en-US&page=${page}`
+      ? `${URL_Base}tv/${id}/recommendations?language=en-US&page=${page}`
       : `${URL_Base}tv/${list}?language=en-US&page=${page}`;
 
   try {
@@ -200,8 +206,8 @@ export async function getPersonData(personId) {
 }
 
 export async function getUserInterests(movieId, tvId) {
-  const moviesUrl = `${URL_Base}movie/${movieId}/similar?language=en-US&page=1`;
-  const tvShowsUrl = `${URL_Base}tv/${tvId}/similar?language=en-US&page=1`;
+  const moviesUrl = `${URL_Base}movie/${movieId}/recommendations?language=en-US&page=1`;
+  const tvShowsUrl = `${URL_Base}tv/${tvId}/recommendations?language=en-US&page=1`;
 
   if (movieId && tvId) {
     const [movies, tvShows] = await axios.all([
@@ -235,5 +241,3 @@ export async function getUserInterests(movieId, tvId) {
 
   if (!movieId && !tvId) console.log("movieId, tvId are undefinded");
 }
-
-export async function getUserInterestsByPage(id, type) {}
