@@ -222,7 +222,7 @@ export async function getUserInterests(movieId, tvId) {
   }
 
   if (movieId) {
-    const movies = await axios.get(tvShowsUrl, options);
+    const movies = await axios.get(moviesUrl, options);
 
     return {
       moviesInterest: movies?.data?.results,
@@ -231,7 +231,7 @@ export async function getUserInterests(movieId, tvId) {
   }
 
   if (tvId) {
-    const tvShows = await axios.get(moviesUrl, options);
+    const tvShows = await axios.get(tvShowsUrl, options);
 
     return {
       moviesInterest: null,

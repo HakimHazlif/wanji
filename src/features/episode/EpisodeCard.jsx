@@ -9,6 +9,7 @@ import {
 import { Link, useNavigate } from "react-router";
 import WatchlistButton from "../lists/WatchlistButton";
 import FavoriteButton from "../lists/FavoriteButton";
+import UserRateMini from "../lists/UserRateMini";
 
 const EpisodeCard = ({ episode }) => {
   const navigate = useNavigate();
@@ -97,9 +98,17 @@ const EpisodeCard = ({ episode }) => {
                   }}
                 />
               </Box>
-              <span className="px-2 py-0.5 rounded bg-orange-amber/20 text-orange-amber font-medium">
+              <span className="px-2 py-0.5 rounded-sm bg-orange-amber font-semibold text-gray-800">
                 {formatNumber(vote_average)}
               </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <UserRateMini
+                type="episode"
+                itemId={id}
+                addStars={true}
+                buttonStyle="px-3 py-0.5 rounded-sm bg-orange-coral font-semibold text-gray-800"
+              />
             </div>
           </div>
         </div>

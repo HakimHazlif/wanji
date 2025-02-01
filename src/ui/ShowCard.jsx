@@ -77,7 +77,11 @@ const ShowCard = ({
                 </div>
               }
             >
-              <UserRateMini type={category} itemId={id} />
+              <UserRateMini
+                type={category}
+                itemId={id}
+                buttonStyle="rounded-md bg-orange-coral w-[45px] h-6 flex items-center justify-center gap-1 text-xs font-bold"
+              />
             </Suspense>
           </div>
 

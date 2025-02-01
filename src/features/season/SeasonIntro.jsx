@@ -63,7 +63,7 @@ const SeasonIntro = () => {
                 }}
               />
             </Box>
-            <p className="px-2 py-0.5 rounded-sm bg-orange-amber text-white font-semibold">
+            <p className="px-2 py-0.5 rounded-sm bg-orange-amber text-gray-800 font-semibold">
               {formatNumber(vote_average)}
             </p>
           </div>

@@ -3,11 +3,11 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import RatingPopup from "./RatingPopup";
 import { useRatingList } from "./useRatingList";
 import SpinnerMini from "../../ui/SpinnerMini";
-import { Tooltip } from "@mui/material";
+import { Box, Rating, Tooltip } from "@mui/material";
 import { useUpadetRating } from "./useUpadetRating";
 import { useAddRating } from "./useAddRating";
 
-const UserRateMini = ({ type, itemId }) => {
+const UserRateMini = ({ type, itemId, addStars = false, buttonStyle }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const { ratingList } = useRatingList();
@@ -26,8 +26,10 @@ const UserRateMini = ({ type, itemId }) => {
 
   const rating = useMemo(
     () =>
-      ratingList?.rating?.filter((el) => el.item_id == itemId)?.[0]?.rate || 0,
-    [itemId, ratingList]
+      ratingList?.rating?.filter(
+        (el) => el.item_id == itemId && el.type === type
+      )?.[0]?.rate || 0,
+    [itemId, ratingList, type]
   );
 
   let content;
@@ -35,7 +37,8 @@ const UserRateMini = ({ type, itemId }) => {
   else
     content = (
       <>
-        <FaStar />
+        {!addStars && <FaStar />}
+        {addStars && rating === 0 && 0}
         {rating > 0 && <p>{rating}</p>}
       </>
     );
@@ -43,12 +46,29 @@ const UserRateMini = ({ type, itemId }) => {
   return (
     <div onClick={(e) => e.stopPropagation()}>
       <Tooltip title={rating ? "Update your rate" : "Add your rate"}>
-        <span>
-          <button
-            onClick={handleOpenPopup}
-            disabled={isAdding || isUpading}
-            className="rounded-md bg-orange-coral w-[45px] h-6 flex items-center justify-center gap-1 text-xs font-bold "
-          >
+        <span
+          className="flex items-center gap-2 cursor-pointer"
+          onClick={handleOpenPopup}
+        >
+          {addStars && (
+            <Box>
+              <Rating
+                value={Number(rating) / 2}
+                precision={0.1}
+                readOnly
+                max={5}
+                sx={{
+                  "& .MuiRating-iconEmpty": {
+                    color: "#ffffff40",
+                  },
+                  "& .MuiRating-iconFilled": {
+                    color: "#ff7f50",
+                  },
+                }}
+              />
+            </Box>
+          )}
+          <button disabled={isAdding || isUpading} className={buttonStyle}>
             {content}
           </button>
         </span>
