@@ -82,7 +82,6 @@ const SeasonIntro = () => {
           <Ellipsis text={overview} />
         </div>
       </div>
-      <hr className="border-1 border-slate-400 w-full my-4" />
     </section>
   );
 };

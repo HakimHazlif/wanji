@@ -1,14 +1,12 @@
 import EpisodesList from "../features/season/EpisodesList";
-import SeasonCredits from "../features/season/SeasonCredits";
-import SeasonImages from "../features/season/SeasonImages";
 import SeasonIntro from "../features/season/SeasonIntro";
 import { useSeason } from "../features/season/useSeason";
 import Spinner from "../ui/Spinner";
 import { getPictureUrlFormat } from "../utils/helper";
 
 const Season = () => {
-  const { isLoading, seasonDetails, episodes } = useSeason();
-  console.log(episodes);
+  const { isLoading, seasonDetails, seasonImages } = useSeason();
+  console.log(seasonImages);
 
   if (isLoading) return <Spinner />;
 
@@ -17,20 +15,6 @@ const Season = () => {
       <div className="padding-x">
         <SeasonIntro />
         <EpisodesList />
-
-        <section className="flex gap-10 py-32">
-          <SeasonImages />
-        </section>
-        <SeasonCredits />
-        {/* <List title="More like this">
-      {similar?.map((show) => (
-        <ShowCard key={show.id} show={show} />
-      ))}
-    </List> */}
-
-        {/* 
-    <ShowSimilar similar={similar} />
-    <ShowReviews reviews={reviews} /> */}
       </div>
       <div className="absolute top-0 right-0 w-full -z-10 ">
         <img

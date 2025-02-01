@@ -30,6 +30,7 @@ const EpisodesList = () => {
           </div>
         )}
       </div>
+
       <div className="flex items-end justify-center mt-20">
         <div className="flex gap-4 items-center">
           <p className="text-slate-300 font-bold text-xl">Seasons</p>

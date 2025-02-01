@@ -82,7 +82,7 @@ const ShowDetails = () => {
                     key={writer.id}
                   >
                     {writer.name}
-                    {writing.length !== index ? ", " : ""}
+                    {created_by.length - 1 !== index ? ", " : ""}
                   </Link>
                 ))}
               </ul>

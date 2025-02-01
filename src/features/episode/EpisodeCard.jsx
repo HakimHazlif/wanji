@@ -64,7 +64,7 @@ const EpisodeCard = ({ episode }) => {
           <div className="flex justify-between">
             <div
               onClick={handleNavigate}
-              className="flex gap-2 font-bold text-2xl"
+              className="flex gap-2 font-bold text-2xl cursor-pointer"
             >
               <span>{episode_number}:</span>
               <h2>{name}</h2>

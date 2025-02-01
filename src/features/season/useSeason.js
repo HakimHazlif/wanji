@@ -15,9 +15,8 @@ export function useSeason() {
 
   const seasonDetails = seasonData?.seasonDetails || null;
   const episodes = seasonData?.episodes || null;
-  const seasonImages = seasonData?.seasonImages || null;
 
   // console.log(seasonData);
 
-  return { isLoading, seasonDetails, episodes, seasonImages };
+  return { isLoading, seasonDetails, episodes };
 }

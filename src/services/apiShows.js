@@ -119,16 +119,12 @@ export async function getTvByList(list, page, id) {
 export async function getSeasonData({ id, seasonNum }) {
   const serieApiUrl = `${URL_Base}tv/${id}?language=en-US`;
   const seasonApiUrl = `${URL_Base}tv/${id}/season/${seasonNum}?language=en-US`;
-  const imagesApiUrl = `${URL_Base}tv/${id}/season/${seasonNum}/images`;
 
   try {
-    const [serieData, seasonDetails, seasonImage] = await axios.all([
+    const [serieData, seasonDetails] = await axios.all([
       axios.get(serieApiUrl, options),
       axios.get(seasonApiUrl, options),
-      axios.get(imagesApiUrl, options),
     ]);
-
-    // if (serieData) console.log(seasonDetails);
 
     return {
       seasonDetails: {
@@ -146,7 +142,6 @@ export async function getSeasonData({ id, seasonNum }) {
         air_date: seasonDetails.data.air_date,
       },
       episodes: seasonDetails.data.episodes,
-      seasonImages: seasonImage.data,
     };
   } catch (err) {
     throw new Error(err);
