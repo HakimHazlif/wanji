@@ -13,10 +13,8 @@ import SeasonsList from "../features/lists/SeasonsList";
 import { useParams } from "react-router";
 
 const Show = () => {
-  const { isLoading, show, details, similar, images, credits, reviews } =
-    useShow();
+  const { isLoading, details, similar, images, credits, reviews } = useShow();
 
-  console.log(show);
   const { category } = useParams();
 
   if (isLoading) return <Spinner />;
@@ -39,7 +37,7 @@ const Show = () => {
           ))}
         </ListScroll>
 
-        {reviews?.length > 0 && <ShowReviews />}
+        {reviews?.length > 0 && <ShowReviews reviews={reviews} />}
       </div>
       <div className="absolute top-0 right-0 w-full -z-10 ">
         <img

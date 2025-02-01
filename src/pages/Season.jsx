@@ -1,20 +1,21 @@
 import EpisodesList from "../features/season/EpisodesList";
 import SeasonCredits from "../features/season/SeasonCredits";
 import SeasonImages from "../features/season/SeasonImages";
-import SeasonIntroDetails from "../features/season/SeasonIntroDetails";
+import SeasonIntro from "../features/season/SeasonIntro";
 import { useSeason } from "../features/season/useSeason";
 import Spinner from "../ui/Spinner";
 import { getPictureUrlFormat } from "../utils/helper";
 
 const Season = () => {
-  const { isLoading, seasonDetails } = useSeason();
+  const { isLoading, seasonDetails, episodes } = useSeason();
+  console.log(episodes);
 
   if (isLoading) return <Spinner />;
 
   return (
     <div className="py-10">
       <div className="padding-x">
-        <SeasonIntroDetails />
+        <SeasonIntro />
         <EpisodesList />
 
         <section className="flex gap-10 py-32">

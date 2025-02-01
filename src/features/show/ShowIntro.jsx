@@ -3,15 +3,11 @@ import {
   getYearMonthFormat,
   updateDateFormat,
   formatNumber,
-  getYearFormat,
   updateRuntime,
 } from "../../utils/helper";
 
-import WatchlistIcon from "../lists/WatchlistIcon";
-
 import Rating from "@mui/material/Rating";
 import { Box } from "@mui/material";
-import FavoriteIcon from "../lists/FavoriteIcon";
 
 import { useParams } from "react-router";
 import { useShow } from "./useShow";

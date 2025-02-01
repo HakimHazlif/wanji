@@ -1,9 +1,6 @@
 import ReviewCard from "../../components/ReviewCard";
-import { useShow } from "./useShow";
 
-const ShowReviews = () => {
-  const { reviews } = useShow();
-
+const ShowReviews = ({ reviews }) => {
   return (
     <section className="flex flex-col gap-5 pt-24">
       <div className="mb-6 border-b border-slate-700 pb-3">

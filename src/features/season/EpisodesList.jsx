@@ -9,12 +9,14 @@ const EpisodesList = () => {
 
   return (
     <div className="py-32">
-      <div className="mb-10">
-        <h2 className="mb-2 text-4xl font-bold">{seasonDetails.name}</h2>
-        <p>({episodes.length} episodes)</p>
+      <div className="mb-10 border-b border-slate-700 pb-4 flex justify-between items-center">
+        <h2 className="text-4xl font-semibold">
+          Episodes of the {seasonDetails.name}
+        </h2>
+        <p className="text-2xl font-semibold">{episodes.length} Episodes</p>
       </div>
       <div className="grid grid-flow-row gap-8">
-        {episodes[0].runtime && episodes[0].vote_average ? (
+        {episodes.length > 0 ? (
           <>
             {episodes.map((episode) => (
               <EpisodeCard episode={episode} key={episode.id} />
@@ -23,7 +25,7 @@ const EpisodesList = () => {
         ) : (
           <div className="w-full h-[200px] bg-bluish-black rounded-2xl flex justify-center items-center font-bold text-xl">
             <p className="w-[450px] text-center">
-              Sorry, there are no episodes available for this season yet.
+              Sorry, there are no episodes available for this season.
             </p>
           </div>
         )}

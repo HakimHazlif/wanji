@@ -5,12 +5,9 @@ import {
   updateDateFormat,
 } from "../../utils/helper";
 import { useSeason } from "./useSeason";
-
-import { useParams } from "react-router";
 import Ellipsis from "../../ui/Ellipsis";
 
-const SeasonIntroDetails = () => {
-  const { id } = useParams();
+const SeasonIntro = () => {
   const { seasonDetails, episodes } = useSeason();
   const {
     title,
@@ -25,7 +22,7 @@ const SeasonIntroDetails = () => {
   } = seasonDetails;
 
   return (
-    <div>
+    <section className="pt-20">
       <div className="flex gap-4 items-end">
         <div>
           <img
@@ -36,13 +33,8 @@ const SeasonIntroDetails = () => {
         </div>
         <div>
           <div className="mb-2 text-white font-bold">
-            <h2 className="text-4xl mb-2">
-              {title}{" "}
-              <span className="text-2xl text-slate-200">
-                {season_number !== 0 && `(Season ${season_number})`}
-              </span>
-            </h2>
-            <h3 className="text-2xl">{name}</h3>
+            <h2 className="text-4xl mb-2">{title}</h2>
+            <h3 className="text-3xl text-slate-200">{name}</h3>
           </div>
           <ul className="flex items-center gap-2 text-sm whitespace-nowrap my-2 text-white">
             <li className="text-sm">{updateDateFormat(air_date)}</li>
@@ -80,7 +72,7 @@ const SeasonIntroDetails = () => {
             {genres?.map((genre) => (
               <li
                 key={genre.id}
-                className="py-2 px-4 rounded-lg bg-black/20 backdrop-blur-lg text-white font-medium text-sm"
+                className="py-2 px-4 rounded-lg bg-black/20 backdrop-blur-md text-white font-medium text-sm"
               >
                 {genre.name}
               </li>
@@ -91,8 +83,8 @@ const SeasonIntroDetails = () => {
         </div>
       </div>
       <hr className="border-1 border-slate-400 w-full my-4" />
-    </div>
+    </section>
   );
 };
 
-export default SeasonIntroDetails;
+export default SeasonIntro;

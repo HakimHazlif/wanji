@@ -30,9 +30,9 @@ const ListScroll = ({ title, path = "", children }) => {
     });
 
     requestAnimationFrame(() => {
-      setIsScrolledLeft(container.scrollLeft <= 0);
+      setIsScrolledLeft(container.scrollLeft < 0);
       setIsScrolledRight(
-        container.scrollLeft + container.offsetWidth >= container.scrollWidth
+        container.scrollLeft + container.offsetWidth > container.scrollWidth
       );
     });
   }, []);
@@ -76,7 +76,7 @@ const ListScroll = ({ title, path = "", children }) => {
         </div>
       </div>
       <div
-        className="grid gap-5 grid-flow-col overflow-x-scroll scrollbar-hide space-x-2 scroll-smooth"
+        className="justify-start grid gap-5 grid-flow-col overflow-x-auto scrollbar-custom space-x-2 scroll-smooth pb-5"
         ref={containerRef}
       >
         {children}
