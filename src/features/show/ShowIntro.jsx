@@ -16,10 +16,14 @@ import Ellipsis from "../../ui/Ellipsis";
 import WatchlistButton from "../lists/WatchlistButton";
 import FavoriteButton from "../lists/FavoriteButton";
 import ButtonAddToList from "../lists/ButtonAddToList";
+import { useState } from "react";
+import VideoPlayer from "../../components/VideoPlayer";
 
 const ShowIntro = () => {
+  const [selectedVideo, setSelectedVideo] = useState(null);
+
   // console.log(details);
-  const { details } = useShow();
+  const { details, videos } = useShow();
   const { category } = useParams();
 
   const {
@@ -54,99 +58,126 @@ const ShowIntro = () => {
             : getYearMonthFormat(details.last_air_date)
         }`;
 
+  const trailer = videos.filter((video) => video.type === "Trailer")?.[0];
+
+  const handlePlayVideo = (video) => {
+    setSelectedVideo(video);
+  };
+
   return (
     <section>
-      <div className="flex gap-4 items-end">
-        <div>
-          <img
-            src={getPictureUrlFormat(poster_path, 1280)}
-            alt="movie poster"
-            className="rounded-xl min-w-[200px] w-[260px] max-w-[280px]"
-          />
-        </div>
-        <div>
-          <div className="mb-2 text-white flex items-end gap-3 font-bold">
-            <h2 className="text-4xl">{title}</h2>
-            {originalTitle === title ? null : (
-              <h3 className="text-2xl">({originalTitle})</h3>
-            )}
+      <div>
+        <div className="flex gap-4 items-end">
+          <div>
+            <img
+              src={getPictureUrlFormat(poster_path, 1280)}
+              alt="movie poster"
+              className="rounded-xl min-w-[200px] w-[260px] max-w-[280px]"
+            />
           </div>
-          <ul className="flex items-center gap-2 text-sm whitespace-nowrap my-2 text-white">
-            <li>{category === "movie" ? "Movie" : "TV Show"}</li>
-            <span>&#x2022;</span>
-            <li className="whitespace-nowrap">{dateFormat}</li>
-            {runtime && (
-              <>
-                <span>&#x2022;</span>
-                <li>{updateRuntime(runtime)}</li>
-              </>
-            )}
-            {number_of_seasons && (
-              <>
-                <span>&#x2022;</span>
-                <li>
-                  {number_of_seasons}{" "}
-                  {number_of_seasons === 1 ? "season" : "seasons"}
-                </li>
-              </>
-            )}
-            {number_of_episodes && (
-              <>
-                <span>&#x2022;</span>
-                <li>{number_of_episodes} episodes</li>
-              </>
-            )}
-          </ul>
-          <div className="flex items-center gap-2 mb-2">
-            <Box>
-              <Rating
-                name="percentage-rating"
-                value={Number(vote_average)}
-                precision={0.1}
-                readOnly
-                max={10}
-                sx={{
-                  "& .MuiRating-iconEmpty": {
-                    color: "#ffffff",
-                    fontSize: "30px",
-                  },
-                  "& .MuiRating-iconFilled": {
-                    color: "#FFD700",
-                    fontSize: "30px",
-                  },
-                }}
-              />
-            </Box>
-            <p className="px-2 py-0.5 rounded-sm bg-orange-amber text-gray-800 font-semibold">
-              {formatNumber(vote_average)}
-            </p>
-          </div>
-
-          <ul className="flex gap-2">
-            {genres.map((genre) => (
-              <li
-                key={genre.id}
-                className="py-2 px-4 rounded-lg bg-black/20 backdrop-blur-md text-white font-medium text-sm"
+          <div>
+            <div className="mb-2 text-white flex items-end gap-3 font-bold">
+              <h2 className="text-4xl">{title}</h2>
+              {originalTitle === title ? null : (
+                <h3 className="text-2xl">({originalTitle})</h3>
+              )}
+            </div>
+            <ul className="flex items-center gap-2 text-sm whitespace-nowrap my-2 text-white">
+              <li>{category === "movie" ? "Movie" : "TV Show"}</li>
+              <span>&#x2022;</span>
+              <li className="whitespace-nowrap">{dateFormat}</li>
+              {runtime && (
+                <>
+                  <span>&#x2022;</span>
+                  <li>{updateRuntime(runtime)}</li>
+                </>
+              )}
+              {number_of_seasons && (
+                <>
+                  <span>&#x2022;</span>
+                  <li>
+                    {number_of_seasons}{" "}
+                    {number_of_seasons === 1 ? "season" : "seasons"}
+                  </li>
+                </>
+              )}
+              {number_of_episodes && (
+                <>
+                  <span>&#x2022;</span>
+                  <li>{number_of_episodes} episodes</li>
+                </>
+              )}
+            </ul>
+            <div className="flex gap-20 items-start">
+              <div className="flex items-center gap-2 mb-2">
+                <Box>
+                  <Rating
+                    name="percentage-rating"
+                    value={Number(vote_average)}
+                    precision={0.1}
+                    readOnly
+                    max={10}
+                    sx={{
+                      "& .MuiRating-iconEmpty": {
+                        color: "#ffffff",
+                        fontSize: "30px",
+                      },
+                      "& .MuiRating-iconFilled": {
+                        color: "#FFD700",
+                        fontSize: "30px",
+                      },
+                    }}
+                  />
+                </Box>
+                <p className="px-2 py-0.5 rounded-sm bg-orange-amber text-gray-800 font-semibold">
+                  {formatNumber(vote_average)}
+                </p>
+              </div>
+              <button
+                onClick={() => handlePlayVideo(trailer)}
+                className="px-4 py-2 bg-orange-coral text-white rounded"
               >
-                {genre.name}
-              </li>
-            ))}
-          </ul>
+                Play Trailer
+              </button>
+            </div>
 
-          <div className="mt-8">
-            <Ellipsis text={overview} />
+            <ul className="flex gap-2">
+              {genres.map((genre) => (
+                <li
+                  key={genre.id}
+                  className="py-2 px-4 rounded-lg bg-black/20 backdrop-blur-md text-white font-medium text-sm"
+                >
+                  {genre.name}
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-8">
+              <Ellipsis text={overview} />
+            </div>
           </div>
         </div>
-      </div>
-      <hr className="border-1 border-slate-400 w-full my-4" />
-      <div className="flex justify-between items-center">
-        <div className="flex gap-2 items-center">
-          <WatchlistButton item={item} size={30} />
-          <FavoriteButton item={item} size={30} />
-          <ButtonAddToList item={item} image={poster_path} showTitle={title} />
+        <hr className="border-1 border-slate-400 w-full my-4" />
+        <div className="flex justify-between items-center">
+          <div className="flex gap-2 items-center">
+            <WatchlistButton item={item} size={30} />
+            <FavoriteButton item={item} size={30} />
+            <ButtonAddToList
+              item={item}
+              image={poster_path}
+              showTitle={title}
+            />
+          </div>
+          <RateUser itemId={id} type={category} />
         </div>
-        <RateUser itemId={id} type={category} />
       </div>
+      {selectedVideo && (
+        <VideoPlayer
+          videoData={selectedVideo}
+          onClose={() => setSelectedVideo(null)}
+          autoplay={true}
+        />
+      )}
     </section>
   );
 };

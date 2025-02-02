@@ -1,35 +1,24 @@
 import axios from "axios";
 import { options, URL_Base } from "../constants/variables";
-import supabase from "./supabase";
 
 export async function getShow({ category, id }) {
   try {
-    const showLists = [
-      "",
-      "/images",
-      "/credits",
-      "/recommendations",
-      "/reviews",
-    ];
+    const showUrl = `${URL_Base}${category}/${id}?append_to_response=credits%2Crecommendations%2Creviews%2Cvideos&language=en-US`;
+    const imagesUrl = `${URL_Base}${category}/${id}/images`;
 
-    const urls = showLists.map((list, index) => {
-      return `${URL_Base}${category}/${id}${list}${
-        index === 1 ? "" : `?language=en-US${index >= 3 ? "&page=1" : ""}`
-      }`;
-    });
+    const [showDetails, showImages] = await axios.all([
+      axios.get(showUrl, options),
+      axios.get(imagesUrl, options),
+    ]);
 
-    if (id) {
-      const [showDetails, showImages, showCredits, showSimilar, showReviews] =
-        await axios.all(urls.map((url) => axios.get(url, options)));
-
-      return {
-        showDetails: showDetails.data,
-        showImages: showImages.data.backdrops,
-        showCredits: showCredits.data,
-        showSimilar: showSimilar.data.results,
-        showReviews: showReviews.data.results,
-      };
-    }
+    return {
+      showDetails: showDetails.data,
+      showImages: showImages.data.backdrops,
+      showCredits: showDetails.data.credits,
+      showSimilar: showDetails.data.recommendations.results,
+      showReviews: showDetails.data.reviews.results,
+      showVideos: showDetails.data.videos.results,
+    };
   } catch (err) {
     throw new Error(err.message);
   }

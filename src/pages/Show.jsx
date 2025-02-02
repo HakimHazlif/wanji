@@ -13,7 +13,10 @@ import SeasonsList from "../features/lists/SeasonsList";
 import { useParams } from "react-router";
 
 const Show = () => {
-  const { isLoading, details, similar, images, credits, reviews } = useShow();
+  const { isLoading, details, similar, images, credits, reviews, videos } =
+    useShow();
+
+  console.log(videos);
 
   const { category } = useParams();
 
