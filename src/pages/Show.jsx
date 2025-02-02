@@ -23,21 +23,46 @@ const Show = () => {
     <main className="pt-32 pb-20">
       <div className="padding-x">
         <ShowIntro />
-        <ShowDetails />
 
-        {category === "tv" && <SeasonsList />}
-        <ShowCredits title="Cast" creditsList={credits?.cast} />
-        <ShowCredits title="Crew" creditsList={credits?.crew} />
+        <section className="pt-28">
+          <ShowDetails />
+        </section>
 
-        {images?.length > 0 && <ShowImages images={images} />}
+        {category === "tv" && (
+          <section className="pt-32">
+            <SeasonsList />
+          </section>
+        )}
+        {credits?.cast.length > 0 && (
+          <section className="pt-28">
+            <ShowCredits title="Cast" creditsList={credits?.cast} />
+          </section>
+        )}
+        {credits?.crew.length > 0 && (
+          <section className="pt-20">
+            <ShowCredits title="Crew" creditsList={credits?.crew} />
+          </section>
+        )}
 
-        <ListScroll title="More like this">
-          {similar?.map((show) => (
-            <ShowCard key={show.id} show={show} category={category} />
-          ))}
-        </ListScroll>
+        {images?.length > 0 && (
+          <section className="pt-32">
+            <ShowImages images={images} />
+          </section>
+        )}
 
-        {reviews?.length > 0 && <ShowReviews reviews={reviews} />}
+        <section className="pt-32">
+          <ListScroll title="More like this">
+            {similar?.map((show) => (
+              <ShowCard key={show.id} show={show} category={category} />
+            ))}
+          </ListScroll>
+        </section>
+
+        {reviews?.length > 0 && (
+          <section className="pt-32">
+            <ShowReviews reviews={reviews} />
+          </section>
+        )}
       </div>
       <div className="absolute top-0 right-0 w-full -z-10 ">
         <img

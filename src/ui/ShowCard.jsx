@@ -19,7 +19,7 @@ const ShowCard = ({
   additions = true,
   parentShowId = null,
 }) => {
-  const { vote_average: rate, year } = show;
+  const { vote_average: rate, episode_number, season_number } = show;
   const id = show?.id || show?.item_id;
   const title = show?.title || show?.name;
   const poster = show?.poster_path || show?.still_path;
@@ -44,9 +44,9 @@ const ShowCard = ({
   const item = {
     itemId: id,
     type: category,
-    parentId: null,
-    episode: null,
-    season: null,
+    parentId: parentShowId,
+    episode: episode_number,
+    season: season_number,
   };
 
   return (

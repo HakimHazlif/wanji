@@ -55,7 +55,7 @@ const ShowIntro = () => {
         }`;
 
   return (
-    <div>
+    <section>
       <div className="flex gap-4 items-end">
         <div>
           <img
@@ -147,7 +147,7 @@ const ShowIntro = () => {
         </div>
         <RateUser itemId={id} type={category} />
       </div>
-    </div>
+    </section>
   );
 };
 

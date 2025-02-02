@@ -13,7 +13,9 @@ const Season = () => {
     <div className="py-10">
       <div className="padding-x">
         <SeasonIntro />
-        <EpisodesList />
+        <section className="pt-32">
+          <EpisodesList />
+        </section>
       </div>
       <div className="absolute top-0 right-0 w-full -z-10 ">
         <img

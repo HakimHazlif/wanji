@@ -8,7 +8,7 @@ const Crew = () => {
   const { crew } = episodeCredits;
 
   return (
-    <section className="max-w-[500px] min-w-[400px] py-7 px-5 bg-bluish-black rounded-xl">
+    <section className="max-w-[500px] min-w-[400px] py-7 px-5  rounded-xl">
       <h3 className="text-xl font-bold mb-5">Crew</h3>
       <ul className="grid grid-flow-row gap-5">
         {crew?.map((crewer, index) => (

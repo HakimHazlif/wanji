@@ -6,57 +6,68 @@ import EpisodeInfo from "../features/episode/EpisodeInfo";
 import ShowImages from "../features/show/ShowImages";
 import Crew from "../features/episode/Crew";
 import Casting from "../features/episode/Casting";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import ShowCredite from "../features/show/ShowCredits";
+import EpisodesList from "../features/season/EpisodesList";
+import ListScroll from "../features/lists/ListScroll";
+import ShowCard from "../ui/ShowCard";
 
 const Episode = () => {
-  const { isLoading, episodeDetails, episodesList, episodeImage } =
-    useEpisode();
+  const {
+    isLoading,
+    episodeDetails,
+    episodesList,
+    episodeImage,
+    episodeCredits,
+  } = useEpisode();
 
   if (isLoading) return <Spinner />;
 
   const { episode_number, season_number } = episodeDetails;
-  const showId = episodesList[0]?.show_id;
+  const showId = episodesList?.[0]?.show_id;
 
   return (
     <main className="pt-60 pb-20">
-      <div className="padding-x ">
+      <div className="padding-x">
         <EpisodeInfo />
-        <section className="flex gap-10 py-32">
-          <div>
+
+        {episodeImage.length > 0 && (
+          <section className="pt-36">
             <ShowImages images={episodeImage} />
-            <Casting />
-          </div>
-          <Crew />
+          </section>
+        )}
+        {episodeCredits?.cast.length > 0 && (
+          <section className="pt-28">
+            <ShowCredite title="Cast" creditsList={episodeCredits?.cast} />
+          </section>
+        )}
+        {episodeCredits?.guest_stars.length > 0 && (
+          <section className="pt-20">
+            <ShowCredite
+              title="Guest Stars"
+              creditsList={episodeCredits?.guest_stars}
+            />
+          </section>
+        )}
+        {episodeCredits?.crew.length > 0 && (
+          <section className="pt-20">
+            <ShowCredite title="Crew" creditsList={episodeCredits?.crew} />
+          </section>
+        )}
+
+        <section className="pt-28">
+          <ListScroll title="Episodes">
+            {episodesList.map((episode) => (
+              <ShowCard
+                key={episode.id}
+                show={episode}
+                category="episode"
+                parentShowId={showId}
+              />
+            ))}
+          </ListScroll>
         </section>
-        <div
-          className={`flex items-center py-10 ${
-            episode_number === 1 ? "justify-end" : "justify-between"
-          } `}
-        >
-          {episode_number !== 1 && (
-            <Link
-              to={`/tv/${showId}/season/${season_number}/episode/${
-                episode_number - 1
-              }`}
-              className="flex gap-2 items-center text-xl font-bold hover:text-orange-coral"
-            >
-              <IoIosArrowBack className="text-2xl" />
-              <h2>Go back to episode {episode_number - 1}</h2>
-            </Link>
-          )}
-          {episode_number < episodesList.length && (
-            <Link
-              to={`/tv/${showId}/season/${season_number}/episode/${
-                season_number + 1
-              }`}
-              className="flex gap-2 items-center text-xl font-bold hover:text-orange-coral"
-            >
-              <h2>Go to episode {episode_number + 1}</h2>
-              <IoIosArrowForward className="text-2xl" />
-            </Link>
-          )}
-        </div>
       </div>
       <div className="absolute top-0 right-0 w-full -z-10 ">
         <img

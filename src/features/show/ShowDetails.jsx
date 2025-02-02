@@ -27,7 +27,7 @@ const ShowDetails = () => {
   const { directing, writing } = crew;
 
   return (
-    <section className="py-28">
+    <section className="">
       <h2 className="text-4xl font-semibold border-b border-slate-700 pb-3">
         {details["title"] ? "Movie" : "Tv Show"} details
       </h2>

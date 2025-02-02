@@ -12,7 +12,7 @@ const EpisodesList = () => {
   )?.length;
 
   return (
-    <div className="py-32">
+    <section className="">
       <div className="mb-10 border-b border-slate-700 pb-4 flex justify-between items-center">
         <h2 className="text-4xl font-semibold">
           Episodes of the {seasonDetails.name}
@@ -48,7 +48,7 @@ const EpisodesList = () => {
           />
         </div>
       )}
-    </div>
+    </section>
   );
 };
 
