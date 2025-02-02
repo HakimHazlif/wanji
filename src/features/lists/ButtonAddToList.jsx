@@ -3,7 +3,7 @@ import { RiPlayListAddFill } from "react-icons/ri";
 import ListsMenu from "./ListsMenu";
 import { Tooltip } from "@mui/material";
 
-const ButtonAddToList = () => {
+const ButtonAddToList = ({ ...props }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   return (
@@ -21,7 +21,11 @@ const ButtonAddToList = () => {
       </Tooltip>
 
       {isPopupOpen && (
-        <ListsMenu setIsPopupOpen={setIsPopupOpen} isPopupOpen={isPopupOpen} />
+        <ListsMenu
+          setIsPopupOpen={setIsPopupOpen}
+          isPopupOpen={isPopupOpen}
+          otherProps={{ ...props }}
+        />
       )}
     </div>
   );

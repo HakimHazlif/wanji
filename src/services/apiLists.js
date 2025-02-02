@@ -57,16 +57,19 @@ export async function deleteShow({ id, listId, type }) {
 }
 
 export async function getShowRating({ itemId, type, userId }) {
-  const { data: rate, error } = await supabase
-    .from("rating")
-    .select("rate")
-    .eq("user_id", userId)
-    .eq("item_id", itemId)
-    .eq("type", type);
+  if (userId && itemId && type) {
+    const { data: rate, error } = await supabase
+      .from("rating")
+      .select("rate")
+      .eq("user_id", userId)
+      .eq("item_id", itemId)
+      .eq("type", type);
 
-  if (error) throw new Error(error);
+    console.log(itemId, userId);
+    if (error) throw new Error(error);
 
-  return rate;
+    return rate;
+  }
 }
 
 export async function addRateToShow({
@@ -121,7 +124,15 @@ export async function getRatingList({ userId }) {
   }
 }
 
-export async function insertNewList({ userId, name, itemId, type }) {
+export async function insertNewList({
+  userId,
+  name,
+  itemId,
+  type,
+  parentId = null,
+  episode = null,
+  season = null,
+}) {
   const listId = crypto.randomUUID();
 
   if (!userId) throw new Error("Should you sign up or log in to add a list");
@@ -137,7 +148,16 @@ export async function insertNewList({ userId, name, itemId, type }) {
   if (itemId && type) {
     const { data: itemData, error: itemError } = await supabase
       .from("items_list")
-      .insert([{ item_id: itemId, list_id: listId, type: type }]);
+      .insert([
+        {
+          item_id: itemId,
+          list_id: listId,
+          type: type,
+          parent_id: parentId,
+          episode_number: episode,
+          season_number: season,
+        },
+      ]);
 
     if (itemError) throw new Error(itemError);
 

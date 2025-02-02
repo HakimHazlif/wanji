@@ -12,6 +12,10 @@ import WatchlistIcon from "../lists/WatchlistIcon";
 import FavoriteIcon from "../lists/FavoriteIcon";
 import { MdAddToPhotos } from "react-icons/md";
 import Ellipsis from "../../ui/Ellipsis";
+import WatchlistButton from "../lists/WatchlistButton";
+import FavoriteButton from "../lists/FavoriteButton";
+import ButtonAddToList from "../lists/ButtonAddToList";
+import { useParams } from "react-router";
 
 const EpisodeInfo = () => {
   const { episodeDetails } = useEpisode();
@@ -22,16 +26,17 @@ const EpisodeInfo = () => {
     season_number,
     episode_number,
     air_date,
-    show_id,
     runtime,
     vote_average,
     overview,
   } = episodeDetails;
 
+  const { id: parentId } = useParams();
+
   const item = {
     itemId: id,
     type: "episode",
-    parentId: show_id,
+    parentId: parentId,
     episode: episode_number,
     season: season_number,
   };
@@ -86,8 +91,9 @@ const EpisodeInfo = () => {
       <hr className="border-1 border-slate-400 w-full my-4" />
       <div className="flex justify-between items-center">
         <div className="flex gap-2 items-center">
-          <WatchlistIcon item={item} />
-          <FavoriteIcon item={item} />
+          <WatchlistButton item={item} size={30} />
+          <FavoriteButton item={item} size={30} />
+          <ButtonAddToList item={item} image={still_path} showTitle={name} />
           <MdAddToPhotos className="text-5xl text-slate-200 hover:text-orange-amber cursor-pointer duration-300 transition-colors ease-linear" />
         </div>
         <div className="py-4 px-4 rounded-lg bg-black/20 backdrop-blur-lg text-white font-medium text-sm flex items-center gap-2 hover:text-orange-amber duration-300 ease-linear transition-colors cursor-pointer">

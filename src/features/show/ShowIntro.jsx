@@ -143,7 +143,7 @@ const ShowIntro = () => {
         <div className="flex gap-2 items-center">
           <WatchlistButton item={item} size={30} />
           <FavoriteButton item={item} size={30} />
-          <ButtonAddToList />
+          <ButtonAddToList item={item} image={poster_path} showTitle={title} />
         </div>
         <RateUser itemId={id} type={category} />
       </div>

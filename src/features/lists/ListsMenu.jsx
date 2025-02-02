@@ -10,15 +10,18 @@ import ItemsList from "./ItemsList";
 import { useCreateList } from "./useCreateList";
 import { getPictureUrlFormat, getYearFormat } from "../../utils/helper";
 
-const ListsMenu = ({ isPopupOpen, setIsPopupOpen }) => {
+const ListsMenu = ({ isPopupOpen, setIsPopupOpen, otherProps }) => {
+  const { image, showTitle, item } = otherProps;
+  const { itemId, type, parentId, episode, season } = item;
+
   const [newListName, setNewListName] = useState("");
   const popupRef = useRef();
-  const { category } = useParams();
-  const { isLoggedIn } = useSelector((state) => state.user);
-  const { uid } = useSelector((state) => state.user.user);
+
+  const { isLoggedIn, user } = useSelector((state) => state.user);
+  const { uid } = user;
 
   const { isLoading, remainLists } = useLists();
-  const { details } = useShow();
+
   const { isLoading: isAdding } = useAddShow();
   const { creatList, isLoading: isCreating } = useCreateList();
 
@@ -31,8 +34,11 @@ const ListsMenu = ({ isPopupOpen, setIsPopupOpen }) => {
       creatList({
         userId: uid,
         name: newListName,
-        itemId: details.id,
-        type: category,
+        itemId,
+        type,
+        parentId,
+        episode,
+        season,
       });
     }
   }
@@ -62,22 +68,20 @@ const ListsMenu = ({ isPopupOpen, setIsPopupOpen }) => {
           <div className="p-4 border-b border-slate-700 flex items-end gap-4">
             <div>
               <img
-                src={getPictureUrlFormat(
-                  details.poster_path || details.still_path
-                )}
+                src={getPictureUrlFormat(image)}
                 alt="poster"
-                className="w-16 rounded-md"
+                className="rounded-md max-h-[100px] h-[90px]"
               />
             </div>
             <div>
               <h2 className="text-xl font-semibold text-white">Save to...</h2>
-              <div className="mt-2 flex items-center gap-2 text-slate-400 text-sm">
-                <FaInfoCircle />
+              <div className="mt-2 flex items-start gap-2 text-slate-400 text-sm">
+                <FaInfoCircle className="mt-1" />
 
                 <p>
                   Select a list or create a new one to save{" "}
                   <span className="font-bold text-orange-amber">
-                    {details.title || details.name}
+                    {showTitle}
                   </span>
                 </p>
               </div>
@@ -106,8 +110,8 @@ const ListsMenu = ({ isPopupOpen, setIsPopupOpen }) => {
           </form>
 
           <div className="mt-5 h-[210px] scrollbar-custom overflow-y-scroll">
-            {remainLists.map((list) => (
-              <ItemsList list={list} key={list.id} />
+            {remainLists?.map((list) => (
+              <ItemsList list={list} key={list.id} item={item} />
             ))}
           </div>
         </div>

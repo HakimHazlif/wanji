@@ -50,9 +50,9 @@ const ShowCredite = ({ title, creditsList }) => {
         }`}
       >
         <div className="grid grid-cols-4 gap-10 text-center px-5">
-          {displayedCast.map((person) => (
+          {displayedCast.map((person, index) => (
             <CreditCard
-              key={person.id}
+              key={`${person.id}-${index}`}
               person={person}
               direction="row"
               size="small"
