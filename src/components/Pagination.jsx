@@ -1,10 +1,6 @@
 import { useSearchParams } from "react-router";
 
-const Pagination = ({ totalPages }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const currentPage = Number(searchParams.get("page")) || 1;
-  const range = 5;
-
+const Pagination = ({ totalPages, currentPage, changePage, range = 5 }) => {
   function getPaginationNumbers() {
     const pages = [];
     const leftSide = Math.max(2, currentPage - range);
@@ -25,18 +21,10 @@ const Pagination = ({ totalPages }) => {
     return pages;
   }
 
-  const handlePageChange = (page) => {
-    if (typeof page === "number" && page >= 1 && page <= totalPages) {
-      const newParams = new URLSearchParams(searchParams);
-      newParams.set("page", page);
-      setSearchParams(newParams);
-    }
-  };
-
   return (
     <div className="flex gap-2">
       <button
-        onClick={() => handlePageChange(currentPage - 1)}
+        onClick={() => changePage(currentPage - 1)}
         disabled={currentPage === 1}
         className={`px-3 py-1 duration-200 transition-colors ${
           currentPage === 1 ? "" : "hover:bg-orange-coral hover:text-gray-800"
@@ -53,7 +41,7 @@ const Pagination = ({ totalPages }) => {
         ) : (
           <button
             key={index}
-            onClick={() => handlePageChange(page)}
+            onClick={() => changePage(page)}
             className={`px-3 py-1 rounded duration-200 transition-colors ${
               page === currentPage
                 ? "bg-orange-amber text-gray-800"
@@ -66,7 +54,7 @@ const Pagination = ({ totalPages }) => {
       )}
 
       <button
-        onClick={() => handlePageChange(currentPage + 1)}
+        onClick={() => changePage(currentPage + 1)}
         disabled={currentPage === totalPages}
         className={`px-3 py-1 duration-200 transition-colors ${
           currentPage === totalPages

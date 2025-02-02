@@ -1,11 +1,15 @@
-import { Link } from "react-router";
+import { useNavigate } from "react-router";
 import EpisodeCard from "../episode/EpisodeCard";
 import { useSeason } from "./useSeason";
+import Pagination from "../../components/Pagination";
 
 const EpisodesList = () => {
+  const navigate = useNavigate();
   const { episodes, seasonDetails } = useSeason();
   const { season_number, showId, seasons } = seasonDetails;
-  console.log(seasonDetails);
+  const totalPages = seasons.filter(
+    (season) => season.name !== "Specials"
+  )?.length;
 
   return (
     <div className="py-32">
@@ -31,27 +35,19 @@ const EpisodesList = () => {
         )}
       </div>
 
-      <div className="flex items-end justify-center mt-20">
-        <div className="flex gap-4 items-center">
-          <p className="text-slate-300 font-bold text-xl">Seasons</p>
-          {seasons.map(
-            (season) =>
-              season.season_number !== 0 && (
-                <Link
-                  to={`/tv/${showId}/season/${season.season_number}`}
-                  key={season.id}
-                  className={`h-12 w-12 text-xl font-bold rounded-full flex justify-center items-center duration-300 transition-colors  ${
-                    season.season_number === season_number
-                      ? "bg-orange-amber cursor-not-allowed"
-                      : "bg-slate-600 hover:bg-bluish-black"
-                  }`}
-                >
-                  {season.season_number}
-                </Link>
-              )
-          )}
+      {totalPages > 1 && (
+        <div className="flex items-end justify-center mt-20">
+          <Pagination
+            totalPages={totalPages}
+            currentPage={season_number}
+            changePage={(page) => {
+              if (typeof page === "number" && page >= 1 && page <= totalPages) {
+                navigate(`/tv/${showId}/season/${page}`);
+              }
+            }}
+          />
         </div>
-      </div>
+      )}
     </div>
   );
 };

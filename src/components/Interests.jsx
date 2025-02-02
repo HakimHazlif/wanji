@@ -19,7 +19,7 @@ const Interests = () => {
           path="movies?movie-tag=for_you&page=1"
           viewAll={true}
         >
-          {interestMovie?.results?.slice(0, 8).map((movie) => (
+          {interestMovie?.slice(0, 10).map((movie) => (
             <ShowCard key={movie.id} show={movie} category="movie" />
           ))}
         </ListScroll>
@@ -30,7 +30,7 @@ const Interests = () => {
           path="tv-shows?tv-tag=for_you&page=1"
           viewAll={true}
         >
-          {interestTv?.results?.slice(0, 8).map((tv) => (
+          {interestTv?.slice(0, 10).map((tv) => (
             <ShowCard key={tv.id} show={tv} category="tv" />
           ))}
         </ListScroll>

@@ -15,10 +15,12 @@ const Shows = () => {
   const [description, setDescription] = useState("");
   const { interestsIds } = useListsContext();
 
-  const [searchParams] = useSearchParams();
-  const tvTag = searchParams.get("tv-tag");
-
   const { isLoading, tvList } = useSpecificTv(interestsIds.tvId);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const tvTag = searchParams.get("tv-tag");
+  const currentPage = Number(searchParams.get("page")) || 1;
+  const totalPages = tvList?.total_pages > 50 ? 50 : tvList?.total_pages;
 
   useEffect(() => {
     switch (tvTag) {
@@ -78,7 +80,15 @@ const Shows = () => {
 
         <div className="flex justify-center py-20">
           <Pagination
-            totalPages={tvList?.total_pages > 50 ? 50 : tvList.total_pages}
+            totalPages={totalPages}
+            currentPage={currentPage}
+            changePage={(page) => {
+              if (typeof page === "number" && page >= 1 && page <= totalPages) {
+                const newParams = new URLSearchParams(searchParams);
+                newParams.set("page", page);
+                setSearchParams(newParams);
+              }
+            }}
           />
         </div>
       </section>

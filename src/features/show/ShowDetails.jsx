@@ -33,9 +33,11 @@ const ShowDetails = () => {
       </h2>
       <div className="flex items-start justify-between gap-16 mt-8">
         <div className="w-2/5">
-          <h3 className="font-medium text-xl text-slate-200">
-            Tagline: {tagline}
-          </h3>
+          {tagline && (
+            <h3 className="font-medium text-xl text-slate-200">
+              Tagline: {tagline}
+            </h3>
+          )}
           <p className="mt-4 mr-8 text-slate-400">{overview}</p>
         </div>
 

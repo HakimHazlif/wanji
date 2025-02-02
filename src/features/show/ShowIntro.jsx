@@ -61,7 +61,7 @@ const ShowIntro = () => {
           <img
             src={getPictureUrlFormat(poster_path, 1280)}
             alt="movie poster"
-            className="rounded-xl min-w-[250px] w-[400px]"
+            className="rounded-xl min-w-[200px] w-[260px] max-w-[280px]"
           />
         </div>
         <div>
@@ -78,10 +78,7 @@ const ShowIntro = () => {
             {runtime && (
               <>
                 <span>&#x2022;</span>
-                <li>
-                  {updateRuntime(runtime)}{" "}
-                  <span>{category === "tv" && "per episode"}</span>
-                </li>
+                <li>{updateRuntime(runtime)}</li>
               </>
             )}
             {number_of_seasons && (

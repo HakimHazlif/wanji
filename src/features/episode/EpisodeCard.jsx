@@ -1,4 +1,4 @@
-import { Box, Rating } from "@mui/material";
+import { Box, Rating, Tooltip } from "@mui/material";
 import {
   formatNumber,
   getMainCrewRolls,
@@ -81,27 +81,29 @@ const EpisodeCard = ({ episode }) => {
             <li>{updateRuntime(runtime)}</li>
           </ul>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-4">
-            <div className="flex items-center gap-2">
-              <Box>
-                <Rating
-                  value={Number(vote_average) / 2}
-                  precision={0.1}
-                  readOnly
-                  max={5}
-                  sx={{
-                    "& .MuiRating-iconEmpty": {
-                      color: "#ffffff40",
-                    },
-                    "& .MuiRating-iconFilled": {
-                      color: "#FFD700",
-                    },
-                  }}
-                />
-              </Box>
-              <span className="px-2 py-0.5 rounded-sm bg-orange-amber font-semibold text-gray-800">
-                {formatNumber(vote_average)}
-              </span>
-            </div>
+            <Tooltip title="TMDB rate">
+              <div className="flex items-center gap-2">
+                <Box>
+                  <Rating
+                    value={Number(vote_average) / 2}
+                    precision={0.1}
+                    readOnly
+                    max={5}
+                    sx={{
+                      "& .MuiRating-iconEmpty": {
+                        color: "#ffffff40",
+                      },
+                      "& .MuiRating-iconFilled": {
+                        color: "#FFD700",
+                      },
+                    }}
+                  />
+                </Box>
+                <span className="px-2 py-0.5 rounded-sm bg-orange-amber font-semibold text-gray-800">
+                  {formatNumber(vote_average)}
+                </span>
+              </div>
+            </Tooltip>
             <div className="flex items-center gap-2">
               <UserRateMini
                 type="episode"

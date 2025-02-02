@@ -1,11 +1,9 @@
 import { useSearchParams } from "react-router";
-import { useMovies } from "../features/movies/useMovies";
 import { useEffect, useState } from "react";
 import Spinner from "../ui/Spinner";
 import Discover from "../components/Discover";
 import { getImageViaPath } from "../utils/helper";
 import ShowCard from "../ui/ShowCard";
-import { useUserInterests } from "../features/userLists/useUserInterests";
 import { useListsContext } from "../context/ListsContext";
 import { useSpecificMovies } from "../features/movies/useSpecificMovies";
 import Pagination from "../components/Pagination";
@@ -16,10 +14,13 @@ const Movies = () => {
   const [description, setDescription] = useState("");
   const { interestsIds } = useListsContext();
 
-  const [searchParams] = useSearchParams();
-  const movieTag = searchParams.get("movie-tag");
-
   const { isLoading, moviesList } = useSpecificMovies(interestsIds.movieId);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const movieTag = searchParams.get("movie-tag");
+  const currentPage = Number(searchParams.get("page")) || 1;
+  const totalPages =
+    moviesList?.total_pages > 50 ? 50 : moviesList?.total_pages;
 
   useEffect(() => {
     switch (movieTag) {
@@ -79,9 +80,15 @@ const Movies = () => {
 
         <div className="flex justify-center py-20">
           <Pagination
-            totalPages={
-              moviesList?.total_pages > 50 ? 50 : moviesList?.total_pages
-            }
+            totalPages={totalPages}
+            currentPage={currentPage}
+            changePage={(page) => {
+              if (typeof page === "number" && page >= 1 && page <= totalPages) {
+                const newParams = new URLSearchParams(searchParams);
+                newParams.set("page", page);
+                setSearchParams(newParams);
+              }
+            }}
           />
         </div>
       </section>
