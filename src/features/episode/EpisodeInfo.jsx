@@ -15,6 +15,7 @@ import Ellipsis from "../../ui/Ellipsis";
 import WatchlistButton from "../lists/WatchlistButton";
 import FavoriteButton from "../lists/FavoriteButton";
 import ButtonAddToList from "../lists/ButtonAddToList";
+import RateUser from "../lists/RateUser";
 import { useParams } from "react-router";
 
 const EpisodeInfo = () => {
@@ -94,12 +95,8 @@ const EpisodeInfo = () => {
           <WatchlistButton item={item} size={30} />
           <FavoriteButton item={item} size={30} />
           <ButtonAddToList item={item} image={still_path} showTitle={name} />
-          <MdAddToPhotos className="text-5xl text-slate-200 hover:text-orange-amber cursor-pointer duration-300 transition-colors ease-linear" />
         </div>
-        <div className="py-4 px-4 rounded-lg bg-black/20 backdrop-blur-lg text-white font-medium text-sm flex items-center gap-2 hover:text-orange-amber duration-300 ease-linear transition-colors cursor-pointer">
-          <span>Add your rate</span>
-          <IoStarOutline className="text-xl" />
-        </div>
+        <RateUser itemId={id} type="episode" />
       </div>
     </section>
   );

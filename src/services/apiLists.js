@@ -65,7 +65,6 @@ export async function getShowRating({ itemId, type, userId }) {
       .eq("item_id", itemId)
       .eq("type", type);
 
-    console.log(itemId, userId);
     if (error) throw new Error(error);
 
     return rate;

@@ -5,8 +5,7 @@ import Spinner from "../ui/Spinner";
 import { getPictureUrlFormat } from "../utils/helper";
 
 const Season = () => {
-  const { isLoading, seasonDetails, seasonImages } = useSeason();
-  console.log(seasonImages);
+  const { isLoading, seasonDetails } = useSeason();
 
   if (isLoading) return <Spinner />;
 

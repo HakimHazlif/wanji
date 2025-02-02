@@ -8,7 +8,7 @@ import { useUpadetRating } from "./useUpadetRating";
 import { Tooltip } from "@mui/material";
 
 const RateUser = ({ itemId, type }) => {
-  const { showRate, isLoading } = useRating();
+  const { showRate, isLoading } = useRating(type, itemId);
   const { isLoading: isAdding } = useAddRating();
   const { isLoading: isUpdating } = useUpadetRating();
 
