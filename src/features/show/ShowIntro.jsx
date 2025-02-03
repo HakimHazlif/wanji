@@ -18,6 +18,7 @@ import FavoriteButton from "../lists/FavoriteButton";
 import ButtonAddToList from "../lists/ButtonAddToList";
 import { useState } from "react";
 import VideoPlayer from "../../components/VideoPlayer";
+import { FaPlay } from "react-icons/fa";
 
 const ShowIntro = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -58,7 +59,7 @@ const ShowIntro = () => {
             : getYearMonthFormat(details.last_air_date)
         }`;
 
-  const trailer = videos.filter((video) => video.type === "Trailer")?.[0];
+  const trailer = videos?.find((video) => video.type === "Trailer") || null;
 
   const handlePlayVideo = (video) => {
     setSelectedVideo(video);
@@ -108,49 +109,52 @@ const ShowIntro = () => {
                 </>
               )}
             </ul>
-            <div className="flex gap-20 items-start">
-              <div className="flex items-center gap-2 mb-2">
-                <Box>
-                  <Rating
-                    name="percentage-rating"
-                    value={Number(vote_average)}
-                    precision={0.1}
-                    readOnly
-                    max={10}
-                    sx={{
-                      "& .MuiRating-iconEmpty": {
-                        color: "#ffffff",
-                        fontSize: "30px",
-                      },
-                      "& .MuiRating-iconFilled": {
-                        color: "#FFD700",
-                        fontSize: "30px",
-                      },
-                    }}
-                  />
-                </Box>
-                <p className="px-2 py-0.5 rounded-sm bg-orange-amber text-gray-800 font-semibold">
-                  {formatNumber(vote_average)}
-                </p>
-              </div>
-              <button
-                onClick={() => handlePlayVideo(trailer)}
-                className="px-4 py-2 bg-orange-coral text-white rounded"
-              >
-                Play Trailer
-              </button>
+            <div className="flex items-center gap-2 mb-2">
+              <Box>
+                <Rating
+                  name="percentage-rating"
+                  value={Number(vote_average)}
+                  precision={0.1}
+                  readOnly
+                  max={10}
+                  sx={{
+                    "& .MuiRating-iconEmpty": {
+                      color: "#ffffff",
+                      fontSize: "30px",
+                    },
+                    "& .MuiRating-iconFilled": {
+                      color: "#FFD700",
+                      fontSize: "30px",
+                    },
+                  }}
+                />
+              </Box>
+              <p className="px-2 py-0.5 rounded-sm bg-orange-amber text-gray-800 font-semibold">
+                {formatNumber(vote_average)}
+              </p>
             </div>
 
-            <ul className="flex gap-2">
-              {genres.map((genre) => (
-                <li
-                  key={genre.id}
-                  className="py-2 px-4 rounded-lg bg-black/20 backdrop-blur-md text-white font-medium text-sm"
+            <div className="flex w-full gap-20 items-center justify-between">
+              <ul className="flex gap-2">
+                {genres.map((genre) => (
+                  <li
+                    key={genre.id}
+                    className="py-2 px-4 rounded-lg bg-black/20 backdrop-blur-md text-white font-medium text-sm"
+                  >
+                    {genre.name}
+                  </li>
+                ))}
+              </ul>
+              {trailer && (
+                <button
+                  onClick={() => handlePlayVideo(trailer)}
+                  className="px-4 py-2 bg-orange-coral text-white rounded flex gap-2 items-center text-sm font-medium hover:bg-orange-amber hover:scale-110"
                 >
-                  {genre.name}
-                </li>
-              ))}
-            </ul>
+                  <FaPlay />
+                  Play Trailer
+                </button>
+              )}
+            </div>
 
             <div className="mt-8">
               <Ellipsis text={overview} />

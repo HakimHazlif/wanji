@@ -4,6 +4,9 @@ import { useMovies } from "../features/movies/useMovies";
 import { getImageViaPath } from "../utils/helper";
 import { useLists } from "../features/lists/useLists";
 import { lazy, Suspense } from "react";
+import { useListsContext } from "../context/ListsContext";
+import TrendingPeople from "../features/person/TrendingPeople";
+import PopularPeople from "../features/person/PopularPeople";
 
 const Interests = lazy(() => import("../components/Interests"));
 const MovieLists = lazy(() => import("../features/movies/MovieLists"));
@@ -12,7 +15,11 @@ const TvLists = lazy(() => import("../features/tv/TvShowLists"));
 const Home = () => {
   const { isLoading, movies, error } = useMovies();
 
-  const { favoriteList } = useLists();
+  const { interestsIds } = useListsContext();
+
+  const isExict =
+    interestsIds["interestMovieId"] !== null ||
+    interestsIds["interestTvId"] !== null;
 
   if (isLoading) return <Spinner />;
 
@@ -25,15 +32,19 @@ const Home = () => {
     <>
       <Discover image={image} />
 
-      {favoriteList?.items_list?.length > 0 ? (
+      {isExict ? (
         <Suspense fallback={<Spinner />}>
           <Interests />
+          <PopularPeople />
           <MovieLists />
+          <TrendingPeople />
           <TvLists />
         </Suspense>
       ) : (
         <Suspense fallback={<Spinner />}>
+          <PopularPeople />
           <MovieLists />
+          <TrendingPeople />
           <TvLists />
         </Suspense>
       )}

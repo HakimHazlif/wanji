@@ -2,10 +2,16 @@ import { useNavigate } from "react-router";
 import { profile } from "../assets/icons";
 import { getProfileImageUrl } from "../utils/helper";
 import { Tooltip } from "@mui/material";
+import { MdTrendingUp } from "react-icons/md";
 
-const CreditCard = ({ person, direction = "col", size = "big" }) => {
+const CreditCard = ({
+  person,
+  direction = "col",
+  size = "big",
+  inHomePage = false,
+}) => {
   const navigate = useNavigate();
-  const { id, name, profile_path } = person;
+  const { id, name, profile_path, known_for_department, popularity } = person;
 
   const role = person.character || person.job;
 
@@ -58,7 +64,21 @@ const CreditCard = ({ person, direction = "col", size = "big" }) => {
             {name}
           </h2>
         </Tooltip>
-        <h3 className="text-[11px] font-medium text-slate-400">{role}</h3>
+        {!inHomePage ? (
+          <h3 className="text-[11px] font-medium text-slate-400">{role}</h3>
+        ) : (
+          <div className="flex gap-2 justify-center">
+            {popularity > 0 && (
+              <h3 className="text-[11px] font-medium text-slate-400 flex gap-1 items-center justify-center">
+                <MdTrendingUp />
+                {popularity}
+              </h3>
+            )}
+            <p className="text-[11px] font-medium text-slate-400">
+              {known_for_department}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

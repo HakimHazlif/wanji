@@ -3,10 +3,8 @@ import CreditCard from "./CreditCard";
 import { IoIosArrowForward } from "react-icons/io";
 import { Link } from "react-router";
 
-const ProfilesScroll = ({ title, credit }) => {
+const CreditsScroll = ({ title, credits }) => {
   const [isHoveredTitle, setIsHoveredTitle] = useState(false);
-
-  const newCredit = credit.filter((item, index) => index < 20);
 
   return (
     <div className="">
@@ -30,7 +28,7 @@ const ProfilesScroll = ({ title, credit }) => {
         </h2>
         <div className="relative flex items-center px-2 py-4 rounded-lg overflow-hidden text-white">
           <div className="rounded-md bg-[#1d1d26] py-5 w-full px-5 space-x-2 flex gap-2 overflow-x-scroll  scrollbar-custom">
-            {newCredit?.map((profile) => (
+            {credits?.map((profile) => (
               <CreditCard key={profile.id} person={profile} />
             ))}
           </div>
@@ -40,4 +38,4 @@ const ProfilesScroll = ({ title, credit }) => {
   );
 };
 
-export default ProfilesScroll;
+export default CreditsScroll;

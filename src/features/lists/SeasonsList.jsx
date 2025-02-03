@@ -14,10 +14,14 @@ const SeasonsList = () => {
     navigate(`/tv/${details.id}/season/${number}`);
   }
 
+  const seasonsWithoutSpecial = seasons?.filter(
+    (season) => season.name !== "Specials"
+  );
+
   return (
     <section className="">
       <ListScroll title="Seasons">
-        {seasons.map((season) => (
+        {seasonsWithoutSpecial.map((season) => (
           <div key={season.id} className="w-52 text-white">
             <div>
               <Tooltip title={season.name}>

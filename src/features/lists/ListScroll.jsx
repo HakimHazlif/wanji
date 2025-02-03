@@ -39,7 +39,7 @@ const ListScroll = ({ title, path = "", children }) => {
 
   return (
     <section className="">
-      <div className=" flex items-center justify-between mb-6">
+      <div className=" flex items-center justify-between mb-10">
         <Link
           to={path}
           className={`text-4xl font-semibold flex items-end gap-4 group text-white ${
