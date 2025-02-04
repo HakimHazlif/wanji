@@ -31,8 +31,20 @@ export const signup = (username, email, password) => async (dispatch) => {
       const { error } = await supabase
         .from("lists")
         .insert([
-          { id: watchlistId, user_id: user.user.id, name: "watchlist" },
-          { some_column: favoriteId, user_id: user.user.id, name: "favorite" },
+          {
+            id: watchlistId,
+            user_id: user.user.id,
+            name: "watchlist",
+            description:
+              "A space to track the titles you're interested in. Organize and manage them in the order that suits your preferences, ensuring you never lose track of what matters to you.",
+          },
+          {
+            id: favoriteId,
+            user_id: user.user.id,
+            name: "favorite",
+            description:
+              "A collection of your most-loved titles. Save and revisit your favorites anytime, creating a personal library of content you enjoy the most.",
+          },
         ])
         .select();
 

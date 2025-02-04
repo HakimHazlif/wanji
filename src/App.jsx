@@ -54,6 +54,7 @@ function App() {
                     <Route path="settings" element={<Settings />} />
                   </Route>
                   <Route path="u/:user/:list" element={<List />} />
+
                   {/* <Route path="u/:user/:list" element={<List />} /> */}
 
                   <Route path="reset-password" element={<ResetPassword />} />

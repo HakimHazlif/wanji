@@ -21,11 +21,11 @@ const CustomLists = () => {
 
   if (remainLists?.length < 1 || !remainLists)
     return (
-      <section className="flex flex-col gap-6 text-center justify-center items-center p-6 bg-gray-50 min-h-[300px]">
-        <div className="text-center">
+      <section className="flex flex-col gap-6 text-center justify-center items-center p-6 bg-bluish-black rounded-lg min-h-[300px] mt-10 ">
+        <div className="flex flex-col justify-center items-center">
           <FaFolderOpen className="mx-auto mb-4 w-16 h-16 text-gray-400" />
 
-          <p className="text-gray-300 mb-4 text-lg">
+          <p className="text-gray-300 mb-10 text-lg">
             You haven&#39;t created a list yet. Start by creating your first
             list to explore items!
           </p>

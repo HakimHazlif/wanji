@@ -10,6 +10,7 @@ export async function getAllUserLists(id) {
       id,
       name,
       created_at,
+      description,
       items_list (*)
     `
     )

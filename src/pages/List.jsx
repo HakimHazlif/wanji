@@ -50,6 +50,26 @@ const List = () => {
     return list;
   }, [list, selectedListId, remainLists]);
 
+  const description = useMemo(() => {
+    if (list === "Watchlist") return watchlist?.description;
+    else if (list === "Favorites") return favoriteList?.description;
+    else if (list === "Lists" && selectedListId) {
+      const customList = remainLists?.find(
+        (list) => list.id === selectedListId
+      );
+      return customList?.description;
+    } else if (list === "Lists" && !selectedListId) {
+      return "Create and customize lists to organize your content however you like. Whether it's by genre, mood, or theme, these lists give you full control over curating and managing your selections.";
+    }
+    return null;
+  }, [
+    list,
+    remainLists,
+    selectedListId,
+    watchlist?.description,
+    favoriteList?.description,
+  ]);
+
   return (
     <main className="padding-x py-32 w-full">
       <div className="absolute top-0 right-0 w-full -z-10 ">
@@ -61,7 +81,7 @@ const List = () => {
         <div className="bg-[#272831] opacity-60 masking h-[600px] w-full absolute bottom-0 right-0 z-10"></div>
       </div>
 
-      <section className="border-b border-slate-600 pb-8 flex justify-between items-center">
+      <section className="w-full border-b border-slate-600 pb-8 flex justify-between items-center">
         <div>
           <h2 className="font-bold text-6xl leading-relaxed">
             {!selectedListId && "My"} {listName}
@@ -80,19 +100,13 @@ const List = () => {
               </Link>
             </p>
           </div>
-          <p className="mt-10 w-4/5">
-            {list === "Watchlist" &&
-              "A space to track the titles you're interested in. Organize and manage them in the order that suits your preferences, ensuring you never lose track of what matters to you."}
-            {list === "Favorites" &&
-              "A collection of your most-loved titles. Save and revisit your favorites anytime, creating a personal library of content you enjoy the most."}
-            {list === "Lists" &&
-              "Create and customize lists to organize your content however you like. Whether it's by genre, mood, or theme, these lists give you full control over curating and managing your selections."}
-          </p>
+          <p className="mt-10 w-4/5">{description}</p>
         </div>
-        <div className="flex-1 flex justify-center items-center">
+        <div className="flex-1 flex justify-end items-center">
           <CreateListButton />
         </div>
       </section>
+
       {list === "Watchlist" && (
         <div>
           {/*if there no films or shows*/}
