@@ -9,6 +9,13 @@ export function updateDateFormat(date) {
     day: "numeric",
   });
 }
+export function formatDateForPerson(date) {
+  return new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
 
 export function formatDate(date) {
   return new Date(date).toLocaleDateString("en-US", {
@@ -30,7 +37,7 @@ export function getYearFormat(date) {
   });
 }
 
-export function calculateAge(birthday, deathday) {
+export function calculateAge(birthday, deathday = null) {
   const birthDate = new Date(birthday);
   const endDate = deathday ? new Date(deathday) : new Date();
   const age = Math.floor(

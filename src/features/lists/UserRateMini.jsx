@@ -37,7 +37,7 @@ const UserRateMini = ({ type, itemId, addStars = false, buttonStyle }) => {
   else
     content = (
       <>
-        {!addStars && <FaStar />}
+        {!addStars && <FaStar className="text-white" />}
         {addStars && rating === 0 && 0}
         {rating > 0 && <p>{rating}</p>}
       </>

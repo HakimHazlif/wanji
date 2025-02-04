@@ -1,6 +1,3 @@
-import { Box, Rating } from "@mui/material";
-import FavoriteIcon from "../features/lists/FavoriteIcon";
-import WatchlistIcon from "../features/lists/WatchlistIcon";
 import {
   formatNumber,
   getPictureUrlFormat,
@@ -44,10 +41,10 @@ const ShowCardRow = ({ show, category, parentShowId = null }) => {
     else if (show["air_date"]) return updateDateFormat(show?.air_date);
   }
 
-  const directors = credits.crew.filter((crew) => crew.job === "Director");
-  const screenplays = credits.crew.filter((crew) => crew.job === "Screenplay");
-  const writers = credits.crew.filter((crew) => crew.job === "Writer");
-  const stars = credits.cast.slice(0, 4);
+  const directors = credits?.crew.filter((crew) => crew.job === "Director");
+  const screenplays = credits?.crew.filter((crew) => crew.job === "Screenplay");
+  const writers = credits?.crew.filter((crew) => crew.job === "Writer");
+  const stars = credits?.cast.slice(0, 4);
 
   // const item = {
   //   itemId: id,
@@ -155,14 +152,16 @@ const ShowCardRow = ({ show, category, parentShowId = null }) => {
           {created_by?.length >= 1 && (
             <CreditView cretids={created_by} job="Created by" />
           )}
-          {directors.length >= 1 && (
+          {directors?.length >= 1 && (
             <CreditView cretids={directors} job="Director" />
           )}
-          {screenplays.length >= 1 && (
+          {screenplays?.length >= 1 && (
             <CreditView cretids={screenplays} job="Screenplay" />
           )}
-          {writers.length >= 1 && <CreditView cretids={writers} job="Writer" />}
-          {stars.length >= 1 && <CreditView cretids={stars} job="Star" />}
+          {writers?.length >= 1 && (
+            <CreditView cretids={writers} job="Writer" />
+          )}
+          {stars?.length >= 1 && <CreditView cretids={stars} job="Star" />}
         </div>
       </div>
     </section>

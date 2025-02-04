@@ -77,12 +77,15 @@ const ShowIntro = () => {
             />
           </div>
           <div>
-            <div className="mb-2 text-white flex items-end gap-3 font-bold">
-              <h2 className="text-4xl">{title}</h2>
+            <h2 className="text-4xl font-bold">
+              {title}{" "}
               {originalTitle === title ? null : (
-                <h3 className="text-2xl">({originalTitle})</h3>
+                <span className="text-2xl text-slate-300">
+                  ({originalTitle})
+                </span>
               )}
-            </div>
+            </h2>
+
             <ul className="flex items-center gap-2 text-sm whitespace-nowrap my-2 text-white">
               <li>{category === "movie" ? "Movie" : "TV Show"}</li>
               <span>&#x2022;</span>
