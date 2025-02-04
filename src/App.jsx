@@ -19,6 +19,7 @@ import Episode from "./pages/Episode";
 import TvShows from "./pages/TvShows";
 import Movies from "./pages/Movies";
 import ListsContextProvider from "./context/ListsContext";
+import CreateNewList from "./pages/CreateNewList";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -54,6 +55,10 @@ function App() {
                     <Route path="settings" element={<Settings />} />
                   </Route>
                   <Route path="u/:user/:list" element={<List />} />
+                  <Route
+                    path="u/:user/list/create"
+                    element={<CreateNewList />}
+                  />
 
                   {/* <Route path="u/:user/:list" element={<List />} /> */}
 

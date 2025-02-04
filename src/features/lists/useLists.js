@@ -12,6 +12,8 @@ export function useLists() {
   } = useQuery({
     queryKey: ["lists", uid],
     queryFn: () => uid && getAllUserLists(uid),
+    staleTime: 0,
+    refetchOnMount: true,
   });
 
   const watchlist = lists

@@ -127,8 +127,9 @@ export async function getRatingList({ userId }) {
 export async function insertNewList({
   userId,
   name,
-  itemId,
-  type,
+  description = null,
+  itemId = null,
+  type = null,
   parentId = null,
   episode = null,
   season = null,
@@ -139,7 +140,9 @@ export async function insertNewList({
 
   const { data: listData, error: listError } = await supabase
     .from("lists")
-    .insert([{ id: listId, user_id: userId, name: name }])
+    .insert([
+      { id: listId, user_id: userId, name: name, description: description },
+    ])
     .select("*")
     .eq("user_id", userId);
 

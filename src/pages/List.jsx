@@ -17,6 +17,8 @@ const List = () => {
 
   const { watchlist, favoriteList, remainLists } = useLists();
 
+  console.log(list);
+
   const searchParams = new URLSearchParams(location.search);
   const selectedListId = searchParams.get("listId");
 
@@ -30,6 +32,8 @@ const List = () => {
       );
       createdAt = customList?.created_at;
     }
+    console.log(createdAt);
+
     return createdAt;
   }, [
     list,
@@ -45,6 +49,7 @@ const List = () => {
       const customList = remainLists?.find(
         (list) => list.id === selectedListId
       );
+      console.log(customList?.name);
       return customList?.name || "Custom List";
     }
     return list;
@@ -57,9 +62,11 @@ const List = () => {
       const customList = remainLists?.find(
         (list) => list.id === selectedListId
       );
+      console.log(customList?.description);
+
       return customList?.description;
     } else if (list === "Lists" && !selectedListId) {
-      return "Create and customize lists to organize your content however you like. Whether it's by genre, mood, or theme, these lists give you full control over curating and managing your selections.";
+      return "Create and customize lists to organize your movies and TV shows however you like. Whether by genre, mood, or theme, these lists give you full control over curating and managing your collection.";
     }
     return null;
   }, [
@@ -109,13 +116,11 @@ const List = () => {
 
       {list === "Watchlist" && (
         <div>
-          {/*if there no films or shows*/}
           <ListView listId={watchlist?.id} />
         </div>
       )}
       {list === "Favorites" && (
         <div>
-          {/*if there no films or shows*/}
           <ListView listId={favoriteList?.id} />
         </div>
       )}
