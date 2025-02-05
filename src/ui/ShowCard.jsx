@@ -18,6 +18,8 @@ const ShowCard = ({
   category,
   additions = true,
   parentShowId = null,
+  deleteShow = null,
+  forEditList = false,
 }) => {
   const { vote_average: rate, episode_number, season_number } = show;
   const id = show?.id || show?.item_id;

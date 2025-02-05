@@ -1,6 +1,6 @@
 import { RiMovie2AiLine } from "react-icons/ri";
 
-const EmptyList = () => {
+const EmptyList = ({ withButton = true }) => {
   return (
     <section className="mt-5 flex flex-col items-center justify-center h-screen text-center bg-gradient-to-b from-gray-900 to-gray-800 text-white">
       <div className="flex flex-col items-center gap-6">
@@ -14,12 +14,14 @@ const EmptyList = () => {
           movies, TV shows, or episodes to fill it up. 🎥🍿
         </p>
 
-        <button
-          onClick={() => console.log("Redirect to explore page")}
-          className="px-6 py-3 bg-orange-amber rounded-lg shadow-md hover:bg-orange-coral transition text-gray-800 font-semibold"
-        >
-          Explore Movies & Shows
-        </button>
+        {withButton && (
+          <button
+            onClick={() => console.log("Redirect to explore page")}
+            className="px-6 py-3 bg-orange-amber rounded-lg shadow-md hover:bg-orange-coral transition text-gray-800 font-semibold"
+          >
+            Explore Movies & Shows
+          </button>
+        )}
       </div>
     </section>
   );

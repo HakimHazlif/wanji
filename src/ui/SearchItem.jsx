@@ -2,15 +2,9 @@ import { Link } from "react-router";
 import { getPictureUrlFormat } from "../utils/helper";
 
 const SearchItem = ({ id, image, title, originalTitle, mediaType }) => {
-  let linkToNavigate;
-  if (mediaType === "movie") linkToNavigate = `movie/${id}`;
-  if (mediaType === "tv") linkToNavigate = `tv/${id}`;
-  if (mediaType === "person") linkToNavigate = `person/${id}`;
-  if (mediaType === "company") linkToNavigate = `company/${id}`;
-
   return (
     <Link
-      to={linkToNavigate || "/"}
+      to={`${mediaType}/${id}`}
       className="flex justify-between px-6 items-center w-full cursor-pointer hover:bg-slate-300 py-3 text-black"
     >
       <div className="flex gap-2 items-center w-[90%]">

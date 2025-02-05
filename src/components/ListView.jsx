@@ -1,4 +1,3 @@
-import { useLists } from "../features/lists/useLists";
 import ShowCard from "../ui/ShowCard";
 import {
   useFetchItemsList,
@@ -12,18 +11,21 @@ import EmptyList from "../ui/EmptyList";
 import ShowCardRow from "./ShowCardRow";
 import SortBy from "../ui/SortBy";
 import { useListsContext } from "../context/ListsContext";
+import { useEffect, useState } from "react";
+import { useDeleteShow } from "../features/lists/useDeleteShow";
 
-const ListView = ({ listId }) => {
-  const { lists } = useLists();
+const ListView = ({ targetList, forEditList = false }) => {
   const { isGridView, setIsGridView } = useListsContext();
 
-  const targetList =
-    lists && lists?.filter((list) => list.id === listId)?.[0]?.items_list;
+  const listId = targetList?.id;
+  const list = targetList?.items_list;
+
+  const { isLoading: isDeleting, deleteShow } = useDeleteShow();
 
   const startPoint = 0;
-  const { itemsList, isLoading } = useFetchItemsList(
+  const { itemsList, isLoading, refetch } = useFetchItemsList(
     listId,
-    targetList,
+    list,
     startPoint
   );
 
@@ -33,18 +35,29 @@ const ListView = ({ listId }) => {
     if (itemsList?.nextPoint !== null) {
       loadMoreItems({
         listId,
-        list: targetList,
+        list,
         nextPoint: itemsList.nextPoint,
       });
     }
   };
 
+  function handleDeleteItem(id, type) {
+    deleteShow({ id, listId, type });
+  }
+
+  useEffect(() => {
+    if (list?.length < 20) {
+      refetch();
+    }
+  }, [list?.length, refetch]);
+
   if (isLoading) return <Spinner />;
 
-  if (!listId || !itemsList || !itemsList.items.length) return <EmptyList />;
+  if (!listId || !itemsList || !itemsList.items.length)
+    return <EmptyList withButton={forEditList && false} />;
 
   return (
-    <section className="mt-5">
+    <section className="mt-5 relative z-10">
       <div className="flex justify-between items-center border-b border-slate-600 pb-5">
         <div>
           <h3 className="bg-bluish-black text-gray-400 text-lg px-5 py-2 rounded-full w-[160px] font-medium text-center">
@@ -101,6 +114,8 @@ const ListView = ({ listId }) => {
                       ? "episode"
                       : "tv"
                   }
+                  forEditList={forEditList}
+                  deleteShow={forEditList ? handleDeleteItem : null}
                 />
               );
             })}
@@ -124,6 +139,8 @@ const ListView = ({ listId }) => {
                       ? "episode"
                       : "tv"
                   }
+                  forEditList={forEditList}
+                  deleteShow={forEditList ? handleDeleteItem : null}
                 />
               );
             })}

@@ -8,7 +8,6 @@ import { bgPopcorn } from "../assets/icons";
 import ListView from "../components/ListView";
 import CreateListButton from "../ui/CreateListButton";
 import CustomLists from "../ui/CustomLists";
-import { FaPencil } from "react-icons/fa6";
 import EditListButton from "../components/EditListButton";
 
 const List = () => {
@@ -22,16 +21,21 @@ const List = () => {
   const searchParams = new URLSearchParams(location.search);
   const selectedListId = searchParams.get("listId");
 
+  const targetList = useMemo(() => {
+    if (list === "Lists" && selectedListId) {
+      const customList = remainLists?.find(
+        (list) => list.id === selectedListId
+      );
+      return customList;
+    }
+    return null;
+  }, [list, remainLists, selectedListId]);
+
   const createdDate = useMemo(() => {
     let createdAt;
     if (list === "Watchlist") createdAt = watchlist?.created_at;
     else if (list === "Favorites") createdAt = favoriteList?.created_at;
-    else if (list === "Lists" && selectedListId) {
-      const customList = remainLists?.find(
-        (list) => list.id === selectedListId
-      );
-      createdAt = customList?.created_at;
-    }
+    else if (list === "Lists" && selectedListId) targetList?.created_at;
 
     return createdAt;
   }, [
@@ -39,36 +43,28 @@ const List = () => {
     watchlist?.created_at,
     favoriteList?.created_at,
     selectedListId,
-    remainLists,
+    targetList?.created_at,
   ]);
 
   const listName = useMemo(() => {
     if (list === "Watchlist" || list === "Favorites") return list;
-    if (list === "Lists" && selectedListId) {
-      const customList = remainLists?.find(
-        (list) => list.id === selectedListId
-      );
-      return customList?.name || "Custom List";
-    }
+    if (list === "Lists" && selectedListId)
+      return targetList?.name || "Custom List";
+
     return list;
-  }, [list, selectedListId, remainLists]);
+  }, [list, selectedListId, targetList?.name]);
 
   const description = useMemo(() => {
     if (list === "Watchlist") return watchlist?.description;
     else if (list === "Favorites") return favoriteList?.description;
-    else if (list === "Lists" && selectedListId) {
-      const customList = remainLists?.find(
-        (list) => list.id === selectedListId
-      );
-
-      return customList?.description;
-    } else if (list === "Lists" && !selectedListId) {
+    else if (list === "Lists" && selectedListId) return targetList?.description;
+    else if (list === "Lists" && !selectedListId)
       return "Create and customize lists to organize your movies and TV shows however you like. Whether by genre, mood, or theme, these lists give you full control over curating and managing your collection.";
-    }
+
     return null;
   }, [
     list,
-    remainLists,
+    targetList?.description,
     selectedListId,
     watchlist?.description,
     favoriteList?.description,
@@ -124,18 +120,18 @@ const List = () => {
 
       {list === "Watchlist" && (
         <div>
-          <ListView listId={watchlist?.id} />
+          <ListView targetList={watchlist} />
         </div>
       )}
       {list === "Favorites" && (
         <div>
-          <ListView listId={favoriteList?.id} />
+          <ListView targetList={favoriteList} />
         </div>
       )}
       {list === "Lists" && !selectedListId && <CustomLists />}
       {list === "Lists" && selectedListId && (
         <div>
-          <ListView listId={selectedListId} />
+          <ListView targetList={targetList} />
         </div>
       )}
     </main>

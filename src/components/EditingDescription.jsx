@@ -13,9 +13,6 @@ const EditingName = ({ list }) => {
   const [editingDescription, setEditingDescription] = useState(false);
   const [newDescription, setNewDescription] = useState("");
 
-  console.log(newDescription);
-  console.log(list?.description);
-
   const handleDescriptionEdit = () => {
     setEditingDescription(true);
   };

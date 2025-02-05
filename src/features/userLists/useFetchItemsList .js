@@ -2,6 +2,8 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { fetchItemsList } from "../../services/apiLists";
 
 export function useFetchItemsList(listId, list, startPoint) {
+  const queryClient = useQueryClient();
+
   const {
     data: itemsList,
     isLoading,
@@ -24,7 +26,6 @@ export function useLoadMoreItems(listId) {
     mutationFn: ({ listId, list, nextPoint }) =>
       fetchItemsList(listId, list, nextPoint),
     onSuccess: (newData, variables) => {
-      console.log("worked");
       queryClient.setQueryData(["itemsList", listId], (oldData) => {
         if (!oldData) return newData;
         return {

@@ -231,10 +231,13 @@ export async function updateList({
 }
 
 export const fetchItemsList = async (listId, list, startPoint = 0) => {
-  if (!list?.length || list?.length <= startPoint) {
+  if (!listId) return "listId is undefinded";
+
+  if (list?.length === 0 || list?.length <= startPoint) {
     return { items: [], listId, nextPoint: null };
   }
 
+  console.log("from inside of fetch function", list.length);
   const showsUrl = list.slice(startPoint, startPoint + 20).map((show) => {
     if (show.type === "movie" || show.type === "tv")
       return `${URL_Base}${show.type}/${show.item_id}?append_to_response=credits&language=en-US`;

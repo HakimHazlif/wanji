@@ -8,6 +8,8 @@ import SearchBar from "../components/SearchBar";
 
 import EditingName from "../components/EditingName";
 import EditingDescription from "../components/EditingDescription";
+import ListView from "../components/ListView";
+import AddingSearchBar from "../components/AddingSearchbar";
 
 const EditList = () => {
   const [searchParams] = useSearchParams();
@@ -63,26 +65,9 @@ const EditList = () => {
             <EditingDescription list={list} />
 
             <section className="py-20">
-              <SearchBar onAddMovie={handleAddMovie} />
+              <AddingSearchBar list={list} />
 
-              {shows.length > 0 && (
-                <div className="mt-10">
-                  <h3 className="text-2xl font-bold mb-4">Movies in List</h3>
-                  <div className="grid grid-cols-3 gap-4">
-                    {shows.map((movie) => (
-                      <div
-                        key={movie.id}
-                        className="border p-3 rounded flex justify-between items-center"
-                      >
-                        <span>{movie.title}</span>
-                        <span className="text-sm text-gray-500">
-                          {movie.release_date?.split("-")[0]}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+              {list?.id && <ListView targetList={list} />}
             </section>
           </div>
         </section>

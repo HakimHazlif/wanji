@@ -5,7 +5,6 @@ import { useTrendingPeople } from "./useTrendingPeople";
 
 const TrendingPeople = () => {
   const { isLoading, trendingPeople } = useTrendingPeople();
-  console.log(trendingPeople);
 
   if (isLoading) return <Spinner />;
 
