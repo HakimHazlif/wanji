@@ -8,6 +8,8 @@ import { bgPopcorn } from "../assets/icons";
 import ListView from "../components/ListView";
 import CreateListButton from "../ui/CreateListButton";
 import CustomLists from "../ui/CustomLists";
+import { FaPencil } from "react-icons/fa6";
+import EditListButton from "../components/EditListButton";
 
 const List = () => {
   const { user } = useSelector((state) => state.user);
@@ -16,8 +18,6 @@ const List = () => {
   const location = useLocation();
 
   const { watchlist, favoriteList, remainLists } = useLists();
-
-  console.log(list);
 
   const searchParams = new URLSearchParams(location.search);
   const selectedListId = searchParams.get("listId");
@@ -32,7 +32,6 @@ const List = () => {
       );
       createdAt = customList?.created_at;
     }
-    console.log(createdAt);
 
     return createdAt;
   }, [
@@ -49,7 +48,6 @@ const List = () => {
       const customList = remainLists?.find(
         (list) => list.id === selectedListId
       );
-      console.log(customList?.name);
       return customList?.name || "Custom List";
     }
     return list;
@@ -62,7 +60,6 @@ const List = () => {
       const customList = remainLists?.find(
         (list) => list.id === selectedListId
       );
-      console.log(customList?.description);
 
       return customList?.description;
     } else if (list === "Lists" && !selectedListId) {
@@ -88,26 +85,37 @@ const List = () => {
         <div className="bg-[#272831] opacity-60 masking h-[600px] w-full absolute bottom-0 right-0 z-10"></div>
       </div>
 
-      <section className="w-full border-b border-slate-600 pb-8 flex justify-between items-center">
+      <section className="w-full mb-20 flex justify-between items-center gap-20">
         <div>
-          <h2 className="font-bold text-6xl leading-relaxed">
-            {!selectedListId && "My"} {listName}
-          </h2>
-          <div className="flex gap-1 font-semibold">
-            {createdDate && (
-              <p className="">
-                Created{" "}
-                <span className="">{formatDistanceToNow(createdDate)}</span> ago
-              </p>
-            )}
-            <p>
-              by{" "}
-              <Link to={`/u/${username}`} className="font-bold text-blue-700">
-                {username}
-              </Link>
-            </p>
+          <div>
+            <h2 className="font-bold text-4xl mb-5">
+              {!selectedListId && "My"} {listName}
+            </h2>
           </div>
-          <p className="mt-10 w-4/5">{description}</p>
+
+          <div className="flex items-center gap-14">
+            <div className="flex gap-1 font-semibold">
+              {createdDate && (
+                <p className="">
+                  Created{" "}
+                  <span className="">{formatDistanceToNow(createdDate)}</span>{" "}
+                  ago
+                </p>
+              )}
+              <p>
+                by{" "}
+                <Link to={`/u/${username}`} className="font-bold text-blue-700">
+                  {username}
+                </Link>
+              </p>
+            </div>
+            {list === "Lists" && selectedListId && (
+              <div>
+                <EditListButton listId={selectedListId} />
+              </div>
+            )}
+          </div>
+          <p className="mt-10 w-full">{description}</p>
         </div>
         <div className="flex-1 flex justify-end items-center">
           <CreateListButton />

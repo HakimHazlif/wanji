@@ -20,6 +20,7 @@ import TvShows from "./pages/TvShows";
 import Movies from "./pages/Movies";
 import ListsContextProvider from "./context/ListsContext";
 import CreateNewList from "./pages/CreateNewList";
+import EditList from "./pages/EditList";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -59,6 +60,7 @@ function App() {
                     path="u/:user/list/create"
                     element={<CreateNewList />}
                   />
+                  <Route path="u/:user/list/edit" element={<EditList />} />
 
                   {/* <Route path="u/:user/:list" element={<List />} /> */}
 

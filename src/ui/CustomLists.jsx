@@ -22,7 +22,7 @@ const CustomLists = () => {
   if (remainLists?.length < 1 || !remainLists)
     return (
       <section className="flex flex-col gap-6 text-center justify-center items-center p-6 bg-bluish-black rounded-lg min-h-[300px] mt-10 ">
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col justify-center items-center ">
           <FaFolderOpen className="mx-auto mb-4 w-16 h-16 text-gray-400" />
 
           <p className="text-gray-300 mb-10 text-lg">
@@ -36,8 +36,8 @@ const CustomLists = () => {
 
   return (
     <section className="w-full space-y-4 p-4 mt-2">
-      <div className="flex justify-between items-center mb-10">
-        <h3 className="text-2xl font-bold text-gray-300 flex items-center gap-2">
+      <div className="flex justify-between items-center mb-10 border-b border-slate-600 pb-5">
+        <h3 className=" flex items-center justify-center gap-2 bg-bluish-black text-gray-400 text-lg px-5 py-2 rounded-full w-[140px] font-medium">
           <FaFolderOpen />
           {remainLists?.length} {remainLists?.length <= 1 ? "list" : "lists"}
         </h3>
@@ -101,6 +101,13 @@ const CustomLists = () => {
                   Has no movie, tv show, or episode yet
                 </p>
               )}
+              <div>
+                {list.description ? (
+                  <p>{list.description}</p>
+                ) : (
+                  <button>Add the description to this list</button>
+                )}
+              </div>
               <div className="flex justify-between items-center border-t pt-3 mt-3 border-gray-600">
                 <p className="text-xs text-gray-400">
                   Created at {updateDateFormat(list.created_at)}

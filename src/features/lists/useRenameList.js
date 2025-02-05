@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "react-query";
-import { updateListName } from "../../services/apiLists";
+import { updateList } from "../../services/apiLists";
 
-export function useCreateList() {
+export function useRenameList() {
   const queryClient = useQueryClient();
 
   const {
@@ -9,7 +9,7 @@ export function useCreateList() {
     isLoading,
     error,
   } = useMutation({
-    mutationFn: updateListName,
+    mutationFn: updateList,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["lists"] });
     },

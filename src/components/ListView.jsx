@@ -45,9 +45,9 @@ const ListView = ({ listId }) => {
 
   return (
     <section className="mt-5">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center border-b border-slate-600 pb-5">
         <div>
-          <h3 className="bg-slate-200 text-blue-600 text-lg px-5 py-2 rounded-full w-[160px] font-medium text-center">
+          <h3 className="bg-bluish-black text-gray-400 text-lg px-5 py-2 rounded-full w-[160px] font-medium text-center">
             {" "}
             Has {targetList.length}{" "}
             {targetList.length <= 1 ? "title" : "titles"}
@@ -58,7 +58,9 @@ const ListView = ({ listId }) => {
 
           <button
             className={`w-8 h-8 rounded-full flex justify-center items-center cursor-pointer ${
-              isGridView ? "bg-slate-200 text-blue-600" : "hover:bg-slate-600"
+              isGridView
+                ? "bg-bluish-black text-gray-500"
+                : "hover:bg-slate-600"
             }`}
             onClick={() => setIsGridView(true)}
             disabled={isGridView}
@@ -67,7 +69,9 @@ const ListView = ({ listId }) => {
           </button>
           <button
             className={`w-8 h-8 rounded-full flex justify-center items-center cursor-pointer ${
-              !isGridView ? "bg-slate-200 text-blue-600" : "hover:bg-slate-600"
+              !isGridView
+                ? "bg-bluish-black text-gray-500"
+                : "hover:bg-slate-600"
             }`}
             onClick={() => setIsGridView(false)}
             disabled={!isGridView}

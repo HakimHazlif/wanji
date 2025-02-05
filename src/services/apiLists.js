@@ -191,23 +191,43 @@ export async function deleteList({ userId, listId }) {
   return { errorList };
 }
 
-export async function updateListName({ userId, listId, newName }) {
+export async function updateList({
+  userId,
+  listId,
+  newName = null,
+  newDescription = null,
+}) {
   if (!userId)
     throw new Error(
       "Should you sign up or log in to update the name of the list"
     );
   if (!listId) throw new Error("the list_id is undefind");
-  if (!newName) throw new Error("the new name is undefind");
 
-  const { data, error } = await supabase
-    .from("lists")
-    .update({ name: newName })
-    .eq("id", listId)
-    .select("*");
+  if (newName) {
+    console.log(newName, listId);
+    const { data, error } = await supabase
+      .from("lists")
+      .update({ name: newName })
+      .eq("id", listId)
+      .select("*")
+      .single();
 
-  if (error) throw new Error(error);
+    if (error) throw new Error(error);
 
-  return { data, error };
+    return { data, error };
+  }
+  if (newDescription) {
+    const { data, error } = await supabase
+      .from("lists")
+      .update({ description: newDescription })
+      .eq("id", listId)
+      .select("*")
+      .single();
+
+    if (error) throw new Error(error);
+
+    return { data, error };
+  }
 }
 
 export const fetchItemsList = async (listId, list, startPoint = 0) => {

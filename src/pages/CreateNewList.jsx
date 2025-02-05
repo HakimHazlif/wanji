@@ -7,8 +7,8 @@ import { useSelector } from "react-redux";
 import { FiAlertCircle } from "react-icons/fi";
 import { useQueryClient } from "react-query";
 
-const MAX_NAME_LENGTH = 100;
-const MAX_DESCRIPTION_LENGTH = 2000;
+const MAX_NAME_LENGTH = 70;
+const MAX_DESCRIPTION_LENGTH = 1000;
 
 const CreateNewList = () => {
   const navigate = useNavigate();
