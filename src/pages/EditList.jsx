@@ -67,7 +67,7 @@ const EditList = () => {
             <section className="py-20">
               <AddingSearchBar list={list} />
 
-              {list?.id && <ListView targetList={list} />}
+              {list?.id && <ListView targetList={list} forEditList={true} />}
             </section>
           </div>
         </section>

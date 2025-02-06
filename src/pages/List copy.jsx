@@ -20,8 +20,6 @@ const List = () => {
     setSearchParams(searchParams);
   }
 
-  console.log("render from lists");
-
   const mediaLists = [
     {
       keyword: "watchlist",

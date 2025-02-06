@@ -18,7 +18,6 @@ const UserProfile = () => {
     ...favoriteList.items_list,
   ];
 
-  console.log("render from UserProfile");
   const uniqueShows = Array.from(
     new Map(
       allShows?.map((show) => [`${show.item_id}-${show.type}`, show])

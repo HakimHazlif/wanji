@@ -7,6 +7,8 @@ import {
 import { fetchItemsList } from "../../services/apiLists";
 
 export function useFetchInfiniteItems(listId, list) {
+  const queryClient = useQueryClient();
+
   const {
     data,
     fetchNextPage,

@@ -31,7 +31,6 @@ const SearchBar = () => {
           );
           const data = await res.json();
 
-          console.log(data);
           setResults(data.results);
         } catch (error) {
           console.error("Error fetching search results:", error);

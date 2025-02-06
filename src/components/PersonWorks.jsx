@@ -35,8 +35,6 @@ const PersonWorks = () => {
         activeTab === "movies"
           ? [...castMovies, ...crewMovies]
           : [...castTvShows, ...crewTvhows];
-
-      console.log(works);
     } else if (departmentFilter === "Acting") {
       works = activeTab === "movies" ? castMovies : castTvShows;
     } else {

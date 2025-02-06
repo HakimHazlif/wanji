@@ -49,7 +49,6 @@ const ItemsList = ({ list, item }) => {
 
   function handleDeleteList() {
     if (isLoggedIn && user.uid) {
-      console.log("clicked");
       deleteList({ userId: user.uid, listId: list.id });
       setForConfirmDelete(false);
     }

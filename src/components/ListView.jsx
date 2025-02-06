@@ -9,6 +9,7 @@ import ShowCardRow from "./ShowCardRow";
 import SortBy from "../ui/SortBy";
 import { useListsContext } from "../context/ListsContext";
 import { useDeleteShow } from "../features/lists/useDeleteShow";
+import { useEffect } from "react";
 
 const ListView = ({ targetList, forEditList = false }) => {
   const { isGridView, setIsGridView } = useListsContext();
@@ -29,6 +30,12 @@ const ListView = ({ targetList, forEditList = false }) => {
   function handleDeleteItem(id, type) {
     deleteShow({ id, listId, type });
   }
+
+  useEffect(() => {
+    if (forEditList && itemsList?.length + 1 === list?.length) {
+      fetchNextPage();
+    }
+  }, [itemsList?.length, list?.length, forEditList, fetchNextPage]);
 
   if (isLoading) return <Spinner />;
 

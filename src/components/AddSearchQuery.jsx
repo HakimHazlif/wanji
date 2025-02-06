@@ -18,14 +18,9 @@ const AddSearchQuery = ({ show, list, onClose }) => {
 
   function handleAddShowToList() {
     if (id && list?.id) {
-      console.log(id);
       const alreadyExist = list?.items_list?.some((item) => {
-        console.log(item.item_id);
-        console.log(item.type);
         return Number(item.item_id) === id && item.type === category;
       });
-
-      console.log(alreadyExist);
 
       if (!alreadyExist) {
         addShow(
