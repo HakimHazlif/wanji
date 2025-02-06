@@ -106,19 +106,17 @@ const AddingSearchBar = ({ list }) => {
       </div>
       {showResults && (
         <div
-          className="absolute z-40 w-full bg-bluish-black shadow-lg rounded-lg mt-2 max-h-[600px] border border-gray-500"
+          className="absolute z-40 bg-bluish-black shadow-lg rounded-lg mt-2 border border-gray-500 grid grid-flow-row overflow-y-auto overflow-x-hidden max-h-[400px] w-full scrollbar-custom"
           ref={resultsRef}
         >
-          <div className="grid grid-flow-row overflow-y-auto max-h-60 scrollbar-custom">
-            {results?.map((result) => (
-              <AddSearchQuery
-                show={result}
-                list={list}
-                key={result.id}
-                onClose={() => setShowResults(false)}
-              />
-            ))}
-          </div>
+          {results?.map((result) => (
+            <AddSearchQuery
+              show={result}
+              list={list}
+              key={result.id}
+              onClose={() => setShowResults(false)}
+            />
+          ))}
         </div>
       )}
     </div>

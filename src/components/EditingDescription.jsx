@@ -5,6 +5,7 @@ import EditButton from "./EditButton";
 import { useSelector } from "react-redux";
 import InputEditButton from "./InputEditButton";
 import { ImPencil } from "react-icons/im";
+import { MAX_DESCRIPTION_LENGTH } from "../constants/variables";
 
 const EditingName = ({ list }) => {
   const { isLoading, renameList } = useRenameList();
@@ -45,6 +46,7 @@ const EditingName = ({ list }) => {
           <textarea
             value={newDescription}
             onChange={(e) => setNewDescription(e.target.value)}
+            maxLength={MAX_DESCRIPTION_LENGTH}
             className="block w-full p-3 bg-bluish-black border outline-none rounded-lg shadow-sm focus:ring-2 focus:ring-orange-coral focus:border-transparent transition-colors"
             rows="2"
           />

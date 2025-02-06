@@ -48,7 +48,7 @@ const AddSearchQuery = ({ show, list, onClose }) => {
 
   return (
     <button
-      className="flex items-center justify-between w-full px-5 py-2 hover:bg-slate-700 cursor-pointer"
+      className="flex items-center justify-between w-full px-5 py-2 hover:bg-slate-700 cursor-pointer min-w-0"
       onClick={handleAddShowToList}
     >
       <div className="flex items-center gap-5">

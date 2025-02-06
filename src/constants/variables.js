@@ -8,6 +8,9 @@ export const options = {
   },
 };
 
+export const MAX_NAME_LENGTH = 70;
+export const MAX_DESCRIPTION_LENGTH = 1000;
+
 export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const API_URLs = {

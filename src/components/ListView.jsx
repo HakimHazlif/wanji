@@ -1,8 +1,5 @@
 import ShowCard from "../ui/ShowCard";
-import {
-  useFetchItemsList,
-  useLoadMoreItems,
-} from "../features/userLists/useFetchItemsList ";
+import { useFetchInfiniteItems } from "../features/userLists/useFetchItemsList ";
 import Spinner from "../ui/Spinner";
 import SpinnerMini from "../ui/SpinnerMini";
 import { BsFillGrid3X3GapFill } from "react-icons/bs";
@@ -11,7 +8,6 @@ import EmptyList from "../ui/EmptyList";
 import ShowCardRow from "./ShowCardRow";
 import SortBy from "../ui/SortBy";
 import { useListsContext } from "../context/ListsContext";
-import { useEffect, useState } from "react";
 import { useDeleteShow } from "../features/lists/useDeleteShow";
 
 const ListView = ({ targetList, forEditList = false }) => {
@@ -22,38 +18,21 @@ const ListView = ({ targetList, forEditList = false }) => {
 
   const { isLoading: isDeleting, deleteShow } = useDeleteShow();
 
-  const startPoint = 0;
-  const { itemsList, isLoading, refetch } = useFetchItemsList(
-    listId,
-    list,
-    startPoint
-  );
-
-  const { loadMoreItems, isLoadingMore } = useLoadMoreItems(listId);
-
-  const loadMore = () => {
-    if (itemsList?.nextPoint !== null) {
-      loadMoreItems({
-        listId,
-        list,
-        nextPoint: itemsList.nextPoint,
-      });
-    }
-  };
+  const {
+    itemsList,
+    isLoading,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+  } = useFetchInfiniteItems(listId, list);
 
   function handleDeleteItem(id, type) {
     deleteShow({ id, listId, type });
   }
 
-  useEffect(() => {
-    if (list?.length < 20) {
-      refetch();
-    }
-  }, [list?.length, refetch]);
-
   if (isLoading) return <Spinner />;
 
-  if (!listId || !itemsList || !itemsList.items.length)
+  if (!listId || !itemsList || itemsList?.length === 0)
     return <EmptyList withButton={forEditList && false} />;
 
   return (
@@ -97,22 +76,18 @@ const ListView = ({ targetList, forEditList = false }) => {
       <div>
         {isGridView ? (
           <div className="grid grid-cols-4 gap-10 py-14">
-            {itemsList?.items.map((item) => {
+            {itemsList?.map((item) => {
               return (
                 <ShowCard
-                  key={item.id}
+                  key={item?.id}
                   show={item}
                   parentShowId={
-                    item["air_date"] &&
-                    targetList.filter((show) => show.item_id == item.id)?.[0]
+                    item?.air_date &&
+                    targetList.filter((show) => show?.item_id == item?.id)?.[0]
                       ?.parent_id
                   }
                   category={
-                    item["title"]
-                      ? "movie"
-                      : item["air_date"]
-                      ? "episode"
-                      : "tv"
+                    item?.title ? "movie" : item?.air_date ? "episode" : "tv"
                   }
                   forEditList={forEditList}
                   deleteShow={forEditList ? handleDeleteItem : null}
@@ -122,22 +97,18 @@ const ListView = ({ targetList, forEditList = false }) => {
           </div>
         ) : (
           <div className="grid grid-flow-row gap-10 py-14">
-            {itemsList?.items.map((item) => {
+            {itemsList?.map((item) => {
               return (
                 <ShowCardRow
-                  key={item.id}
+                  key={item?.id}
                   show={item}
                   parentShowId={
-                    item["air_date"] &&
-                    targetList.filter((show) => show.item_id == item.id)?.[0]
+                    item?.air_date &&
+                    targetList.filter((show) => show?.item_id == item?.id)?.[0]
                       ?.parent_id
                   }
                   category={
-                    item["title"]
-                      ? "movie"
-                      : item["air_date"]
-                      ? "episode"
-                      : "tv"
+                    item?.title ? "movie" : item?.air_date ? "episode" : "tv"
                   }
                   forEditList={forEditList}
                   deleteShow={forEditList ? handleDeleteItem : null}
@@ -148,13 +119,13 @@ const ListView = ({ targetList, forEditList = false }) => {
         )}
       </div>
 
-      {targetList?.length > itemsList?.items.length && (
+      {hasNextPage && (
         <button
           className="w-full py-2 font-bold text-lg bg-orange-amber"
-          onClick={loadMore}
-          disabled={isLoadingMore}
+          onClick={() => fetchNextPage()}
+          disabled={isFetchingNextPage}
         >
-          {isLoadingMore ? (
+          {isFetchingNextPage ? (
             <div className="flex justify-center items-center">
               <SpinnerMini />
             </div>

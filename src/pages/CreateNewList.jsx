@@ -6,9 +6,10 @@ import SpinnerMini from "../ui/SpinnerMini";
 import { useSelector } from "react-redux";
 import { FiAlertCircle } from "react-icons/fi";
 import { useQueryClient } from "react-query";
-
-const MAX_NAME_LENGTH = 70;
-const MAX_DESCRIPTION_LENGTH = 1000;
+import {
+  MAX_DESCRIPTION_LENGTH,
+  MAX_NAME_LENGTH,
+} from "../constants/variables";
 
 const CreateNewList = () => {
   const navigate = useNavigate();
