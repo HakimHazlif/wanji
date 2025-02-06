@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from "react-router";
+import { Link, useNavigate, useSearchParams } from "react-router";
 import { bgPopcorn } from "../assets/icons";
 import { useLists } from "../features/lists/useLists";
 import { useSelector } from "react-redux";
@@ -10,23 +10,16 @@ import EditingName from "../components/EditingName";
 import EditingDescription from "../components/EditingDescription";
 import ListView from "../components/ListView";
 import AddingSearchBar from "../components/AddingSearchbar";
+import { IoIosArrowBack } from "react-icons/io";
 
 const EditList = () => {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const listId = searchParams.get("listId");
   const { username } = useSelector((state) => state.user.user);
 
-  const { remainLists } = useLists();
-  const list = remainLists?.find((list) => list.id === listId);
-
-  const [shows, setShows] = useState([]);
-
-  const handleAddMovie = (movie) => {
-    // Add movie to list, prevent duplicates
-    if (!shows.find((m) => m.id === movie.id)) {
-      setShows((prev) => [...prev, movie]);
-    }
-  };
+  const { lists } = useLists();
+  const list = lists?.find((list) => list.id === listId);
 
   return (
     <main className="padding-x py-32">
@@ -42,7 +35,25 @@ const EditList = () => {
       {list?.id && (
         <section className="w-full mb-20 flex items-center gap-20">
           <div className="w-full">
-            <EditingName list={list} />
+            <div className="mb-6">
+              <button
+                className="flex items-center gap-2 group text-lg font-semibold hover:text-white text-gray-400 transition-colors duration-100 ease-out"
+                onClick={() => navigate(-1)}
+              >
+                <IoIosArrowBack
+                  className="group-hover:animate-zigzag transition-all duration-200 ease-linear"
+                  size={25}
+                />
+                Back
+              </button>
+            </div>
+            {list?.name === "watchlist" || list?.name === "favorite" ? (
+              <h1 className="font-bold text-5xl mb-5 capitalize">
+                {list?.name}
+              </h1>
+            ) : (
+              <EditingName list={list} />
+            )}
 
             <div className="flex items-center gap-1 mb-5">
               {list?.created_at && (
@@ -62,10 +73,18 @@ const EditList = () => {
               </p>
             </div>
 
-            <EditingDescription list={list} />
+            {list?.name === "watchlist" || list?.name === "favorite" ? (
+              <p className="font-sembold text-xl text-gray-300 mb-5">
+                {list?.description}
+              </p>
+            ) : (
+              <EditingDescription list={list} />
+            )}
 
             <section className="py-20">
-              <AddingSearchBar list={list} />
+              <div className="mb-20">
+                <AddingSearchBar list={list} />
+              </div>
 
               {list?.id && <ListView targetList={list} forEditList={true} />}
             </section>

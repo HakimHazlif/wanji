@@ -10,8 +10,11 @@ import SortBy from "../ui/SortBy";
 import { useListsContext } from "../context/ListsContext";
 import { useDeleteShow } from "../features/lists/useDeleteShow";
 import { useEffect } from "react";
+import EditListButton from "./EditListButton";
+import { useQueryClient } from "react-query";
 
 const ListView = ({ targetList, forEditList = false }) => {
+  const queryClient = useQueryClient();
   const { isGridView, setIsGridView } = useListsContext();
 
   const listId = targetList?.id;
@@ -25,6 +28,7 @@ const ListView = ({ targetList, forEditList = false }) => {
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
+    refetch,
   } = useFetchInfiniteItems(listId, list);
 
   function handleDeleteItem(id, type) {
@@ -32,10 +36,26 @@ const ListView = ({ targetList, forEditList = false }) => {
   }
 
   useEffect(() => {
-    if (forEditList && itemsList?.length + 1 === list?.length) {
+    const itemsLength = itemsList?.length ?? 0;
+    const ListLength = list?.length ?? 0;
+
+    console.log(itemsLength, ListLength);
+    if (forEditList && itemsLength + 1 === ListLength) {
       fetchNextPage();
     }
-  }, [itemsList?.length, list?.length, forEditList, fetchNextPage]);
+    if (itemsLength - 1 === ListLength) {
+      queryClient.removeQueries(["itemsList", listId]);
+      refetch({ refetchPage: (page, index) => index === 0 });
+    }
+  }, [
+    itemsList?.length,
+    list?.length,
+    forEditList,
+    fetchNextPage,
+    listId,
+    refetch,
+    queryClient,
+  ]);
 
   if (isLoading) return <Spinner />;
 
@@ -48,11 +68,11 @@ const ListView = ({ targetList, forEditList = false }) => {
         <div>
           <h3 className="bg-bluish-black text-gray-400 text-lg px-5 py-2 rounded-full w-[160px] font-medium text-center">
             {" "}
-            Has {targetList.length}{" "}
-            {targetList.length <= 1 ? "title" : "titles"}
+            Has {list.length} {list.length <= 1 ? "title" : "titles"}
           </h3>
         </div>
         <div className="flex items-center gap-5">
+          {!forEditList && <EditListButton listId={listId} />}
           <SortBy />
 
           <button
@@ -127,19 +147,21 @@ const ListView = ({ targetList, forEditList = false }) => {
       </div>
 
       {hasNextPage && (
-        <button
-          className="w-full py-2 font-bold text-lg bg-orange-amber"
-          onClick={() => fetchNextPage()}
-          disabled={isFetchingNextPage}
-        >
-          {isFetchingNextPage ? (
-            <div className="flex justify-center items-center">
-              <SpinnerMini />
-            </div>
-          ) : (
-            "Load More"
-          )}
-        </button>
+        <div className="flex justify-center w-full">
+          <button
+            className="py-2 font-bold text-lg bg-orange-amber rounded-full w-4/5"
+            onClick={() => fetchNextPage()}
+            disabled={isFetchingNextPage}
+          >
+            {isFetchingNextPage ? (
+              <div className="flex justify-center items-center">
+                <SpinnerMini size={30} />
+              </div>
+            ) : (
+              "Load More"
+            )}
+          </button>
+        </div>
       )}
     </section>
   );

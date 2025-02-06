@@ -4,11 +4,11 @@ import { useNavigate } from "react-router";
 
 const EditListButton = ({ listId }) => {
   const navigate = useNavigate();
-  const { username } = useSelector((state) => state.user.user);
+  // const { username } = useSelector((state) => state.user.user);
   return (
     <button
       className="flex gap-2 items-center justify-center font-medium w-[130px] h-[35px] bg-orange-coral rounded-full"
-      onClick={() => navigate(`/u/${username}/list/edit?listId=${listId}`)}
+      onClick={() => navigate(`edit?listId=${listId}`)}
     >
       <FaPencil />
       Edit List

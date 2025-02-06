@@ -60,7 +60,7 @@ function App() {
                     path="u/:user/list/create"
                     element={<CreateNewList />}
                   />
-                  <Route path="u/:user/list/edit" element={<EditList />} />
+                  <Route path="u/:user/:list/edit" element={<EditList />} />
 
                   {/* <Route path="u/:user/:list" element={<List />} /> */}
 

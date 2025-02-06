@@ -21,7 +21,9 @@ const ShowCard = ({
   deleteShow = null,
   forEditList = false,
 }) => {
-  const { vote_average: rate, episode_number, season_number } = show;
+  const rate = show?.vote_average;
+  const episode_number = show?.episode_number;
+  const season_number = show?.season_number;
   const id = show?.id || show?.item_id;
   const title = show?.title || show?.name;
   const poster = show?.poster_path || show?.still_path;
@@ -29,9 +31,9 @@ const ShowCard = ({
   const navigate = useNavigate();
 
   function handleDate() {
-    if (show["release_date"]) return getYearFormat(show?.release_date);
-    else if (show["first_air_date"]) return getYearFormat(show?.first_air_date);
-    else if (show["air_date"]) return updateDateFormat(show?.air_date);
+    if (show?.release_date) return getYearFormat(show?.release_date);
+    else if (show?.first_air_date) return getYearFormat(show?.first_air_date);
+    else if (show?.air_date) return updateDateFormat(show?.air_date);
   }
 
   function handleNavigate() {

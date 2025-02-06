@@ -7,8 +7,6 @@ import {
 import { fetchItemsList } from "../../services/apiLists";
 
 export function useFetchInfiniteItems(listId, list) {
-  const queryClient = useQueryClient();
-
   const {
     data,
     fetchNextPage,
@@ -30,6 +28,8 @@ export function useFetchInfiniteItems(listId, list) {
   });
 
   const itemsList = data?.pages?.flatMap((page) => page.items);
+
+  console.log({ itemsList, isLoading, isFetchingNextPage, hasNextPage });
 
   return {
     itemsList,

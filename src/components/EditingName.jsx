@@ -72,7 +72,7 @@ const EditingName = ({ list }) => {
         </div>
       ) : (
         <div className="flex items-end gap-2">
-          <h2 className="font-bold text-4xl ">{list?.name}</h2>
+          <h2 className="font-bold text-5xl">{list?.name}</h2>
           <EditButton title="Rename your list" handleEdit={handleNameEdit}>
             <ImPencil size={20} className="text-blue-500" />
           </EditButton>

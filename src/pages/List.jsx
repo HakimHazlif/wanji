@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Link, useLocation, useParams } from "react-router";
+import { Link, useLocation, useNavigate, useParams } from "react-router";
 import { useLists } from "../features/lists/useLists";
 
 import { formatDistanceToNow } from "date-fns";
@@ -9,8 +9,12 @@ import ListView from "../components/ListView";
 import CreateListButton from "../ui/CreateListButton";
 import CustomLists from "../ui/CustomLists";
 import EditListButton from "../components/EditListButton";
+import { IoIosArrowBack } from "react-icons/io";
+import { FaPencil } from "react-icons/fa6";
 
 const List = () => {
+  const navigate = useNavigate();
+
   const { user } = useSelector((state) => state.user);
   const { username } = user;
   const { list } = useParams();
@@ -81,40 +85,56 @@ const List = () => {
         <div className="bg-[#272831] opacity-60 masking h-[600px] w-full absolute bottom-0 right-0 z-10"></div>
       </div>
 
-      <section className="w-full mb-20 flex justify-between items-center gap-20">
-        <div>
+      <section className="mb-20 ">
+        {list === "Lists" && selectedListId && (
+          <div className="mb-6 flex justify-end">
+            <button
+              className="flex items-center gap-2 group text-lg font-semibold hover:text-gary-400 text-white transition-colors duration-100 ease-out"
+              onClick={() =>
+                navigate(`/u/${username}/list/edit?listId=${selectedListId}`)
+              }
+            >
+              <FaPencil
+                className="group-hover:animate-write transition-all duration-200 ease-linear"
+                size={20}
+              />
+              Edit List
+            </button>
+          </div>
+        )}
+        <div className="w-full flex justify-between items-center gap-28">
           <div>
-            <h2 className="font-bold text-4xl mb-5">
-              {!selectedListId && "My"} {listName}
-            </h2>
-          </div>
-
-          <div className="flex items-center gap-14">
-            <div className="flex gap-1 font-semibold">
-              {createdDate && (
-                <p className="">
-                  Created{" "}
-                  <span className="">{formatDistanceToNow(createdDate)}</span>{" "}
-                  ago
-                </p>
-              )}
-              <p>
-                by{" "}
-                <Link to={`/u/${username}`} className="font-bold text-blue-700">
-                  {username}
-                </Link>
-              </p>
+            <div>
+              <h2 className="font-bold text-4xl mb-5">
+                {!selectedListId && "My"} {listName}
+              </h2>
             </div>
-            {list === "Lists" && selectedListId && (
-              <div>
-                <EditListButton listId={selectedListId} />
+
+            <div className="flex items-center gap-14">
+              <div className="flex gap-1 font-semibold">
+                {createdDate && (
+                  <p className="">
+                    Created{" "}
+                    <span className="">{formatDistanceToNow(createdDate)}</span>{" "}
+                    ago
+                  </p>
+                )}
+                <p>
+                  by{" "}
+                  <Link
+                    to={`/u/${username}`}
+                    className="font-bold text-blue-700"
+                  >
+                    {username}
+                  </Link>
+                </p>
               </div>
-            )}
+            </div>
+            <p className="mt-10 w-full">{description}</p>
           </div>
-          <p className="mt-10 w-full">{description}</p>
-        </div>
-        <div className="flex-1 flex justify-end items-center">
-          <CreateListButton />
+          <div className="flex-1 flex justify-end items-center">
+            <CreateListButton />
+          </div>
         </div>
       </section>
 
