@@ -3,16 +3,19 @@ import { useAddShow } from "./useAddShow";
 import { useSelector } from "react-redux";
 import SpinnerMini from "../../ui/SpinnerMini";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDeleteShow } from "./useDeleteShow";
 import { LuListCheck } from "react-icons/lu";
 import { SlOptionsVertical } from "react-icons/sl";
 import ItemsListOption from "../../ui/ItemsListOption";
 import DeleteListConfirm from "../../ui/DeleteListConfirm";
 import { useDeleteList } from "./useDeleteList";
+import Ellipsis from "../../ui/Ellipsis";
 
 const ItemsList = ({ list, item }) => {
   const { itemId, type, parentId, episode, season } = item;
+
+  const buttonRef = useRef();
 
   const [isAdded, setIsAdded] = useState(false);
   const [isOptionOpen, setIsOptionOpen] = useState(false);
@@ -54,6 +57,11 @@ const ItemsList = ({ list, item }) => {
     }
   }
 
+  function handleTogglePopup(e) {
+    e.stopPropagation();
+    setIsOptionOpen((prev) => !prev);
+  }
+
   let content;
 
   if (isAdding || isDeleting) {
@@ -82,9 +90,11 @@ const ItemsList = ({ list, item }) => {
       >
         <div>{content}</div>
 
-        <div className="flex items-center justify-between w-full">
-          <p className="text-white font-medium text-lg">{list.name}</p>
-          <p className="text-sm text-slate-400">
+        <div className="flex items-center justify-between w-full gap-4">
+          <p className="text-white font-medium text-lg text-start">
+            <Ellipsis text={list.name} lines="line-clamp-1" />
+          </p>
+          <p className="text-sm text-slate-400 text-nowrap">
             {list.items_list.length || 0}{" "}
             {list.items_list.length === 1 ? "item" : "items"}
           </p>
@@ -92,7 +102,8 @@ const ItemsList = ({ list, item }) => {
       </button>
       <div className="relative">
         <button
-          onClick={() => setIsOptionOpen((prev) => !prev)}
+          onClick={handleTogglePopup}
+          ref={buttonRef}
           className="hover:bg-blue-200 rounded-full w-7 h-7 flex justify-center items-center "
         >
           <SlOptionsVertical className="w-4 h-4 text-slate-400" />
@@ -100,6 +111,7 @@ const ItemsList = ({ list, item }) => {
 
         {isOptionOpen && (
           <ItemsListOption
+            buttonRef={buttonRef}
             setIsOptionOpen={setIsOptionOpen}
             isAdded={isAdded}
             addToList={handleAddToList}

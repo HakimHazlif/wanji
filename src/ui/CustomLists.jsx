@@ -42,7 +42,6 @@ const CustomLists = () => {
           <FaFolderOpen />
           {remainLists?.length} {remainLists?.length <= 1 ? "list" : "lists"}
         </h3>
-        <CreateListButton />
       </div>
       <ul className="grid grid-flow-row gap-4">
         {remainLists?.map((list) => (

@@ -12,24 +12,30 @@ import { IoLogOutOutline, IoSettingsOutline } from "react-icons/io5";
 import { fetchItemsList } from "../services/apiLists";
 import { logout } from "../services/apiAuth";
 
-const ProfileMenu = ({ setHandle, onClose }) => {
+const ProfileMenu = ({ setHandle, onClose, buttonRef }) => {
   const dispatch = useDispatch();
   const menuRef = useRef();
   const { isLoggedIn, user } = useSelector((state) => state.user);
 
   const { avatar, username, email } = user;
 
-  const { watchlist, favoriteList, remainLists } = useLists();
+  // const { watchlist, favoriteList, remainLists } = useLists();
 
   useEffect(() => {
     function handleDropMenu(e) {
-      if (menuRef.current && !menuRef.current.contains(e.target)) onClose();
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(e.target) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(e.target)
+      )
+        onClose();
     }
 
     document.addEventListener("mousedown", handleDropMenu);
 
     return () => document.removeEventListener("mousedown", handleDropMenu);
-  }, [menuRef, onClose]);
+  }, [menuRef, onClose, buttonRef]);
 
   return (
     <div className="absolute z-40 right-0 top-0 cursor-default" ref={menuRef}>

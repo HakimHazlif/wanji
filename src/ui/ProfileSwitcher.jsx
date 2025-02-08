@@ -3,7 +3,7 @@ import { useSession } from "../context/UserContext";
 import Button from "../ui/Button";
 import ProfileMenu from "../components/ProfileMenu";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getUser } from "../services/apiAuth";
 
 const styleClassName =
@@ -12,12 +12,16 @@ const styleClassName =
 const ProfileSwitcher = () => {
   const dispatch = useDispatch();
 
+  const buttonRef = useRef();
+
   const [openProfileMenu, setOpenProfileMenu] = useState(false);
   const { toggleLogsForm } = useSession();
   const { isLoggedIn } = useSelector((state) => state.user);
   const { avatar } = useSelector((state) => state.user.user);
 
-  function toggleProfileMenu() {
+  function toggleProfileMenu(e) {
+    e.stopPropagation();
+
     setOpenProfileMenu((prev) => !prev);
   }
 
@@ -30,6 +34,7 @@ const ProfileSwitcher = () => {
       {isLoggedIn ? (
         <>
           <button
+            ref={buttonRef}
             className="bg-orange-coral py-1 px-2.5 rounded-full hover:bg-orange-amber duration-150 transition-all text-slate-200"
             onClick={toggleProfileMenu}
           >
@@ -42,6 +47,7 @@ const ProfileSwitcher = () => {
           {openProfileMenu ? (
             <ProfileMenu
               setHandle={toggleProfileMenu}
+              buttonRef={buttonRef}
               onClose={() => setOpenProfileMenu(false)}
             />
           ) : null}

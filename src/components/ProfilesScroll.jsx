@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import CreditCard from "./CreditCard";
 import { IoIosArrowForward } from "react-icons/io";
 import { Link } from "react-router";

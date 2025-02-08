@@ -16,8 +16,6 @@ const Show = () => {
   const { isLoading, details, similar, images, credits, reviews, videos } =
     useShow();
 
-  console.log(videos);
-
   const { category } = useParams();
 
   if (isLoading) return <Spinner />;

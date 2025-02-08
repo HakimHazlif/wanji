@@ -75,8 +75,8 @@ const List = () => {
     <main className="padding-x py-32 w-full">
       <HeaderBackDrop backdrop={bgPopcorn} alt="backdrop" height="h-[400px]" />
 
-      <section className="mb-20 ">
-        <div>
+      <section className="mb-20 flex items-end justify-between">
+        <div className="w-3/5">
           {list === "Watchlist" || list === "Favorites" || isListsPage ? (
             <h2 className="font-bold text-5xl mb-5">
               {!selectedListId && "My"} {listName}
@@ -109,17 +109,18 @@ const List = () => {
             </p>
           ) : (
             <div className="font-sembold text-xl text-gray-300 mt-5">
-              <EditingDescription list={list} />
+              <EditingDescription list={targetList} />
             </div>
           )}
+        </div>
+        <div className="">
+          <CreateListButton />
         </div>
       </section>
 
       {!isListsPage && (
         <div className="mb-20 flex gap-5 items-center">
           <AddingSearchBar list={targetList} />
-          <span>Or</span>
-          <CreateListButton />
         </div>
       )}
 

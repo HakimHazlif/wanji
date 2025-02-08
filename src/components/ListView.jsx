@@ -69,9 +69,12 @@ const ListView = ({ targetList, forEditList = false }) => {
     <section className="mt-5 relative z-10">
       <div className="flex justify-between items-center border-b border-slate-600 pb-5">
         <div>
-          <h3 className="bg-bluish-black text-gray-400 text-lg px-5 py-2 rounded-full w-[160px] font-medium text-center">
-            {" "}
-            Has {list.length} {list.length <= 1 ? "title" : "titles"}
+          <h3 className="bg-bluish-black text-gray-400 text-lg px-6 py-2 rounded-full font-medium text-center">
+            {itemsList?.length < list.length
+              ? `1-${itemsList?.length} ${
+                  itemsList?.length <= 1 ? "title" : "titles"
+                } / ${list.length}`
+              : `${list.length} ${list.length <= 1 ? "title" : "titles"}`}
           </h3>
         </div>
         <div className="flex items-center gap-5">
@@ -79,7 +82,7 @@ const ListView = ({ targetList, forEditList = false }) => {
           <SortBy />
 
           <button
-            className={`w-8 h-8 rounded-full flex justify-center items-center  ${
+            className={`w-9 h-9 rounded-full flex justify-center items-center  ${
               isGridView
                 ? "bg-bluish-black text-gray-500 cursor-not-allowed"
                 : "hover:bg-slate-600 cursor-pointer"
@@ -87,10 +90,10 @@ const ListView = ({ targetList, forEditList = false }) => {
             onClick={() => setIsGridView(true)}
             disabled={isGridView}
           >
-            <BsFillGrid3X3GapFill className="w-5 h-5" />
+            <BsFillGrid3X3GapFill size={20} />
           </button>
           <button
-            className={`w-8 h-8 rounded-full flex justify-center items-center  ${
+            className={`w-9 h-9 rounded-full flex justify-center items-center  ${
               !isGridView
                 ? "bg-bluish-black text-gray-500 cursor-not-allowed"
                 : "hover:bg-slate-600 cursor-pointer"
@@ -98,7 +101,7 @@ const ListView = ({ targetList, forEditList = false }) => {
             onClick={() => setIsGridView(false)}
             disabled={!isGridView}
           >
-            <FaListUl className="w-5 h-5" />
+            <FaListUl size={20} />
           </button>
         </div>
       </div>
