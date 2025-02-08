@@ -1,9 +1,4 @@
-import {
-  useInfiniteQuery,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "react-query";
+import { useInfiniteQuery } from "react-query";
 import { fetchItemsList } from "../../services/apiLists";
 
 export function useFetchInfiniteItems(listId, list) {
@@ -27,7 +22,10 @@ export function useFetchInfiniteItems(listId, list) {
     keepPreviousData: true,
   });
 
-  const itemsList = data?.pages?.flatMap((page) => page.items);
+  const itemsList =
+    data?.pages?.flatMap((page) => {
+      if (page?.listId) return page.items;
+    }) ?? [];
 
   console.log({ itemsList, isLoading, isFetchingNextPage, hasNextPage });
 

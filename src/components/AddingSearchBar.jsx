@@ -60,14 +60,14 @@ const AddingSearchBar = ({ list }) => {
 
   return (
     <div className="relative w-full">
-      <div className="flex items-center border border-gray-500 outline-none bg-bluish-black rounded-full p-2 shadow-sm focus-within:border-2 focus-within:border-orange-500">
+      <div className="flex items-center border border-gray-500 outline-none bg-bluish-black rounded-full p-1 shadow-sm focus-within:border-2 focus-within:border-orange-500">
         <BiSearch size={25} className="text-gray-400 ml-2" />
         <input
           type="text"
           placeholder="Add Movie or TV Show to Your List..."
           value={query}
           onChange={handleSearch}
-          className="w-full bg-transparent outline-none py-2 px-5"
+          className="w-full bg-transparent outline-none py-1 px-5"
         />
         <div
           className="relative flex items-center justify-between w-36 px-4 py-2 cursor-pointer rounded-full bg-slate-600"

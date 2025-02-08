@@ -7,7 +7,9 @@ import { useNavigate } from "react-router";
 import { FaStar } from "react-icons/fa";
 import Ellipsis from "./Ellipsis";
 import { Tooltip } from "@mui/material";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState } from "react";
+import { TiDelete } from "react-icons/ti";
+import DeleteListConfirm from "./DeleteListConfirm";
 
 const WatchlistButton = lazy(() => import("../features/lists/WatchlistButton"));
 const FavoriteButton = lazy(() => import("../features/lists/FavoriteButton"));
@@ -20,7 +22,10 @@ const ShowCard = ({
   parentShowId = null,
   deleteShow = null,
   forEditList = false,
+  isDeleting = false,
 }) => {
+  const [deletePopup, setDeletePopup] = useState(false);
+
   const rate = show?.vote_average;
   const episode_number = show?.episode_number;
   const season_number = show?.season_number;
@@ -112,6 +117,29 @@ const ShowCard = ({
           )}
         </div>
       </div>
+
+      {forEditList && (
+        <div className="absolute z-40 top-1 right-1">
+          <Tooltip title="Delete this Item">
+            <span>
+              <button onClick={() => setDeletePopup(true)}>
+                <TiDelete
+                  size={35}
+                  className="text-gray-300 hover:text-red-400 duration-200 transition-colors"
+                />
+              </button>
+            </span>
+          </Tooltip>
+        </div>
+      )}
+      {deletePopup && (
+        <DeleteListConfirm
+          onClose={() => setDeletePopup(false)}
+          onDelete={() => deleteShow(id, category)}
+          showName={title}
+          isDeleting={isDeleting}
+        />
+      )}
     </div>
   );
 };

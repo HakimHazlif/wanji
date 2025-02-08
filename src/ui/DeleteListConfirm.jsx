@@ -1,6 +1,13 @@
 import { useEffect, useRef } from "react";
+import SpinnerMini from "./SpinnerMini";
 
-const DeleteListConfirm = ({ onClose, onDelete, listName }) => {
+const DeleteListConfirm = ({
+  onClose,
+  onDelete,
+  listName = "",
+  showName = "",
+  isDeleting = false,
+}) => {
   const popupRef = useRef();
 
   useEffect(() => {
@@ -24,12 +31,22 @@ const DeleteListConfirm = ({ onClose, onDelete, listName }) => {
         className="fixed z-[100] w-[600px] bg-gray-800 rounded-lg shadow-xl  mx-auto py-6 px-20 text-center"
         ref={popupRef}
       >
-        <h3 className="text-lg font-semibold ">Delete List</h3>
-        <p className="mt-4 text-gray-400">
-          Are you sure you want to delete the list{" "}
-          <span className="font-semibold text-red-500">{listName}</span>? This
-          action cannot be undone.
-        </p>
+        <h3 className="text-lg font-semibold ">
+          {showName ? "Delete Item" : "Delete List"}
+        </h3>
+        {showName ? (
+          <p className="mt-4 text-gray-400">
+            Are you sure you want to delete{" "}
+            <span className="font-semibold text-red-500">{showName}</span> from
+            this list? This action cannot be undone.
+          </p>
+        ) : (
+          <p className="mt-4 text-gray-400">
+            Are you sure you want to delete the list{" "}
+            <span className="font-semibold text-red-500">{listName}</span>? This
+            action cannot be undone.
+          </p>
+        )}
 
         <div className="mt-6 flex justify-center gap-4">
           <button
@@ -40,9 +57,10 @@ const DeleteListConfirm = ({ onClose, onDelete, listName }) => {
           </button>
           <button
             onClick={onDelete}
-            className="px-4 py-2 w-[100px] bg-red-500 text-white rounded-lg hover:bg-red-600"
+            disabled={isDeleting}
+            className=" px-4 py-2 w-[100px] bg-red-500 text-white rounded-lg hover:bg-red-600 flex items-center justify-center"
           >
-            Delete
+            {isDeleting ? <SpinnerMini size={24} /> : "Delete"}
           </button>
         </div>
       </div>

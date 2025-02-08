@@ -12,9 +12,11 @@ import { useDeleteShow } from "../features/lists/useDeleteShow";
 import { useEffect } from "react";
 import EditListButton from "./EditListButton";
 import { useQueryClient } from "react-query";
+import { useSelector } from "react-redux";
 
 const ListView = ({ targetList, forEditList = false }) => {
   const queryClient = useQueryClient();
+  const { uid } = useSelector((state) => state.user.user);
   const { isGridView, setIsGridView } = useListsContext();
 
   const listId = targetList?.id;
@@ -32,14 +34,15 @@ const ListView = ({ targetList, forEditList = false }) => {
   } = useFetchInfiniteItems(listId, list);
 
   function handleDeleteItem(id, type) {
-    deleteShow({ id, listId, type });
+    if (uid) {
+      deleteShow({ id, listId, type });
+    }
   }
 
   useEffect(() => {
     const itemsLength = itemsList?.length ?? 0;
     const ListLength = list?.length ?? 0;
 
-    console.log(itemsLength, ListLength);
     if (forEditList && itemsLength + 1 === ListLength) {
       fetchNextPage();
     }
@@ -59,7 +62,7 @@ const ListView = ({ targetList, forEditList = false }) => {
 
   if (isLoading) return <Spinner />;
 
-  if (!listId || !itemsList || itemsList?.length === 0)
+  if (!listId || !itemsList || !itemsList?.length || !itemsList[0])
     return <EmptyList withButton={forEditList && false} />;
 
   return (
@@ -76,10 +79,10 @@ const ListView = ({ targetList, forEditList = false }) => {
           <SortBy />
 
           <button
-            className={`w-8 h-8 rounded-full flex justify-center items-center cursor-pointer ${
+            className={`w-8 h-8 rounded-full flex justify-center items-center  ${
               isGridView
-                ? "bg-bluish-black text-gray-500"
-                : "hover:bg-slate-600"
+                ? "bg-bluish-black text-gray-500 cursor-not-allowed"
+                : "hover:bg-slate-600 cursor-pointer"
             }`}
             onClick={() => setIsGridView(true)}
             disabled={isGridView}
@@ -87,10 +90,10 @@ const ListView = ({ targetList, forEditList = false }) => {
             <BsFillGrid3X3GapFill className="w-5 h-5" />
           </button>
           <button
-            className={`w-8 h-8 rounded-full flex justify-center items-center cursor-pointer ${
+            className={`w-8 h-8 rounded-full flex justify-center items-center  ${
               !isGridView
-                ? "bg-bluish-black text-gray-500"
-                : "hover:bg-slate-600"
+                ? "bg-bluish-black text-gray-500 cursor-not-allowed"
+                : "hover:bg-slate-600 cursor-pointer"
             }`}
             onClick={() => setIsGridView(false)}
             disabled={!isGridView}
@@ -103,31 +106,34 @@ const ListView = ({ targetList, forEditList = false }) => {
       <div>
         {isGridView ? (
           <div className="grid grid-cols-4 gap-10 py-14">
-            {itemsList?.map((item) => {
-              return (
-                <ShowCard
-                  key={item?.id}
-                  show={item}
-                  parentShowId={
-                    item?.air_date &&
-                    targetList.filter((show) => show?.item_id == item?.id)?.[0]
-                      ?.parent_id
-                  }
-                  category={
-                    item?.title ? "movie" : item?.air_date ? "episode" : "tv"
-                  }
-                  forEditList={forEditList}
-                  deleteShow={forEditList ? handleDeleteItem : null}
-                />
-              );
-            })}
+            {itemsList[0] &&
+              itemsList?.map((item) => {
+                return (
+                  <ShowCard
+                    key={item?.id}
+                    show={item}
+                    parentShowId={
+                      item?.air_date &&
+                      targetList.filter(
+                        (show) => show?.item_id == item?.id
+                      )?.[0]?.parent_id
+                    }
+                    category={
+                      item?.title ? "movie" : item?.air_date ? "episode" : "tv"
+                    }
+                    forEditList={forEditList}
+                    deleteShow={forEditList ? handleDeleteItem : null}
+                    isDeleting={isDeleting}
+                  />
+                );
+              })}
           </div>
         ) : (
           <div className="grid grid-flow-row gap-10 py-14">
-            {itemsList?.map((item) => {
+            {itemsList?.map((item, index) => {
               return (
                 <ShowCardRow
-                  key={item?.id}
+                  key={item?.id || index}
                   show={item}
                   parentShowId={
                     item?.air_date &&
@@ -139,6 +145,7 @@ const ListView = ({ targetList, forEditList = false }) => {
                   }
                   forEditList={forEditList}
                   deleteShow={forEditList ? handleDeleteItem : null}
+                  isDeleting={isDeleting}
                 />
               );
             })}

@@ -11,6 +11,12 @@ import CustomLists from "../ui/CustomLists";
 import EditListButton from "../components/EditListButton";
 import { IoIosArrowBack } from "react-icons/io";
 import { FaPencil } from "react-icons/fa6";
+import EditingDescription from "../components/EditingDescription";
+import EditButton from "../components/EditButton";
+import { ImPencil } from "react-icons/im";
+import AddingSearchBar from "../components/AddingSearchbar";
+import EditingName from "../components/EditingName";
+import HeaderBackDrop from "../ui/HeaderBackDrop";
 
 const List = () => {
   const navigate = useNavigate();
@@ -24,8 +30,11 @@ const List = () => {
 
   const searchParams = new URLSearchParams(location.search);
   const selectedListId = searchParams.get("listId");
+  const isListsPage = list === "Lists" && !selectedListId;
 
   const targetList = useMemo(() => {
+    if (list === "Watchlist") return watchlist;
+    else if (list === "Favorites") return favoriteList;
     if (list === "Lists" && selectedListId) {
       const customList = remainLists?.find(
         (list) => list.id === selectedListId
@@ -33,127 +42,88 @@ const List = () => {
       return customList;
     }
     return null;
-  }, [list, remainLists, selectedListId]);
+  }, [list, remainLists, watchlist, favoriteList, selectedListId]);
 
-  const createdDate = useMemo(() => {
-    let createdAt;
-    if (list === "Watchlist") createdAt = watchlist?.created_at;
-    else if (list === "Favorites") createdAt = favoriteList?.created_at;
-    else if (list === "Lists" && selectedListId) targetList?.created_at;
+  const listData = useMemo(() => {
+    if (list === "Lists" && !selectedListId)
+      return {
+        listId: null,
+        createdDate: null,
+        listName: list,
+        description:
+          "Create and customize lists to organize your movies and TV shows however you like. Whether by genre, mood, or theme, these lists give you full control over curating and managing your collection.",
+      };
 
-    return createdAt;
+    return {
+      listId: targetList?.id,
+      createdDate: targetList?.created_at,
+      listName: targetList?.name || "Custom List",
+      description: targetList?.description,
+    };
   }, [
     list,
-    watchlist?.created_at,
-    favoriteList?.created_at,
-    selectedListId,
+    targetList?.id,
     targetList?.created_at,
-  ]);
-
-  const listName = useMemo(() => {
-    if (list === "Watchlist" || list === "Favorites") return list;
-    if (list === "Lists" && selectedListId)
-      return targetList?.name || "Custom List";
-
-    return list;
-  }, [list, selectedListId, targetList?.name]);
-
-  const description = useMemo(() => {
-    if (list === "Watchlist") return watchlist?.description;
-    else if (list === "Favorites") return favoriteList?.description;
-    else if (list === "Lists" && selectedListId) return targetList?.description;
-    else if (list === "Lists" && !selectedListId)
-      return "Create and customize lists to organize your movies and TV shows however you like. Whether by genre, mood, or theme, these lists give you full control over curating and managing your collection.";
-
-    return null;
-  }, [
-    list,
-    targetList?.description,
     selectedListId,
-    watchlist?.description,
-    favoriteList?.description,
+    targetList?.description,
+    targetList?.name,
   ]);
+
+  const { listId, createdDate, listName, description } = listData;
 
   return (
     <main className="padding-x py-32 w-full">
-      <div className="absolute top-0 right-0 w-full -z-10 ">
-        <img
-          src={bgPopcorn}
-          alt="backdrop of movie"
-          className="h-[400px] w-full object-cover object-center masking"
-        />
-        <div className="bg-[#272831] opacity-60 masking h-[600px] w-full absolute bottom-0 right-0 z-10"></div>
-      </div>
+      <HeaderBackDrop backdrop={bgPopcorn} alt="backdrop" height="h-[400px]" />
 
       <section className="mb-20 ">
-        {list === "Lists" && selectedListId && (
-          <div className="mb-6 flex justify-end">
-            <button
-              className="flex items-center gap-2 group text-lg font-semibold hover:text-gary-400 text-white transition-colors duration-100 ease-out"
-              onClick={() =>
-                navigate(`/u/${username}/list/edit?listId=${selectedListId}`)
-              }
-            >
-              <FaPencil
-                className="group-hover:animate-write transition-all duration-200 ease-linear"
-                size={20}
-              />
-              Edit List
-            </button>
-          </div>
-        )}
-        <div className="w-full flex justify-between items-center gap-28">
-          <div>
-            <div>
-              <h2 className="font-bold text-4xl mb-5">
-                {!selectedListId && "My"} {listName}
-              </h2>
-            </div>
+        <div>
+          {list === "Watchlist" || list === "Favorites" || isListsPage ? (
+            <h2 className="font-bold text-5xl mb-5">
+              {!selectedListId && "My"} {listName}
+            </h2>
+          ) : (
+            <EditingName list={targetList} />
+          )}
 
-            <div className="flex items-center gap-14">
-              <div className="flex gap-1 font-semibold">
-                {createdDate && (
-                  <p className="">
-                    Created{" "}
-                    <span className="">{formatDistanceToNow(createdDate)}</span>{" "}
-                    ago
-                  </p>
-                )}
-                <p>
-                  by{" "}
-                  <Link
-                    to={`/u/${username}`}
-                    className="font-bold text-blue-700"
-                  >
-                    {username}
-                  </Link>
-                </p>
-              </div>
+          <div className="flex gap-1 font-semibold">
+            {createdDate && (
+              <p className="">
+                Created{" "}
+                <span className="">{formatDistanceToNow(createdDate)}</span> ago
+              </p>
+            )}
+            <p>
+              by{" "}
+              <Link
+                to={`/u/${username}`}
+                className="font-bold text-orange-amber"
+              >
+                {username}
+              </Link>
+            </p>
+          </div>
+
+          {list === "Watchlist" || list === "Favorites" || isListsPage ? (
+            <p className="font-sembold text-xl text-gray-300 mt-5">
+              {description}
+            </p>
+          ) : (
+            <div className="font-sembold text-xl text-gray-300 mt-5">
+              <EditingDescription list={list} />
             </div>
-            <p className="mt-10 w-full">{description}</p>
-          </div>
-          <div className="flex-1 flex justify-end items-center">
-            <CreateListButton />
-          </div>
+          )}
         </div>
       </section>
 
-      {list === "Watchlist" && (
-        <div>
-          <ListView targetList={watchlist} />
+      {!isListsPage && (
+        <div className="mb-20 flex gap-5 items-center">
+          <AddingSearchBar list={targetList} />
+          <span>Or</span>
+          <CreateListButton />
         </div>
       )}
-      {list === "Favorites" && (
-        <div>
-          <ListView targetList={favoriteList} />
-        </div>
-      )}
-      {list === "Lists" && !selectedListId && <CustomLists />}
-      {list === "Lists" && selectedListId && (
-        <div>
-          <ListView targetList={targetList} />
-        </div>
-      )}
+
+      {isListsPage ? <CustomLists /> : <ListView targetList={targetList} />}
     </main>
   );
 };

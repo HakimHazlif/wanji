@@ -5,7 +5,7 @@ const EditButton = ({ handleEdit, title, children = null }) => {
   return (
     <Tooltip title={title}>
       <span>
-        <button onClick={handleEdit} className="px-3 py-1 flex gap-3">
+        <button onClick={handleEdit} className="py-1 flex items-end gap-3">
           {children}
         </button>
       </span>

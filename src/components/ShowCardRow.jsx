@@ -10,8 +10,21 @@ import ShowStatus from "../ui/ShowStatus";
 import Ellipsis from "../ui/Ellipsis";
 import { IoMdStar } from "react-icons/io";
 import CreditView from "../ui/CreditView";
+import DeleteListConfirm from "../ui/DeleteListConfirm";
+import { TiDelete } from "react-icons/ti";
+import { Tooltip } from "@mui/material";
+import { useState } from "react";
 
-const ShowCardRow = ({ show, category, parentShowId = null }) => {
+const ShowCardRow = ({
+  show,
+  category,
+  parentShowId = null,
+  deleteShow = null,
+  forEditList = false,
+  isDeleting = false,
+}) => {
+  const [deletePopup, setDeletePopup] = useState(false);
+
   const navigate = useNavigate();
 
   const {
@@ -55,7 +68,7 @@ const ShowCardRow = ({ show, category, parentShowId = null }) => {
   // };
 
   return (
-    <section className="flex rounded-2xl bg-bluish-black overflow-hidden">
+    <div className="flex rounded-2xl bg-bluish-black overflow-hidden relative">
       <img
         src={getPictureUrlFormat(poster)}
         alt={title}
@@ -164,7 +177,29 @@ const ShowCardRow = ({ show, category, parentShowId = null }) => {
           {stars?.length >= 1 && <CreditView cretids={stars} job="Star" />}
         </div>
       </div>
-    </section>
+      {forEditList && (
+        <div className="absolute z-40 top-1 right-1">
+          <Tooltip title="Delete this Item">
+            <span>
+              <button onClick={() => setDeletePopup(true)}>
+                <TiDelete
+                  size={35}
+                  className="text-gray-300 hover:text-red-400 duration-200 transition-colors"
+                />
+              </button>
+            </span>
+          </Tooltip>
+        </div>
+      )}
+      {deletePopup && (
+        <DeleteListConfirm
+          onClose={() => setDeletePopup(false)}
+          onDelete={() => deleteShow(id, category)}
+          showName={title}
+          isDeleting={isDeleting}
+        />
+      )}
+    </div>
   );
 };
 

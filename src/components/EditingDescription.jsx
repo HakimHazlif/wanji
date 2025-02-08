@@ -42,13 +42,13 @@ const EditingName = ({ list }) => {
   return (
     <div className="flex items-center gap-4 mb-5">
       {editingDescription ? (
-        <div className="flex items-center gap-2 w-full">
+        <div className="flex items-end gap-2 w-full">
           <textarea
             value={newDescription}
             onChange={(e) => setNewDescription(e.target.value)}
             maxLength={MAX_DESCRIPTION_LENGTH}
             className="block w-full p-3 bg-bluish-black border outline-none rounded-lg shadow-sm focus:ring-2 focus:ring-orange-coral focus:border-transparent transition-colors"
-            rows="2"
+            rows="3"
           />
           <InputEditButton
             handleClick={() => setEditingDescription(false)}
@@ -73,7 +73,7 @@ const EditingName = ({ list }) => {
         <>
           {list?.description ? (
             <div className="flex items-end gap-2">
-              <p className="font-sembold text-xl text-gray-300">
+              <p className="font-sembold text-xl text-gray-300 mt-5">
                 {list?.description}
               </p>
               <EditButton
@@ -84,15 +84,15 @@ const EditingName = ({ list }) => {
               </EditButton>
             </div>
           ) : (
-            <EditButton
-              handleEdit={handleDescriptionEdit}
-              title="Describe your list"
-            >
-              <ImPencil size={20} className="text-blue-500" />
-              <span className="text-gray-400 font-medium">
-                Add a description to your list
-              </span>
-            </EditButton>
+            <div className="font-sembold text-xl text-gray-300 mt-5">
+              <EditButton
+                handleEdit={handleDescriptionEdit}
+                title="Describe your list"
+              >
+                <span>Add a description to your list</span>
+                <ImPencil size={15} className="text-blue-500 mb-1" />
+              </EditButton>
+            </div>
           )}
         </>
       )}
