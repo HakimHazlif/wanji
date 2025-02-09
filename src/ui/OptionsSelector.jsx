@@ -1,3 +1,4 @@
+import { Tooltip } from "@mui/material";
 import { useEffect, useRef } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 
@@ -46,7 +47,7 @@ const OptionsSelector = ({
 
       {isOpen && (
         <ul
-          className="absolute z-20 top-full right-0 mt-2 bg-slate-700 shadow-lg rounded-lg min-w-28 overflow-auto scrollbar-custom max-h-[300px]"
+          className="absolute w-full z-20 top-full right-0 mt-2 bg-slate-700 shadow-lg rounded-lg min-w-28 overflow-auto scrollbar-custom max-h-[300px]"
           ref={popupRef}
         >
           {sortOptions.map((option) => (

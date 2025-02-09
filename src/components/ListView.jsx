@@ -15,6 +15,7 @@ import { useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import LoadMoreButton from "./LoadMoreButton";
 import { useRatingList } from "../features/lists/useRatingList";
+import { Tooltip } from "@mui/material";
 
 const ListView = ({ targetList, forEditList = false }) => {
   const queryClient = useQueryClient();
@@ -38,16 +39,17 @@ const ListView = ({ targetList, forEditList = false }) => {
     "Alphabetical (Z-A)",
   ];
   const [selectedOption, setSelectedOption] = useState(sortOptions[0]);
-  const [isOpenOptions, setIsOpenOptions] = useState(false);
+  const [isOpenSort, setIsOpenSort] = useState(false);
+
+  const filterOptions = ["All", "Movies", "TV Shows", "Episodes"];
+  const [filteredOption, setFilteredOption] = useState(filterOptions[0]);
+  const [isOpenFilter, setIsOpenFilter] = useState(false);
 
   const listId = targetList?.id;
   const list = targetList?.items_list;
 
   const { isLoading: isDeleting, deleteShow } = useDeleteShow();
-
   const { ratingList } = useRatingList();
-
-  // console.log(ratingList);
 
   const {
     itemsList,
@@ -66,6 +68,10 @@ const ListView = ({ targetList, forEditList = false }) => {
 
   function handleSelectSortOption(option) {
     setSelectedOption(option);
+  }
+
+  function handleSelectFilterOption(option) {
+    setFilteredOption(option);
   }
 
   const itemsListWithUserRating = useMemo(() => {
@@ -89,8 +95,27 @@ const ListView = ({ targetList, forEditList = false }) => {
     return addRating;
   }, [itemsList, ratingList]);
 
+  const filterdList = useMemo(() => {
+    switch (filteredOption) {
+      case "Movies":
+        return itemsListWithUserRating.filter(
+          (item) => item.media_type === "movie"
+        );
+      case "TV Shows":
+        return itemsListWithUserRating.filter(
+          (item) => item.media_type === "tv"
+        );
+      case "Episodes":
+        return itemsListWithUserRating.filter(
+          (item) => item.media_type === "episode"
+        );
+      default:
+        return itemsListWithUserRating;
+    }
+  }, [filteredOption, itemsListWithUserRating]);
+
   const sortedList = useMemo(() => {
-    const sortedList = itemsListWithUserRating.sort((a, b) => {
+    const sortedList = filterdList.sort((a, b) => {
       const aReleaseDate = a?.release_date || a?.first_air_date || a?.air_date;
       const bReleaseDate = b?.release_date || b?.first_air_date || b?.air_date;
       const aTitle = a?.title || a?.name;
@@ -133,7 +158,7 @@ const ListView = ({ targetList, forEditList = false }) => {
     });
 
     return sortedList;
-  }, [itemsListWithUserRating, selectedOption]);
+  }, [filterdList, selectedOption]);
 
   useEffect(() => {
     const itemsLength = itemsList?.length ?? 0;
@@ -175,18 +200,27 @@ const ListView = ({ targetList, forEditList = false }) => {
         </div>
         <div className="flex items-center gap-5">
           {!forEditList && <EditListButton listId={listId} />}
+
+          <OptionsSelector
+            selectedOption={filteredOption}
+            handleToggle={setIsOpenFilter}
+            sortOptions={filterOptions}
+            isOpen={isOpenFilter}
+            handleSelect={handleSelectFilterOption}
+          />
+
           <OptionsSelector
             selectedOption={selectedOption}
-            handleToggle={setIsOpenOptions}
+            handleToggle={setIsOpenSort}
             sortOptions={sortOptions}
-            isOpen={isOpenOptions}
+            isOpen={isOpenSort}
             handleSelect={handleSelectSortOption}
           />
 
           <button
             className={`w-9 h-9 rounded-full flex justify-center items-center  ${
               isGridView
-                ? "bg-bluish-black text-gray-500 cursor-not-allowed"
+                ? "bg-slate-700 cursor-not-allowed"
                 : "hover:bg-slate-600 cursor-pointer"
             }`}
             onClick={() => setIsGridView(true)}
@@ -197,7 +231,7 @@ const ListView = ({ targetList, forEditList = false }) => {
           <button
             className={`w-9 h-9 rounded-full flex justify-center items-center  ${
               !isGridView
-                ? "bg-bluish-black text-gray-500 cursor-not-allowed"
+                ? "bg-slate-700 cursor-not-allowed"
                 : "hover:bg-slate-600 cursor-pointer"
             }`}
             onClick={() => setIsGridView(false)}
@@ -209,53 +243,69 @@ const ListView = ({ targetList, forEditList = false }) => {
       </div>
 
       <div>
-        {isGridView ? (
-          <div className="grid grid-cols-4 gap-10 py-14">
-            {itemsList[0] &&
-              sortedList?.map((item) => {
-                return (
-                  <ShowCard
-                    key={item?.id}
-                    show={item}
-                    parentShowId={
-                      item?.air_date &&
-                      targetList.filter(
-                        (show) => show?.item_id == item?.id
-                      )?.[0]?.parent_id
-                    }
-                    category={
-                      item?.title ? "movie" : item?.air_date ? "episode" : "tv"
-                    }
-                    forEditList={forEditList}
-                    deleteShow={forEditList ? handleDeleteItem : null}
-                    isDeleting={isDeleting}
-                  />
-                );
-              })}
-          </div>
+        {sortedList?.length > 0 ? (
+          isGridView ? (
+            <div className="grid grid-cols-4 gap-10 py-14">
+              {sortedList?.length > 0 &&
+                sortedList?.map((item) => {
+                  return (
+                    <ShowCard
+                      key={item?.id}
+                      show={item}
+                      parentShowId={
+                        item?.air_date &&
+                        targetList.filter(
+                          (show) => show?.item_id == item?.id
+                        )?.[0]?.parent_id
+                      }
+                      category={
+                        item?.title
+                          ? "movie"
+                          : item?.air_date
+                          ? "episode"
+                          : "tv"
+                      }
+                      forEditList={forEditList}
+                      deleteShow={forEditList ? handleDeleteItem : null}
+                      isDeleting={isDeleting}
+                    />
+                  );
+                })}
+            </div>
+          ) : (
+            <div className="grid grid-flow-row gap-10 py-14">
+              {sortedList?.length > 0 &&
+                sortedList?.map((item, index) => {
+                  return (
+                    <ShowCardRow
+                      key={item?.id || index}
+                      show={item}
+                      parentShowId={
+                        item?.air_date &&
+                        targetList.filter(
+                          (show) => show?.item_id == item?.id
+                        )?.[0]?.parent_id
+                      }
+                      category={
+                        item?.title
+                          ? "movie"
+                          : item?.air_date
+                          ? "episode"
+                          : "tv"
+                      }
+                      forEditList={forEditList}
+                      deleteShow={forEditList ? handleDeleteItem : null}
+                      isDeleting={isDeleting}
+                    />
+                  );
+                })}
+            </div>
+          )
         ) : (
-          <div className="grid grid-flow-row gap-10 py-14">
-            {itemsList[0] &&
-              sortedList?.map((item, index) => {
-                return (
-                  <ShowCardRow
-                    key={item?.id || index}
-                    show={item}
-                    parentShowId={
-                      item?.air_date &&
-                      targetList.filter(
-                        (show) => show?.item_id == item?.id
-                      )?.[0]?.parent_id
-                    }
-                    category={
-                      item?.title ? "movie" : item?.air_date ? "episode" : "tv"
-                    }
-                    forEditList={forEditList}
-                    deleteShow={forEditList ? handleDeleteItem : null}
-                    isDeleting={isDeleting}
-                  />
-                );
-              })}
+          <div className="bg-bluish-black flex justify-center items-center rounded-md w-full h-[200px] mt-8">
+            <p className="text-gray-300 font-medium">
+              There are no {filteredOption} listed here
+            </p>
           </div>
         )}
       </div>
