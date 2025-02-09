@@ -24,6 +24,7 @@ const ShowCard = ({
   forEditList = false,
   isDeleting = false,
 }) => {
+  const navigate = useNavigate();
   const [deletePopup, setDeletePopup] = useState(false);
 
   const rate = show?.vote_average;
@@ -32,8 +33,6 @@ const ShowCard = ({
   const id = show?.id || show?.item_id;
   const title = show?.title || show?.name;
   const poster = show?.poster_path || show?.still_path;
-
-  const navigate = useNavigate();
 
   function handleDate() {
     if (show?.release_date) return getYearFormat(show?.release_date);

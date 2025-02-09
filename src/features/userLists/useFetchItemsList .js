@@ -27,10 +27,17 @@ export function useFetchInfiniteItems(listId, list) {
       if (page?.listId) return page.items;
     }) ?? [];
 
-  console.log({ itemsList, isLoading, isFetchingNextPage, hasNextPage });
+  const addCreateDateToList =
+    itemsList?.length > 0
+      ? itemsList.map((item, index) => ({
+          ...item,
+          created_at: list?.[index]?.created_at,
+          media_type: list?.[index]?.type,
+        }))
+      : [];
 
   return {
-    itemsList,
+    itemsList: addCreateDateToList,
     isLoading,
     isFetchingNextPage,
     hasNextPage,
