@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useRef, useState } from "react";
 import { useLists } from "../features/lists/useLists";
 
 const ListsContext = createContext();
@@ -23,6 +23,8 @@ function ListsContextProvider({ children }) {
 
   const [isGridView, setIsGridView] = useState(true);
 
+  const addingSearchBarRef = useRef(null);
+
   const sortOptions = [
     "List order",
     "Alphabetical",
@@ -44,6 +46,7 @@ function ListsContextProvider({ children }) {
     sortOptions,
     handleSortChange,
     interestsIds,
+    addingSearchBarRef,
   };
 
   return (

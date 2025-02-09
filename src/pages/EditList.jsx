@@ -11,6 +11,7 @@ import EditingDescription from "../components/EditingDescription";
 import ListView from "../components/ListView";
 import AddingSearchBar from "../components/AddingSearchbar";
 import { IoIosArrowBack } from "react-icons/io";
+import CreatedByAuth from "../components/CreatedByAuth";
 
 const EditList = () => {
   const navigate = useNavigate();
@@ -55,23 +56,7 @@ const EditList = () => {
               <EditingName list={list} />
             )}
 
-            <div className="flex items-center gap-1 mb-5">
-              {list?.created_at && (
-                <p className="font-semibold">
-                  Created <span>{formatDistanceToNow(list?.created_at)}</span>{" "}
-                  ago
-                </p>
-              )}
-              <p className="font-semibold">
-                by{" "}
-                <Link
-                  to={`/u/${username}`}
-                  className="font-bold text-orange-amber hover:text-blue-700 duration-200 transition-colors"
-                >
-                  {username}
-                </Link>
-              </p>
-            </div>
+            <CreatedByAuth createdDate={list?.created_at} username={username} />
 
             {list?.name === "watchlist" || list?.name === "favorite" ? (
               <p className="font-sembold text-xl text-gray-300 mb-5">

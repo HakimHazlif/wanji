@@ -3,8 +3,11 @@ import { BiSearch } from "react-icons/bi";
 import { IoIosArrowDown } from "react-icons/io";
 import { options, URL_Base } from "../constants/variables";
 import AddSearchQuery from "./AddSearchQuery";
+import OptionsSelector from "../ui/OptionsSelector";
+import { useListsContext } from "../context/ListsContext";
 
 const AddingSearchBar = ({ list }) => {
+  const { addingSearchBarRef } = useListsContext();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("movie");
   const [results, setResults] = useState([]);
@@ -14,6 +17,10 @@ const AddingSearchBar = ({ list }) => {
   const selectorRef = useRef();
   const resultsRef = useRef();
 
+  function handleSelectCategory(selectedCategory) {
+    setCategory(selectedCategory);
+  }
+
   const handleSearch = async (e) => {
     const value = e.target.value;
     setQuery(value);
@@ -22,8 +29,6 @@ const AddingSearchBar = ({ list }) => {
       setResults([]);
       return;
     }
-
-    // Simulated search results (replace with API call)
 
     if (value.length > 2) {
       const queryURI = encodeURIComponent(value);
@@ -59,50 +64,25 @@ const AddingSearchBar = ({ list }) => {
   }, []);
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full" id="adding-search-bar">
       <div className="flex items-center border border-gray-500 outline-none bg-bluish-black rounded-full p-1 shadow-sm focus-within:border-2 focus-within:border-orange-500">
         <BiSearch size={25} className="text-gray-400 ml-2" />
         <input
+          ref={addingSearchBarRef}
           type="text"
           placeholder="Add Movie or TV Show to Your List..."
           value={query}
           onChange={handleSearch}
           className="w-full bg-transparent outline-none py-1 px-5"
         />
-        <div
-          className="relative flex items-center justify-between w-36 px-4 py-2 cursor-pointer rounded-full bg-slate-600"
-          onClick={() => setShowSelector(!showSelector)}
-        >
-          <span className="capitalize">
-            {category === "movie" ? "Movies" : "TV Show"}
-          </span>
-          <IoIosArrowDown />
-          {showSelector && (
-            <div
-              className="absolute z-50 left-0 top-full mt-2 bg-slate-600 border border-gray-500 shadow-md rounded-md w-32 text-center"
-              ref={selectorRef}
-            >
-              <div
-                className="p-2 hover:bg-slate-700 cursor-pointer"
-                onClick={() => {
-                  setCategory("movie");
-                  setShowSelector(false);
-                }}
-              >
-                Movies
-              </div>
-              <div
-                className="p-2 hover:bg-slate-700 cursor-pointer"
-                onClick={() => {
-                  setCategory("tv");
-                  setShowSelector(false);
-                }}
-              >
-                TV Shows
-              </div>
-            </div>
-          )}
-        </div>
+
+        <OptionsSelector
+          handleToggle={() => setShowSelector((prev) => !prev)}
+          handleSelect={handleSelectCategory}
+          selectedOption={category === "movie" ? "Movies" : "TV Show"}
+          isOpen={showSelector}
+          sortOptions={["movie", "tv"]}
+        />
       </div>
       {showResults && (
         <div

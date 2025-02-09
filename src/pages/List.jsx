@@ -17,6 +17,7 @@ import { ImPencil } from "react-icons/im";
 import AddingSearchBar from "../components/AddingSearchbar";
 import EditingName from "../components/EditingName";
 import HeaderBackDrop from "../ui/HeaderBackDrop";
+import CreatedByAuth from "../components/CreatedByAuth";
 
 const List = () => {
   const navigate = useNavigate();
@@ -85,23 +86,7 @@ const List = () => {
             <EditingName list={targetList} />
           )}
 
-          <div className="flex gap-1 font-semibold">
-            {createdDate && (
-              <p className="">
-                Created{" "}
-                <span className="">{formatDistanceToNow(createdDate)}</span> ago
-              </p>
-            )}
-            <p>
-              by{" "}
-              <Link
-                to={`/u/${username}`}
-                className="font-bold text-orange-amber"
-              >
-                {username}
-              </Link>
-            </p>
-          </div>
+          <CreatedByAuth createdDate={createdDate} username={username} />
 
           {list === "Watchlist" || list === "Favorites" || isListsPage ? (
             <p className="font-sembold text-xl text-gray-300 mt-5">

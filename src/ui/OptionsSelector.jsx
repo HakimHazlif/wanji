@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 
-const SortBy = ({
+const OptionsSelector = ({
   selectedOption,
   handleToggle,
   sortOptions,
@@ -31,11 +31,10 @@ const SortBy = ({
   }, [handleToggle]);
 
   return (
-    <div className="relative flex items-center gap-2 ">
-      <span>Sort by</span>
+    <div className="relative">
       <button
         ref={buttonRef}
-        className="text-white bg-slate-700 text-lg px-5 py-2 rounded-full font-medium flex items-center justify-between gap-3 cursor-pointer"
+        className="text-white bg-slate-700 px-5 py-2 rounded-full font-medium flex items-center justify-between gap-3 cursor-pointer text-nowrap"
         onClick={(e) => {
           e.stopPropagation;
           handleToggle((prev) => !prev);
@@ -47,7 +46,7 @@ const SortBy = ({
 
       {isOpen && (
         <ul
-          className="absolute z-20 top-full right-0 mt-2 bg-slate-700 shadow-lg rounded-lg"
+          className="absolute z-20 top-full right-0 mt-2 bg-slate-700 shadow-lg rounded-lg min-w-28"
           ref={popupRef}
         >
           {sortOptions.map((option) => (
@@ -68,4 +67,4 @@ const SortBy = ({
   );
 };
 
-export default SortBy;
+export default OptionsSelector;

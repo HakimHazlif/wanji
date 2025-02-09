@@ -6,13 +6,14 @@ import { BsFillGrid3X3GapFill } from "react-icons/bs";
 import { FaListUl } from "react-icons/fa";
 import EmptyList from "../ui/EmptyList";
 import ShowCardRow from "./ShowCardRow";
-import SortBy from "../ui/SortBy";
+import OptionsSelector from "../ui/OptionsSelector";
 import { useListsContext } from "../context/ListsContext";
 import { useDeleteShow } from "../features/lists/useDeleteShow";
 import { useEffect } from "react";
 import EditListButton from "./EditListButton";
 import { useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
+import LoadMoreButton from "./LoadMoreButton";
 
 const ListView = ({ targetList, forEditList = false }) => {
   const queryClient = useQueryClient();
@@ -63,7 +64,7 @@ const ListView = ({ targetList, forEditList = false }) => {
   if (isLoading) return <Spinner />;
 
   if (!listId || !itemsList || !itemsList?.length || !itemsList[0])
-    return <EmptyList withButton={forEditList && false} />;
+    return <EmptyList />;
 
   return (
     <section className="mt-5 relative z-10">
@@ -79,7 +80,7 @@ const ListView = ({ targetList, forEditList = false }) => {
         </div>
         <div className="flex items-center gap-5">
           {!forEditList && <EditListButton listId={listId} />}
-          <SortBy />
+          <OptionsSelector />
 
           <button
             className={`w-9 h-9 rounded-full flex justify-center items-center  ${
@@ -158,19 +159,10 @@ const ListView = ({ targetList, forEditList = false }) => {
 
       {hasNextPage && (
         <div className="flex justify-center w-full">
-          <button
-            className="py-2 font-bold text-lg bg-orange-amber rounded-full w-4/5"
-            onClick={() => fetchNextPage()}
-            disabled={isFetchingNextPage}
-          >
-            {isFetchingNextPage ? (
-              <div className="flex justify-center items-center">
-                <SpinnerMini size={30} />
-              </div>
-            ) : (
-              "Load More"
-            )}
-          </button>
+          <LoadMoreButton
+            isFetching={isFetchingNextPage}
+            fetchMore={fetchNextPage}
+          />
         </div>
       )}
     </section>

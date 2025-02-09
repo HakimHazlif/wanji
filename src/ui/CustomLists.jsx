@@ -10,7 +10,7 @@ import { FaPencil } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import CustomListCard from "./CustomListCard";
 import { useEffect, useMemo, useState } from "react";
-import SortBy from "./SortBy";
+import OptionsSelector from "./OptionsSelector";
 
 const CustomLists = () => {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const CustomLists = () => {
     "Alphabetical (A-Z)",
     "Alphabetical (Z-A)",
   ];
-  const [selectedOption, setSelectedOption] = useState(sortOptions[0].option);
+  const [selectedOption, setSelectedOption] = useState(sortOptions[0]);
 
   function handleSelectOption(selectedOption) {
     setSelectedOption(selectedOption);
@@ -82,7 +82,7 @@ const CustomLists = () => {
           <FaFolderOpen />
           {remainLists?.length} {remainLists?.length <= 1 ? "list" : "lists"}
         </h3>
-        <SortBy
+        <OptionsSelector
           selectedOption={selectedOption}
           sortOptions={sortOptions}
           isOpen={isOpen}
