@@ -1,6 +1,6 @@
 import { useNavigate, useSearchParams } from "react-router";
 import { useLists } from "../features/lists/useLists";
-import { IoIosTv } from "react-icons/io";
+import { IoIosTv, IoMdArrowDropdown } from "react-icons/io";
 import CreateListButton from "./CreateListButton";
 import { updateDateFormat } from "../utils/helper";
 import { FaFolderOpen, FaPen } from "react-icons/fa";
@@ -9,6 +9,8 @@ import { MdOutlinePlayCircleFilled } from "react-icons/md";
 import { FaPencil } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import CustomListCard from "./CustomListCard";
+import { useEffect, useMemo, useState } from "react";
+import SortBy from "./SortBy";
 
 const CustomLists = () => {
   const navigate = useNavigate();
@@ -16,9 +18,47 @@ const CustomLists = () => {
 
   const { remainLists } = useLists();
 
-  function handleNavigate(listId) {
-    navigate(`/u/${user.username}/Lists?listId=${listId}`);
+  const [isOpen, setIOpen] = useState(false);
+  const sortOptions = [
+    "Date Created (Newest)",
+    "Date Created (Oldest)",
+    "Number of Titles (Most)",
+    "Number of Titles (Fewest)",
+    "Alphabetical (A-Z)",
+    "Alphabetical (Z-A)",
+  ];
+  const [selectedOption, setSelectedOption] = useState(sortOptions[0].option);
+
+  function handleSelectOption(selectedOption) {
+    setSelectedOption(selectedOption);
   }
+
+  // function handleNavigate(listId) {
+  //   navigate(`/u/${user.username}/Lists?listId=${listId}`);
+  // }
+
+  const newList = useMemo(() => {
+    const newList = remainLists?.sort((a, b) => {
+      switch (selectedOption) {
+        case "Date Created (Newest)":
+          return new Date(b.created_at) - new Date(a.created_at);
+        case "Date Created (Oldest)":
+          return new Date(a.created_at) - new Date(b.created_at);
+        case "Number of Titles (Most)":
+          return b.items_list.length - a.items_list.length;
+        case "Number of Titles (Fewest)":
+          return a.items_list.length - b.items_list.length;
+        case "Alphabetical (A-Z)":
+          return a.name.localeCompare(b.name);
+        case "Alphabetical (Z-A)":
+          return b.name.localeCompare(a.name);
+        default:
+          return 0;
+      }
+    });
+
+    return newList;
+  }, [remainLists, selectedOption]);
 
   if (remainLists?.length < 1 || !remainLists)
     return (
@@ -38,13 +78,20 @@ const CustomLists = () => {
   return (
     <section className="w-full space-y-4 p-4 mt-2">
       <div className="flex justify-between items-center mb-10 border-b border-slate-600 pb-5">
-        <h3 className="flex items-center justify-center gap-2 bg-bluish-black text-gray-400 text-lg px-5 py-3 rounded-full w-[140px] font-bold">
+        <h3 className="flex items-center justify-center gap-2 bg-bluish-black text-gray-400 text-lg px-5 py-2 rounded-full w-[140px] font-bold">
           <FaFolderOpen />
           {remainLists?.length} {remainLists?.length <= 1 ? "list" : "lists"}
         </h3>
+        <SortBy
+          selectedOption={selectedOption}
+          sortOptions={sortOptions}
+          isOpen={isOpen}
+          handleToggle={setIOpen}
+          handleSelect={handleSelectOption}
+        />
       </div>
-      <ul className="grid grid-flow-row gap-4">
-        {remainLists?.map((list) => (
+      <ul className="grid grid-cols-2 gap-4">
+        {newList?.map((list) => (
           <CustomListCard key={list.id} list={list} />
         ))}
       </ul>

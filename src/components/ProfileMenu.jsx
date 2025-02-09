@@ -61,6 +61,7 @@ const ProfileMenu = ({ setHandle, onClose, buttonRef }) => {
             route={`/u/${username}`}
             itemName="View Profile"
             icon={<FaRegUser />}
+            onClick={onClose}
           />
         </ul>
         <hr className="border-[1.5px] my-2" />
@@ -70,16 +71,19 @@ const ProfileMenu = ({ setHandle, onClose, buttonRef }) => {
             itemName="Watchlist"
             route={`/u/${username}/Watchlist`}
             icon={<BsBookmarkCheck />}
+            onClick={onClose}
           />
           <ProfileElements
             itemName="Favorites"
             route={`/u/${username}/Favorites`}
             icon={<IoMdHeartEmpty />}
+            onClick={onClose}
           />
           <ProfileElements
             itemName="My Lists"
             route={`/u/${username}/Lists`}
             icon={<MdChecklistRtl />}
+            onClick={onClose}
           />
         </ul>
         <hr className="border-[1.5px] my-2" />
@@ -88,12 +92,16 @@ const ProfileMenu = ({ setHandle, onClose, buttonRef }) => {
             itemName="Settings"
             route={`/u/${username}/settings`}
             icon={<IoSettingsOutline />}
+            onClick={onClose}
           />
           <ProfileElements
             itemName="Log out"
             route="/"
             icon={<IoLogOutOutline />}
-            onClick={() => dispatch(logout())}
+            onClick={() => {
+              onClose();
+              dispatch(logout());
+            }}
           />
         </ul>
       </aside>

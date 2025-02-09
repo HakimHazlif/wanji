@@ -83,7 +83,7 @@ const CustomListCard = ({ list }) => {
             <Ellipsis lines="line-clamp-2" text={list.description} />
           ) : (
             <p className="text-gray-500 text-sm italic">
-              There is no description for this list.
+              There is no available description for this list.
             </p>
           )}
         </div>
