@@ -5,6 +5,7 @@ export function useUserInterests({ movieId, tvId }) {
   const { data, isLoading } = useQuery({
     queryKey: ["interests"],
     queryFn: () => getUserInterests(movieId, tvId),
+    enabled: movieId !== null || tvId !== null,
     onError: (error) => {
       throw new Error(error);
     },

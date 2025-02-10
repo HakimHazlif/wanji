@@ -199,15 +199,23 @@ export async function getUserInterests(movieId, tvId) {
       axios.get(tvShowsUrl, options),
     ]);
 
+    console.log({
+      moviesInterest: movies?.data.results,
+      tvShowsInterest: tvShows?.data.results,
+    });
     return {
-      moviesInterest: movies?.data,
-      tvShowsInterest: tvShows?.data,
+      moviesInterest: movies?.data.results,
+      tvShowsInterest: tvShows?.data.results,
     };
   }
 
   if (movieId) {
     const movies = await axios.get(moviesUrl, options);
 
+    console.log({
+      moviesInterest: movies?.data?.results,
+      tvShowsInterest: null,
+    });
     return {
       moviesInterest: movies?.data?.results,
       tvShowsInterest: null,
@@ -217,11 +225,15 @@ export async function getUserInterests(movieId, tvId) {
   if (tvId) {
     const tvShows = await axios.get(tvShowsUrl, options);
 
+    console.log({
+      moviesInterest: null,
+      tvShowsInterest: tvShows?.data?.results,
+    });
     return {
       moviesInterest: null,
       tvShowsInterest: tvShows?.data?.results,
     };
   }
 
-  if (!movieId && !tvId) console.log("movieId, tvId are undefinded");
+  if (!movieId && !tvId) console.log("movieId or tvId are undefinded");
 }

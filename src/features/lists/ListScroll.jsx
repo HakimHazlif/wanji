@@ -63,11 +63,11 @@ const ListScroll = ({ title, path = "", children }) => {
   }, [updateScrollState]);
 
   return (
-    <section className="">
+    <div className="">
       <div className="flex items-center justify-between mb-10">
         <Link
           to={path}
-          className={`text-4xl font-semibold flex items-end gap-4 group text-white ${
+          className={`text-4xl font-semibold flex items-end gap-4 group text-white group ${
             path !== "" ? "cursor-pointer" : "cursor-default"
           }`}
           onMouseEnter={() => setIsHoveredTitle(true)}
@@ -75,15 +75,18 @@ const ListScroll = ({ title, path = "", children }) => {
         >
           {title}
           {path && (
-            <span className="flex items-center gap-1 text-blue-400 text-base relative">
+            <span className="flex items-center gap-2 text-gray-300 group-hover:text-orange-coral text-xl relative">
               <span
-                className={`transition-all  ease-in duration-400 ${
+                className={`transition-all ease-in duration-400 ${
                   isHoveredTitle ? "opacity-100 delay-300" : "opacity-0"
                 }`}
               >
                 View all
               </span>
-              <IoIosArrowForward className=" absolute transform translate-x-0 group-hover:translate-x-16 transition-transform duration-300 ease-linear text-2xl" />
+              <IoIosArrowForward
+                className="absolute transform translate-x-0 group-hover:translate-x-[70px] transition-transform duration-300 ease-linear"
+                size={30}
+              />
             </span>
           )}
         </Link>
@@ -120,13 +123,13 @@ const ListScroll = ({ title, path = "", children }) => {
           }`}
         />
         <div
-          className="justify-start grid gap-5 grid-flow-col overflow-x-auto scrollbar-custom space-x-2 scroll-smooth pb-5"
+          className="grid justify-items-start gap-6 grid-flow-col overflow-x-auto scrollbar-custom space-x-2 scroll-smooth pb-5 pr-1"
           ref={containerRef}
         >
           {children}
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

@@ -2,49 +2,57 @@ import Discover from "../components/Discover";
 import Spinner from "../ui/Spinner";
 import { useMovies } from "../features/movies/useMovies";
 import { getImageViaPath } from "../utils/helper";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useListsContext } from "../context/ListsContext";
 import TrendingPeople from "../features/person/TrendingPeople";
 import PopularPeople from "../features/person/PopularPeople";
 
 const Recommended = lazy(() => import("../components/Recommended"));
-const MovieLists = lazy(() => import("../features/movies/MovieLists"));
-const TvLists = lazy(() => import("../features/tv/TvShowLists"));
+const MoviesList = lazy(() => import("../features/movies/MoviesList"));
+const TvShowsList = lazy(() => import("../features/tv/TvShowsList"));
 
 const Home = () => {
   const { isLoading, movies, error } = useMovies();
+  const [isIntersetsExict, setIsIntersetsExict] = useState(false);
 
   const { interestsIds } = useListsContext();
 
-  const isExict =
-    interestsIds["interestMovieId"] !== null ||
-    interestsIds["interestTvId"] !== null;
+  const image =
+    getImageViaPath(movies?.popularMovies[0].backdrop_path, 1280) || null;
+
+  useEffect(() => {
+    console.log(interestsIds?.movieId);
+    if (interestsIds?.movieId || interestsIds?.tvId) setIsIntersetsExict(true);
+  }, [interestsIds]);
 
   if (isLoading) return <Spinner />;
-
-  if (error) return <p>{error}</p>;
-
-  const image =
-    getImageViaPath(movies.popularMovies[0].backdrop_path, 1280) || null;
 
   return (
     <>
       <Discover image={image} />
 
-      {isExict ? (
+      {isIntersetsExict ? (
         <Suspense fallback={<Spinner />}>
-          <Recommended />
-          <PopularPeople />
-          <MovieLists />
+          <MoviesList listKey="popularMovies" />
+          <TvShowsList listKey="popularTv" />
           <TrendingPeople />
-          <TvLists />
+          <Recommended />
+          <MoviesList listKey="topRatedMovies" />
+          <TvShowsList listKey="topRatedTv" />
+          <PopularPeople />
+          <MoviesList listKey="nowPlaynigMovies" />
+          <TvShowsList listKey="onTheAir" />
         </Suspense>
       ) : (
         <Suspense fallback={<Spinner />}>
-          <PopularPeople />
-          <MovieLists />
+          <MoviesList listKey="popularMovies" />
+          <TvShowsList listKey="popularTv" />
           <TrendingPeople />
-          <TvLists />
+          <MoviesList listKey="topRatedMovies" />
+          <TvShowsList listKey="topRatedTv" />
+          <PopularPeople />
+          <MoviesList listKey="nowPlaynigMovies" />
+          <TvShowsList listKey="onTheAir" />
         </Suspense>
       )}
     </>

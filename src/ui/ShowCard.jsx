@@ -65,7 +65,7 @@ const ShowCard = ({
           {poster ? (
             <img
               src={getPictureUrlFormat(poster, 500)}
-              alt="movie poster"
+              alt={title}
               className="relative w-full h-[300px] object-cover rounded-md shadow-2xl cursor-pointer"
               onClick={handleNavigate}
               loading="lazy"

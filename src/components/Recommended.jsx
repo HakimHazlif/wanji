@@ -1,6 +1,7 @@
 import { useListsContext } from "../context/ListsContext";
 import ListScroll from "../features/lists/ListScroll";
 import { useUserInterests } from "../features/userLists/useUserInterests";
+import ListGrid from "../ui/ListGrid";
 import ShowCard from "../ui/ShowCard";
 import Spinner from "../ui/Spinner";
 
@@ -18,26 +19,24 @@ const Recommended = () => {
       }`}
     >
       {interestMovie?.length > 0 && (
-        <ListScroll
-          title="Movies You Might Like"
-          path="movies?movie-tag=for_you&page=1"
-          viewAll={true}
+        <ListGrid
+          title="Recommended Movies"
+          path="/movies?movie-tag=for_you&page=1"
         >
-          {interestMovie?.slice(0, 10).map((movie) => (
+          {interestMovie?.slice(0, 8).map((movie) => (
             <ShowCard key={movie.id} show={movie} category="movie" />
           ))}
-        </ListScroll>
+        </ListGrid>
       )}
       {interestTv?.length > 0 && (
-        <ListScroll
-          title="TV Shows You Might Like"
-          path="tv-shows?tv-tag=for_you&page=1"
-          viewAll={true}
+        <ListGrid
+          title="Recommended TV Shows"
+          path="/tv-shows?tv-tag=for_you&page=1"
         >
-          {interestTv?.slice(0, 10).map((tv) => (
+          {interestTv?.slice(0, 8).map((tv) => (
             <ShowCard key={tv.id} show={tv} category="tv" />
           ))}
-        </ListScroll>
+        </ListGrid>
       )}
     </section>
   );
