@@ -2,13 +2,12 @@ import Discover from "../components/Discover";
 import Spinner from "../ui/Spinner";
 import { useMovies } from "../features/movies/useMovies";
 import { getImageViaPath } from "../utils/helper";
-import { useLists } from "../features/lists/useLists";
 import { lazy, Suspense } from "react";
 import { useListsContext } from "../context/ListsContext";
 import TrendingPeople from "../features/person/TrendingPeople";
 import PopularPeople from "../features/person/PopularPeople";
 
-const Interests = lazy(() => import("../components/Interests"));
+const Recommended = lazy(() => import("../components/Recommended"));
 const MovieLists = lazy(() => import("../features/movies/MovieLists"));
 const TvLists = lazy(() => import("../features/tv/TvShowLists"));
 
@@ -34,7 +33,7 @@ const Home = () => {
 
       {isExict ? (
         <Suspense fallback={<Spinner />}>
-          <Interests />
+          <Recommended />
           <PopularPeople />
           <MovieLists />
           <TrendingPeople />

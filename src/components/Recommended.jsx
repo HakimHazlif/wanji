@@ -4,7 +4,7 @@ import { useUserInterests } from "../features/userLists/useUserInterests";
 import ShowCard from "../ui/ShowCard";
 import Spinner from "../ui/Spinner";
 
-const Interests = () => {
+const Recommended = () => {
   const { interestsIds } = useListsContext();
   const { interestMovie, interestTv, isLoading } =
     useUserInterests(interestsIds);
@@ -43,4 +43,4 @@ const Interests = () => {
   );
 };
 
-export default Interests;
+export default Recommended;
