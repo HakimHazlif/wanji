@@ -48,7 +48,7 @@ const WatchlistButton = ({ item, size = 20 }) => {
     if (isWatchlist) {
       content = (
         <>
-          <BsBookmarkCheckFill size={size} className=" text-orange-amber" />
+          <BsBookmarkCheckFill size={size} className=" text-gray-200" />
         </>
       );
     } else {
@@ -64,7 +64,11 @@ const WatchlistButton = ({ item, size = 20 }) => {
     <Tooltip title={isWatchlist ? "Delete from Watchlist" : "Add to Watchlist"}>
       <span>
         <button
-          className={`bg-slate-700 px-4 py-2 w-24   font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-slate-500`}
+          className={`${
+            isWatchlist
+              ? "bg-amber-400 hover:bg-amber-500"
+              : "bg-slate-700 hover:bg-slate-600"
+          } px-4 py-2 w-24  font-bold rounded-lg flex items-center justify-center gap-2 transition-colors duration-200 shadow-lg`}
           onClick={
             isWatchlist ? handleDeleteFromWatchlist : handleAddToWatchlist
           }

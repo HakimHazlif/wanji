@@ -49,7 +49,7 @@ const FavoriteButton = ({ item, size = 20 }) => {
     if (isFavorited) {
       content = (
         <>
-          <FaHeart size={size} className=" text-strawberry" />
+          <FaHeart size={size} className=" text-gray-200" />
         </>
       );
     } else {
@@ -65,7 +65,11 @@ const FavoriteButton = ({ item, size = 20 }) => {
     <Tooltip title={isFavorited ? "Delete from Favorites" : "Add to Favorites"}>
       <span>
         <button
-          className="bg-slate-700 w-24 px-4 py-2 font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-slate-500"
+          className={`${
+            isFavorited
+              ? "bg-strawberry hover:bg-red-600"
+              : "bg-slate-700 hover:bg-slate-600"
+          }  w-24 px-4 py-2 font-bold rounded-lg flex items-center justify-center gap-2 transition-colors duration-200 shadow-lg`}
           onClick={isFavorited ? handleDeleteFromFavorite : handleAddToFavorite}
           disabled={isLoading || isAdding || isDeleting}
         >

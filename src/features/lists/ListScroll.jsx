@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   IoIosArrowDropleftCircle,
   IoIosArrowDroprightCircle,
@@ -11,35 +11,60 @@ const ListScroll = ({ title, path = "", children }) => {
 
   const [isScrolledLeft, setIsScrolledLeft] = useState(true);
   const [isScrolledRight, setIsScrolledRight] = useState(false);
+  const [showLeftFade, setShowLeftFade] = useState(false);
+  const [showRightFade, setShowRightFade] = useState(true);
 
   const [isHoveredTitle, setIsHoveredTitle] = useState(false);
 
-  const handleScroll = useCallback((direction) => {
+  const updateScrollState = useCallback(() => {
     const container = containerRef.current;
-    const scrollAmount = 240;
     if (!container) return;
 
-    const newScrollLeft =
-      direction === "left"
-        ? container.scrollLeft - scrollAmount
-        : container.scrollLeft + scrollAmount;
+    const isAtLeft = container.scrollLeft <= 0;
+    const isAtRight =
+      Math.ceil(container.scrollLeft + container.offsetWidth) >=
+      container.scrollWidth;
 
-    container.scrollTo({
-      left: newScrollLeft,
-      behavior: "smooth",
-    });
-
-    requestAnimationFrame(() => {
-      setIsScrolledLeft(container.scrollLeft < 0);
-      setIsScrolledRight(
-        container.scrollLeft + container.offsetWidth > container.scrollWidth
-      );
-    });
+    setIsScrolledLeft(isAtLeft);
+    setIsScrolledRight(isAtRight);
+    setShowLeftFade(!isAtLeft);
+    setShowRightFade(!isAtRight);
   }, []);
+
+  const handleScroll = useCallback(
+    (direction) => {
+      const container = containerRef.current;
+      const scrollAmount = 280;
+      if (!container) return;
+
+      const newScrollLeft =
+        direction === "left"
+          ? container.scrollLeft - scrollAmount
+          : container.scrollLeft + scrollAmount;
+
+      container.scrollTo({
+        left: newScrollLeft,
+        behavior: "smooth",
+      });
+
+      requestAnimationFrame(updateScrollState);
+    },
+    [updateScrollState]
+  );
+
+  useEffect(() => {
+    updateScrollState();
+    const container = containerRef.current;
+    if (!container) return;
+
+    container.addEventListener("scroll", updateScrollState);
+
+    return () => container.removeEventListener("scroll", updateScrollState);
+  }, [updateScrollState]);
 
   return (
     <section className="">
-      <div className=" flex items-center justify-between mb-10">
+      <div className="flex items-center justify-between mb-10">
         <Link
           to={path}
           className={`text-4xl font-semibold flex items-end gap-4 group text-white ${
@@ -66,20 +91,40 @@ const ListScroll = ({ title, path = "", children }) => {
           <IoIosArrowDropleftCircle
             onClick={() => handleScroll("left")}
             disabled={isScrolledLeft}
-            className="hover:text-white duration-300 transition-colors"
+            className={` duration-300 transition-colors ${
+              isScrolledLeft
+                ? "opacity-30 cursor-not-allowed"
+                : "hover:text-white"
+            }`}
           />
           <IoIosArrowDroprightCircle
             onClick={() => handleScroll("right")}
             disabled={isScrolledRight}
-            className="hover:text-white duration-300 transition-colors"
+            className={` duration-300 transition-colors ${
+              isScrolledRight
+                ? "opacity-30 cursor-not-allowed"
+                : "hover:text-white"
+            }`}
           />
         </div>
       </div>
-      <div
-        className="justify-start grid gap-5 grid-flow-col overflow-x-auto scrollbar-custom space-x-2 scroll-smooth pb-5"
-        ref={containerRef}
-      >
-        {children}
+      <div className="relative">
+        <div
+          className={`absolute left-0 top-0 bottom-5 w-20 bg-gradient-to-r from-[#25242f] to-transparent z-10 pointer-events-none transition-opacity duration-300 ${
+            showLeftFade ? "opacity-100" : "opacity-0"
+          }`}
+        />
+        <div
+          className={`absolute right-0 top-0 bottom-5 w-20 bg-gradient-to-l from-[#25242f] to-transparent z-10 pointer-events-none transition-opacity duration-300 ${
+            showRightFade ? "opacity-100" : "opacity-0"
+          }`}
+        />
+        <div
+          className="justify-start grid gap-5 grid-flow-col overflow-x-auto scrollbar-custom space-x-2 scroll-smooth pb-5"
+          ref={containerRef}
+        >
+          {children}
+        </div>
       </div>
     </section>
   );

@@ -1,6 +1,6 @@
-const HeaderBackDrop = ({ backdrop, alt, height = "h-[600px]" }) => {
+const HeaderBackDrop = ({ backdrop, alt, height = "h-[500px]" }) => {
   return (
-    <div className="absolute top-0 right-0 w-full -z-10 ">
+    <div className="absolute top-0 right-0 w-full -z-10">
       <img
         src={backdrop}
         alt={alt}

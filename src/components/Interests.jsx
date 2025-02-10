@@ -12,8 +12,12 @@ const Interests = () => {
   if (isLoading) return <Spinner />;
 
   return (
-    <section className="flex flex-col gap-20 padding-x pt-28">
-      {interestMovie && (
+    <section
+      className={`flex flex-col gap-20 padding-x ${
+        interestMovie?.length > 0 || interestTv?.length > 0 ? "pt-28" : ""
+      }`}
+    >
+      {interestMovie?.length > 0 && (
         <ListScroll
           title="Movies You Might Like"
           path="movies?movie-tag=for_you&page=1"
@@ -24,7 +28,7 @@ const Interests = () => {
           ))}
         </ListScroll>
       )}
-      {interestTv && (
+      {interestTv?.length > 0 && (
         <ListScroll
           title="TV Shows You Might Like"
           path="tv-shows?tv-tag=for_you&page=1"

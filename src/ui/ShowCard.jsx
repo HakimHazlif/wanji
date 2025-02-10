@@ -10,6 +10,7 @@ import { Tooltip } from "@mui/material";
 import { lazy, Suspense, useState } from "react";
 import { TiDelete } from "react-icons/ti";
 import DeleteListConfirm from "./DeleteListConfirm";
+import EmptyPoster from "../components/EmptyPoster";
 
 const WatchlistButton = lazy(() => import("../features/lists/WatchlistButton"));
 const FavoriteButton = lazy(() => import("../features/lists/FavoriteButton"));
@@ -61,42 +62,50 @@ const ShowCard = ({
     <div className="w-52 relative">
       <div className="">
         <Tooltip title={title}>
-          <img
-            src={getPictureUrlFormat(poster, 500)}
-            alt="movie poster"
-            className="relative w-full h-[300px] object-cover rounded-md shadow-2xl cursor-pointer"
-            onClick={handleNavigate}
-            loading="lazy"
-          />
+          {poster ? (
+            <img
+              src={getPictureUrlFormat(poster, 500)}
+              alt="movie poster"
+              className="relative w-full h-[300px] object-cover rounded-md shadow-2xl cursor-pointer"
+              onClick={handleNavigate}
+              loading="lazy"
+            />
+          ) : (
+            <EmptyPoster />
+          )}
         </Tooltip>
-        <div className="px-3 mt-2">
-          <div className="flex gap-4">
-            <Tooltip title="TMDB rate">
-              <div className="rounded-md bg-orange-amber w-[45px] h-6  flex items-center justify-center gap-1 text-xs font-bold">
-                <FaStar />
-                <p>{rate?.toFixed(1)}</p>
-              </div>
-            </Tooltip>
-
-            <Suspense
-              fallback={
-                <div className="rounded-md bg-orange-coral w-[45px] h-6  flex items-center justify-center gap-1 text-xs font-bold">
-                  <FaStar />
+        <div className="mt-2">
+          <div className="flex w-full justify-between items-center">
+            <div className="flex gap-4">
+              <Tooltip title="TMDB rate">
+                <div className="rounded-md bg-orange-amber text-gray-700 w-[45px] h-6 flex items-center justify-center gap-1 text-xs font-bold">
+                  <FaStar className="text-white" />
+                  <p>{rate?.toFixed(1)}</p>
                 </div>
-              }
-            >
-              <UserRateMini
-                type={category}
-                itemId={id}
-                buttonStyle="rounded-md bg-orange-coral w-[45px] h-6 flex items-center justify-center gap-1 text-xs font-bold"
-              />
-            </Suspense>
+              </Tooltip>
+
+              <Suspense
+                fallback={
+                  <div className="rounded-md bg-orange-coral w-[45px] h-6 flex items-center justify-center gap-1 text-xs font-bold">
+                    <FaStar />
+                  </div>
+                }
+              >
+                <UserRateMini
+                  type={category}
+                  itemId={id}
+                  buttonStyle="rounded-md bg-orange-coral w-[45px] text-gray-700 h-6 flex items-center justify-center gap-1 text-xs font-bold"
+                />
+              </Suspense>
+            </div>
+            <div>
+              <span className="text-xs text-slate-400 font-medium">
+                {handleDate()}
+              </span>
+            </div>
           </div>
 
           <div className="flex flex-col gap-1 mt-2">
-            <span className="text-[12px] text-slate-400 font-medium">
-              {handleDate()}
-            </span>
             <Tooltip title={title}>
               <h2
                 onClick={handleNavigate}
@@ -108,7 +117,7 @@ const ShowCard = ({
           </div>
           {additions && (
             <Suspense fallback={<div>Loading</div>}>
-              <div className="flex justify-center gap-2 mt-4">
+              <div className="flex justify-between gap-2 mt-4">
                 <WatchlistButton item={item} />
                 <FavoriteButton item={item} />
               </div>
