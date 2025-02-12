@@ -43,10 +43,14 @@ const ProfileHeader = () => {
             <div className="flex items-center justify-between w-full">
               <div className="flex flex-wrap gap-4 text-gray-400">
                 <div className="py-3 px-4 rounded-lg bg-black/20 backdrop-blur-lg text-white font-medium text-sm">
-                  <span>{moviesNum} Movies</span>
+                  <span>
+                    {moviesNum} {moviesNum <= 1 ? "Movie" : "Movies"}
+                  </span>
                 </div>
                 <div className="py-3 px-4 rounded-lg bg-black/20 backdrop-blur-lg text-white font-medium text-sm">
-                  <span>{tvNum} TV Shows</span>
+                  <span>
+                    {tvNum} {tvNum <= 1 ? "TV Show" : "TV Shows"}
+                  </span>
                 </div>
                 <div className="py-3 px-4 rounded-lg bg-black/20 backdrop-blur-lg text-white font-medium text-sm">
                   <span>{remainLists?.length + 2} Lists</span>

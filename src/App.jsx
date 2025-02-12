@@ -23,6 +23,7 @@ import CreateNewList from "./pages/CreateNewList";
 import EditList from "./pages/EditList";
 import ProfileSettings from "./pages/ProfileSettings";
 import AccountSettings from "./pages/AccountSettings";
+import Genre from "./pages/Genre";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -44,6 +45,10 @@ function App() {
                   <Route index element={<Home />} />
                   <Route path="movies" element={<Movies />} />
                   <Route path="tv-shows" element={<TvShows />} />
+                  <Route
+                    path="genre/:genre/:genreId/:category"
+                    element={<Genre />}
+                  />
                   <Route path="/:category/:id" element={<Show />} />
                   <Route
                     path="/:category/:id/season/:seasonNum"

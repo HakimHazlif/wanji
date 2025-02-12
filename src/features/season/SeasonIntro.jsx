@@ -6,6 +6,7 @@ import {
 } from "../../utils/helper";
 import { useSeason } from "./useSeason";
 import Ellipsis from "../../ui/Ellipsis";
+import { Link } from "react-router";
 
 const SeasonIntro = () => {
   const { seasonDetails, episodes } = useSeason();
@@ -70,12 +71,16 @@ const SeasonIntro = () => {
 
           <ul className="flex gap-2">
             {genres?.map((genre) => (
-              <li
+              <Link
                 key={genre.id}
-                className="py-2 px-4 rounded-lg bg-black/20 backdrop-blur-md text-white font-medium text-sm"
+                to={`/genre/${genre.name
+                  .split(" ")
+                  .map((word) => word.charAt(0).toLowerCase() + word.slice(1))
+                  .join("-")}/${genre.id}/tv?page=1`}
+                className="py-2 px-4 rounded-lg bg-black/20 hover:bg-black/60 backdrop-blur-md text-white font-medium text-sm"
               >
                 {genre.name}
-              </li>
+              </Link>
             ))}
           </ul>
 

@@ -1,4 +1,3 @@
-import { FaUber } from "react-icons/fa6";
 import { RiAccountCircleLine, RiProfileLine } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { Link, Outlet, useLocation } from "react-router";

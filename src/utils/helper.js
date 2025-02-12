@@ -1,4 +1,5 @@
 export function getImageViaPath(path, width) {
+  if (!path) return null;
   return `https://image.tmdb.org/t/p/w${width}${path}`;
 }
 

@@ -62,17 +62,19 @@ const ShowCard = ({
     <div className="w-52 relative">
       <div className="">
         <Tooltip title={title}>
-          {poster ? (
-            <img
-              src={getPictureUrlFormat(poster, 500)}
-              alt={title}
-              className="relative w-full h-[300px] object-cover rounded-md shadow-2xl cursor-pointer"
-              onClick={handleNavigate}
-              loading="lazy"
-            />
-          ) : (
-            <EmptyPoster />
-          )}
+          <span>
+            {poster ? (
+              <img
+                src={getPictureUrlFormat(poster, 500)}
+                alt={title}
+                className="relative w-full h-[300px] object-cover rounded-md shadow-2xl cursor-pointer"
+                onClick={handleNavigate}
+                loading="lazy"
+              />
+            ) : (
+              <EmptyPoster />
+            )}
+          </span>
         </Tooltip>
         <div className="mt-2">
           <div className="flex w-full justify-between items-center">

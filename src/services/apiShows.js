@@ -105,6 +105,27 @@ export async function getTvByList(list, page, id) {
   }
 }
 
+export async function getShowsByGenre(genreId, category, page) {
+  console.log({ genreId, category, page });
+  const url = `${URL_Base}discover/${category}?include_adult=false&${
+    category === "movie"
+      ? "include_video=false"
+      : "include_null_first_air_dates=false"
+  }&language=en-US&page=${page}&sort_by=popularity.desc&with_genres=${genreId}`;
+
+  console.log(url);
+
+  try {
+    const shows = await axios.get(url, options);
+
+    console.log(shows?.data);
+
+    return shows?.data ?? [];
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
 export async function getSeasonData({ id, seasonNum }) {
   const serieApiUrl = `${URL_Base}tv/${id}?language=en-US`;
   const seasonApiUrl = `${URL_Base}tv/${id}/season/${seasonNum}?language=en-US`;

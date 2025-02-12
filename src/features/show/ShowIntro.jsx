@@ -9,7 +9,7 @@ import {
 import Rating from "@mui/material/Rating";
 import { Box } from "@mui/material";
 
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { useShow } from "./useShow";
 import RateUser from "../lists/RateUser";
 import Ellipsis from "../../ui/Ellipsis";
@@ -26,6 +26,8 @@ const ShowIntro = () => {
   // console.log(details);
   const { details, videos } = useShow();
   const { category } = useParams();
+
+  console.log(details);
 
   const {
     id,
@@ -140,12 +142,18 @@ const ShowIntro = () => {
             <div className="flex w-full gap-20 items-center justify-between">
               <ul className="flex gap-2">
                 {genres.map((genre) => (
-                  <li
+                  <Link
                     key={genre.id}
-                    className="py-2 px-4 rounded-lg bg-black/20 backdrop-blur-md text-white font-medium text-sm"
+                    to={`/genre/${genre.name
+                      .split(" ")
+                      .map(
+                        (word) => word.charAt(0).toLowerCase() + word.slice(1)
+                      )
+                      .join("-")}/${genre.id}/${category}?page=1`}
+                    className="py-2 px-4 rounded-lg bg-black/20 hover:bg-black/60 backdrop-blur-md text-white font-medium text-sm"
                   >
                     {genre.name}
-                  </li>
+                  </Link>
                 ))}
               </ul>
               {trailer && (
