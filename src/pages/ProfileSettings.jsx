@@ -1,5 +1,3 @@
-import { FaUser } from "react-icons/fa6";
-import CancelButton from "../components/CancelButton";
 import SpinnerMini from "../ui/SpinnerMini";
 import { useDispatch, useSelector } from "react-redux";
 import { BiUpload } from "react-icons/bi";

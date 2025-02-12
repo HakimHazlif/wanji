@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePassword } from "../services/apiAuth";
 import { useNavigate } from "react-router";
+import SpinnerMini from "../ui/SpinnerMini";
 
 const AccountEdit = () => {
   const navigate = useNavigate();
@@ -114,7 +115,7 @@ const AccountEdit = () => {
             className={`mt-2 block w-full px-3 py-2  bg-bluish-black border ${
               oldPasswordError ? "border-strawberry" : "border-slate-400"
             }  outline-none rounded-lg shadow-sm focus:border-orange-coral transition-colors`}
-            // disabled={status === "loading"}
+            disabled={status === "loading"}
           />
           {oldPasswordError && (
             <p className="text-sm text-strawberry ml-1 mt-1">
@@ -139,7 +140,7 @@ const AccountEdit = () => {
             className={`mt-2 block w-full px-3 py-2  bg-bluish-black border ${
               newPasswordError ? "border-strawberry" : "border-slate-400"
             } outline-none rounded-lg shadow-sm focus:border-orange-coral transition-colors`}
-            // disabled={status === "loading"}
+            disabled={status === "loading"}
           />
           {newPasswordError && (
             <p className="text-sm text-strawberry ml-1 mt-1">
@@ -164,7 +165,7 @@ const AccountEdit = () => {
             className={`mt-2 block w-full px-3 py-2  bg-bluish-black border ${
               confirmedPasswordError ? "border-strawberry" : "border-slate-400"
             } outline-none rounded-lg shadow-sm focus:border-orange-coral transition-colors`}
-            // disabled={status === "loading"}
+            disabled={status === "loading"}
           />
           {confirmedPasswordError && (
             <p className="text-sm text-strawberry ml-1 mt-1">
@@ -177,8 +178,7 @@ const AccountEdit = () => {
           className="px-6 py-3 w-full text-gray-800 font-medium rounded-lg bg-orange-amber transition-colors duration-200 flex items-center justify-center gap-2"
           disabled={status === "loading"}
         >
-          {/* {status === "loading" ? <SpinnerMini size={25} /> : "Save Changes"} */}
-          Save Changes
+          {status === "loading" ? <SpinnerMini size={25} /> : "Save Changes"}
         </button>
       </form>
     </section>

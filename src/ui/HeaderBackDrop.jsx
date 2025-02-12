@@ -1,8 +1,14 @@
-const HeaderBackDrop = ({ backdrop, alt, height = "h-[500px]" }) => {
+import { bgPopcorn } from "../assets/icons";
+
+const HeaderBackDrop = ({
+  backdrop = null,
+  alt = "wanji backdrop",
+  height = "h-[500px]",
+}) => {
   return (
     <div className="absolute top-0 right-0 w-full -z-10">
       <img
-        src={backdrop}
+        src={backdrop ? backdrop : bgPopcorn}
         alt={alt}
         className={`${height} w-full object-cover object-center masking`}
       />

@@ -21,8 +21,8 @@ import Movies from "./pages/Movies";
 import ListsContextProvider from "./context/ListsContext";
 import CreateNewList from "./pages/CreateNewList";
 import EditList from "./pages/EditList";
-import ProfileEdit from "./pages/ProfileEdit";
-import AccountEdit from "./pages/AccountEdit";
+import ProfileSettings from "./pages/ProfileSettings";
+import AccountSettings from "./pages/AccountSettings";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -57,8 +57,8 @@ function App() {
                   <Route path={`u/:user`} element={<Profile />} />
 
                   <Route path="u/:user/settings" element={<Settings />}>
-                    <Route path="profile" element={<ProfileEdit />} />
-                    <Route path="account" element={<AccountEdit />} />
+                    <Route path="profile" element={<ProfileSettings />} />
+                    <Route path="account" element={<AccountSettings />} />
                   </Route>
 
                   <Route path="u/:user/:list" element={<List />} />
