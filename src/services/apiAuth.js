@@ -1,4 +1,4 @@
-import supabase from "./supabase";
+import supabase, { supabaseUrl } from "./supabase";
 import {
   authFailure,
   authStart,
@@ -17,6 +17,7 @@ export const signup = (username, email, password) => async (dispatch) => {
       options: {
         data: {
           username,
+          bio: "",
           avatar: "",
         },
       },
@@ -56,6 +57,7 @@ export const signup = (username, email, password) => async (dispatch) => {
         uid: user.user.id,
         username: user.user.user_metadata.username,
         email: user.user.email,
+        bio: user.user.user_metadata.bio,
         avatar: user.user.user_metadata.avatar,
         createdAt: user.user.created_at,
         lastSignin: user.user.last_sign_in_at,
@@ -88,6 +90,7 @@ export const login = (email, password) => async (dispatch) => {
         uid: user.user.id,
         username: user.user.user_metadata.username,
         email: user.user.email,
+        bio: user.user.user_metadata.bio,
         avatar: user.user.user_metadata.avatar,
         createdAt: user.user.created_at,
         lastSignin: user.user.last_sign_in_at,
@@ -127,27 +130,105 @@ export const resetForgottenPassword = (email) => async (dispatch) => {
   }
 };
 
-export const updateAuth =
-  (email, password, username, avatar) => async (dispatch) => {
+export const updatePassword =
+  (email, oldPassword, newPassword) => async (dispatch) => {
+    if (!oldPassword || !newPassword) return;
+
+    try {
+      dispatch(authStart());
+
+      const { data: user, error } = await supabase.auth.signInWithPassword({
+        email,
+        password: oldPassword,
+      });
+
+      if (error) {
+        console.log(error);
+        dispatch(authFailure(error.message));
+        return;
+      }
+
+      if (user) {
+        const { data: updatedUser, error2 } = await supabase.auth.updateUser({
+          password: newPassword,
+        });
+
+        if (error2) throw new Error(error2.message);
+
+        dispatch(
+          authSuccess({
+            uid: updatedUser.user.id,
+            username: updatedUser.user.user_metadata.username,
+            email: updatedUser.user.email,
+            bio: updatedUser.user.user_metadata.bio,
+            avatar: updatedUser.user.user_metadata.avatar,
+            createdAt: updatedUser.user.created_at,
+            lastSignin: updatedUser.user.last_sign_in_at,
+            lastUpdate: updatedUser.user.updated_at,
+          })
+        );
+      }
+    } catch (err) {
+      dispatch(authFailure(err.message));
+    }
+  };
+
+export const updateProfile =
+  (username = "", bio = "", avatar = null) =>
+  async (dispatch) => {
+    if (!username && !bio) return;
+
     try {
       dispatch(authStart());
       const { data: user, error } = await supabase.auth.updateUser({
-        email,
-        password,
-        data: { username, avatar },
+        data: { username, bio },
       });
 
       if (error) throw new Error(error.message);
 
+      if (!avatar) {
+        dispatch(
+          authSuccess({
+            uid: user.user.id,
+            username: user.user.user_metadata.username,
+            email: user.user.email,
+            bio: user.user.user_metadata.bio,
+            avatar: user.user.user_metadata.avatar,
+            createdAt: user.user.created_at,
+            lastSignin: user.user.last_sign_in_at,
+            lastUpdate: user.user.updated_at,
+          })
+        );
+        return;
+      }
+
+      const fileName = `avatar-${user.user.id}-${Math.random()}`;
+
+      const { error: storageError } = await supabase.storage
+        .from("avatars")
+        .upload(fileName, avatar);
+
+      if (storageError) throw new Error(storageError.message);
+
+      const { data: updatedUser, error: error2 } =
+        await supabase.auth.updateUser({
+          data: {
+            avatar: `${supabaseUrl}/storage/v1/object/public/avatars/${fileName}`,
+          },
+        });
+
+      if (error2) throw new Error(error2.message);
+
       dispatch(
         authSuccess({
-          uid: user.user.id,
-          username: user.user.user_metadata.username,
-          email: user.user.email,
-          avatar: user.user.user_metadata.avatar,
-          createdAt: user.user.created_at,
-          lastSignin: user.user.last_sign_in_at,
-          lastUpdate: user.user.updated_at,
+          uid: updatedUser.user.id,
+          username: updatedUser.user.user_metadata.username,
+          email: updatedUser.user.email,
+          bio: updatedUser.user.user_metadata.bio,
+          avatar: updatedUser.user.user_metadata.avatar,
+          createdAt: updatedUser.user.created_at,
+          lastSignin: updatedUser.user.last_sign_in_at,
+          lastUpdate: updatedUser.user.updated_at,
         })
       );
     } catch (err) {
@@ -169,6 +250,7 @@ export const updateAuthPassword = (password) => async (dispatch) => {
         uid: user.user.id,
         username: user.user.user_metadata.username,
         email: user.user.email,
+        bio: user.user.user_metadata.bio,
         avatar: user.user.user_metadata.avatar,
         createdAt: user.user.created_at,
         lastSignin: user.user.last_sign_in_at,
@@ -190,13 +272,14 @@ export const getUser = () => async (dispatch) => {
     if (user)
       dispatch(
         setUser({
-          uid: user.id,
-          username: user.user_metadata.username,
-          email: user.email,
-          avatar: user.user_metadata.avatar,
-          createdAt: user.created_at,
-          lastSignin: user.last_sign_in_at,
-          lastUpdate: user.updated_at,
+          uid: user?.id ?? "",
+          username: user?.user_metadata?.username ?? "",
+          email: user?.email ?? "",
+          bio: user?.user?.user_metadata?.bio ?? "",
+          avatar: user?.user_metadata?.avatar ?? "",
+          createdAt: user?.created_at ?? "",
+          lastSignin: user?.last_sign_in_at ?? "",
+          lastUpdate: user?.updated_at ?? "",
         })
       );
     else dispatch(logOutSuccess());

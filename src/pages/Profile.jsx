@@ -3,71 +3,19 @@ import { Outlet } from "react-router";
 import { bgPopcorn } from "../assets/icons";
 import { updateDateFormat } from "../utils/helper";
 import { useLists } from "../features/lists/useLists";
+import HeaderBackDrop from "../ui/HeaderBackDrop";
+import ProfileHeader from "../components/ProfileHeader";
 
 const Profile = () => {
-  const { user, isLoggedin } = useSelector((state) => state.user);
-  const { avatar, username, createdAt } = user;
-
-  const { remainLists, watchlist, favoriteList } = useLists();
-
-  const allShowsOfRemainLists = remainLists?.flatMap((list) => list.items_list);
-
-  const allShows = allShowsOfRemainLists && [
-    ...allShowsOfRemainLists,
-    ...watchlist.items_list,
-    ...favoriteList.items_list,
-  ];
-
-  const uniqueShows = Array.from(
-    new Map(
-      allShows?.map((show) => [`${show.item_id}-${show.type}`, show])
-    ).values()
-  );
-
-  const moviesNum = uniqueShows.filter((show) => show.type === "movie").length;
-  const tvNum = uniqueShows.filter((show) => show.type === "tv").length;
-
   return (
     <main>
-      <section className="pt-32 padding-x">
-        <div className="flex items-end gap-5">
-          <div className="bg-orange-coral w-60 h-60 flex justify-center items-center rounded-full">
-            {avatar ? (
-              <img src={avatar} alt="avatar" />
-            ) : (
-              <i className="fa-solid fa-user text-9xl text-slate-200 "></i>
-            )}
-          </div>
-          <div className="flex-1 flex flex-col gap-3">
-            <h1 className="text-5xl font-bold ">{username}</h1>
-            <p className="text-sm font-semibold">
-              Member since{" "}
-              <span className="text-orange-amber">
-                {updateDateFormat(createdAt)}
-              </span>
-            </p>
-            <div className="flex flex-wrap gap-6 text-gray-400">
-              <div className="py-3 px-4 rounded-lg bg-black/20 backdrop-blur-lg text-white font-medium text-sm">
-                <span>{moviesNum} Movies</span>
-              </div>
-              <div className="py-3 px-4 rounded-lg bg-black/20 backdrop-blur-lg text-white font-medium text-sm">
-                <span>{tvNum} TV Shows</span>
-              </div>
-              <div className="py-3 px-4 rounded-lg bg-black/20 backdrop-blur-lg text-white font-medium text-sm">
-                <span>{remainLists?.length + 2} Lists</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <div className="absolute top-0 right-0 w-full -z-10 ">
-        <img
-          src={bgPopcorn}
-          alt="backdrop of movie"
-          className="h-[400px] w-full object-cover object-center masking"
-        />
-        <div className="bg-[#272831] opacity-60 masking h-[600px] w-full absolute bottom-0 right-0 z-10"></div>
-      </div>
+      <HeaderBackDrop
+        backdrop={bgPopcorn}
+        alt="User backdrop"
+        height="h-[400px]"
+      />
+
+      <ProfileHeader />
     </main>
   );
 };

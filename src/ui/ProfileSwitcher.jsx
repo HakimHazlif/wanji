@@ -17,7 +17,7 @@ const ProfileSwitcher = () => {
   const [openProfileMenu, setOpenProfileMenu] = useState(false);
   const { toggleLogsForm } = useSession();
   const { isLoggedIn } = useSelector((state) => state.user);
-  const { avatar } = useSelector((state) => state.user.user);
+  const { avatar, username } = useSelector((state) => state.user.user);
 
   function toggleProfileMenu(e) {
     e.stopPropagation();
@@ -35,15 +35,22 @@ const ProfileSwitcher = () => {
         <>
           <button
             ref={buttonRef}
-            className="bg-orange-coral py-1 px-2.5 rounded-full hover:bg-orange-amber duration-150 transition-all text-slate-200"
+            className="h-[35px] w-[35px] rounded-full  overflow-hidden ring-2 ring-orange-coral"
             onClick={toggleProfileMenu}
           >
             {avatar ? (
-              <img src={avatar} alt="avatar" />
+              <img
+                src={avatar}
+                alt={username}
+                className="w-full object-cover object-center"
+              />
             ) : (
-              <i className="fa-solid fa-user text-xl"></i>
+              <div className="w-full h-full flex justify-center items-center bg-orange-coral hover:bg-orange-amber duration-150 transition-all text-lg text-slate-200 capitalize">
+                {username.charAt(0)}
+              </div>
             )}
           </button>
+
           {openProfileMenu ? (
             <ProfileMenu
               setHandle={toggleProfileMenu}

@@ -21,6 +21,8 @@ import Movies from "./pages/Movies";
 import ListsContextProvider from "./context/ListsContext";
 import CreateNewList from "./pages/CreateNewList";
 import EditList from "./pages/EditList";
+import ProfileEdit from "./pages/ProfileEdit";
+import AccountEdit from "./pages/AccountEdit";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -52,9 +54,13 @@ function App() {
                     element={<Episode />}
                   />
                   <Route path="person/:personId" element={<Person />} />
-                  <Route path={`u/:user`} element={<Profile />}>
-                    <Route path="settings" element={<Settings />} />
+                  <Route path={`u/:user`} element={<Profile />} />
+
+                  <Route path="u/:user/settings" element={<Settings />}>
+                    <Route path="profile" element={<ProfileEdit />} />
+                    <Route path="account" element={<AccountEdit />} />
                   </Route>
+
                   <Route path="u/:user/:list" element={<List />} />
                   <Route
                     path="u/:user/list/create"

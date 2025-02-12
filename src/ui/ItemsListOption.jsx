@@ -99,7 +99,9 @@ const ItemsListOption = ({
         </li>
         <li
           onClick={() =>
-            navigate(`/u/${user.username}/Lists?listId=${list.id}`)
+            navigate(
+              `/u/${user.username.replace(" ", "-")}/Lists?listId=${list.id}`
+            )
           }
           className="w-full py-2 px-5 flex items-center gap-3 text-base hover:bg-slate-800 cursor-pointer"
         >

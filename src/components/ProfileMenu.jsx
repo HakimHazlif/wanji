@@ -11,6 +11,7 @@ import { MdChecklistRtl } from "react-icons/md";
 import { IoLogOutOutline, IoSettingsOutline } from "react-icons/io5";
 import { fetchItemsList } from "../services/apiLists";
 import { logout } from "../services/apiAuth";
+import UserAvatar from "../ui/UserAvatar";
 
 const ProfileMenu = ({ setHandle, onClose, buttonRef }) => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const ProfileMenu = ({ setHandle, onClose, buttonRef }) => {
   const { isLoggedIn, user } = useSelector((state) => state.user);
 
   const { avatar, username, email } = user;
+  const userPath = username.replace(" ", "-");
 
   // const { watchlist, favoriteList, remainLists } = useLists();
 
@@ -38,17 +40,14 @@ const ProfileMenu = ({ setHandle, onClose, buttonRef }) => {
   }, [menuRef, onClose, buttonRef]);
 
   return (
-    <div className="absolute z-40 right-0 top-0 cursor-default" ref={menuRef}>
+    <div className="absolute z-40 right-0 top-2 cursor-default" ref={menuRef}>
       <aside className="bg-white absolute right-28 top-16 z-40 text-black w-[300px] max-w-[380px] min-w-[200px]  rounded-lg py-3 px-3">
         <div className="flex gap-4 justify-start items-center px-3 pt-3 pb-4">
-          <div className="bg-orange-coral w-11 h-11 rounded-full flex justify-center items-center relative">
-            {avatar ? (
-              <img src={avatar} alt="avatar" />
-            ) : (
-              <i className="fa-solid fa-user text-xl"></i>
-            )}
+          <div className="relative">
+            <UserAvatar size="w-11 h-11" textSize="text-xl" />
+
             {isLoggedIn && (
-              <div className="absolute w-[10px] h-[10px] bg-green-500 rounded-full bottom-[4px] right-0"></div>
+              <div className="absolute z-30 w-[10px] h-[10px] bg-green-500 rounded-full bottom-[0px] right-0"></div>
             )}
           </div>
           <div>
@@ -58,7 +57,7 @@ const ProfileMenu = ({ setHandle, onClose, buttonRef }) => {
         </div>
         <ul>
           <ProfileElements
-            route={`/u/${username}`}
+            route={`/u/${userPath}`}
             itemName="View Profile"
             icon={<FaRegUser />}
             onClick={onClose}
@@ -69,19 +68,19 @@ const ProfileMenu = ({ setHandle, onClose, buttonRef }) => {
         <ul>
           <ProfileElements
             itemName="Watchlist"
-            route={`/u/${username}/Watchlist`}
+            route={`/u/${userPath}/Watchlist`}
             icon={<BsBookmarkCheck />}
             onClick={onClose}
           />
           <ProfileElements
             itemName="Favorites"
-            route={`/u/${username}/Favorites`}
+            route={`/u/${userPath}/Favorites`}
             icon={<IoMdHeartEmpty />}
             onClick={onClose}
           />
           <ProfileElements
             itemName="My Lists"
-            route={`/u/${username}/Lists`}
+            route={`/u/${userPath}/Lists`}
             icon={<MdChecklistRtl />}
             onClick={onClose}
           />
@@ -90,7 +89,7 @@ const ProfileMenu = ({ setHandle, onClose, buttonRef }) => {
         <ul>
           <ProfileElements
             itemName="Settings"
-            route={`/u/${username}/settings`}
+            route={`/u/${userPath}/settings/profile`}
             icon={<IoSettingsOutline />}
             onClick={onClose}
           />

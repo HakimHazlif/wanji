@@ -19,7 +19,7 @@ const CustomListCard = ({ list }) => {
   const { deleteList, isLoading } = useDeleteList();
 
   function handleNavigate(listId) {
-    navigate(`/u/${username}/Lists?listId=${listId}`);
+    navigate(`/u/${username.replace(" ", "-")}/Lists?listId=${listId}`);
   }
 
   function handleDeleteList() {
@@ -97,7 +97,11 @@ const CustomListCard = ({ list }) => {
                 <button
                   className="text-blue-400 hover:bg-slate-700 hover:text-blue-600 rounded-full p-2 transition-colors"
                   onClick={() =>
-                    navigate(`/u/${username}/list/edit?listId=${list.id}`)
+                    navigate(
+                      `/u/${username.replace(" ", "-")}/list/edit?listId=${
+                        list.id
+                      }`
+                    )
                   }
                 >
                   <FaPencil size={18} />

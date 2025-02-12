@@ -5,7 +5,6 @@ import { Link } from "react-router";
 
 const ProfileElements = ({ icon, itemName, route, onClick = null }) => {
   const { status } = useSelector((state) => state.user);
-  // const { username } = useSelector((state) => state.user.user);
 
   if (status === "loading") return <Spinner />;
 

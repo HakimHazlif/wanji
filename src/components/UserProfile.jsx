@@ -3,6 +3,7 @@ import { useLists } from "../features/lists/useLists";
 import { bgPopcorn } from "../assets/icons";
 import { Outlet } from "react-router";
 import { updateDateFormat } from "../utils/helper";
+import UserAvatar from "../ui/UserAvatar";
 
 const UserProfile = () => {
   const { user, isLoggedin } = useSelector((state) => state.user);
@@ -29,13 +30,8 @@ const UserProfile = () => {
   return (
     <section className="pt-60 padding-x">
       <div className="flex items-end gap-5">
-        <div className="bg-orange-coral w-60 h-60 flex justify-center items-center rounded-full">
-          {avatar ? (
-            <img src={avatar} alt="avatar" />
-          ) : (
-            <i className="fa-solid fa-user text-9xl text-slate-200 "></i>
-          )}
-        </div>
+        <UserAvatar size="w-60 h-60" textSize="text-8xl" />
+
         <div className="flex-1 flex flex-col gap-3">
           <h1 className="text-5xl font-bold ">{username}</h1>
           <p className="text-sm font-semibold">

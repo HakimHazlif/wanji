@@ -9,7 +9,7 @@ const CreateListButton = () => {
   return (
     <button
       className="max-w-60 w-72 py-3 bg-orange-amber rounded-full flex justify-center items-center hover:bg-orange-coral transition-colors duration-300"
-      onClick={() => navigate(`/u/${username}/list/create`)}
+      onClick={() => navigate(`/u/${username.replace(" ", "-")}/list/create`)}
     >
       <div className="flex items-center gap-3 font-bold text-gray-800">
         <FaPlus />

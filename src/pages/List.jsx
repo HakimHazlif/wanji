@@ -8,7 +8,6 @@ import { bgPopcorn } from "../assets/icons";
 import ListView from "../components/ListView";
 import CreateListButton from "../ui/CreateListButton";
 import CustomLists from "../ui/CustomLists";
-import EditListButton from "../components/EditListButton";
 import { IoIosArrowBack } from "react-icons/io";
 import { FaPencil } from "react-icons/fa6";
 import EditingDescription from "../components/EditingDescription";

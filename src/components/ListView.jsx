@@ -4,13 +4,14 @@ import Spinner from "../ui/Spinner";
 import SpinnerMini from "../ui/SpinnerMini";
 import { BsFillGrid3X3GapFill } from "react-icons/bs";
 import { FaListUl } from "react-icons/fa";
+import { FaPencil } from "react-icons/fa6";
 import EmptyList from "../ui/EmptyList";
 import ShowCardRow from "./ShowCardRow";
 import OptionsSelector from "../ui/OptionsSelector";
 import { useListsContext } from "../context/ListsContext";
 import { useDeleteShow } from "../features/lists/useDeleteShow";
 import { useEffect, useMemo, useState } from "react";
-import EditListButton from "./EditListButton";
+import EditNavigateButton from "./EditNavigateButton";
 import { useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import LoadMoreButton from "./LoadMoreButton";
@@ -199,7 +200,15 @@ const ListView = ({ targetList, forEditList = false }) => {
           </h3>
         </div>
         <div className="flex items-center gap-5">
-          {!forEditList && <EditListButton listId={listId} />}
+          {!forEditList && (
+            <EditNavigateButton
+              navigateLink={`edit?listId=${listId}`}
+              tooltipTitle="Edit List"
+            >
+              <FaPencil />
+              Edit List
+            </EditNavigateButton>
+          )}
 
           <OptionsSelector
             selectedOption={filteredOption}

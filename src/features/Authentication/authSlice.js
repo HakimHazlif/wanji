@@ -4,6 +4,7 @@ const initialState = {
   user: {
     uid: "",
     username: "",
+    bio: "",
     email: "",
     avatar: "",
     createdAt: "",
@@ -38,6 +39,7 @@ const authSlice = createSlice({
         uid: "",
         username: "",
         email: "",
+        bio: "",
         avatar: "",
         createdAt: "",
         lastSignin: "",
@@ -53,6 +55,7 @@ const authSlice = createSlice({
       state.status = "authenticated";
       state.error = null;
     },
+
     resetPassword: (state) => {
       state.status = "resetted";
     },
