@@ -5,6 +5,7 @@ import { useState } from "react";
 import { updateProfile } from "../services/apiAuth";
 import { useNavigate } from "react-router";
 import UserAvatar from "../ui/UserAvatar";
+import { MAX_BIO_LENGTH, MAX_USERNAME_LENGTH } from "../constants/variables";
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
@@ -14,21 +15,27 @@ const ProfileEdit = () => {
     (state) => state.user.user
   );
 
-  console.log(avatar);
-
   const [userData, setUserData] = useState({
     username,
     bio,
     avatar: null,
   });
-  const [error, setError] = useState("");
+  const [error, setError] = useState({
+    usernameError: "",
+    bioError: "",
+    avatarError: "",
+  });
+  const { usernameError, bioError, avatarError } = error;
 
   function handleFileChange(e) {
     const file = e.target.files[0];
 
     if (file) {
       if (file.size > 25 * 1024 * 1024) {
-        setError("File size must be less than 25MB");
+        setError((prev) => ({
+          ...prev,
+          avatarError: "File size must be less than 25MB",
+        }));
         setUserData((prev) => ({
           ...prev,
           avatar,
@@ -40,7 +47,10 @@ const ProfileEdit = () => {
         ...prev,
         avatar: file,
       }));
-      setError("");
+      setError((prev) => ({
+        ...prev,
+        avatarError: "",
+      }));
     }
   }
 
@@ -53,8 +63,32 @@ const ProfileEdit = () => {
     }));
   }
 
+  function handleValidateLength() {
+    let isError;
+
+    if (userData.username.length > MAX_USERNAME_LENGTH) {
+      setError((prev) => ({
+        ...prev,
+        usernameError: `Username cannot exceed ${MAX_USERNAME_LENGTH} characters`,
+      }));
+      isError = true;
+    }
+
+    if (userData.bio.length > MAX_BIO_LENGTH) {
+      setError((prev) => ({
+        ...prev,
+        bioError: `Bio cannot exceed ${MAX_BIO_LENGTH} characters`,
+      }));
+      isError = true;
+    }
+
+    return isError ?? false;
+  }
+
   function handleSaveUserData(e) {
     e.preventDefault();
+
+    if (handleValidateLength()) return;
 
     const usernameInput =
       userData.username.trim() === ""
@@ -84,14 +118,12 @@ const ProfileEdit = () => {
             <p className="text-sm text-gray-400">
               Upload an image with a max size of 25MB.
             </p>
-
             <label
               htmlFor="file-upload"
               className="flex gap-2 items-center justify-center font-medium py-2 px-8 hover:bg-slate-600 bg-slate-700 duration-200 transition-colors rounded-full cursor-pointer"
             >
               <BiUpload className="w-5 h-5" /> Select a file
             </label>
-
             <input
               id="file-upload"
               type="file"
@@ -100,9 +132,8 @@ const ProfileEdit = () => {
               onChange={handleFileChange}
               disabled={status === "loading"}
             />
-
-            {error ? (
-              <p className="text-sm text-strawberry">{error}</p>
+            {avatarError ? (
+              <p className="text-sm text-strawberry">{avatarError}</p>
             ) : (
               userData.avatar && (
                 <p className="text-sm text-gray-300">{userData.avatar.name}</p>
@@ -112,12 +143,23 @@ const ProfileEdit = () => {
         </div>
 
         <div>
-          <label
-            htmlFor="username"
-            className="block text-sm font-medium text-gray-200"
-          >
-            Username
-          </label>
+          <div className="flex justify-between items-center mb-2">
+            <label
+              htmlFor="username"
+              className="block text-sm font-medium text-gray-200"
+            >
+              Username
+            </label>
+            <span
+              className={`text-sm ${
+                userData.username.length > MAX_USERNAME_LENGTH
+                  ? "text-red-500"
+                  : "text-gray-400"
+              }`}
+            >
+              {userData.username.length}/{MAX_USERNAME_LENGTH}
+            </span>
+          </div>
           <input
             type="text"
             value={userData.username}
@@ -126,15 +168,31 @@ const ProfileEdit = () => {
             id="username"
             className="mt-2 block w-full px-3 py-2  bg-bluish-black border border-slate-400 outline-none rounded-lg shadow-sm focus:border-orange-coral transition-colors"
             disabled={status === "loading"}
+            maxLength={MAX_USERNAME_LENGTH}
           />
+          {usernameError && (
+            <p className="text-sm text-strawberry mt-1">{usernameError}</p>
+          )}
         </div>
+
         <div>
-          <label
-            htmlFor="bio"
-            className="block text-sm font-medium text-gray-200 "
-          >
-            Bio
-          </label>
+          <div className="flex justify-between items-center mb-2">
+            <label
+              htmlFor="username"
+              className="block text-sm font-medium text-gray-200"
+            >
+              Bio
+            </label>
+            <span
+              className={`text-sm ${
+                userData.bio.length > MAX_BIO_LENGTH
+                  ? "text-red-500"
+                  : "text-gray-400"
+              }`}
+            >
+              {userData.bio.length}/{MAX_BIO_LENGTH}
+            </span>
+          </div>
           <textarea
             name="bio"
             id="bio"
@@ -143,7 +201,11 @@ const ProfileEdit = () => {
             rows={4}
             className="mt-2 block w-full px-3 py-2  bg-bluish-black border border-slate-400 outline-none rounded-lg shadow-sm focus:border-orange-coral transition-colors"
             disabled={status === "loading"}
+            maxLength={MAX_BIO_LENGTH}
           ></textarea>
+          {bioError && (
+            <p className="text-sm text-strawberry mt-1">{bioError}</p>
+          )}
         </div>
         <button
           type="submit"

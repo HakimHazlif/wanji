@@ -8,6 +8,8 @@ const ProfileHeader = () => {
   const { user, isLoggedin } = useSelector((state) => state.user);
   const { bio, username, createdAt } = user;
 
+  console.log(bio);
+
   const { remainLists, watchlist, favoriteList } = useLists();
 
   const allShowsOfRemainLists = remainLists?.flatMap((list) => list.items_list);
@@ -28,9 +30,9 @@ const ProfileHeader = () => {
   const tvNum = uniqueShows.filter((show) => show.type === "tv").length;
 
   return (
-    <section className="pt-32 padding-x">
+    <section className="pt-40 padding-x">
       <div className="">
-        <div className="flex items-end gap-5">
+        <div className="flex items-start gap-5">
           <UserAvatar size="w-48 h-48" textSize="text-8xl" />
           <div className="flex-1 flex flex-col gap-3">
             <h1 className="text-5xl font-bold ">{username}</h1>
@@ -40,6 +42,7 @@ const ProfileHeader = () => {
                 {updateDateFormat(createdAt)}
               </span>
             </p>
+
             <div className="flex items-center justify-between w-full">
               <div className="flex flex-wrap gap-4 text-gray-400">
                 <div className="py-3 px-4 rounded-lg bg-black/20 backdrop-blur-lg text-white font-medium text-sm">
@@ -63,10 +66,10 @@ const ProfileHeader = () => {
                 Profile Edit
               </button> */}
             </div>
+            <div className="my-2">
+              <p className="text-gray-300 mb-5">{bio}</p>
+            </div>
           </div>
-        </div>
-        <div className="my-8 pl-52">
-          <p className="text-gray-300 mb-5">{bio}</p>
         </div>
       </div>
     </section>

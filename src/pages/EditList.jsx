@@ -12,6 +12,7 @@ import ListView from "../components/ListView";
 import AddingSearchBar from "../components/AddingSearchbar";
 import { IoIosArrowBack } from "react-icons/io";
 import CreatedByAuth from "../components/CreatedByAuth";
+import HeaderBackDrop from "../ui/HeaderBackDrop";
 
 const EditList = () => {
   const navigate = useNavigate();
@@ -24,14 +25,7 @@ const EditList = () => {
 
   return (
     <main className="padding-x py-32">
-      <div className="absolute top-0 right-0 w-full -z-10 ">
-        <img
-          src={bgPopcorn}
-          alt="backdrop of movie"
-          className="h-[400px] w-full object-cover object-center masking"
-        />
-        <div className="bg-[#272831] opacity-60 masking h-[600px] w-full absolute bottom-0 right-0 z-10"></div>
-      </div>
+      <HeaderBackDrop backdrop={bgPopcorn} height="h-[400px]" />
 
       {list?.id && (
         <section className="w-full mb-20 flex items-center gap-20">
