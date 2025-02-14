@@ -269,20 +269,20 @@ export const getUser = () => async (dispatch) => {
       data: { user },
     } = await supabase.auth.getUser();
 
-    if (user)
+    if (user) {
       dispatch(
         setUser({
           uid: user?.id ?? "",
           username: user?.user_metadata?.username ?? "",
           email: user?.email ?? "",
-          bio: user?.user?.user_metadata?.bio ?? "",
+          bio: user?.user_metadata?.bio ?? "",
           avatar: user?.user_metadata?.avatar ?? "",
           createdAt: user?.created_at ?? "",
           lastSignin: user?.last_sign_in_at ?? "",
           lastUpdate: user?.updated_at ?? "",
         })
       );
-    else dispatch(logOutSuccess());
+    } else dispatch(logOutSuccess());
   } catch (err) {
     dispatch(authFailure(err));
   }

@@ -106,8 +106,7 @@ const EpisodeCard = ({ episode }) => {
             </Tooltip>
             <div className="flex items-center gap-2">
               <UserRateMini
-                type="episode"
-                itemId={id}
+                item={item}
                 addStars={true}
                 buttonStyle="px-3 py-0.5 rounded-sm bg-orange-coral font-semibold text-gray-800"
               />

@@ -1,6 +1,7 @@
 import { bgPopcorn } from "../assets/icons";
 import HeaderBackDrop from "../ui/HeaderBackDrop";
 import ProfileHeader from "../components/ProfileHeader";
+import ProfileLists from "../components/ProfileLists";
 
 const Profile = () => {
   return (
@@ -12,6 +13,7 @@ const Profile = () => {
       />
 
       <ProfileHeader />
+      <ProfileLists />
     </main>
   );
 };

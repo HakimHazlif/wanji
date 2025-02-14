@@ -5,7 +5,7 @@ import { getRatingList } from "../../services/apiLists";
 export function useRatingList() {
   const { uid } = useSelector((state) => state.user.user);
 
-  const { data: ratingList, isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["ratingList", uid],
     queryFn: () => getRatingList({ userId: uid }),
     onError: (error) => {
@@ -13,7 +13,7 @@ export function useRatingList() {
     },
   });
 
-  // console.log(ratingList);
+  const ratingList = data?.rating;
 
   return { ratingList, isLoading };
 }

@@ -12,6 +12,7 @@ import { IoLogOutOutline, IoSettingsOutline } from "react-icons/io5";
 import { fetchItemsList } from "../services/apiLists";
 import { logout } from "../services/apiAuth";
 import UserAvatar from "../ui/UserAvatar";
+import { FaRegStar } from "react-icons/fa6";
 
 const ProfileMenu = ({ setHandle, onClose, buttonRef }) => {
   const dispatch = useDispatch();
@@ -67,13 +68,13 @@ const ProfileMenu = ({ setHandle, onClose, buttonRef }) => {
 
         <ul>
           <ProfileElements
-            itemName="Watchlist"
+            itemName="My Watchlist"
             route={`/u/${userPath}/Watchlist`}
             icon={<BsBookmarkCheck />}
             onClick={onClose}
           />
           <ProfileElements
-            itemName="Favorites"
+            itemName="My Favorites"
             route={`/u/${userPath}/Favorites`}
             icon={<IoMdHeartEmpty />}
             onClick={onClose}
@@ -82,6 +83,12 @@ const ProfileMenu = ({ setHandle, onClose, buttonRef }) => {
             itemName="My Lists"
             route={`/u/${userPath}/Lists`}
             icon={<MdChecklistRtl />}
+            onClick={onClose}
+          />
+          <ProfileElements
+            itemName="My ratings"
+            route={`/u/${userPath}/Ratings`}
+            icon={<FaRegStar />}
             onClick={onClose}
           />
         </ul>

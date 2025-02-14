@@ -94,8 +94,7 @@ const ShowCard = ({
                 }
               >
                 <UserRateMini
-                  type={category}
-                  itemId={id}
+                  item={item}
                   buttonStyle="rounded-md bg-orange-coral w-[45px] text-gray-700 h-6 flex items-center justify-center gap-1 text-xs font-bold"
                 />
               </Suspense>
@@ -119,7 +118,7 @@ const ShowCard = ({
           </div>
           {additions && (
             <Suspense fallback={<div>Loading</div>}>
-              <div className="flex justify-between gap-2 mt-4">
+              <div className="flex justify-between gap-1 mt-4">
                 <WatchlistButton item={item} />
                 <FavoriteButton item={item} />
               </div>

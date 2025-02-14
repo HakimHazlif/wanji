@@ -21,8 +21,6 @@ function ListsContextProvider({ children }) {
     tvId: interestTvId,
   };
 
-  console.log(interestsIds);
-
   const [isGridView, setIsGridView] = useState(true);
 
   const addingSearchBarRef = useRef(null);

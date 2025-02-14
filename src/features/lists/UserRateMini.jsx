@@ -7,7 +7,7 @@ import { Box, Rating, Tooltip } from "@mui/material";
 import { useUpadetRating } from "./useUpadetRating";
 import { useAddRating } from "./useAddRating";
 
-const UserRateMini = ({ type, itemId, addStars = false, buttonStyle }) => {
+const UserRateMini = ({ item, addStars = false, buttonStyle }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const { ratingList } = useRatingList();
@@ -26,10 +26,10 @@ const UserRateMini = ({ type, itemId, addStars = false, buttonStyle }) => {
 
   const rating = useMemo(
     () =>
-      ratingList?.rating?.filter(
-        (el) => el.item_id == itemId && el.type === type
+      ratingList?.filter(
+        (el) => el.item_id == item?.itemId && el.type === item?.type
       )?.[0]?.rate || 0,
-    [itemId, ratingList, type]
+    [item?.itemId, ratingList, item?.type]
   );
 
   let content;
@@ -77,8 +77,7 @@ const UserRateMini = ({ type, itemId, addStars = false, buttonStyle }) => {
         <RatingPopup
           isPopupOpen={isPopupOpen}
           setClosePopup={handleClosePopup}
-          itemId={itemId}
-          type={type}
+          item={item}
           showRate={rating}
         />
       )}

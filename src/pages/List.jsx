@@ -17,6 +17,7 @@ import AddingSearchBar from "../components/AddingSearchbar";
 import EditingName from "../components/EditingName";
 import HeaderBackDrop from "../ui/HeaderBackDrop";
 import CreatedByAuth from "../components/CreatedByAuth";
+import { useRatingList } from "../features/lists/useRatingList";
 
 const List = () => {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ const List = () => {
   const location = useLocation();
 
   const { watchlist, favoriteList, remainLists } = useLists();
+  const { ratingList } = useRatingList();
 
   const searchParams = new URLSearchParams(location.search);
   const selectedListId = searchParams.get("listId");
@@ -35,6 +37,7 @@ const List = () => {
   const targetList = useMemo(() => {
     if (list === "Watchlist") return watchlist;
     else if (list === "Favorites") return favoriteList;
+    else if (list === "Ratings") return ratingList;
     if (list === "Lists" && selectedListId) {
       const customList = remainLists?.find(
         (list) => list.id === selectedListId
@@ -53,6 +56,14 @@ const List = () => {
         description:
           "Create and customize lists to organize your movies and TV shows however you like. Whether by genre, mood, or theme, these lists give you full control over curating and managing your collection.",
       };
+    if (list === "Ratings") {
+      return {
+        listId: null,
+        createdDate: null,
+        listName: list,
+        description: ".",
+      };
+    }
 
     return {
       listId: targetList?.id,
@@ -77,7 +88,10 @@ const List = () => {
 
       <section className="mb-20 flex items-end justify-between">
         <div className="w-3/5">
-          {list === "Watchlist" || list === "Favorites" || isListsPage ? (
+          {list === "Watchlist" ||
+          list === "Favorites" ||
+          list === "Ratings" ||
+          isListsPage ? (
             <h2 className="font-bold text-5xl mb-5">
               {!selectedListId && "My"} {listName}
             </h2>
@@ -87,7 +101,10 @@ const List = () => {
 
           <CreatedByAuth createdDate={createdDate} username={username} />
 
-          {list === "Watchlist" || list === "Favorites" || isListsPage ? (
+          {list === "Watchlist" ||
+          list === "Favorites" ||
+          list === "Ratings" ||
+          isListsPage ? (
             <p className="font-sembold text-xl text-gray-300 mt-5">
               {description}
             </p>

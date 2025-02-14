@@ -61,7 +61,11 @@ const Show = () => {
 
         {reviews?.length > 0 && (
           <section className="pt-32">
-            <ShowReviews reviews={reviews} />
+            <ShowReviews
+              reviews={reviews}
+              itemId={details?.id}
+              type={category}
+            />
           </section>
         )}
       </div>

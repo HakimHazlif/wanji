@@ -12,6 +12,11 @@ const ReviewCard = ({ review }) => {
     .map((paragraph) => `<p>${paragraph}</p>`)
     .join("");
 
+  const avatar =
+    author_details?.avatar_path?.slice(0, 5) === "https"
+      ? author_details?.avatar_path
+      : getImageViaPath(author_details?.avatar_path, 400);
+
   function hundleClick() {
     setIsReadMore(!isReadMore);
   }
@@ -37,7 +42,7 @@ const ReviewCard = ({ review }) => {
           <div>
             {author_details?.avatar_path ? (
               <img
-                src={getImageViaPath(author_details.avatar_path, 400)}
+                src={avatar}
                 alt={`${author}'s avatar`}
                 className="w-12 h-12 rounded-full object-cover"
               />

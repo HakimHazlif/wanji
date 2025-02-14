@@ -6,13 +6,7 @@ import { useAddRating } from "./useAddRating";
 import { useRating } from "./useRating";
 import { useSelector } from "react-redux";
 
-const RatingPopup = ({
-  setClosePopup,
-  itemId,
-  type,
-  showRate = 0,
-  parentId = null,
-}) => {
+const RatingPopup = ({ setClosePopup, item, showRate = 0 }) => {
   const { uid } = useSelector((state) => state.user.user);
 
   const [rating, setRating] = useState(Number(showRate));
@@ -27,11 +21,13 @@ const RatingPopup = ({
       if (!uid) throw new Error("You should log in first");
 
       const rowQuery = {
-        itemId,
-        type: type,
+        itemId: item?.itemId,
+        type: item?.type,
         rating,
         userId: uid,
-        parentId,
+        parentId: item?.parentId,
+        season: item?.season,
+        episode: item?.episode,
       };
 
       if (!showRate) addRating(rowQuery);
@@ -74,7 +70,7 @@ const RatingPopup = ({
 
         <div className="text-center">
           <h2 className="text-xl font-semibold text-white mb-6">
-            Rate this {type}
+            Rate this {item?.type}
           </h2>
 
           <div className="flex flex-col items-center gap-4">

@@ -8,8 +8,6 @@ const ProfileHeader = () => {
   const { user, isLoggedin } = useSelector((state) => state.user);
   const { bio, username, createdAt } = user;
 
-  console.log(bio);
-
   const { remainLists, watchlist, favoriteList } = useLists();
 
   const allShowsOfRemainLists = remainLists?.flatMap((list) => list.items_list);

@@ -33,12 +33,14 @@ const CustomListCard = ({ list }) => {
       <div className="p-5">
         <div className="flex gap-4 justify-between items-center mb-3">
           <Tooltip title={list.name}>
-            <h3
-              className="text-xl font-semibold hover:text-orange-amber cursor-pointer"
-              onClick={() => handleNavigate(list.id)}
-            >
-              <Ellipsis lines="line-clamp-1" text={list.name} />
-            </h3>{" "}
+            <span>
+              <h3
+                className="text-xl font-semibold hover:text-orange-amber cursor-pointer"
+                onClick={() => handleNavigate(list.id)}
+              >
+                <Ellipsis lines="line-clamp-1" text={list.name} />
+              </h3>
+            </span>
           </Tooltip>
           <span className="bg-slate-700 text-blue-200 text-xs px-3 py-1.5 rounded-full text-nowrap">
             Has {list.items_list.length}{" "}

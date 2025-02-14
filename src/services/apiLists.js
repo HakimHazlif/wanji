@@ -78,7 +78,10 @@ export async function addRateToShow({
   rating,
   userId,
   parentId = null,
+  season = null,
+  episode = null,
 }) {
+  console.log({ itemId, type, rating, userId, parentId, season, episode });
   const { data, error } = await supabase
     .from("rating")
     .insert([
@@ -88,11 +91,13 @@ export async function addRateToShow({
         user_id: userId,
         rate: rating,
         parent_id: parentId,
+        season_number: season,
+        episode_number: episode,
       },
     ])
     .select("*");
 
-  console.log(data);
+  if (error) throw new Error(error);
 
   return { data, error };
 }
@@ -251,4 +256,48 @@ export const fetchItemsList = async (listId, list, startPoint = 0) => {
   const items = results.map((result) => result.data);
 
   return { items: items, listId, nextPoint: startPoint + items.length };
+};
+
+export const fetchShortLists = async (watchlist, favoritesList, ratingList) => {
+  console.log("fetchShortLists was launched");
+
+  const watchlistLength = watchlist?.length ?? 0;
+  const favoritesLength = favoritesList?.length ?? 0;
+  const ratingListLength = ratingList?.length ?? 0;
+
+  if (!watchlistLength && !favoritesLength && !ratingListLength) return;
+
+  console.log("fetchShortLists was called");
+
+  const generateUrls = (list) =>
+    list?.map((item) =>
+      item.type === "episode"
+        ? `${URL_Base}tv/${item.parent_id}/season/${item.season_number}/episode/${item.episode_number}?append_to_response=credits&language=en-US`
+        : `${URL_Base}${item.type}/${item.item_id}?append_to_response=credits&language=en-US`
+    ) || [];
+
+  const itemsUrls = [
+    ...generateUrls(watchlist),
+    ...generateUrls(favoritesList),
+    ...generateUrls(ratingList),
+  ];
+  const results = await axios.all(
+    itemsUrls.map((url) => axios.get(url, options))
+  );
+
+  const watchlistItems = results
+    .slice(0, watchlistLength)
+    ?.map((result) => result.data);
+  const favoritesItems = results
+    .slice(watchlistLength, favoritesLength + watchlistLength)
+    ?.map((result) => result.data);
+  const ratingItems = results
+    .slice(favoritesLength + watchlistLength, results.length)
+    ?.map((result) => result.data);
+
+  return {
+    shortWatchlist: watchlistItems,
+    shortFavorites: favoritesItems,
+    shortRatings: ratingItems,
+  };
 };

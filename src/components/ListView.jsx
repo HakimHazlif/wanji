@@ -16,7 +16,6 @@ import { useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import LoadMoreButton from "./LoadMoreButton";
 import { useRatingList } from "../features/lists/useRatingList";
-import { Tooltip } from "@mui/material";
 
 const ListView = ({ targetList, forEditList = false }) => {
   const queryClient = useQueryClient();
@@ -46,11 +45,13 @@ const ListView = ({ targetList, forEditList = false }) => {
   const [filteredOption, setFilteredOption] = useState(filterOptions[0]);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
 
-  const listId = targetList?.id;
-  const list = targetList?.items_list;
-
   const { isLoading: isDeleting, deleteShow } = useDeleteShow();
   const { ratingList } = useRatingList();
+
+  const listId = targetList?.id ?? uid;
+  const list = targetList?.items_list ?? ratingList;
+
+  console.log(list);
 
   const {
     itemsList,
@@ -78,8 +79,8 @@ const ListView = ({ targetList, forEditList = false }) => {
   const itemsListWithUserRating = useMemo(() => {
     const ratingMap = new Map();
 
-    if (Array.isArray(ratingList?.rating)) {
-      ratingList?.rating?.forEach((ratingItem) => {
+    if (Array.isArray(ratingList)) {
+      ratingList?.forEach((ratingItem) => {
         const key = `${ratingItem.item_id}-${ratingItem.type}`;
         ratingMap.set(key, ratingItem.rate);
       });
@@ -124,8 +125,6 @@ const ListView = ({ targetList, forEditList = false }) => {
 
       switch (selectedOption) {
         case "Date Added (Oldest)":
-          console.log(a.created_at);
-          console.log(b.created_at);
           return new Date(a.created_at) - new Date(b.created_at);
         case "Date Added (Newest)":
           return new Date(b.created_at) - new Date(a.created_at);
@@ -165,7 +164,9 @@ const ListView = ({ targetList, forEditList = false }) => {
     const itemsLength = itemsList?.length ?? 0;
     const ListLength = list?.length ?? 0;
 
-    if (forEditList && itemsLength + 1 === ListLength) {
+    console.log(itemsLength, ListLength);
+
+    if (itemsLength + 1 === ListLength) {
       fetchNextPage();
     }
     if (itemsLength - 1 === ListLength) {
@@ -256,14 +257,15 @@ const ListView = ({ targetList, forEditList = false }) => {
           isGridView ? (
             <div className="grid grid-cols-4 gap-10 py-14">
               {sortedList?.length > 0 &&
-                sortedList?.map((item) => {
+                sortedList?.map((item, index) => {
                   return (
                     <ShowCard
-                      key={item?.id}
+                      key={item?.id || index}
                       show={item}
                       parentShowId={
                         item?.air_date &&
-                        targetList.filter(
+                        targetList?.length > 0 &&
+                        targetList?.filter(
                           (show) => show?.item_id == item?.id
                         )?.[0]?.parent_id
                       }
@@ -291,7 +293,8 @@ const ListView = ({ targetList, forEditList = false }) => {
                       show={item}
                       parentShowId={
                         item?.air_date &&
-                        targetList.filter(
+                        targetList?.length > 0 &&
+                        targetList?.filter(
                           (show) => show?.item_id == item?.id
                         )?.[0]?.parent_id
                       }
