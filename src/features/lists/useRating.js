@@ -19,12 +19,14 @@ export function useRating(type = null, itemId = null) {
   const { data, isLoading } = useQuery({
     queryKey: ["rating", updateType, updatedId, uid],
     queryFn: () => getShowRating(item),
+    enabled: uid !== "",
     onError: (err) => {
       throw new Error(err);
     },
   });
 
   const showRate = data?.[0]?.rate ?? null;
+  console.log(showRate);
 
   return { showRate, isLoading };
 }

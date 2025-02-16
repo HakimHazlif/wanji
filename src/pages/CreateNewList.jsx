@@ -156,7 +156,7 @@ const CreateNewList = () => {
                 onChange={handleChange}
                 placeholder="Enter a name for your list"
                 maxLength={MAX_NAME_LENGTH}
-                className={`block w-full p-3 bg-bluish-black border outline-none ${
+                className={`block w-full p-3 bg-slate-800 border outline-none ${
                   errors.name ? "border-red-500" : "border-gray-600"
                 } rounded-lg shadow-sm focus:ring-2 focus:ring-orange-coral focus:border-transparent transition-colors`}
               />
@@ -192,7 +192,7 @@ const CreateNewList = () => {
                 rows="4"
                 placeholder="Describe what kind of items this list will contain"
                 maxLength={MAX_DESCRIPTION_LENGTH}
-                className={`block w-full p-3 bg-bluish-black border outline-none ${
+                className={`block w-full p-3 bg-slate-800 border outline-none ${
                   errors.description ? "border-red-500" : "border-gray-600"
                 } rounded-lg shadow-sm focus:ring-2 focus:ring-orange-coral focus:border-transparent transition-colors`}
               />

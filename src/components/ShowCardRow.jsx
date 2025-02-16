@@ -195,7 +195,8 @@ const ShowCardRow = ({
         <DeleteListConfirm
           onClose={() => setDeletePopup(false)}
           onDelete={() => deleteShow(id, category)}
-          showName={title}
+          name={title}
+          type="deleteItem"
           isDeleting={isDeleting}
         />
       )}

@@ -25,7 +25,7 @@ const ItemsList = ({ list, item }) => {
 
   const { addShow, isLoading: isAdding } = useAddShow();
   const { deleteShow, isLoading: isDeleting } = useDeleteShow();
-  const { deleteList } = useDeleteList();
+  const { deleteList, isLoading: isDeletingList } = useDeleteList();
 
   const row = {
     id: itemId,
@@ -52,8 +52,14 @@ const ItemsList = ({ list, item }) => {
 
   function handleDeleteList() {
     if (isLoggedIn && user.uid) {
-      deleteList({ userId: user.uid, listId: list.id });
-      setForConfirmDelete(false);
+      deleteList(
+        { userId: user.uid, listId: list.id },
+        {
+          onSuccess: () => {
+            setForConfirmDelete(false);
+          },
+        }
+      );
     }
   }
 
@@ -126,7 +132,9 @@ const ItemsList = ({ list, item }) => {
         <DeleteListConfirm
           onClose={() => setForConfirmDelete(false)}
           onDelete={handleDeleteList}
-          listName={list.name}
+          name={list.name}
+          type="deleteList"
+          isDeleting={isDeletingList}
         />
       )}
     </div>

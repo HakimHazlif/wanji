@@ -9,7 +9,7 @@ export default {
       },
       colors: {
         "orange-amber": "#ffbf00",
-        "orange-coral": "#ff7f50",
+        "orange-coral": "#ffa845",
         peach: "#ffe5b4",
         strawberry: "#ff1f1f",
         "blue-paresian": "#192bc2",

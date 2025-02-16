@@ -27,8 +27,6 @@ const ShowIntro = () => {
   const { details, videos } = useShow();
   const { category } = useParams();
 
-  console.log(details);
-
   const {
     id,
     genres,
@@ -183,7 +181,7 @@ const ShowIntro = () => {
               showTitle={title}
             />
           </div>
-          <RateUser itemId={id} type={category} />
+          <RateUser item={item} />
         </div>
       </div>
       {selectedVideo && (

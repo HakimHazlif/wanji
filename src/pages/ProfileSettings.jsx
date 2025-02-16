@@ -114,7 +114,7 @@ const ProfileEdit = () => {
         <div className="mb-8 w-full flex items-center gap-4">
           <UserAvatar size="w-[100px] h-[100px]" textSize="text-5xl" />
 
-          <div className="flex flex-col items-center gap-3 py-4 px-10 flex-1 bg-bluish-black border border-slate-400 rounded-lg shadow-lg">
+          <div className="flex flex-col items-center gap-3 py-4 px-10 flex-1 bg-slate-800 border border-slate-400 rounded-lg shadow-lg">
             <p className="text-sm text-gray-400">
               Upload an image with a max size of 25MB.
             </p>
@@ -166,7 +166,7 @@ const ProfileEdit = () => {
             onChange={(e) => handleTextCange(e, "username")}
             name="username"
             id="username"
-            className="mt-2 block w-full px-3 py-2  bg-bluish-black border border-slate-400 outline-none rounded-lg shadow-sm focus:border-orange-coral transition-colors"
+            className="mt-2 block w-full px-3 py-2  bg-slate-800 border border-slate-400 outline-none rounded-lg shadow-sm focus:border-orange-coral transition-colors"
             disabled={status === "loading"}
             maxLength={MAX_USERNAME_LENGTH}
           />
@@ -199,7 +199,7 @@ const ProfileEdit = () => {
             value={userData.bio}
             onChange={(e) => handleTextCange(e, "bio")}
             rows={4}
-            className="mt-2 block w-full px-3 py-2  bg-bluish-black border border-slate-400 outline-none rounded-lg shadow-sm focus:border-orange-coral transition-colors"
+            className="mt-2 block w-full px-3 py-2  bg-slate-800 border border-slate-400 outline-none rounded-lg shadow-sm focus:border-orange-coral transition-colors"
             disabled={status === "loading"}
             maxLength={MAX_BIO_LENGTH}
           ></textarea>

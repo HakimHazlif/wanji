@@ -35,6 +35,17 @@ html {
   }
 }
 
+.fsdf {
+  color: #705d3b;
+  color: #ffbf00;
+  color: #ffa845;
+  color: #ffe5b4;
+  color: #ff1f1f;
+  color: #661e7c;
+  color: #0000ff;
+  color: #ffde05c3;
+}
+
 .spinner-mini {
   animation: rotation 1.5s infinite linear;
 }

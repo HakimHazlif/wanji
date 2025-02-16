@@ -24,7 +24,14 @@ const CustomListCard = ({ list }) => {
 
   function handleDeleteList() {
     if (uid) {
-      deleteList({ userId: uid, listId: list.id });
+      deleteList(
+        { userId: uid, listId: list.id },
+        {
+          onSuccess: () => {
+            setDeleteConfirm(false);
+          },
+        }
+      );
     }
   }
 
@@ -128,7 +135,9 @@ const CustomListCard = ({ list }) => {
         <DeleteListConfirm
           onClose={() => setDeleteConfirm(false)}
           onDelete={handleDeleteList}
-          listName={list.name}
+          name={list.name}
+          type="deleteList"
+          isDeleting={isLoading}
         />
       )}
     </li>

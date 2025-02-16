@@ -48,7 +48,7 @@ const EditingName = ({ list }) => {
             value={newName}
             maxLength={MAX_NAME_LENGTH}
             onChange={(e) => setNewName(e.target.value)}
-            className="block w-full px-3 py-1 text-4xl bg-bluish-black border outline-none rounded-lg shadow-sm focus:ring-2 focus:ring-orange-coral focus:border-transparent transition-colors"
+            className="block w-full px-3 py-1 text-4xl bg-slate-800 border outline-none rounded-lg shadow-sm focus:ring-2 focus:ring-orange-coral focus:border-transparent transition-colors"
           />
 
           <InputEditButton

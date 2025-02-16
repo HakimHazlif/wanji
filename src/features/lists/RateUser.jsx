@@ -7,8 +7,8 @@ import { useAddRating } from "./useAddRating";
 import { useUpadetRating } from "./useUpadetRating";
 import { Tooltip } from "@mui/material";
 
-const RateUser = ({ itemId, type }) => {
-  const { showRate, isLoading } = useRating(type, itemId);
+const RateUser = ({ item }) => {
+  const { showRate, isLoading } = useRating(item?.type, item?.itemId);
   const { isLoading: isAdding } = useAddRating();
   const { isLoading: isUpdating } = useUpadetRating();
 
@@ -41,10 +41,8 @@ const RateUser = ({ itemId, type }) => {
 
       {isPopupOpen && (
         <RatingPopup
-          isPopupOpen={isPopupOpen}
           setClosePopup={() => setIsPopupOpen(false)}
-          itemId={itemId}
-          type={type}
+          item={item}
           showRate={showRate}
         />
       )}

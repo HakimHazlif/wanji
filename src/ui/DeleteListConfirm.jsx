@@ -4,8 +4,8 @@ import SpinnerMini from "./SpinnerMini";
 const DeleteListConfirm = ({
   onClose,
   onDelete,
-  listName = "",
-  showName = "",
+  type,
+  name = "",
   isDeleting = false,
 }) => {
   const popupRef = useRef();
@@ -32,21 +32,22 @@ const DeleteListConfirm = ({
         ref={popupRef}
       >
         <h3 className="text-lg font-semibold ">
-          {showName ? "Delete Item" : "Delete List"}
+          {type === "deleteItem" && "Delete Item"}
+          {type === "deleteList" && "Delete List"}
+          {type === "deleteReview" && "Delete Review"}
         </h3>
-        {showName ? (
-          <p className="mt-4 text-gray-400">
-            Are you sure you want to delete{" "}
-            <span className="font-semibold text-red-500">{showName}</span> from
-            this list? This action cannot be undone.
-          </p>
-        ) : (
-          <p className="mt-4 text-gray-400">
-            Are you sure you want to delete the list{" "}
-            <span className="font-semibold text-red-500">{listName}</span>? This
-            action cannot be undone.
-          </p>
-        )}
+        <p>
+          Are you sure you want to delete{" "}
+          {type === "DeleteItem" &&
+            `${(
+              <span className="font-semibold text-red-500">{name}</span>
+            )} from  this list`}
+          {type === "DeleteList" &&
+            `the list 
+            ${(<span className="font-semibold text-red-500">{name}</span>)}`}
+          {type === "deleteReview" && "this review"}? This action cannot be
+          undone.
+        </p>
 
         <div className="mt-6 flex justify-center gap-4">
           <button

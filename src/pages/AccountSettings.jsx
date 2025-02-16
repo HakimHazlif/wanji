@@ -112,7 +112,7 @@ const AccountEdit = () => {
             onChange={(e) => handleTextCange(e, "oldPassword")}
             name="old-password"
             id="old-password"
-            className={`mt-2 block w-full px-3 py-2  bg-bluish-black border ${
+            className={`mt-2 block w-full px-3 py-2  bg-slate-800 border ${
               oldPasswordError ? "border-strawberry" : "border-slate-400"
             }  outline-none rounded-lg shadow-sm focus:border-orange-coral transition-colors`}
             disabled={status === "loading"}
@@ -137,7 +137,7 @@ const AccountEdit = () => {
             onChange={(e) => handleTextCange(e, "newPassword")}
             name="new-password"
             id="new-password"
-            className={`mt-2 block w-full px-3 py-2  bg-bluish-black border ${
+            className={`mt-2 block w-full px-3 py-2  bg-slate-800 border ${
               newPasswordError ? "border-strawberry" : "border-slate-400"
             } outline-none rounded-lg shadow-sm focus:border-orange-coral transition-colors`}
             disabled={status === "loading"}
@@ -162,7 +162,7 @@ const AccountEdit = () => {
             onChange={(e) => handleTextCange(e, "confirmedPassword")}
             name="confirmed-password"
             id="confirmed-password"
-            className={`mt-2 block w-full px-3 py-2  bg-bluish-black border ${
+            className={`mt-2 block w-full px-3 py-2  bg-slate-800 border ${
               confirmedPasswordError ? "border-strawberry" : "border-slate-400"
             } outline-none rounded-lg shadow-sm focus:border-orange-coral transition-colors`}
             disabled={status === "loading"}

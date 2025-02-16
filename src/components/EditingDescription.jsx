@@ -47,7 +47,7 @@ const EditingName = ({ list }) => {
             value={newDescription}
             onChange={(e) => setNewDescription(e.target.value)}
             maxLength={MAX_DESCRIPTION_LENGTH}
-            className="block w-full p-3 bg-bluish-black border outline-none rounded-lg shadow-sm focus:ring-2 focus:ring-orange-coral focus:border-transparent transition-colors"
+            className="block w-full p-3 bg-slate-800 border outline-none rounded-lg shadow-sm focus:ring-2 focus:ring-orange-coral focus:border-transparent transition-colors"
             rows="3"
           />
           <InputEditButton

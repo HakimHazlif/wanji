@@ -59,15 +59,9 @@ const Show = () => {
           </ListScroll>
         </section>
 
-        {reviews?.length > 0 && (
-          <section className="pt-32">
-            <ShowReviews
-              reviews={reviews}
-              itemId={details?.id}
-              type={category}
-            />
-          </section>
-        )}
+        <section className="pt-32">
+          <ShowReviews reviews={reviews} show={details} category={category} />
+        </section>
       </div>
       <div className="absolute top-0 right-0 w-full -z-10 ">
         <img

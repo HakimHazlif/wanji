@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import { updateReview as updateReviewApi } from "../../services/apiReviews";
 
-export function useUpadetRating() {
+export function useUpdateReview() {
   const { uid } = useSelector((state) => state.user.user);
   const queryClient = useQueryClient();
 

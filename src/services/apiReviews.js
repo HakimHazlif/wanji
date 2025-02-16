@@ -32,6 +32,9 @@ export async function addReview({
   parentId = null,
   season = null,
   episode = null,
+  watchedDate,
+  rewatchedDates,
+  hasSpoiler,
 }) {
   const { data, error } = await supabase
     .from("reviews")
@@ -44,6 +47,9 @@ export async function addReview({
         parent_id: parentId,
         season_number: season,
         episode_number: episode,
+        watched_date: watchedDate,
+        rewatched_dates: rewatchedDates,
+        has_spoiler: hasSpoiler,
       },
     ])
     .select("*");
@@ -53,10 +59,23 @@ export async function addReview({
   return { data };
 }
 
-export async function updateReview({ itemId, type, newReview, userId }) {
+export async function updateReview({
+  itemId,
+  type,
+  review,
+  userId,
+  watchedDate,
+  rewatchedDates,
+  hasSpoiler,
+}) {
   const { data, error } = await supabase
     .from("reviews")
-    .update({ review: newReview })
+    .update({
+      review: review,
+      watched_date: watchedDate,
+      rewatched_dates: rewatchedDates,
+      has_spoiler: hasSpoiler,
+    })
     .eq("user_id", userId)
     .eq("item_id", itemId)
     .eq("type", type)

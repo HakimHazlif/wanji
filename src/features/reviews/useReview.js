@@ -7,13 +7,16 @@ export function useReview() {
   const { uid } = useSelector((state) => state.user.user);
   const { id, category } = useParams();
 
-  const { data: review, isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["review"],
     queryFn: () => fetchUserReview(uid, id, category),
+    enabled: uid !== "",
     onError: (err) => {
       throw new Error(err.message);
     },
   });
 
-  return { review, isLoading };
+  const userReview = data?.review?.[0] ?? null;
+
+  return { userReview, isLoading };
 }
