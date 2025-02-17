@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { useSelector } from "react-redux";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useLists } from "../features/lists/useLists";
 import CustomListCard from "../ui/CustomListCard";
+import EmptyShortList from "./EmptyShortList";
 
 const ProfileCustomLists = () => {
+  const navigate = useNavigate();
   const { username } = useSelector((state) => state.user.user);
   const { remainLists } = useLists();
 
@@ -37,11 +39,24 @@ const ProfileCustomLists = () => {
         </Link>
       </div>
       <div className="">
-        <ul className="grid grid-cols-2 gap-4">
-          {remainLists?.slice(0, 4)?.map((list) => (
-            <CustomListCard key={list.id} list={list} />
-          ))}
-        </ul>
+        {remainLists?.length > 0 ? (
+          <ul className="grid grid-cols-2 gap-4">
+            {remainLists?.slice(0, 4)?.map((list) => (
+              <CustomListCard key={list.id} list={list} />
+            ))}
+          </ul>
+        ) : (
+          <EmptyShortList listNmae="List">
+            <button
+              onClick={() =>
+                navigate(`/u/${username.replace(" ", "-")}/list/create`)
+              }
+              className="px-10 py-[10px] bg-orange-amber rounded-full flex justify-center items-center hover:bg-orange-coral transition-colors duration-300 text-gray-900 font-medium"
+            >
+              Create a List
+            </button>
+          </EmptyShortList>
+        )}
       </div>
     </section>
   );

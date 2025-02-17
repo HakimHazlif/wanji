@@ -258,16 +258,26 @@ export const fetchItemsList = async (listId, list, startPoint = 0) => {
   return { items: items, listId, nextPoint: startPoint + items.length };
 };
 
-export const fetchShortLists = async (watchlist, favoritesList, ratingList) => {
+export const fetchShortLists = async (
+  watchlist,
+  favoritesList,
+  ratingList,
+  reviewslist
+) => {
   console.log("fetchShortLists was launched");
 
   const watchlistLength = watchlist?.length ?? 0;
   const favoritesLength = favoritesList?.length ?? 0;
   const ratingListLength = ratingList?.length ?? 0;
+  const reviewsListLength = reviewslist?.length ?? 0;
 
-  if (!watchlistLength && !favoritesLength && !ratingListLength) return;
-
-  console.log("fetchShortLists was called");
+  if (
+    !watchlistLength &&
+    !favoritesLength &&
+    !ratingListLength &&
+    !reviewsListLength
+  )
+    return;
 
   const generateUrls = (list) =>
     list?.map((item) =>
@@ -280,6 +290,7 @@ export const fetchShortLists = async (watchlist, favoritesList, ratingList) => {
     ...generateUrls(watchlist),
     ...generateUrls(favoritesList),
     ...generateUrls(ratingList),
+    ...generateUrls(reviewslist),
   ];
   const results = await axios.all(
     itemsUrls.map((url) => axios.get(url, options))
@@ -292,12 +303,19 @@ export const fetchShortLists = async (watchlist, favoritesList, ratingList) => {
     .slice(watchlistLength, favoritesLength + watchlistLength)
     ?.map((result) => result.data);
   const ratingItems = results
-    .slice(favoritesLength + watchlistLength, results.length)
+    .slice(
+      favoritesLength + watchlistLength,
+      favoritesLength + watchlistLength + ratingListLength
+    )
+    ?.map((result) => result.data);
+  const reviewsItems = results
+    .slice(favoritesLength + watchlistLength + ratingListLength, results.length)
     ?.map((result) => result.data);
 
   return {
     shortWatchlist: watchlistItems,
     shortFavorites: favoritesItems,
     shortRatings: ratingItems,
+    shortReviews: reviewsItems,
   };
 };

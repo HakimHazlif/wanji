@@ -30,6 +30,7 @@ const ShowReviews = ({ reviews, show, category }) => {
   const usersReviewList = useMemo(() => {
     const usersReviewList = usersReview?.map((userReview) => {
       return {
+        id: userReview.user_id,
         author: userReview.username,
         author_details: {
           avatar_path: userReview.avatar,
@@ -71,13 +72,13 @@ const ShowReviews = ({ reviews, show, category }) => {
         </div>
       )}
 
-      {usersReview.length > 0 && (
+      {usersReview?.length > 0 && (
         <div className="mb-14">
           <div className="mb-6">
             <h3 className="text-2xl font-semibold ">Community Reviews</h3>
           </div>
           <div className="grid grid-flow-row gap-3">
-            {usersReviewList.map((review) => {
+            {usersReviewList?.map((review) => {
               return <ReviewCard key={review.id} review={review} />;
             })}
           </div>

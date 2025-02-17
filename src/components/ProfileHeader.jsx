@@ -60,9 +60,6 @@ const ProfileHeader = () => {
               <EditNavigateButton navigateLink="settings/profile">
                 Profile Edit
               </EditNavigateButton>
-              {/* <button className="max-w-60 w-72 py-2 bg-orange-coral rounded-full flex justify-center items-center hover:bg-orange-coral transition-colors duration-300 text-gray-900">
-                Profile Edit
-              </button> */}
             </div>
             <div className="my-2">
               <p className="text-gray-300 mb-5">{bio}</p>
