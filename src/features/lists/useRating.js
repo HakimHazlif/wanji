@@ -26,7 +26,6 @@ export function useRating(type = null, itemId = null) {
   });
 
   const showRate = data?.[0]?.rate ?? null;
-  console.log(showRate);
 
   return { showRate, isLoading };
 }

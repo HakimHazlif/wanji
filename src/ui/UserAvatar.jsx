@@ -11,7 +11,7 @@ const UserAvatar = ({ size, textSize = "text-lg" }) => {
         <img
           src={avatar}
           alt={username}
-          className="w-full object-cover object-center"
+          className="w-full h-full object-cover object-center"
         />
       ) : (
         <div

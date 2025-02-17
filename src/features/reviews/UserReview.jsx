@@ -10,7 +10,7 @@ const UserReview = ({ show, type }) => {
     <>
       <div className="flex items-center justify-between">
         <div className="flex gap-5 items-center">
-          <UserAvatar size="w-28 h-28" />
+          <UserAvatar size="w-28 h-28" textSize="text-6xl" />
           <div className="">
             <p className="text-lg text-slate-300">What did you think?</p>
             <p className="text-sm text-slate-400">

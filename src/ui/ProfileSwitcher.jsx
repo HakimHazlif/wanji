@@ -42,7 +42,7 @@ const ProfileSwitcher = () => {
               <img
                 src={avatar}
                 alt={username}
-                className="w-full object-cover object-center"
+                className="w-full h-full object-cover object-center"
               />
             ) : (
               <div className="w-full h-full flex justify-center items-center bg-orange-coral hover:bg-orange-amber duration-150 transition-all text-lg text-slate-200 capitalize">

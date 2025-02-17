@@ -4,6 +4,8 @@ import { useLists } from "../features/lists/useLists";
 const ListsContext = createContext();
 
 function ListsContextProvider({ children }) {
+  const [item, setItem] = useState({});
+
   const { favoriteList } = useLists();
 
   const favoriteMovies = favoriteList?.items_list?.filter(
@@ -25,26 +27,9 @@ function ListsContextProvider({ children }) {
 
   const addingSearchBarRef = useRef(null);
 
-  const sortOptions = [
-    "List order",
-    "Alphabetical",
-    "TMDB rating",
-    "Popularity",
-    "Release date",
-    "Runtime",
-    "Your rating",
-    "Date added",
-  ];
-
-  const handleSortChange = (selectedOption) => {
-    console.log("Sorting by:", selectedOption);
-  };
-
   const values = {
     isGridView,
     setIsGridView,
-    sortOptions,
-    handleSortChange,
     interestsIds,
     addingSearchBarRef,
   };

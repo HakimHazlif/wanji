@@ -1,6 +1,6 @@
 import supabase from "./supabase";
 
-export async function fetchReviewsList(userId) {
+export async function fetchUserReviewsList(userId) {
   const { data: reviews, error } = await supabase
     .from("reviews")
     .select("*")
@@ -9,6 +9,56 @@ export async function fetchReviewsList(userId) {
   if (error) throw new Error(error.message);
 
   return { reviews };
+}
+
+export async function fetchReviewsList(itemId, type, userId) {
+  const { data: reviewsList, error: reviewsError } = await supabase
+    .from("reviews")
+    .select("*")
+    .eq("item_id", itemId)
+    .eq("type", type)
+    .neq("user_id", userId);
+
+  if (reviewsError) console.error(reviewsError);
+
+  const userIds = reviewsList.map((review) => review.user_id);
+
+  const { data: profiles, error: profilesError } = await supabase
+    .from("profiles")
+    .select("*")
+    .in("id", userIds);
+
+  if (profilesError) console.error(profilesError);
+
+  const userMap = new Map(
+    profiles.map((user) => [
+      user.id,
+      {
+        username: user.username,
+        avatar: user.avatar,
+      },
+    ])
+  );
+
+  const { data: ratings, error: ratingsError } = await supabase
+    .from("rating")
+    .select("user_id, rate")
+    .eq("item_id", itemId)
+    .eq("type", type)
+    .in("user_id", userIds);
+
+  if (ratingsError) console.error(ratingsError);
+
+  const ratingMap = new Map(ratings.map((r) => [r.user_id, r.rate]));
+
+  const reviews = reviewsList.map((review) => ({
+    ...review,
+    username: userMap.get(review.user_id)?.username || "Unknown",
+    avatar: userMap.get(review.user_id)?.avatar || null,
+    rate: ratingMap.get(review.user_id) || null,
+  }));
+
+  return reviews;
 }
 
 export async function fetchUserReview(userId, itemId, type) {

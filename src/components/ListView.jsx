@@ -51,8 +51,6 @@ const ListView = ({ targetList, forEditList = false }) => {
   const listId = targetList?.id ?? uid;
   const list = targetList?.items_list ?? ratingList;
 
-  console.log(list);
-
   const {
     itemsList,
     isLoading,

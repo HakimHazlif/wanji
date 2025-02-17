@@ -1,13 +1,13 @@
 import { useSelector } from "react-redux";
-import { fetchReviewsList } from "../../services/apiReviews";
+import { fetchUserReviewsList } from "../../services/apiReviews";
 import { useQuery } from "react-query";
 
-export function useReviewsList() {
+export function useUserReviewsList() {
   const { uid } = useSelector((state) => state.user.user);
 
   const { data, isLoading } = useQuery({
-    queryKey: ["reviewsList", uid],
-    queryFn: () => fetchReviewsList({ userId: uid }),
+    queryKey: ["userReviewsList", uid],
+    queryFn: () => fetchUserReviewsList(uid),
     onError: (error) => {
       console.log(error);
     },

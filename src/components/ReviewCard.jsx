@@ -26,9 +26,10 @@ const ReviewCard = ({ review, isUser = false, show = null, type = null }) => {
     .map((paragraph) => `<p>${paragraph}</p>`)
     .join("");
 
-  const avatar = isUser
-    ? author_details?.avatar_path
-    : getImageViaPath(author_details?.avatar_path, 400);
+  const avatar =
+    author_details?.avatar_path?.slice(0, 5) === "https"
+      ? author_details?.avatar_path
+      : getImageViaPath(author_details?.avatar_path, 400);
 
   const getFirstLetterFromAuthor = author[0];
 

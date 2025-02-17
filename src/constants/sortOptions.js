@@ -1,0 +1,16 @@
+export const sortOptionsForListView = [
+  "Date Added (Oldest)",
+  "Date Added (Newest)",
+  "TMDB Rating (Highest)",
+  "TMDB Rating (Lowest)",
+  "Your Rating (Highest)",
+  "Your Rating (Lowest)",
+  "Popularity (Highest)",
+  "Popularity (Lowest)",
+  "Release Date (Oldest)",
+  "Release Date (Newest)",
+  "Runtime (Longest)",
+  "Runtime (Shortest)",
+  "Alphabetical (A-Z)",
+  "Alphabetical (Z-A)",
+];
