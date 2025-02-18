@@ -41,77 +41,78 @@ const ProfileMenu = ({ setHandle, onClose, buttonRef }) => {
   }, [menuRef, onClose, buttonRef]);
 
   return (
-    <div className="absolute z-40 right-0 top-2 cursor-default" ref={menuRef}>
-      <aside className="bg-white absolute right-28 top-16 z-40 text-black w-[300px] max-w-[380px] min-w-[200px]  rounded-lg py-3 px-3">
-        <div className="flex gap-4 justify-start items-center px-3 pt-3 pb-4">
-          <div className="relative">
-            <UserAvatar size="w-11 h-11" textSize="text-xl" />
+    <aside
+      className="bg-white absolute right-0 sm:top-8 top-7 z-40 text-black w-[270px] max-w-[320px] min-w-[230px]  rounded-lg py-3 px-3"
+      ref={menuRef}
+    >
+      <div className="flex gap-4 justify-start items-center px-3 pt-3 pb-4">
+        <div className="relative">
+          <UserAvatar size="w-11 h-11" textSize="text-xl" />
 
-            {isLoggedIn && (
-              <div className="absolute z-30 w-[10px] h-[10px] bg-green-500 rounded-full bottom-[0px] right-0"></div>
-            )}
-          </div>
-          <div>
-            <p className="font-bold text-xl">{username}</p>
-            <p className="text-slate-500 font-medium text-sm">{email}</p>
-          </div>
+          {isLoggedIn && (
+            <div className="absolute z-30 w-[10px] h-[10px] bg-green-500 rounded-full bottom-[0px] right-0"></div>
+          )}
         </div>
-        <ul>
-          <ProfileElements
-            route={`/u/${userPath}`}
-            itemName="View Profile"
-            icon={<FaRegUser />}
-            onClick={onClose}
-          />
-        </ul>
-        <hr className="border-[1.5px] my-2" />
+        <div>
+          <p className="font-bold text-xl">{username}</p>
+          <p className="text-slate-500 font-medium text-sm">{email}</p>
+        </div>
+      </div>
+      <ul>
+        <ProfileElements
+          route={`/u/${userPath}`}
+          itemName="View Profile"
+          icon={<FaRegUser />}
+          onClose={onClose}
+        />
+      </ul>
+      <hr className="border-[1.5px] my-2" />
 
-        <ul>
-          <ProfileElements
-            itemName="My Watchlist"
-            route={`/u/${userPath}/Watchlist`}
-            icon={<BsBookmarkCheck />}
-            onClick={onClose}
-          />
-          <ProfileElements
-            itemName="My Favorites"
-            route={`/u/${userPath}/Favorites`}
-            icon={<IoMdHeartEmpty />}
-            onClick={onClose}
-          />
-          <ProfileElements
-            itemName="My Lists"
-            route={`/u/${userPath}/Lists`}
-            icon={<MdChecklistRtl />}
-            onClick={onClose}
-          />
-          <ProfileElements
-            itemName="My ratings"
-            route={`/u/${userPath}/Ratings`}
-            icon={<FaRegStar />}
-            onClick={onClose}
-          />
-        </ul>
-        <hr className="border-[1.5px] my-2" />
-        <ul>
-          <ProfileElements
-            itemName="Settings"
-            route={`/u/${userPath}/settings/profile`}
-            icon={<IoSettingsOutline />}
-            onClick={onClose}
-          />
-          <ProfileElements
-            itemName="Log out"
-            route="/"
-            icon={<IoLogOutOutline />}
-            onClick={() => {
-              onClose();
-              dispatch(logout());
-            }}
-          />
-        </ul>
-      </aside>
-    </div>
+      <ul>
+        <ProfileElements
+          itemName="My Watchlist"
+          route={`/u/${userPath}/Watchlist`}
+          icon={<BsBookmarkCheck />}
+          onClose={onClose}
+        />
+        <ProfileElements
+          itemName="My Favorites"
+          route={`/u/${userPath}/Favorites`}
+          icon={<IoMdHeartEmpty />}
+          onClose={onClose}
+        />
+        <ProfileElements
+          itemName="My Lists"
+          route={`/u/${userPath}/Lists`}
+          icon={<MdChecklistRtl />}
+          onClose={onClose}
+        />
+        <ProfileElements
+          itemName="My ratings"
+          route={`/u/${userPath}/Ratings`}
+          icon={<FaRegStar />}
+          onClose={onClose}
+        />
+      </ul>
+      <hr className="border-[1.5px] my-2" />
+      <ul>
+        <ProfileElements
+          itemName="Settings"
+          route={`/u/${userPath}/settings/profile`}
+          icon={<IoSettingsOutline />}
+          onClose={onClose}
+        />
+        <ProfileElements
+          itemName="Log out"
+          route="/"
+          icon={<IoLogOutOutline />}
+          onClose={() => {
+            onClose();
+            dispatch(logout());
+          }}
+        />
+      </ul>
+    </aside>
   );
 };
 

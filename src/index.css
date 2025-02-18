@@ -35,17 +35,6 @@ html {
   }
 }
 
-.fsdf {
-  color: #705d3b;
-  color: #ffbf00;
-  color: #ffa845;
-  color: #ffe5b4;
-  color: #ff1f1f;
-  color: #661e7c;
-  color: #0000ff;
-  color: #ffde05c3;
-}
-
 .spinner-mini {
   animation: rotation 1.5s infinite linear;
 }
@@ -62,7 +51,7 @@ html {
   }
 
   .padding-x {
-    @apply xl:px-36 lg:px-28 md:px-20 sm:px-12 px-4;
+    @apply 2xl:px-44 xl:px-40 lg:px-36 md:px-16 sm:px-12 xs:px-8 2xs:px-6 px-2;
   }
 
   .padding {
@@ -72,9 +61,8 @@ html {
   .header-gradient {
     background-image: linear-gradient(
       to bottom,
-      #000000c1,
-      #00000070,
-      #0000003e,
+      #25242fea,
+      #25242fae,
       transparent
     );
   }

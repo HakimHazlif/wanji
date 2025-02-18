@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { getUser } from "../services/apiAuth";
 
 const styleClassName =
-  "py-2 text-white font-medium font-roboto rounded-xl w-[100px] min-w-[70px] duration-200 transition-colors";
+  "font-medium font-roboto text-sm rounded-xl lg:w-[100px] md:w-[88px] w-[70px] duration-200 transition-colors";
 
 const ProfileSwitcher = () => {
   const dispatch = useDispatch();
@@ -15,7 +15,6 @@ const ProfileSwitcher = () => {
   const buttonRef = useRef();
 
   const [openProfileMenu, setOpenProfileMenu] = useState(false);
-  const { toggleLogsForm } = useSession();
   const { isLoggedIn } = useSelector((state) => state.user);
   const { avatar, username } = useSelector((state) => state.user.user);
 
@@ -32,23 +31,28 @@ const ProfileSwitcher = () => {
   return (
     <div>
       {isLoggedIn ? (
-        <>
+        <div className="relative">
           <button
             ref={buttonRef}
-            className="h-[35px] w-[35px] rounded-full  overflow-hidden ring-2 ring-orange-coral"
+            className="flex items-center gap-2 group"
             onClick={toggleProfileMenu}
           >
-            {avatar ? (
-              <img
-                src={avatar}
-                alt={username}
-                className="w-full h-full object-cover object-center"
-              />
-            ) : (
-              <div className="w-full h-full flex justify-center items-center bg-orange-coral hover:bg-orange-amber duration-150 transition-all text-lg text-slate-200 capitalize">
-                {username.charAt(0)}
-              </div>
-            )}
+            <div className="sm:w-[27px] sm:h-[27px] w-[22px] h-[22px] rounded-full overflow-hidden ring-2 ring-orange-coral">
+              {avatar ? (
+                <img
+                  src={avatar}
+                  alt={username}
+                  className="w-full h-full object-cover object-center"
+                />
+              ) : (
+                <div className="w-full h-full flex justify-center items-center bg-orange-coral hover:bg-orange-amber duration-150 transition-all text-sm md:text-lg sm:text-base text-slate-200 capitalize">
+                  {username.charAt(0)}
+                </div>
+              )}
+            </div>
+            <span className="text-lg font-medium max-sm:hidden group-hover:text-orange-coral duration-150 transition-colors">
+              {username}
+            </span>
           </button>
 
           {openProfileMenu ? (
@@ -58,22 +62,22 @@ const ProfileSwitcher = () => {
               onClose={() => setOpenProfileMenu(false)}
             />
           ) : null}
-        </>
+        </div>
       ) : (
-        <div className="flex gap-2">
-          <Link to="/signup" onClick={() => toggleLogsForm("signup")}>
-            <Button
-              stylish={`${styleClassName} border border-orange-amber hover:bg-amber-50 hover:text-[#0e0e6b]`}
+        <div className="md:flex gap-2 hidden">
+          <Link to="/signup">
+            <button
+              className={`${styleClassName} border-2 border-orange-coral hover:bg-orange-200 hover:text-slate-900 py-1.5`}
             >
               Sign up
-            </Button>
+            </button>
           </Link>
-          <Link to="/login" onClick={() => toggleLogsForm("login")}>
-            <Button
-              stylish={`${styleClassName} bg-orange-amber hover:bg-orange-coral`}
+          <Link to="/login">
+            <button
+              className={`${styleClassName} bg-orange-amber hover:bg-orange-coral text-slate-900 py-2`}
             >
               Log in
-            </Button>
+            </button>
           </Link>
         </div>
       )}

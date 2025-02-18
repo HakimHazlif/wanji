@@ -2,6 +2,16 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    screens: {
+      "2xl": "1536px",
+      xl: "1280px",
+      lg: "1024px",
+      md: "768px",
+      sm: "640px",
+      xs: "425px",
+      "2xs": "375px",
+      "3xs": "320px",
+    },
     extend: {
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
