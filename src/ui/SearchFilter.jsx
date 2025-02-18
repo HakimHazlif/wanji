@@ -28,7 +28,7 @@ const SearchFilter = ({ selectedValue, handleSelectOpetion }) => {
         onClick={() => setOpenOptions((prev) => !prev)}
       >
         <div className="flex justify-between items-center bg-slate-200 border-none rounded-t-3xl rounded-b-3xl py-2 px-3 text-black cursor-pointer">
-          <span className="capitalize">
+          <span className="capitalize text-nowrap">
             {selectedValue === "tv" && "TV Show"}
             {selectedValue === "multi" && "All"}
             {selectedValue !== "tv" &&
@@ -38,12 +38,12 @@ const SearchFilter = ({ selectedValue, handleSelectOpetion }) => {
           <IoMdArrowDropdown className="text-xl" />
         </div>
         <div
-          className={`absolute top-11 left-1 bg-slate-200 z-50 rounded-md overflow-hidden w-[120px] capitalize ${
+          className={`absolute top-full right-0 text-gray-900 bg-slate-200 z-50 rounded-md overflow-hidden max-w-[140px] w-[120px] min-w-[100px] capitalize ${
             openOpetions ? "block" : "hidden"
           }`}
         >
           <div
-            className="py-2 px-3 cursor-pointer transition-colors hover:bg-slate-300"
+            className="p-2 cursor-pointer transition-colors hover:bg-slate-300"
             data-value="all"
             onClick={() => handleSelectOpetion("multi")}
           >

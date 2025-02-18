@@ -3,14 +3,17 @@ import SearchBar from "./SearchBar";
 
 const Discover = ({ image }) => {
   return (
-    <section className="">
-      <div className="flex flex-col gap-20 justify-end items-center padding-x leading-relaxed text-center h-[200px] mt-32">
-        <p className="font-montserrat font-bold text-white text-2xl lg:px-[250px] md:px-[250px] sm:px-[150px] px-[100px] text-shadow-md">
-          and explore a world of movies and shows waiting to be discovered right
-          now
+    <section className="padding-x">
+      <div className="flex flex-col items-center w-full leading-relaxed text-center">
+        <h1 className="font-bold text-3xl max-sm:text-xl font-montserrat text-shadow-md w-full md:w-[400px] sm:w-[500px]">
+          Dive into a world of endless stories
+        </h1>
+        <p className="font-montserrat font-bold text-2xl max-sm:text-lg text-shadow-md w-full mb-20 md:w-[450px] sm:w-[500px] text-center">
+          Explore, rate, and curate your ultimate collection of films and
+          series.
         </p>
-        <SearchBar />
       </div>
+      <SearchBar />
 
       <HeaderBackDrop backdrop={image} alt="backdrop" />
     </section>
