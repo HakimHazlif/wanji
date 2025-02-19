@@ -33,6 +33,10 @@ html {
     -webkit-mask-image: linear-gradient(black, black, transparent);
     filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.5));
   }
+
+  .heading-title-1 {
+    @apply text-xl sm:text-2xl md:text-3xl font-semibold text-slate-200;
+  }
 }
 
 .spinner-mini {

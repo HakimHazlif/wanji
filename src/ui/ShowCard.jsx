@@ -59,7 +59,7 @@ const ShowCard = ({
   };
 
   return (
-    <div className="w-52 relative">
+    <div className="md:w-52 sm:w-48 w-44 relative">
       <div className="">
         <Tooltip title={title}>
           <span>
@@ -67,7 +67,7 @@ const ShowCard = ({
               <img
                 src={getPictureUrlFormat(poster, 500)}
                 alt={title}
-                className="relative w-full h-[300px] object-cover rounded-md shadow-2xl cursor-pointer"
+                className="relative w-full md:h-[320px] sm:h-[290px] h-[260px]  object-cover rounded-md shadow-2xl cursor-pointer"
                 onClick={handleNavigate}
                 loading="lazy"
               />
@@ -78,7 +78,7 @@ const ShowCard = ({
         </Tooltip>
         <div className="mt-2">
           <div className="flex w-full justify-between items-center">
-            <div className="flex gap-4">
+            <div className="flex md:gap-3 gap-2">
               <Tooltip title="TMDB rate">
                 <div className="rounded-md bg-orange-amber text-gray-700 w-[45px] h-6 flex items-center justify-center gap-1 text-xs font-bold">
                   <FaStar className="text-white" />
@@ -118,7 +118,7 @@ const ShowCard = ({
           </div>
           {additions && (
             <Suspense fallback={<div>Loading</div>}>
-              <div className="flex justify-between gap-1 mt-4">
+              <div className="flex justify-between gap-2 mt-4">
                 <WatchlistButton item={item} />
                 <FavoriteButton item={item} />
               </div>

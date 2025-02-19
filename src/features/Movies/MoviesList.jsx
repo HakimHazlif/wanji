@@ -24,7 +24,9 @@ const MoviesList = ({ listKey }) => {
   }
 
   return (
-    <section className={`padding-x ${moviesList.length > 0 ? "pt-32" : ""}`}>
+    <section
+      className={`padding-x ${moviesList.length > 0 ? "md:pt-32 pt-52" : ""}`}
+    >
       {moviesList.length > 0 && (
         <ListScroll title={listTitle} path={path} viewAll={true}>
           {moviesList.map((movie) => (

@@ -3,7 +3,11 @@ import { useSelector } from "react-redux";
 import { useLists } from "./useLists";
 import { useAddShow } from "./useAddShow";
 import { useDeleteShow } from "./useDeleteShow";
-import { BsBookmarkCheckFill, BsBookmarkPlusFill } from "react-icons/bs";
+import {
+  BsBookmarkCheckFill,
+  BsBookmarkPlus,
+  BsBookmarkPlusFill,
+} from "react-icons/bs";
 import { Tooltip } from "@mui/material";
 import SpinnerMini from "../../ui/SpinnerMini";
 
@@ -43,18 +47,18 @@ const WatchlistButton = ({ item, size = 20 }) => {
 
   let content;
   if (isAdding || isDeleting || isLoading) {
-    content = <SpinnerMini size={size} />;
+    content = <SpinnerMini />;
   } else {
     if (isWatchlist) {
       content = (
         <>
-          <BsBookmarkCheckFill size={size} className=" text-gray-200" />
+          <BsBookmarkCheckFill className="text-gray-200 md:text-xl sm:text-lg text-base" />
         </>
       );
     } else {
       content = (
         <>
-          <BsBookmarkPlusFill size={size} className="text-gray-200" />
+          <BsBookmarkPlus className="text-gray-200 md:text-xl sm:text-lg text-base" />
         </>
       );
     }
@@ -66,9 +70,9 @@ const WatchlistButton = ({ item, size = 20 }) => {
         <button
           className={`${
             isWatchlist
-              ? "bg-amber-400 hover:bg-amber-500"
+              ? "bg-amber-500 hover:bg-amber-400"
               : "bg-slate-700 hover:bg-slate-600"
-          } px-4 py-2 w-24  font-bold rounded-lg flex items-center justify-center gap-2 transition-colors duration-200 shadow-lg`}
+          } md:w-[100px] sm:w-[92px] w-[85px] py-2 font-bold rounded-lg flex items-center justify-center gap-2 transition-colors duration-200 shadow-lg`}
           onClick={
             isWatchlist ? handleDeleteFromWatchlist : handleAddToWatchlist
           }

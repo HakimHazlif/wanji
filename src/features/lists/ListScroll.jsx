@@ -67,7 +67,7 @@ const ListScroll = ({ title, path = "", children }) => {
       <div className="flex items-center justify-between mb-10">
         <Link
           to={path}
-          className={`text-4xl font-semibold flex items-end gap-4 group text-white group ${
+          className={`heading-title-1 flex items-end md:gap-4 gap-2 group ${
             path !== "" ? "cursor-pointer" : "cursor-default"
           }`}
           onMouseEnter={() => setIsHoveredTitle(true)}
@@ -75,7 +75,7 @@ const ListScroll = ({ title, path = "", children }) => {
         >
           {title}
           {path && (
-            <span className="flex items-center gap-2 text-gray-300 group-hover:text-orange-coral text-xl relative">
+            <span className="flex items-center gap-2 text-gray-300 group-hover:text-orange-coral md:text-xl sm:text-lg text-base relative">
               <span
                 className={`transition-all ease-in duration-400 ${
                   isHoveredTitle ? "opacity-100 delay-300" : "opacity-0"
@@ -83,14 +83,11 @@ const ListScroll = ({ title, path = "", children }) => {
               >
                 View all
               </span>
-              <IoIosArrowForward
-                className="absolute transform translate-x-0 group-hover:translate-x-[70px] transition-transform duration-300 ease-linear"
-                size={30}
-              />
+              <IoIosArrowForward className="absolute transform translate-x-0 md:group-hover:translate-x-[70px] sm:group-hover:translate-x-[64px]  group-hover:translate-x-[58px]  transition-transform duration-300 ease-linear md:text-3xl sm:text-2xl text-xl" />
             </span>
           )}
         </Link>
-        <div className="flex gap-3 text-4xl text-slate-600 cursor-pointer">
+        <div className="flex gap-3 sm:text-4xl text-3xl text-slate-600 cursor-pointer">
           <IoIosArrowDropleftCircle
             onClick={() => handleScroll("left")}
             disabled={isScrolledLeft}
@@ -123,7 +120,7 @@ const ListScroll = ({ title, path = "", children }) => {
           }`}
         />
         <div
-          className="grid justify-items-start gap-6 grid-flow-col overflow-x-auto scrollbar-custom space-x-2 scroll-smooth pb-5 pr-1"
+          className="grid justify-items-start md:gap-6 sm:gap-4 gap-2 grid-flow-col overflow-x-auto scrollbar-custom space-x-2 scroll-smooth pb-5 pr-1"
           ref={containerRef}
         >
           {children}

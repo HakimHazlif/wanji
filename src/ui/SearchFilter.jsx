@@ -18,16 +18,16 @@ const SearchFilter = ({ selectedValue, handleSelectOpetion }) => {
   }, []);
 
   return (
-    <>
+    <div>
       <label htmlFor="filter-select" className="hidden">
         Filter
       </label>
       <div
         ref={dropdownRef}
-        className="w-[120px] relative z-40"
+        className="sm:w-[120px] w-[100px] relative z-40"
         onClick={() => setOpenOptions((prev) => !prev)}
       >
-        <div className="flex justify-between items-center bg-slate-200 border-none rounded-t-3xl rounded-b-3xl py-2 px-3 text-black cursor-pointer">
+        <div className="flex justify-between items-center bg-slate-200 border-none rounded-t-3xl rounded-b-3xl py-2 px-3 text-black cursor-pointer sm:text-base text-sm">
           <span className="capitalize text-nowrap">
             {selectedValue === "tv" && "TV Show"}
             {selectedValue === "multi" && "All"}
@@ -72,7 +72,7 @@ const SearchFilter = ({ selectedValue, handleSelectOpetion }) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

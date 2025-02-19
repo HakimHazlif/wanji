@@ -20,13 +20,13 @@ const CreditCard = ({
   function getPictureSize() {
     switch (size) {
       case "small":
-        return "w-16 h-16";
+        return "sm:w-16 sm:h-16 w-14 h-14";
       case "meduim":
-        return "w-24 h-24";
+        return "sm:w-24 sm:h-24 w-20 h-20";
       case "big":
-        return "w-36 h-36";
+        return "sm:w-36 sm:h-36 w-32 h-32";
       default:
-        return "w-32 h-32";
+        return "sm:w-32 sm:h-32 w-28 h-28";
     }
   }
 

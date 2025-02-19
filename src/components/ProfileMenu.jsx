@@ -1,6 +1,6 @@
 import ProfileElements from "./ProfileElement";
 import { profileMenuElements } from "../constants/uiElements";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
 import { FaRegUser } from "react-icons/fa";
@@ -14,12 +14,12 @@ import { logout } from "../services/apiAuth";
 import UserAvatar from "../ui/UserAvatar";
 import { FaRegStar } from "react-icons/fa6";
 
-const ProfileMenu = ({ setHandle, onClose, buttonRef }) => {
+const ProfileMenu = ({ onClose, buttonRef }) => {
   const dispatch = useDispatch();
   const menuRef = useRef();
   const { isLoggedIn, user } = useSelector((state) => state.user);
 
-  const { avatar, username, email } = user;
+  const { username, email } = user;
   const userPath = username.replace(" ", "-");
 
   // const { watchlist, favoriteList, remainLists } = useLists();
@@ -42,10 +42,14 @@ const ProfileMenu = ({ setHandle, onClose, buttonRef }) => {
 
   return (
     <aside
-      className="bg-white absolute right-0 sm:top-8 top-7 z-40 text-black w-[270px] max-w-[320px] min-w-[230px]  rounded-lg py-3 px-3"
+      className="bg-white absolute right-0 sm:top-8 top-7 z-50 text-black w-[270px] max-w-[320px] min-w-[230px]  rounded-lg py-3 px-3"
       ref={menuRef}
     >
-      <div className="flex gap-4 justify-start items-center px-3 pt-3 pb-4">
+      <Link
+        to={`/u/${userPath}`}
+        className="flex gap-4 justify-start items-center px-3 pt-3 pb-4 "
+        onClick={onClose}
+      >
         <div className="relative">
           <UserAvatar size="w-11 h-11" textSize="text-xl" />
 
@@ -57,8 +61,8 @@ const ProfileMenu = ({ setHandle, onClose, buttonRef }) => {
           <p className="font-bold text-xl">{username}</p>
           <p className="text-slate-500 font-medium text-sm">{email}</p>
         </div>
-      </div>
-      <ul>
+      </Link>
+      <ul className="font-medium">
         <ProfileElements
           route={`/u/${userPath}`}
           itemName="View Profile"
@@ -68,7 +72,7 @@ const ProfileMenu = ({ setHandle, onClose, buttonRef }) => {
       </ul>
       <hr className="border-[1.5px] my-2" />
 
-      <ul>
+      <ul className="font-medium">
         <ProfileElements
           itemName="My Watchlist"
           route={`/u/${userPath}/Watchlist`}
@@ -95,7 +99,7 @@ const ProfileMenu = ({ setHandle, onClose, buttonRef }) => {
         />
       </ul>
       <hr className="border-[1.5px] my-2" />
-      <ul>
+      <ul className="font-medium">
         <ProfileElements
           itemName="Settings"
           route={`/u/${userPath}/settings/profile`}

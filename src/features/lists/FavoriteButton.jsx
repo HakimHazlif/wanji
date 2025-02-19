@@ -49,13 +49,13 @@ const FavoriteButton = ({ item, size = 20 }) => {
     if (isFavorited) {
       content = (
         <>
-          <FaHeart size={size} className=" text-gray-200" />
+          <FaHeart className="text-gray-200 md:text-xl sm:text-lg text-base" />
         </>
       );
     } else {
       content = (
         <>
-          <LuHeart size={size} className=" text-gray-200" />
+          <LuHeart className="text-gray-200 md:text-xl sm:text-lg text-base" />
         </>
       );
     }
@@ -69,7 +69,7 @@ const FavoriteButton = ({ item, size = 20 }) => {
             isFavorited
               ? "bg-strawberry hover:bg-red-600"
               : "bg-slate-700 hover:bg-slate-600"
-          }  w-24 px-4 py-2 font-bold rounded-lg flex items-center justify-center gap-2 transition-colors duration-200 shadow-lg`}
+          } md:w-[100px] sm:w-[92px] w-[85px] py-2 font-bold rounded-lg flex items-center justify-center gap-2 transition-colors duration-200 shadow-lg`}
           onClick={isFavorited ? handleDeleteFromFavorite : handleAddToFavorite}
           disabled={isLoading || isAdding || isDeleting}
         >

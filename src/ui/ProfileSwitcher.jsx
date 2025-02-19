@@ -37,7 +37,7 @@ const ProfileSwitcher = () => {
             className="flex items-center gap-2 group"
             onClick={toggleProfileMenu}
           >
-            <div className="sm:w-[27px] sm:h-[27px] w-[22px] h-[22px] rounded-full overflow-hidden ring-2 ring-orange-coral">
+            <div className="sm:w-[27px] sm:h-[27px] w-[25px] h-[25px] rounded-full overflow-hidden ring-2 ring-orange-coral">
               {avatar ? (
                 <img
                   src={avatar}
