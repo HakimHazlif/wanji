@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "react-query";
 import { deleteShow as apiDeleteShow } from "../../services/apiLists";
 
-export function useDeleteShow() {
+export function useDeleteShow(type) {
   const queryClient = useQueryClient();
 
   const {
@@ -12,6 +12,9 @@ export function useDeleteShow() {
     mutationFn: apiDeleteShow,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["lists"] });
+      queryClient.invalidateQueries({
+        queryKey: ["itemsStatus", type],
+      });
     },
   });
 

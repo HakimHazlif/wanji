@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { BiSolidFilm } from "react-icons/bi";
 import { FiMenu } from "react-icons/fi";
-import { IoIosHome, IoIosTv } from "react-icons/io";
 import { Link, NavLink } from "react-router";
 import ProfileElements from "../components/ProfileElement";
 import { FaFilm } from "react-icons/fa";
@@ -19,7 +17,7 @@ const navbarElements = [
   {
     itemName: "Movies",
     icon: <FaFilm className="md:hidden" />,
-    navigationPath: "/movies?movie-tag=popular&page=1",
+    navigationPath: "/movies?movies-tag=popular&page=1",
   },
   {
     itemName: "TV Shows",

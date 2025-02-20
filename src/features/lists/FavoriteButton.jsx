@@ -7,44 +7,93 @@ import { FaHeart } from "react-icons/fa";
 import { LuHeart } from "react-icons/lu";
 import { Tooltip } from "@mui/material";
 import SpinnerMini from "../../ui/SpinnerMini";
+import { useListsContext } from "../../context/ListsContext";
 
-const FavoriteButton = ({ item, size = 20 }) => {
-  const { itemId, type, parentId, episode, season } = item;
-
+const FavoriteButton = ({ item }) => {
   const { isLoggedIn } = useSelector((state) => state.user);
 
+  const { itemsStatusMap, setMoviesMap, setTvShowsMap, setEpisodesMap } =
+    useListsContext();
+  const { itemId, type, parentId, episode, season } = item;
+
+  const isFavorited = itemsStatusMap?.[type]?.[itemId]?.inFavorites ?? false;
+
   const { favoriteList, isLoading } = useLists();
-  const { isLoading: isAdding, addShow } = useAddShow();
-  const { isLoading: isDeleting, deleteShow } = useDeleteShow();
+  const { isLoading: isAdding, addShow } = useAddShow(type);
+  const { isLoading: isDeleting, deleteShow } = useDeleteShow(type);
 
   function handleAddToFavorite() {
     if (isLoggedIn && favoriteList) {
       const listId = favoriteList.id;
-      addShow({
-        id: itemId,
-        listId,
-        type,
-        parentId,
-        episode,
-        season,
-      });
+      addShow(
+        {
+          id: itemId,
+          listId,
+          type,
+          parentId,
+          episode,
+          season,
+        },
+        {
+          onSuccess: () => {
+            if (type === "movie") {
+              setMoviesMap((prev) => ({
+                ...prev,
+                [itemId]: { ...prev[itemId], inFavorites: true },
+              }));
+            } else if (type === "tv") {
+              setTvShowsMap((prev) => ({
+                ...prev,
+                [itemId]: { ...prev[itemId], inFavorites: true },
+              }));
+            } else if (type === "episode") {
+              setEpisodesMap((prev) => ({
+                ...prev,
+                [itemId]: { ...prev[itemId], inFavorites: true },
+              }));
+            }
+          },
+        }
+      );
     }
   }
   function handleDeleteFromFavorite() {
     if (isLoggedIn && favoriteList) {
       const listId = favoriteList.id;
-      deleteShow({ id: itemId, listId, type });
+      deleteShow(
+        { id: itemId, listId, type },
+        {
+          onSuccess: () => {
+            if (type === "movie") {
+              setMoviesMap((prev) => ({
+                ...prev,
+                [itemId]: { ...prev[itemId], inFavorites: false },
+              }));
+            } else if (type === "tv") {
+              setTvShowsMap((prev) => ({
+                ...prev,
+                [itemId]: { ...prev[itemId], inFavorites: false },
+              }));
+            } else if (type === "episode") {
+              setEpisodesMap((prev) => ({
+                ...prev,
+                [itemId]: { ...prev[itemId], inFavorites: false },
+              }));
+            }
+          },
+        }
+      );
     }
   }
 
-  const isFavorited = useMemo(
-    () => favoriteList?.items_list.some((el) => el.item_id == itemId),
-    [itemId, favoriteList?.items_list]
-  );
+  // const isFavorited = useMemo(
+  //   () => favoriteList?.items_list.some((el) => el.item_id == itemId),
+  //   [itemId, favoriteList?.items_list]
+  // );
 
   let content;
   if (isAdding || isDeleting || isLoading) {
-    content = <SpinnerMini size={size} />;
+    content = <SpinnerMini />;
   } else {
     if (isFavorited) {
       content = (

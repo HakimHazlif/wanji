@@ -6,7 +6,7 @@ const TvShowsList = ({ listKey }) => {
   const { tvShows } = useTvShows();
   const category = "tv";
 
-  const tvShowsList = tvShows?.[listKey]?.slice(0, 9) ?? [];
+  const tvShowsList = tvShows?.[listKey]?.slice(0, 8) ?? [];
 
   let path, listTitle;
   if (listKey === "popularTv") {

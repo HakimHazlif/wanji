@@ -162,8 +162,6 @@ const ListView = ({ targetList, forEditList = false }) => {
     const itemsLength = itemsList?.length ?? 0;
     const ListLength = list?.length ?? 0;
 
-    console.log(itemsLength, ListLength);
-
     if (itemsLength + 1 === ListLength) {
       fetchNextPage();
     }

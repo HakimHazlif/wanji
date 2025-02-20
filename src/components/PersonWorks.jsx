@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { usePerson } from "../features/person/usePerson";
-import ShowCardRow from "./ShowCardRow";
 import WorkCard from "../features/person/WorkCard";
 
 const PersonWorks = () => {

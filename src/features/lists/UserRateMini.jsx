@@ -1,18 +1,20 @@
 import { FaStar } from "react-icons/fa";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import RatingPopup from "./RatingPopup";
-import { useRatingList } from "./useRatingList";
 import SpinnerMini from "../../ui/SpinnerMini";
 import { Box, Rating, Tooltip } from "@mui/material";
 import { useUpadetRating } from "./useUpadetRating";
 import { useAddRating } from "./useAddRating";
+import { useListsContext } from "../../context/ListsContext";
 
 const UserRateMini = ({ item, addStars = false, buttonStyle }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  const { ratingList } = useRatingList();
-  const { isLoading: isUpading } = useUpadetRating();
-  const { isLoading: isAdding } = useAddRating();
+  const { itemsStatusMap } = useListsContext();
+
+  const rating = itemsStatusMap?.[item?.type]?.[item?.itemId]?.rating ?? false;
+
+  // const { ratingList } = useRatingList();
 
   const handleOpenPopup = (e) => {
     e.stopPropagation();
@@ -23,25 +25,6 @@ const UserRateMini = ({ item, addStars = false, buttonStyle }) => {
     e?.stopPropagation();
     setIsPopupOpen(false);
   };
-
-  const rating = useMemo(
-    () =>
-      ratingList?.filter(
-        (el) => el.item_id == item?.itemId && el.type === item?.type
-      )?.[0]?.rate || 0,
-    [item?.itemId, ratingList, item?.type]
-  );
-
-  let content;
-  if (isAdding || isUpading) content = <SpinnerMini />;
-  else
-    content = (
-      <>
-        {!addStars && <FaStar className="text-white" />}
-        {addStars && rating === 0 && 0}
-        {rating > 0 && <p>{rating}</p>}
-      </>
-    );
 
   return (
     <div onClick={(e) => e.stopPropagation()}>
@@ -68,8 +51,10 @@ const UserRateMini = ({ item, addStars = false, buttonStyle }) => {
               />
             </Box>
           )}
-          <button disabled={isAdding || isUpading} className={buttonStyle}>
-            {content}
+          <button className={buttonStyle}>
+            {!addStars && <FaStar className="text-white" />}
+            {addStars && rating === 0 && 0}
+            {rating > 0 && <p>{rating}</p>}
           </button>
         </span>
       </Tooltip>

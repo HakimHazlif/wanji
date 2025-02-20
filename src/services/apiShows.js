@@ -1,5 +1,6 @@
 import axios from "axios";
 import { options, URL_Base } from "../constants/variables";
+import supabase from "./supabase";
 
 export async function getShow({ category, id }) {
   try {
@@ -49,16 +50,18 @@ export async function getMovies() {
   }
 }
 
-export async function getMoviesByList(list, page, id) {
+export async function getItemsByList(list, page, id, type) {
   const url =
     list === "for_you"
-      ? `${URL_Base}movie/${id}/recommendations?language=en-US&page=${page}`
-      : `${URL_Base}movie/${list}?language=en-US&page=${page}`;
+      ? `${URL_Base}${type}/${id}/recommendations?language=en-US&page=${page}`
+      : `${URL_Base}${type}/${list}?language=en-US&page=${page}`;
+
+  console.log(url);
 
   try {
     const moviesList = await axios.get(url, options);
 
-    return moviesList ? moviesList.data : [];
+    return moviesList?.data ?? [];
   } catch (err) {
     console.log(err);
   }
@@ -87,21 +90,6 @@ export async function getTvShows() {
     };
   } catch (err) {
     throw new Error(err.response?.data || "Something went wrong");
-  }
-}
-
-export async function getTvByList(list, page, id) {
-  const url =
-    list === "for_you"
-      ? `${URL_Base}tv/${id}/recommendations?language=en-US&page=${page}`
-      : `${URL_Base}tv/${list}?language=en-US&page=${page}`;
-
-  try {
-    const moviesList = await axios.get(url, options);
-
-    return moviesList ? moviesList.data : [];
-  } catch (err) {
-    console.log(err);
   }
 }
 

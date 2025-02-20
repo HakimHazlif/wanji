@@ -9,6 +9,7 @@ export function useMovies() {
   } = useQuery({
     queryKey: ["movies"],
     queryFn: getMovies,
+    staleTime: 1000 * 60 * 24,
   });
 
   // const popularMovies = movies?.popularMovies.slice(0, 9) ?? [];

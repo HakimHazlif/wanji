@@ -1,49 +1,90 @@
-import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLists } from "./useLists";
 import { useAddShow } from "./useAddShow";
 import { useDeleteShow } from "./useDeleteShow";
-import {
-  BsBookmarkCheckFill,
-  BsBookmarkPlus,
-  BsBookmarkPlusFill,
-} from "react-icons/bs";
+import { BsBookmarkCheckFill, BsBookmarkPlus } from "react-icons/bs";
 import { Tooltip } from "@mui/material";
 import SpinnerMini from "../../ui/SpinnerMini";
+import { useListsContext } from "../../context/ListsContext";
 
-const WatchlistButton = ({ item, size = 20 }) => {
-  const { itemId, type, parentId, episode, season } = item;
-
+const WatchlistButton = ({ item }) => {
   const { isLoggedIn } = useSelector((state) => state.user);
 
+  const { itemsStatusMap, setMoviesMap, setTvShowsMap, setEpisodesMap } =
+    useListsContext();
+  const { itemId, type, parentId, episode, season } = item;
+
+  const isWatchlist = itemsStatusMap?.[type]?.[itemId]?.inWatchlist ?? false;
+
   const { watchlist, isLoading } = useLists();
-  const { isLoading: isAdding, addShow } = useAddShow();
-  const { isLoading: isDeleting, deleteShow } = useDeleteShow();
+  const { isLoading: isAdding, addShow } = useAddShow(type);
+  const { isLoading: isDeleting, deleteShow } = useDeleteShow(type);
 
   function handleAddToWatchlist() {
     if (isLoggedIn && watchlist) {
       const listId = watchlist.id;
-      addShow({
-        id: itemId,
-        listId,
-        type,
-        parentId,
-        episode,
-        season,
-      });
+      addShow(
+        {
+          id: itemId,
+          listId,
+          type,
+          parentId,
+          episode,
+          season,
+        },
+        {
+          onSuccess: () => {
+            if (type === "movie") {
+              setMoviesMap((prev) => ({
+                ...prev,
+                [itemId]: { ...prev[itemId], inWatchlist: true },
+              }));
+            } else if (type === "tv") {
+              setTvShowsMap((prev) => ({
+                ...prev,
+                [itemId]: { ...prev[itemId], inWatchlist: true },
+              }));
+            } else if (type === "episode") {
+              setEpisodesMap((prev) => ({
+                ...prev,
+                [itemId]: { ...prev[itemId], inWatchlist: true },
+              }));
+            }
+          },
+        }
+      );
     }
   }
   function handleDeleteFromWatchlist() {
     if (isLoggedIn && watchlist) {
       const listId = watchlist.id;
-      deleteShow({ id: itemId, listId: listId, type });
+      deleteShow(
+        { id: itemId, listId: listId, type },
+        {
+          onSuccess: () => {
+            {
+              if (type === "movie") {
+                setMoviesMap((prev) => ({
+                  ...prev,
+                  [itemId]: { ...prev[itemId], inWatchlist: false },
+                }));
+              } else if (type === "tv") {
+                setTvShowsMap((prev) => ({
+                  ...prev,
+                  [itemId]: { ...prev[itemId], inWatchlist: false },
+                }));
+              } else if (type === "episode") {
+                setEpisodesMap((prev) => ({
+                  ...prev,
+                  [itemId]: { ...prev[itemId], inWatchlist: false },
+                }));
+              }
+            }
+          },
+        }
+      );
     }
   }
-
-  const isWatchlist = useMemo(
-    () => watchlist?.items_list.some((el) => el.item_id == itemId),
-    [itemId, watchlist?.items_list]
-  );
 
   let content;
   if (isAdding || isDeleting || isLoading) {

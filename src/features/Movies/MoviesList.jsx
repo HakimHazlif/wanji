@@ -6,21 +6,21 @@ const MoviesList = ({ listKey }) => {
   const { movies } = useMovies();
   const category = "movie";
 
-  const moviesList = movies?.[listKey]?.slice(0, 9) ?? [];
+  const moviesList = movies?.[listKey]?.slice(0, 8) ?? [];
 
   let path, listTitle;
   if (listKey === "popularMovies") {
-    path = "/movies?movie-tag=popular&page=1";
+    path = "/movies?movies-tag=popular&page=1";
     listTitle = "Popular Movies";
   } else if (listKey === "topRatedMovies") {
     listTitle = "Top Rated Movies";
-    path = "/movies?movie-tag=top_rated&page=1";
+    path = "/movies?movies-tag=top_rated&page=1";
   } else if (listKey === "nowPlaynigMovies") {
     listTitle = "Now Playnig Movies";
-    path = "/movies?movie-tag=now_playing&page=1";
+    path = "/movies?movies-tag=now_playing&page=1";
   } else if (listKey === "upcomingMovies") {
     listTitle = "Upcoming Movies";
-    path = "/movies?movie-tag=upcoming&page=1";
+    path = "/movies?movies-tag=upcoming&page=1";
   }
 
   return (

@@ -319,3 +319,89 @@ export const fetchShortLists = async (
     shortReviews: reviewsItems,
   };
 };
+
+export async function fetchItemsStatus({
+  itemIds = [],
+  type,
+  watchlistId,
+  favoriteListId,
+  userId,
+}) {
+  if (!itemIds.length) return {};
+
+  try {
+    const [watchlistResponse, favoritesResponse, ratingsResponse] =
+      await Promise.all([
+        supabase
+          .from("items_list")
+          .select("item_id")
+          .eq("list_id", watchlistId)
+          .eq("type", type)
+          .in("item_id", itemIds),
+
+        supabase
+          .from("items_list")
+          .select("item_id")
+          .eq("list_id", favoriteListId)
+          .eq("type", type)
+          .in("item_id", itemIds),
+
+        supabase
+          .from("rating")
+          .select("item_id, rate")
+          .eq("user_id", userId)
+          .eq("type", type)
+          .in("item_id", itemIds),
+      ]);
+
+    if (watchlistResponse.error) throw watchlistResponse.error;
+    if (favoritesResponse.error) throw favoritesResponse.error;
+    if (ratingsResponse.error) throw ratingsResponse.error;
+
+    const watchlistSet = new Set(
+      watchlistResponse.data.map((item) => item.item_id)
+    );
+    const favoritesSet = new Set(
+      favoritesResponse.data.map((item) => item.item_id)
+    );
+    const ratingsMap = new Map(
+      ratingsResponse.data.map((item) => [item.item_id, item.rate])
+    );
+
+    return itemIds.reduce((acc, id) => {
+      const idStr = id.toString();
+      acc[idStr] = {
+        inWatchlist: watchlistSet.has(idStr),
+        inFavorites: favoritesSet.has(idStr),
+        rating: ratingsMap.get(idStr) || null,
+      };
+      return acc;
+    }, {});
+  } catch (error) {
+    console.error("Error fetching items status:", error);
+    throw new Error(`Failed to fetch items status: ${error.message}`);
+  }
+}
+
+export async function fetchLastFavorite(favoriteId) {
+  const { data: movie, error: movieIdError } = await supabase
+    .from("items_list")
+    .select("item_id")
+    .eq("list_id", favoriteId)
+    .eq("type", "movie")
+    .order("created_at", { ascending: false })
+    .limit(1);
+
+  const { data: tvShow, error: tvIdError } = await supabase
+    .from("items_list")
+    .select("item_id")
+    .eq("list_id", favoriteId)
+    .eq("type", "tv")
+    .order("created_at", { ascending: false })
+    .limit(1);
+
+  if (movieIdError) throw new Error(movieIdError.message);
+  if (tvIdError) throw new Error(tvIdError.message);
+
+  return { movieId: movie?.[0]?.item_id, tvId: tvShow?.[0]?.item_id };
+}

@@ -4,23 +4,26 @@ import Spinner from "../ui/Spinner";
 import Discover from "../components/Discover";
 import { getImageViaPath } from "../utils/helper";
 import ShowCard from "../ui/ShowCard";
-import { useTvShows } from "../features/tv/useTvShows";
-import { useSpecificTv } from "../features/tv/useSpecificTv";
-import { useListsContext } from "../context/ListsContext";
+
 import Pagination from "../components/Pagination";
+import { useLists } from "../features/lists/useLists";
+import { useLastFavorite } from "../features/lists/useLastFavorite";
+import { useSpecificItems } from "../features/movies/useSpecificItems";
+import { useListsContext } from "../context/ListsContext";
 
 const Shows = () => {
   const category = "tv";
   const [title, setTitle] = useState("Popular TV Shows");
   const [description, setDescription] = useState("");
-  const { interestsIds } = useListsContext();
+  const { favoriteListId } = useListsContext();
+  const { tvId } = useLastFavorite(favoriteListId);
 
-  const { isLoading, tvList } = useSpecificTv(interestsIds.tvId);
+  const { isLoading, itemsList } = useSpecificItems(tvId, category);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const tvTag = searchParams.get("tv-tag");
   const currentPage = Number(searchParams.get("page")) || 1;
-  const totalPages = tvList?.total_pages > 50 ? 50 : tvList?.total_pages;
+  const totalPages = itemsList?.total_pages > 50 ? 50 : itemsList?.total_pages;
 
   useEffect(() => {
     switch (tvTag) {
@@ -63,7 +66,7 @@ const Shows = () => {
     <main className="">
       <Discover
         image={
-          getImageViaPath(tvList?.results?.[0]?.backdrop_path, 1280) || null
+          getImageViaPath(itemsList?.results?.[0]?.backdrop_path, 1280) || null
         }
       />
       <section className="padding-x py-14">
@@ -73,7 +76,7 @@ const Shows = () => {
         </div>
 
         <div className="w-full grid grid-cols-4 gap-16 pt-20">
-          {tvList?.results?.map((tv) => (
+          {itemsList?.results?.map((tv) => (
             <ShowCard key={tv.id} show={tv} category={category} />
           ))}
         </div>

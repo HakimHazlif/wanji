@@ -1,39 +1,31 @@
-import { useListsContext } from "../context/ListsContext";
-import ListScroll from "../features/lists/ListScroll";
-import { useUserInterests } from "../features/userLists/useUserInterests";
+import { useEffect } from "react";
+import { useItemsStatus } from "../features/lists/useItemsStatus";
 import ListGrid from "../ui/ListGrid";
 import ShowCard from "../ui/ShowCard";
-import Spinner from "../ui/Spinner";
 
-const Recommended = () => {
-  const { interestsIds } = useListsContext();
-  const { interestMovie, interestTv, isLoading } =
-    useUserInterests(interestsIds);
-
-  if (isLoading) return <Spinner />;
+const Recommended = ({ recommendedShows }) => {
+  const interestMovies = recommendedShows?.moviesInterest?.slice(0, 8) ?? [];
+  const interestTVs = recommendedShows?.tvShowsInterest?.slice(0, 8) ?? [];
 
   return (
     <section
       className={`flex flex-col gap-20 padding-x ${
-        interestMovie?.length > 0 || interestTv?.length > 0 ? "pt-28" : ""
+        interestMovies.length || interestTVs.length ? "pt-28" : ""
       }`}
     >
-      {interestMovie?.length > 0 && (
-        <ListGrid
-          title="Recommended Movies"
-          path="/movies?movie-tag=for_you&page=1"
-        >
-          {interestMovie?.slice(0, 8).map((movie) => (
+      {interestMovies.length && (
+        <ListGrid title="Recommended Movies" path="/movies?tag=for_you&page=1">
+          {interestMovies?.map((movie) => (
             <ShowCard key={movie.id} show={movie} category="movie" />
           ))}
         </ListGrid>
       )}
-      {interestTv?.length > 0 && (
+      {interestTVs.length && (
         <ListGrid
           title="Recommended TV Shows"
-          path="/tv-shows?tv-tag=for_you&page=1"
+          path="/tv-shows?tag=for_you&page=1"
         >
-          {interestTv?.slice(0, 8).map((tv) => (
+          {interestTVs?.map((tv) => (
             <ShowCard key={tv.id} show={tv} category="tv" />
           ))}
         </ListGrid>

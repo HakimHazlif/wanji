@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "react-query";
 import { insertShow } from "../../services/apiLists";
 
-export function useAddShow() {
+export function useAddShow(type) {
   const queryClient = useQueryClient();
 
   const {
@@ -12,6 +12,9 @@ export function useAddShow() {
     mutationFn: insertShow,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["lists"] });
+      queryClient.invalidateQueries({
+        queryKey: ["itemsStatus", type],
+      });
     },
     onError: () => {
       console.log("the adding is failed");

@@ -3,18 +3,21 @@ import { useEffect, useRef, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { useUpadetRating } from "./useUpadetRating";
 import { useAddRating } from "./useAddRating";
-import { useRating } from "./useRating";
 import { useSelector } from "react-redux";
+import { useListsContext } from "../../context/ListsContext";
+import SpinnerMini from "../../ui/SpinnerMini";
 
 const RatingPopup = ({ setClosePopup, item, showRate = 0 }) => {
   const { uid } = useSelector((state) => state.user.user);
+
+  const { setMoviesMap, setTvShowsMap, setEpisodesMap } = useListsContext();
 
   const [rating, setRating] = useState(Number(showRate));
   const [hover, setHover] = useState(0);
   const popupRef = useRef();
 
-  const { updateRating } = useUpadetRating();
-  const { addRating } = useAddRating();
+  const { updateRating, isLoading: isUpading } = useUpadetRating(item?.type);
+  const { addRating, isLoading: isAdding } = useAddRating(item?.type);
 
   const handleSubmit = async () => {
     try {
@@ -30,10 +33,52 @@ const RatingPopup = ({ setClosePopup, item, showRate = 0 }) => {
         episode: item?.episode,
       };
 
-      if (!showRate) addRating(rowQuery);
-      else updateRating(rowQuery);
+      if (!showRate)
+        addRating(rowQuery, {
+          onSuccess: () => {
+            if (item?.type === "movie") {
+              setMoviesMap((prev) => ({
+                ...prev,
+                [item?.itemId]: { ...prev[item?.itemId], rating },
+              }));
+            } else if (item?.type === "tv") {
+              setTvShowsMap((prev) => ({
+                ...prev,
+                [item?.itemId]: { ...prev[item?.itemId], rating },
+              }));
+            } else if (item?.type === "episode") {
+              setEpisodesMap((prev) => ({
+                ...prev,
+                [item?.itemId]: { ...prev[item?.itemId], rating },
+              }));
+            }
 
-      setClosePopup();
+            setClosePopup();
+          },
+        });
+      else
+        updateRating(rowQuery, {
+          onSuccess: () => {
+            if (item?.type === "movie") {
+              setMoviesMap((prev) => ({
+                ...prev,
+                [item?.itemId]: { ...prev[item?.itemId], rating },
+              }));
+            } else if (item?.type === "tv") {
+              setTvShowsMap((prev) => ({
+                ...prev,
+                [item?.itemId]: { ...prev[item?.itemId], rating },
+              }));
+            } else if (item?.type === "episode") {
+              setEpisodesMap((prev) => ({
+                ...prev,
+                [item?.itemId]: { ...prev[item?.itemId], rating },
+              }));
+            }
+
+            setClosePopup();
+          },
+        });
     } catch (error) {
       console.error(error);
     }
@@ -101,12 +146,12 @@ const RatingPopup = ({ setClosePopup, item, showRate = 0 }) => {
 
             <button
               onClick={handleSubmit}
-              disabled={!rating}
+              disabled={!rating || isAdding || isUpading}
               className="mt-4 w-full py-3 px-4 bg-blue-600 text-white rounded-lg font-medium
                    hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed
-                   transition-colors duration-200"
+                   transition-colors duration-200 flex justify-center items-center"
             >
-              Add Rating
+              {isAdding || isUpading ? <SpinnerMini /> : "Add Rating"}
             </button>
           </div>
         </div>

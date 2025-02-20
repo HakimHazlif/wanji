@@ -4,23 +4,27 @@ import Spinner from "../ui/Spinner";
 import Discover from "../components/Discover";
 import { getImageViaPath } from "../utils/helper";
 import ShowCard from "../ui/ShowCard";
-import { useListsContext } from "../context/ListsContext";
-import { useSpecificMovies } from "../features/movies/useSpecificMovies";
+import { useSpecificItems } from "../features/movies/useSpecificItems";
 import Pagination from "../components/Pagination";
+import { useLists } from "../features/lists/useLists";
+import { useLastFavorite } from "../features/lists/useLastFavorite";
+import { useListsContext } from "../context/ListsContext";
 
 const Movies = () => {
   const category = "movie";
   const [title, setTitle] = useState("Popular Movies");
   const [description, setDescription] = useState("");
-  const { interestsIds } = useListsContext();
+  const { favoriteListId } = useListsContext();
+  const { movieId } = useLastFavorite(favoriteListId);
 
-  const { isLoading, moviesList } = useSpecificMovies(interestsIds.movieId);
+  const { isLoading, itemsList } = useSpecificItems(movieId, category);
+
+  console.log(movieId);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const movieTag = searchParams.get("movie-tag");
+  const movieTag = searchParams.get("movies-tag");
   const currentPage = Number(searchParams.get("page")) || 1;
-  const totalPages =
-    moviesList?.total_pages > 50 ? 50 : moviesList?.total_pages;
+  const totalPages = itemsList?.total_pages > 50 ? 50 : itemsList?.total_pages;
 
   useEffect(() => {
     switch (movieTag) {
@@ -63,7 +67,7 @@ const Movies = () => {
     <main className="">
       <Discover
         image={
-          getImageViaPath(moviesList?.results?.[0]?.backdrop_path, 1280) || null
+          getImageViaPath(itemsList?.results?.[0]?.backdrop_path, 1280) || null
         }
       />
       <section className="padding-x py-14">
@@ -73,7 +77,7 @@ const Movies = () => {
         </div>
 
         <div className="w-full grid grid-cols-4 gap-16 pt-20">
-          {moviesList?.results?.map((movie) => (
+          {itemsList?.results?.map((movie) => (
             <ShowCard key={movie.id} show={movie} category={category} />
           ))}
         </div>
