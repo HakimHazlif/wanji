@@ -5,10 +5,10 @@ const Discover = ({ image }) => {
   return (
     <section className="padding-x">
       <div className="flex flex-col items-center w-full leading-relaxed text-center">
-        <h1 className="font-bold text-3xl max-sm:text-xl font-montserrat text-shadow-md w-full md:w-[400px] sm:w-[500px]">
+        <h1 className="font-bold text-3xl max-sm:text-xl font-montserrat text-shadow-md w-full md:w-[460px] sm:w-[500px] mb-5">
           Dive into a world of endless stories
         </h1>
-        <p className="font-montserrat font-bold text-2xl max-sm:text-lg text-shadow-md w-full mb-20 md:w-[450px] sm:w-[500px] text-center">
+        <p className="font-montserrat font-bold text-2xl max-sm:text-lg text-shadow-md w-full mb-20 md:w-[500px] sm:w-[500px] text-center">
           Explore, rate, and curate your ultimate collection of films and
           series.
         </p>

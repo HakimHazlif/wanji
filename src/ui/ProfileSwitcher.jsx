@@ -1,15 +1,14 @@
-import { Link } from "react-router";
-import { useSession } from "../context/UserContext";
-import Button from "../ui/Button";
+import { Link, useNavigate } from "react-router";
 import ProfileMenu from "../components/ProfileMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { getUser } from "../services/apiAuth";
 
 const styleClassName =
-  "font-medium font-roboto text-sm rounded-xl lg:w-[100px] md:w-[88px] w-[70px] duration-200 transition-colors";
+  "font-medium font-roboto text-sm rounded-lg lg:w-[100px] md:w-[88px] w-[70px] duration-200 transition-colors";
 
 const ProfileSwitcher = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const buttonRef = useRef();
@@ -65,20 +64,18 @@ const ProfileSwitcher = () => {
         </div>
       ) : (
         <div className="md:flex gap-2 hidden">
-          <Link to="/signup">
-            <button
-              className={`${styleClassName} border-2 border-orange-coral hover:bg-orange-200 hover:text-slate-900 py-1.5`}
-            >
-              Sign up
-            </button>
-          </Link>
-          <Link to="/login">
-            <button
-              className={`${styleClassName} bg-orange-amber hover:bg-orange-coral text-slate-900 py-2`}
-            >
-              Log in
-            </button>
-          </Link>
+          <button
+            className={`${styleClassName} bg-orange-100 text-amber-700 hover:bg-orange-200 hover:text-amber-800 py-1.5`}
+            onClick={() => navigate("/signup")}
+          >
+            Sign up
+          </button>
+          <button
+            className={`${styleClassName} bg-orange-amber hover:bg-orange-coral text-amber-900 py-2`}
+            onClick={() => navigate("/login")}
+          >
+            Log in
+          </button>
         </div>
       )}
     </div>
