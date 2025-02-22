@@ -70,17 +70,13 @@ const ReviewPopup = ({
 
     if (uid && reviewInput !== "") {
       if (!forUpdateReview) {
-        console.log("from add", query);
         addReview(query, { onSuccess: () => onClose() });
       }
 
       if (forUpdateReview) {
-        console.log("from update", query);
-
         updateReview(query, { onSuccess: () => onClose() });
       }
     }
-    console.log("from outside:", query);
   }
 
   function setToday(label, index = null) {

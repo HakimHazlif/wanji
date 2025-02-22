@@ -25,14 +25,6 @@ const ItemsListOption = ({
       const rect = buttonRef.current.getBoundingClientRect();
       const wouldOverflowBottom = rect.bottom + 160 > window.innerHeight;
 
-      console.log({
-        rectRight: rect.right,
-        rectLeft: rect.left,
-        rectTop: rect.top,
-        rectBottom: rect.bottom,
-        screenX: window.innerWidth,
-        scrrenY: window.innerHeight,
-      });
       setPositon({
         top: wouldOverflowBottom ? rect.bottom - 195 : rect.bottom + 10,
         right: rect.right - 510,

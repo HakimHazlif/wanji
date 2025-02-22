@@ -4,7 +4,6 @@ import ReviewCard from "../../components/ReviewCard";
 import { useMemo } from "react";
 
 const ProfileReviews = ({ reviews }) => {
-  console.log(reviews);
   const { avatar, username } = useSelector((state) => state.user.user);
 
   const reviewList = useMemo(() => {

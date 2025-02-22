@@ -10,8 +10,7 @@ import { useListsContext } from "../../context/ListsContext";
 const WatchlistButton = ({ item }) => {
   const { isLoggedIn } = useSelector((state) => state.user);
 
-  const { itemsStatusMap, setMoviesMap, setTvShowsMap, setEpisodesMap } =
-    useListsContext();
+  const { itemsStatusMap, setItemsStatusMap } = useListsContext();
   const { itemId, type, parentId, episode, season } = item;
 
   const isWatchlist = itemsStatusMap?.[type]?.[itemId]?.inWatchlist ?? false;
@@ -34,22 +33,16 @@ const WatchlistButton = ({ item }) => {
         },
         {
           onSuccess: () => {
-            if (type === "movie") {
-              setMoviesMap((prev) => ({
-                ...prev,
-                [itemId]: { ...prev[itemId], inWatchlist: true },
-              }));
-            } else if (type === "tv") {
-              setTvShowsMap((prev) => ({
-                ...prev,
-                [itemId]: { ...prev[itemId], inWatchlist: true },
-              }));
-            } else if (type === "episode") {
-              setEpisodesMap((prev) => ({
-                ...prev,
-                [itemId]: { ...prev[itemId], inWatchlist: true },
-              }));
-            }
+            setItemsStatusMap((prev) => ({
+              ...prev,
+              [type]: {
+                ...prev[type],
+                [itemId]: {
+                  ...prev[type]?.[itemId],
+                  inWatchlist: true,
+                },
+              },
+            }));
           },
         }
       );
@@ -62,24 +55,16 @@ const WatchlistButton = ({ item }) => {
         { id: itemId, listId: listId, type },
         {
           onSuccess: () => {
-            {
-              if (type === "movie") {
-                setMoviesMap((prev) => ({
-                  ...prev,
-                  [itemId]: { ...prev[itemId], inWatchlist: false },
-                }));
-              } else if (type === "tv") {
-                setTvShowsMap((prev) => ({
-                  ...prev,
-                  [itemId]: { ...prev[itemId], inWatchlist: false },
-                }));
-              } else if (type === "episode") {
-                setEpisodesMap((prev) => ({
-                  ...prev,
-                  [itemId]: { ...prev[itemId], inWatchlist: false },
-                }));
-              }
-            }
+            setItemsStatusMap((prev) => ({
+              ...prev,
+              [type]: {
+                ...prev[type],
+                [itemId]: {
+                  ...prev[type]?.[itemId],
+                  inWatchlist: false,
+                },
+              },
+            }));
           },
         }
       );

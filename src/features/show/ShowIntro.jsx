@@ -23,7 +23,6 @@ import { FaPlay } from "react-icons/fa";
 const ShowIntro = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
 
-  // console.log(details);
   const { details, videos } = useShow();
   const { category } = useParams();
 

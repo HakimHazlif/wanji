@@ -1,4 +1,3 @@
-import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLists } from "./useLists";
 import { useAddShow } from "./useAddShow";
@@ -12,8 +11,8 @@ import { useListsContext } from "../../context/ListsContext";
 const FavoriteButton = ({ item }) => {
   const { isLoggedIn } = useSelector((state) => state.user);
 
-  const { itemsStatusMap, setMoviesMap, setTvShowsMap, setEpisodesMap } =
-    useListsContext();
+  const { itemsStatusMap, setItemsStatusMap } = useListsContext();
+
   const { itemId, type, parentId, episode, season } = item;
 
   const isFavorited = itemsStatusMap?.[type]?.[itemId]?.inFavorites ?? false;
@@ -36,22 +35,16 @@ const FavoriteButton = ({ item }) => {
         },
         {
           onSuccess: () => {
-            if (type === "movie") {
-              setMoviesMap((prev) => ({
-                ...prev,
-                [itemId]: { ...prev[itemId], inFavorites: true },
-              }));
-            } else if (type === "tv") {
-              setTvShowsMap((prev) => ({
-                ...prev,
-                [itemId]: { ...prev[itemId], inFavorites: true },
-              }));
-            } else if (type === "episode") {
-              setEpisodesMap((prev) => ({
-                ...prev,
-                [itemId]: { ...prev[itemId], inFavorites: true },
-              }));
-            }
+            setItemsStatusMap((prev) => ({
+              ...prev,
+              [type]: {
+                ...prev[type],
+                [itemId]: {
+                  ...prev[type]?.[itemId],
+                  inFavorites: true,
+                },
+              },
+            }));
           },
         }
       );
@@ -64,22 +57,16 @@ const FavoriteButton = ({ item }) => {
         { id: itemId, listId, type },
         {
           onSuccess: () => {
-            if (type === "movie") {
-              setMoviesMap((prev) => ({
-                ...prev,
-                [itemId]: { ...prev[itemId], inFavorites: false },
-              }));
-            } else if (type === "tv") {
-              setTvShowsMap((prev) => ({
-                ...prev,
-                [itemId]: { ...prev[itemId], inFavorites: false },
-              }));
-            } else if (type === "episode") {
-              setEpisodesMap((prev) => ({
-                ...prev,
-                [itemId]: { ...prev[itemId], inFavorites: false },
-              }));
-            }
+            setItemsStatusMap((prev) => ({
+              ...prev,
+              [type]: {
+                ...prev[type],
+                [itemId]: {
+                  ...prev[type]?.[itemId],
+                  inFavorites: false,
+                },
+              },
+            }));
           },
         }
       );

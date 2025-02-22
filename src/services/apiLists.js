@@ -29,7 +29,6 @@ export async function insertShow({
   episode = null,
   season = null,
 }) {
-  // console.log({ id, listId, type, title, date });
   const { data, error } = await supabase.from("items_list").insert([
     {
       item_id: id,
@@ -81,7 +80,6 @@ export async function addRateToShow({
   season = null,
   episode = null,
 }) {
-  console.log({ itemId, type, rating, userId, parentId, season, episode });
   const { data, error } = await supabase
     .from("rating")
     .insert([
@@ -209,7 +207,6 @@ export async function updateList({
   if (!listId) throw new Error("the list_id is undefind");
 
   if (newName) {
-    console.log(newName, listId);
     const { data, error } = await supabase
       .from("lists")
       .update({ name: newName })
@@ -242,7 +239,6 @@ export const fetchItemsList = async (listId, list, startPoint = 0) => {
     return { items: [], listId, nextPoint: null };
   }
 
-  console.log("from inside of fetch function", list.length);
   const showsUrl = list.slice(startPoint, startPoint + 50).map((show) => {
     if (show.type === "movie" || show.type === "tv")
       return `${URL_Base}${show.type}/${show.item_id}?append_to_response=credits&language=en-US`;
@@ -264,8 +260,6 @@ export const fetchShortLists = async (
   ratingList,
   reviewslist
 ) => {
-  console.log("fetchShortLists was launched");
-
   const watchlistLength = watchlist?.length ?? 0;
   const favoritesLength = favoritesList?.length ?? 0;
   const ratingListLength = ratingList?.length ?? 0;

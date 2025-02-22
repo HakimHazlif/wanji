@@ -2,11 +2,8 @@ import ShowCard from "../../ui/ShowCard";
 import ListScroll from "../lists/ListScroll";
 import { useMovies } from "./useMovies";
 
-const MoviesList = ({ listKey }) => {
-  const { movies } = useMovies();
+const MoviesList = ({ listKey, movies }) => {
   const category = "movie";
-
-  const moviesList = movies?.[listKey]?.slice(0, 8) ?? [];
 
   let path, listTitle;
   if (listKey === "popularMovies") {
@@ -25,11 +22,11 @@ const MoviesList = ({ listKey }) => {
 
   return (
     <section
-      className={`padding-x ${moviesList.length > 0 ? "md:pt-32 pt-52" : ""}`}
+      className={`padding-x ${movies.length > 0 ? "md:pt-32 pt-52" : ""}`}
     >
-      {moviesList.length > 0 && (
+      {movies.length > 0 && (
         <ListScroll title={listTitle} path={path} viewAll={true}>
-          {moviesList.map((movie) => (
+          {movies.map((movie) => (
             <ShowCard key={movie.id} show={movie} category={category} />
           ))}
         </ListScroll>

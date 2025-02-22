@@ -6,7 +6,6 @@ import { getImageViaPath } from "../utils/helper";
 import ShowCard from "../ui/ShowCard";
 import { useSpecificItems } from "../features/movies/useSpecificItems";
 import Pagination from "../components/Pagination";
-import { useLists } from "../features/lists/useLists";
 import { useLastFavorite } from "../features/lists/useLastFavorite";
 import { useListsContext } from "../context/ListsContext";
 
@@ -15,11 +14,10 @@ const Movies = () => {
   const [title, setTitle] = useState("Popular Movies");
   const [description, setDescription] = useState("");
   const { favoriteListId } = useListsContext();
-  const { movieId } = useLastFavorite(favoriteListId);
+  const { movieId, isLodaing: movieIdLoading } =
+    useLastFavorite(favoriteListId);
 
   const { isLoading, itemsList } = useSpecificItems(movieId, category);
-
-  console.log(movieId);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const movieTag = searchParams.get("movies-tag");
@@ -61,10 +59,10 @@ const Movies = () => {
     }
   }, [movieTag]);
 
-  if (isLoading) return <Spinner />;
+  if (isLoading || movieIdLoading) return <Spinner />;
 
   return (
-    <main className="">
+    <div className="">
       <Discover
         image={
           getImageViaPath(itemsList?.results?.[0]?.backdrop_path, 1280) || null
@@ -96,7 +94,7 @@ const Movies = () => {
           />
         </div>
       </section>
-    </main>
+    </div>
   );
 };
 

@@ -1,14 +1,16 @@
 import { createContext, useContext, useRef, useState } from "react";
 import { useLists } from "../features/lists/useLists";
-import { useLastFavorite } from "../features/lists/useLastFavorite";
 
 const ListsContext = createContext();
 
 function ListsContextProvider({ children }) {
   const [item, setItem] = useState({});
-  const [moviesMap, setMoviesMap] = useState({});
-  const [tvShowsMap, setTvShowsMap] = useState({});
-  const [episodesMap, setEpisodesMap] = useState({});
+  const [itemsStatusMap, setItemsStatusMap] = useState({
+    movie: {},
+    tv: {},
+    episode: {},
+  });
+  const [itemsStatusLoading, setItemsStatusLoading] = useState(false);
 
   const { favoriteList, watchlist } = useLists();
 
@@ -28,14 +30,10 @@ function ListsContextProvider({ children }) {
         addingSearchBarRef,
         favoriteListId,
         watchlistId,
-        itemsStatusMap: {
-          movie: moviesMap,
-          tv: tvShowsMap,
-          episode: episodesMap,
-        },
-        setMoviesMap,
-        setTvShowsMap,
-        setEpisodesMap,
+        itemsStatusMap,
+        setItemsStatusMap,
+        itemsStatusLoading,
+        setItemsStatusLoading,
       }}
     >
       {children}

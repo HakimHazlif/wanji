@@ -18,7 +18,6 @@ export function useShortLists(
       reviewsList?.length > 0,
   });
 
-  console.log(data);
   const shortWatchlist = data?.shortWatchlist ?? [];
   const shortFavorites = data?.shortFavorites ?? [];
   const shortRatings = data?.shortRatings ?? [];

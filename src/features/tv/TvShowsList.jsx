@@ -2,11 +2,8 @@ import ShowCard from "../../ui/ShowCard";
 import ListScroll from "../lists/ListScroll";
 import { useTvShows } from "./useTvShows";
 
-const TvShowsList = ({ listKey }) => {
-  const { tvShows } = useTvShows();
+const TvShowsList = ({ listKey, tvShows }) => {
   const category = "tv";
-
-  const tvShowsList = tvShows?.[listKey]?.slice(0, 8) ?? [];
 
   let path, listTitle;
   if (listKey === "popularTv") {
@@ -24,10 +21,10 @@ const TvShowsList = ({ listKey }) => {
   }
 
   return (
-    <section className={`padding-x ${tvShowsList.length > 0 ? "pt-32" : ""}`}>
-      {tvShowsList.length > 0 && (
+    <section className={`padding-x ${tvShows.length > 0 ? "pt-32" : ""}`}>
+      {tvShows.length > 0 && (
         <ListScroll title={listTitle} path={path} viewAll={true}>
-          {tvShowsList.map((tv) => (
+          {tvShows.map((tv) => (
             <ShowCard key={tv.id} show={tv} category={category} />
           ))}
         </ListScroll>

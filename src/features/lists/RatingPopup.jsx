@@ -10,48 +10,44 @@ import SpinnerMini from "../../ui/SpinnerMini";
 const RatingPopup = ({ setClosePopup, item, showRate = 0 }) => {
   const { uid } = useSelector((state) => state.user.user);
 
-  const { setMoviesMap, setTvShowsMap, setEpisodesMap } = useListsContext();
+  const { setItemsStatusMap } = useListsContext();
 
   const [rating, setRating] = useState(Number(showRate));
   const [hover, setHover] = useState(0);
   const popupRef = useRef();
 
-  const { updateRating, isLoading: isUpading } = useUpadetRating(item?.type);
-  const { addRating, isLoading: isAdding } = useAddRating(item?.type);
+  const { itemId, type, parentId, season, episode } = item;
+
+  const { updateRating, isLoading: isUpading } = useUpadetRating(type);
+  const { addRating, isLoading: isAdding } = useAddRating(type);
 
   const handleSubmit = async () => {
     try {
       if (!uid) throw new Error("You should log in first");
 
       const rowQuery = {
-        itemId: item?.itemId,
-        type: item?.type,
+        itemId: itemId,
+        type: type,
         rating,
         userId: uid,
-        parentId: item?.parentId,
-        season: item?.season,
-        episode: item?.episode,
+        parentId: parentId,
+        season: season,
+        episode: episode,
       };
 
       if (!showRate)
         addRating(rowQuery, {
           onSuccess: () => {
-            if (item?.type === "movie") {
-              setMoviesMap((prev) => ({
-                ...prev,
-                [item?.itemId]: { ...prev[item?.itemId], rating },
-              }));
-            } else if (item?.type === "tv") {
-              setTvShowsMap((prev) => ({
-                ...prev,
-                [item?.itemId]: { ...prev[item?.itemId], rating },
-              }));
-            } else if (item?.type === "episode") {
-              setEpisodesMap((prev) => ({
-                ...prev,
-                [item?.itemId]: { ...prev[item?.itemId], rating },
-              }));
-            }
+            setItemsStatusMap((prev) => ({
+              ...prev,
+              [type]: {
+                ...prev[type],
+                [itemId]: {
+                  ...prev[type]?.[itemId],
+                  rating,
+                },
+              },
+            }));
 
             setClosePopup();
           },
@@ -59,22 +55,16 @@ const RatingPopup = ({ setClosePopup, item, showRate = 0 }) => {
       else
         updateRating(rowQuery, {
           onSuccess: () => {
-            if (item?.type === "movie") {
-              setMoviesMap((prev) => ({
-                ...prev,
-                [item?.itemId]: { ...prev[item?.itemId], rating },
-              }));
-            } else if (item?.type === "tv") {
-              setTvShowsMap((prev) => ({
-                ...prev,
-                [item?.itemId]: { ...prev[item?.itemId], rating },
-              }));
-            } else if (item?.type === "episode") {
-              setEpisodesMap((prev) => ({
-                ...prev,
-                [item?.itemId]: { ...prev[item?.itemId], rating },
-              }));
-            }
+            setItemsStatusMap((prev) => ({
+              ...prev,
+              [type]: {
+                ...prev[type],
+                [itemId]: {
+                  ...prev[type]?.[itemId],
+                  rating,
+                },
+              },
+            }));
 
             setClosePopup();
           },
@@ -115,7 +105,7 @@ const RatingPopup = ({ setClosePopup, item, showRate = 0 }) => {
 
         <div className="text-center">
           <h2 className="text-xl font-semibold text-white mb-6">
-            Rate this {item?.type}
+            Rate this {type}
           </h2>
 
           <div className="flex flex-col items-center gap-4">

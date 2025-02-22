@@ -10,7 +10,6 @@ export function useUserInterests(movieId, tvId) {
       throw new Error(error);
     },
   });
-  // console.log(data);
 
   return { recommendedShows, isLoading };
 }

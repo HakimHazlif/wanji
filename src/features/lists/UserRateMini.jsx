@@ -6,6 +6,7 @@ import { Box, Rating, Tooltip } from "@mui/material";
 import { useUpadetRating } from "./useUpadetRating";
 import { useAddRating } from "./useAddRating";
 import { useListsContext } from "../../context/ListsContext";
+import { useItemsStatus } from "./useItemsStatus";
 
 const UserRateMini = ({ item, addStars = false, buttonStyle }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -30,7 +31,7 @@ const UserRateMini = ({ item, addStars = false, buttonStyle }) => {
     <div onClick={(e) => e.stopPropagation()}>
       <Tooltip title={rating ? "Update your rate" : "Add your rate"}>
         <span
-          className="flex items-center gap-2 cursor-pointer"
+          className="flex items-center justify-center gap-2 cursor-pointer"
           onClick={handleOpenPopup}
         >
           {addStars && (

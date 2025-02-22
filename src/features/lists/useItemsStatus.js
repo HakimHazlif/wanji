@@ -8,12 +8,10 @@ export function useItemsStatus(itemIds, type) {
   const {
     watchlistId,
     favoriteListId,
-    setMoviesMap,
-    setTvShowsMap,
-    setEpisodesMap,
+    itemsStatusMap,
+    setItemsStatusMap,
+    setItemsStatusLoading,
   } = useListsContext();
-
-  console.log(`itemIds ${type}:`, itemIds.length);
 
   const { data, isLoading } = useQuery({
     queryKey: ["itemsStatus", type, { ids: itemIds }],
@@ -28,9 +26,12 @@ export function useItemsStatus(itemIds, type) {
     enabled:
       !!itemIds?.length && !!type && !!watchlistId && !!favoriteListId && !!uid,
     onSuccess: (data) => {
-      if (type === "movie") setMoviesMap(data);
-      else if (type === "tv") setTvShowsMap(data);
-      else if (type === "episode") setEpisodesMap(data);
+      const prevData = itemsStatusMap[type] || {};
+      const mergedData = Object.fromEntries(
+        new Map([...Object.entries(prevData), ...Object.entries(data)])
+      );
+
+      setItemsStatusMap((prev) => ({ ...prev, [type]: mergedData }));
     },
   });
 

@@ -79,11 +79,8 @@ export const login = (email, password) => async (dispatch) => {
     });
 
     if (error) {
-      // console.log(error);
       throw new Error(error.message);
     }
-
-    console.log(user);
 
     dispatch(
       authSuccess({
@@ -143,7 +140,6 @@ export const updatePassword =
       });
 
       if (error) {
-        console.log(error);
         dispatch(authFailure(error.message));
         return;
       }

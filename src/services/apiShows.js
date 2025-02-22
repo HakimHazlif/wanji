@@ -56,8 +56,6 @@ export async function getItemsByList(list, page, id, type) {
       ? `${URL_Base}${type}/${id}/recommendations?language=en-US&page=${page}`
       : `${URL_Base}${type}/${list}?language=en-US&page=${page}`;
 
-  console.log(url);
-
   try {
     const moviesList = await axios.get(url, options);
 
@@ -94,19 +92,14 @@ export async function getTvShows() {
 }
 
 export async function getShowsByGenre(genreId, category, page) {
-  console.log({ genreId, category, page });
   const url = `${URL_Base}discover/${category}?include_adult=false&${
     category === "movie"
       ? "include_video=false"
       : "include_null_first_air_dates=false"
   }&language=en-US&page=${page}&sort_by=popularity.desc&with_genres=${genreId}`;
 
-  console.log(url);
-
   try {
     const shows = await axios.get(url, options);
-
-    console.log(shows?.data);
 
     return shows?.data ?? [];
   } catch (err) {
@@ -208,10 +201,6 @@ export async function getUserInterests(movieId, tvId) {
       axios.get(tvShowsUrl, options),
     ]);
 
-    console.log({
-      moviesInterest: movies?.data.results,
-      tvShowsInterest: tvShows?.data.results,
-    });
     return {
       moviesInterest: movies?.data.results,
       tvShowsInterest: tvShows?.data.results,
@@ -221,10 +210,6 @@ export async function getUserInterests(movieId, tvId) {
   if (movieId) {
     const movies = await axios.get(moviesUrl, options);
 
-    console.log({
-      moviesInterest: movies?.data?.results,
-      tvShowsInterest: null,
-    });
     return {
       moviesInterest: movies?.data?.results,
       tvShowsInterest: null,
