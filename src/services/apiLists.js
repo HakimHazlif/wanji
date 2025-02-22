@@ -363,17 +363,66 @@ export async function fetchItemsStatus({
     );
 
     return itemIds.reduce((acc, id) => {
-      const idStr = id.toString();
-      acc[idStr] = {
-        inWatchlist: watchlistSet.has(idStr),
-        inFavorites: favoritesSet.has(idStr),
-        rating: ratingsMap.get(idStr) || null,
+      const idString = id.toString();
+      acc[idString] = {
+        inWatchlist: watchlistSet.has(idString),
+        inFavorites: favoritesSet.has(idString),
+        rating: ratingsMap.get(idString) || null,
       };
       return acc;
     }, {});
   } catch (error) {
     console.error("Error fetching items status:", error);
     throw new Error(`Failed to fetch items status: ${error.message}`);
+  }
+}
+
+export async function fetchItemStatus(
+  id,
+  type,
+  watchlistId,
+  favoriteListId,
+  userId
+) {
+  if (!id || !type || !userId) return {};
+
+  try {
+    const [listsResponse, ratingsResponse] = await Promise.all([
+      supabase
+        .from("items_list")
+        .select("list_id")
+        .eq("type", type)
+        .eq("item_id", id),
+
+      supabase
+        .from("rating")
+        .select("rate")
+        .eq("user_id", userId)
+        .eq("type", type)
+        .eq("item_id", id),
+    ]);
+
+    if (listsResponse.error) throw listsResponse.error;
+    if (ratingsResponse.error) throw ratingsResponse.error;
+
+    const listIds = new Set(listsResponse?.data?.map((item) => item.list_id));
+
+    return {
+      [id]: {
+        inWatchlist: listIds.has(watchlistId),
+        inFavorites: listIds.has(favoriteListId),
+        rating: ratingsResponse?.data[0]?.rate || null,
+        remainLists: listsResponse?.data?.reduce((acc, item) => {
+          if (item.list_id !== watchlistId && item.list_id !== favoriteListId) {
+            acc.push(item);
+          }
+          return acc;
+        }, []),
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching item status:", error);
+    throw new Error(`Failed to fetch item status: ${error.message}`);
   }
 }
 

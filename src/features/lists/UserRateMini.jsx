@@ -13,7 +13,7 @@ const UserRateMini = ({ item, addStars = false, buttonStyle }) => {
 
   const { itemsStatusMap } = useListsContext();
 
-  const rating = itemsStatusMap?.[item?.type]?.[item?.itemId]?.rating ?? false;
+  const rating = itemsStatusMap?.[item?.type]?.[item?.itemId]?.rating ?? 0;
 
   // const { ratingList } = useRatingList();
 

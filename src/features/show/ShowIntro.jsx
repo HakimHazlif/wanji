@@ -19,8 +19,10 @@ import ButtonAddToList from "../lists/ButtonAddToList";
 import { useState } from "react";
 import VideoPlayer from "../../components/VideoPlayer";
 import { FaPlay } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const ShowIntro = () => {
+  const { isLoggedIn } = useSelector((state) => state.user);
   const [selectedVideo, setSelectedVideo] = useState(null);
 
   const { details, videos } = useShow();
@@ -170,18 +172,20 @@ const ShowIntro = () => {
           </div>
         </div>
         <hr className="border-1 border-slate-400 w-full my-4" />
-        <div className="flex justify-between items-center">
-          <div className="flex gap-2 items-center">
-            <WatchlistButton item={item} size={30} />
-            <FavoriteButton item={item} size={30} />
-            <ButtonAddToList
-              item={item}
-              image={poster_path}
-              showTitle={title}
-            />
+        {isLoggedIn && (
+          <div className="flex justify-between items-center">
+            <div className="flex gap-2 items-center">
+              <WatchlistButton item={item} />
+              <FavoriteButton item={item} />
+              <ButtonAddToList
+                item={item}
+                image={poster_path}
+                showTitle={title}
+              />
+            </div>
+            <RateUser item={item} />
           </div>
-          <RateUser item={item} />
-        </div>
+        )}
       </div>
       {selectedVideo && (
         <VideoPlayer

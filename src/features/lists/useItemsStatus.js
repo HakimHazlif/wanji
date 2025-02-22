@@ -24,7 +24,7 @@ export function useItemsStatus(itemIds, type) {
       const prevData = itemsStatusMap[type] || {};
       const mergedData = Object.fromEntries(
         new Map([...Object.entries(prevData), ...Object.entries(data)])
-      );
+      ); // This is to prevent duplicate keys
 
       setItemsStatusMap((prev) => ({ ...prev, [type]: mergedData }));
     },

@@ -16,6 +16,9 @@ export function useAddRating(type) {
       queryClient.invalidateQueries(["rating", category, id, uid]);
       queryClient.invalidateQueries(["ratingList", uid]);
       queryClient.invalidateQueries(["itemsStatus", type]);
+      queryClient.invalidateQueries({
+        queryKey: ["itemStatus", type],
+      });
     },
     onError: (err) => {
       throw new Error(err);

@@ -6,28 +6,34 @@ import SpinnerMini from "../../ui/SpinnerMini";
 import { useAddRating } from "./useAddRating";
 import { useUpadetRating } from "./useUpadetRating";
 import { Tooltip } from "@mui/material";
+import { useListsContext } from "../../context/ListsContext";
 
 const RateUser = ({ item }) => {
-  const { showRate, isLoading } = useRating(item?.type, item?.itemId);
+  const { itemId, type } = item;
+
   const { isLoading: isAdding } = useAddRating();
   const { isLoading: isUpdating } = useUpadetRating();
 
+  const { itemsStatusMap } = useListsContext();
+
+  const rating = itemsStatusMap?.[type]?.[itemId]?.rating ?? 0;
+
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  if (isLoading || isAdding || isUpdating) return <SpinnerMini />;
+  if (isAdding || isUpdating) return <SpinnerMini />;
 
   return (
     <>
-      <Tooltip title={showRate ? "Update your rate" : "Add your rate"}>
+      <Tooltip title={rating ? "Update your rate" : "Add your rate"}>
         <span>
           <button
             onClick={() => setIsPopupOpen(true)}
             className="py-3 px-5 rounded-lg bg-black/20 backdrop-blur-lg text-white font-medium text-sm flex items-center gap-2 hover:text-orange-amber duration-300 ease-linear transition-colors cursor-pointer"
           >
-            {showRate ? (
+            {rating ? (
               <>
                 <FaStar className="text-xl text-orange-amber" />
-                <p className="font-bold text-lg"> {showRate}/10</p>
+                <p className="font-bold text-lg"> {rating}/10</p>
               </>
             ) : (
               <>
@@ -43,7 +49,7 @@ const RateUser = ({ item }) => {
         <RatingPopup
           setClosePopup={() => setIsPopupOpen(false)}
           item={item}
-          showRate={showRate}
+          showRate={rating}
         />
       )}
     </>

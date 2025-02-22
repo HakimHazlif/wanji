@@ -11,13 +11,17 @@ import ItemsListOption from "../../ui/ItemsListOption";
 import DeleteListConfirm from "../../ui/DeleteListConfirm";
 import { useDeleteList } from "./useDeleteList";
 import Ellipsis from "../../ui/Ellipsis";
+import { useListsContext } from "../../context/ListsContext";
 
 const ItemsList = ({ list, item }) => {
-  const { itemId, type, parentId, episode, season } = item;
-
   const buttonRef = useRef();
+  const { itemId, type, parentId, episode, season } = item;
+  const { itemsStatusMap, setItemsStatusMap } = useListsContext();
 
-  const [isAdded, setIsAdded] = useState(false);
+  const isAdded = itemsStatusMap?.[type]?.[itemId]?.remainLists?.some(
+    (listItem) => listItem.list_id === list.id
+  );
+
   const [isOptionOpen, setIsOptionOpen] = useState(false);
   const [forConfirmDelete, setForConfirmDelete] = useState(false);
 
@@ -38,14 +42,52 @@ const ItemsList = ({ list, item }) => {
 
   function handleAddToList() {
     if (isLoggedIn && list && itemId) {
-      addShow(row);
+      addShow(row, {
+        onSuccess: () => {
+          setItemsStatusMap((prev) => {
+            const prevLists = prev[type]?.[itemId]?.remainLists || [];
+            return {
+              ...prev,
+              [type]: {
+                ...prev[type],
+                [itemId]: {
+                  ...prev[type]?.[itemId],
+                  remainLists: [
+                    ...new Set([...prevLists, { list_id: list.id }]),
+                  ],
+                },
+              },
+            };
+          });
+        },
+      });
       setIsOptionOpen(false);
     }
   }
 
   function handleDeleteFromList() {
     if (isLoggedIn && list && itemId) {
-      deleteShow({ id: itemId, listId: list.id, type });
+      deleteShow(
+        { id: itemId, listId: list.id, type },
+        {
+          onSuccess: () => {
+            setItemsStatusMap((prev) => {
+              const prevLists = prev[type]?.[itemId]?.remainLists || [];
+
+              return {
+                ...prev,
+                [type]: {
+                  ...prev[type],
+                  [itemId]: {
+                    ...prev[type]?.[itemId],
+                    remainLists: prevLists.filter((l) => l.list_id !== list.id),
+                  },
+                },
+              };
+            });
+          },
+        }
+      );
       setIsOptionOpen();
     }
   }
@@ -81,12 +123,6 @@ const ItemsList = ({ list, item }) => {
       );
     }
   }
-
-  useEffect(() => {
-    const inList = list?.items_list.some((el) => el.item_id == itemId);
-
-    setIsAdded(inList);
-  }, [list?.items_list, itemId]);
 
   return (
     <div className="w-full p-4 flex items-center gap-4 justify-between hover:bg-slate-800 rounded-md transition-colors">

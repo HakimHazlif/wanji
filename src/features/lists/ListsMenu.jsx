@@ -9,6 +9,7 @@ import Spinner from "../../ui/Spinner";
 import ItemsList from "./ItemsList";
 import { useCreateList } from "./useCreateList";
 import { getPictureUrlFormat, getYearFormat } from "../../utils/helper";
+import { useListsContext } from "../../context/ListsContext";
 
 const ListsMenu = ({ isPopupOpen, setIsPopupOpen, otherProps }) => {
   const { image, showTitle, item } = otherProps;

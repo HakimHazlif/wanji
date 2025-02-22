@@ -15,6 +15,9 @@ export function useAddShow(type) {
       queryClient.invalidateQueries({
         queryKey: ["itemsStatus", type],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["itemStatus", type],
+      });
     },
     onError: () => {
       console.log("the adding is failed");

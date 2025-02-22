@@ -11,14 +11,15 @@ import ShowCard from "../ui/ShowCard";
 import ShowImages from "../features/show/ShowImages";
 import SeasonsList from "../features/lists/SeasonsList";
 import { useParams } from "react-router";
+import { useItemStatus } from "../features/lists/useItemStatus";
 
 const Show = () => {
-  const { isLoading, details, similar, images, credits, reviews, videos } =
-    useShow();
+  const { isLoading, details, similar, images, credits, reviews } = useShow();
+  const { isLoading: isStatusLoading } = useItemStatus();
 
   const { category } = useParams();
 
-  if (isLoading) return <Spinner />;
+  if (isLoading || isStatusLoading) return <Spinner />;
 
   return (
     <main className="pt-32 pb-20">

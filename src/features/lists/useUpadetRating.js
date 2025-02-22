@@ -12,6 +12,9 @@ export function useUpadetRating(type) {
       queryClient.invalidateQueries(["rating"]);
       queryClient.invalidateQueries(["ratingList", uid]);
       queryClient.invalidateQueries(["itemsStatus", type]);
+      queryClient.invalidateQueries({
+        queryKey: ["itemStatus", type],
+      });
     },
     onError: (err) => {
       throw new Error(err);

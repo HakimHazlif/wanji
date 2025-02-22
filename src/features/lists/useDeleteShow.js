@@ -15,6 +15,9 @@ export function useDeleteShow(type) {
       queryClient.invalidateQueries({
         queryKey: ["itemsStatus", type],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["itemStatus", type],
+      });
     },
   });
 

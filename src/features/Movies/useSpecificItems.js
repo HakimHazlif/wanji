@@ -22,12 +22,10 @@ export function useSpecificItems(id, type) {
     },
   });
 
-  const uniqueMedia = Array.from(
-    new Map(itemsList?.results?.map((show) => [`${show.id}`, show.id])).values()
-  );
+  const uniqueMedia = itemsList?.results?.map((show) => show.id);
 
   const { isLoading: isFeaturesLoading } = useItemsStatus(
-    uniqueMedia.length ? uniqueMedia : null,
+    uniqueMedia?.length ? uniqueMedia : null,
     type
   );
 
