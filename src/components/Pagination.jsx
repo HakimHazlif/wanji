@@ -1,10 +1,13 @@
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 
 const Pagination = ({ totalPages, currentPage, changePage, range = 5 }) => {
+  const [rangeState, setRangeState] = useState(range);
+
   function getPaginationNumbers() {
     const pages = [];
-    const leftSide = Math.max(2, currentPage - range);
-    const rightSide = Math.min(totalPages - 1, currentPage + range);
+    const leftSide = Math.max(2, currentPage - rangeState);
+    const rightSide = Math.min(totalPages - 1, currentPage + rangeState);
 
     pages.push(1);
 
@@ -20,6 +23,23 @@ const Pagination = ({ totalPages, currentPage, changePage, range = 5 }) => {
 
     return pages;
   }
+
+  useEffect(() => {
+    function updateRange() {
+      if (window.innerWidth <= 375) {
+        setRangeState(1);
+      } else if (window.innerWidth < 640) {
+        setRangeState(3);
+      } else {
+        setRangeState(range);
+      }
+    }
+
+    updateRange();
+    window.addEventListener("resize", updateRange);
+
+    return () => window.removeEventListener("resize", updateRange);
+  }, []);
 
   return (
     <div className="flex gap-2">

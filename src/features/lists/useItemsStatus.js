@@ -5,13 +5,8 @@ import { useSelector } from "react-redux";
 
 export function useItemsStatus(itemIds, type) {
   const { uid } = useSelector((state) => state.user.user);
-  const {
-    watchlistId,
-    favoriteListId,
-    itemsStatusMap,
-    setItemsStatusMap,
-    setItemsStatusLoading,
-  } = useListsContext();
+  const { watchlistId, favoriteListId, itemsStatusMap, setItemsStatusMap } =
+    useListsContext();
 
   const { data, isLoading } = useQuery({
     queryKey: ["itemsStatus", type, { ids: itemIds }],

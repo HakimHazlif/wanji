@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import { useSearchParams } from "react-router";
 import { getItemsByList } from "../../services/apiShows";
+import { useItemsStatus } from "../lists/useItemsStatus";
 
 export function useSpecificItems(id, type) {
   const [searchParams] = useSearchParams();
@@ -21,5 +22,14 @@ export function useSpecificItems(id, type) {
     },
   });
 
-  return { itemsList, isLoading };
+  const uniqueMedia = Array.from(
+    new Map(itemsList?.results?.map((show) => [`${show.id}`, show.id])).values()
+  );
+
+  const { isLoading: isFeaturesLoading } = useItemsStatus(
+    uniqueMedia.length ? uniqueMedia : null,
+    type
+  );
+
+  return { itemsList, isLoading, isFeaturesLoading };
 }

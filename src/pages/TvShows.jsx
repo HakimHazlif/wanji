@@ -75,7 +75,7 @@ const Shows = () => {
           <p className="mt-5 text-base text-slate-400">{description}</p>
         </div>
 
-        <div className="w-full grid grid-cols-4 gap-16 pt-20">
+        <div className="w-full justify-items-center grid xl:grid-cols-4 2xl:grid-cols-5 md:grid-cols-4 sm:grid-cols-3  xs:grid-cols-2 gap-16 pt-20">
           {itemsList?.results?.map((tv) => (
             <ShowCard key={tv.id} show={tv} category={category} />
           ))}

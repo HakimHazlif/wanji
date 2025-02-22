@@ -4,13 +4,11 @@ import { useLists } from "../features/lists/useLists";
 const ListsContext = createContext();
 
 function ListsContextProvider({ children }) {
-  const [item, setItem] = useState({});
   const [itemsStatusMap, setItemsStatusMap] = useState({
     movie: {},
     tv: {},
     episode: {},
   });
-  const [itemsStatusLoading, setItemsStatusLoading] = useState(false);
 
   const { favoriteList, watchlist } = useLists();
 
@@ -32,8 +30,6 @@ function ListsContextProvider({ children }) {
         watchlistId,
         itemsStatusMap,
         setItemsStatusMap,
-        itemsStatusLoading,
-        setItemsStatusLoading,
       }}
     >
       {children}

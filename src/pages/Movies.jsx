@@ -68,13 +68,13 @@ const Movies = () => {
           getImageViaPath(itemsList?.results?.[0]?.backdrop_path, 1280) || null
         }
       />
-      <section className="padding-x py-14">
+      <section className="padding-x py-24">
         <div className="border-b border-slate-700  pb-5">
           <h1 className="text-4xl  font-bold">{title}</h1>
           <p className="mt-5 text-base text-slate-400">{description}</p>
         </div>
 
-        <div className="w-full grid grid-cols-4 gap-16 pt-20">
+        <div className="w-full justify-items-center grid xl:grid-cols-4 2xl:grid-cols-5 md:grid-cols-4  sm:grid-cols-3  xs:grid-cols-2 gap-16 pt-20">
           {itemsList?.results?.map((movie) => (
             <ShowCard key={movie.id} show={movie} category={category} />
           ))}
