@@ -6,9 +6,14 @@ import { BsBookmarkCheckFill, BsBookmarkPlus } from "react-icons/bs";
 import { Tooltip } from "@mui/material";
 import SpinnerMini from "../../ui/SpinnerMini";
 import { useListsContext } from "../../context/ListsContext";
+import { useItemStatus } from "./useItemStatus";
 
-const WatchlistButton = ({ item }) => {
+const WatchlistButton = ({
+  item,
+  iconSize = "md:text-xl sm:text-lg text-base",
+}) => {
   const { isLoggedIn } = useSelector((state) => state.user);
+  const { isLoading: isStatusLoading } = useItemStatus();
 
   const { itemsStatusMap, setItemsStatusMap } = useListsContext();
   const { itemId, type, parentId, episode, season } = item;
@@ -72,19 +77,19 @@ const WatchlistButton = ({ item }) => {
   }
 
   let content;
-  if (isAdding || isDeleting || isLoading) {
-    content = <SpinnerMini />;
+  if (isAdding || isDeleting || isLoading || isStatusLoading) {
+    content = <SpinnerMini iconSize={iconSize} />;
   } else {
     if (isWatchlist) {
       content = (
         <>
-          <BsBookmarkCheckFill className="text-gray-200 md:text-xl sm:text-lg text-base" />
+          <BsBookmarkCheckFill className={`text-gray-200 ${iconSize}`} />
         </>
       );
     } else {
       content = (
         <>
-          <BsBookmarkPlus className="text-gray-200 md:text-xl sm:text-lg text-base" />
+          <BsBookmarkPlus className={`text-gray-200 ${iconSize}`} />
         </>
       );
     }

@@ -17,7 +17,7 @@ const ListGrid = ({ path, title, children }) => {
         )}
       </div>
       <div className="">
-        <div className="grid xl:grid-cols-5 lg:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 justify-items-center w-full xs:gap-y-20 gap-10 gap-y-10 pb-8">
+        <div className="grid 2xl:grid-cols-5 lg:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 justify-items-center w-full xs:gap-y-20 gap-10 gap-y-10 pb-8">
           {children}
         </div>
       </div>

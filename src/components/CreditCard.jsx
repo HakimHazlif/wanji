@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router";
-import { profile } from "../assets/icons";
 import { getProfileImageUrl } from "../utils/helper";
 import { Tooltip } from "@mui/material";
 import { MdTrendingUp } from "react-icons/md";
+import EmptyCredit from "./EmptyCredit";
 
 const CreditCard = ({
   person,
@@ -43,16 +43,25 @@ const CreditCard = ({
       }`}
     >
       <div
-        className={`relative ${getPictureSize()} overflow-hidden rounded-full flex-shrink-0`}
+        className={`relative ${getPictureSize()} overflow-hidden rounded-full flex-shrink-0 cursor-pointer`}
       >
-        <Tooltip title={name}>
-          <img
-            src={profilePath || profile}
-            alt="cast picture"
-            className={`${getPictureSize()} rounded-full object-cover cursor-pointer`}
-            onClick={handleNavigate}
+        {profilePath ? (
+          <Tooltip title={name}>
+            <img
+              src={profilePath}
+              alt="cast picture"
+              className={`${getPictureSize()} object-cover cursor-pointer`}
+              onClick={handleNavigate}
+            />
+          </Tooltip>
+        ) : (
+          <EmptyCredit
+            iconSize={size}
+            pictureSize={getPictureSize()}
+            onNavigate={handleNavigate}
+            personName={name}
           />
-        </Tooltip>
+        )}
       </div>
 
       <div className="w-full mt-2">

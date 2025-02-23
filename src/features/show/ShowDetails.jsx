@@ -5,9 +5,11 @@ import {
   updateDateFormat,
 } from "../../utils/helper";
 import { useShow } from "./useShow";
+import Detail from "../../components/Detail";
+import ShowImages from "./ShowImages";
 
 const ShowDetails = () => {
-  const { details, credits } = useShow();
+  const { details, credits, images } = useShow();
   const {
     tagline,
     overview,
@@ -27,34 +29,33 @@ const ShowDetails = () => {
   const { directing, writing } = crew;
 
   return (
-    <section className="">
+    <div className="">
       <h2 className="text-4xl font-semibold border-b border-slate-700 pb-3">
         {details["title"] ? "Movie" : "Tv Show"} details
       </h2>
-      <div className="flex items-start justify-between gap-16 mt-8">
-        <div className="w-2/5">
-          {tagline && (
-            <h3 className="font-medium text-xl text-slate-200">
-              Tagline: {tagline}
-            </h3>
-          )}
-          <p className="mt-4 mr-8 text-slate-400">{overview}</p>
+      <div className="flex md:flex-row flex-col items-start justify-between xl:gap-32 md:gap-20 gap-16 mt-8">
+        <div className="md:w-2/5 w-full flex md:flex-col flex-row justify-between gap-10">
+          <div className="md:w-full w-1/2">
+            {tagline && (
+              <h3 className="font-medium text-xl text-slate-200">
+                Tagline: {tagline}
+              </h3>
+            )}
+            <p className="mt-4 text-slate-400">{overview}</p>
+          </div>
+          <div className="flex-1">
+            <ShowImages images={images} />
+          </div>
         </div>
 
-        <div className="w-3/5 font-medium flex flex-col gap-4">
-          <div className="flex">
-            <span className="w-40 text-slate-300">Status</span>
+        <div className="md:w-3/5 w-full font-medium flex flex-col gap-4">
+          <Detail detail="Status">
             <span>{status}</span>
-          </div>
+          </Detail>
 
           {directing?.length > 0 && (
-            <div className="flex ">
-              <span className="w-40 text-slate-300">Directed By</span>
-              <ul
-                className={`flex gap-2 ${
-                  directing.length > 3 ? "flex-col" : "flex-row"
-                }`}
-              >
+            <Detail detail="Directed By">
+              <ul className="flex-1 flex flex-wrap gap-2 gap-y-0">
                 {directing.map((director, index) => (
                   <Link
                     to={`/person/${director.id}`}
@@ -66,17 +67,12 @@ const ShowDetails = () => {
                   </Link>
                 ))}
               </ul>
-            </div>
+            </Detail>
           )}
 
           {created_by?.length > 0 && (
-            <div className="flex ">
-              <span className="w-40 text-slate-300">Created By</span>
-              <ul
-                className={`flex gap-2 ${
-                  created_by.length > 3 ? "flex-col" : "flex-row"
-                }`}
-              >
+            <Detail detail="Created By">
+              <ul className="flex-1 flex flex-wrap gap-2 gap-y-0">
                 {created_by.map((writer, index) => (
                   <Link
                     to={`/person/${writer.id}`}
@@ -88,17 +84,12 @@ const ShowDetails = () => {
                   </Link>
                 ))}
               </ul>
-            </div>
+            </Detail>
           )}
 
           {writing?.length > 0 && (
-            <div className="flex ">
-              <span className="w-40 text-slate-300">Written By</span>
-              <ul
-                className={`flex gap-2 ${
-                  writing.length > 3 ? "flex-col" : "flex-row"
-                }`}
-              >
+            <Detail detail="Written By">
+              <ul className="flex-1 flex flex-wrap gap-2 gap-y-0">
                 {writing.map((writer, index) => (
                   <Link
                     to={`/person/${writer.id}`}
@@ -110,85 +101,76 @@ const ShowDetails = () => {
                   </Link>
                 ))}
               </ul>
-            </div>
+            </Detail>
           )}
 
           {(details["release_date"] || details["first_air_date"]) && (
-            <div className="flex">
-              <span className="w-40 text-slate-300">
-                {details["release_date"] ? "Release Date" : "First Air Date"}
-              </span>
+            <Detail
+              detail={
+                details["release_date"] ? "Release Date" : "First Air Date"
+              }
+            >
               <span>
                 {updateDateFormat(
                   details["release_date"] || details["first_air_date"]
                 )}
               </span>
-            </div>
+            </Detail>
           )}
 
           {details["last_air_date"] && (
-            <div className="flex">
-              <span className="w-40 text-slate-300">Last Air Date</span>
+            <Detail detail="Last Air Date">
               <span>{updateDateFormat(details["last_air_date"])}</span>
-            </div>
+            </Detail>
           )}
 
           {budget > 0 && (
-            <div className="flex">
-              <span className="w-40 text-slate-300">Budget</span>
+            <Detail detail="Badget">
               <span>${formatHugeNumber(budget)}</span>
-            </div>
+            </Detail>
           )}
 
           {revenue > 0 && (
-            <div className="flex">
-              <span className="w-40 text-slate-300">Revenue</span>
+            <Detail detail="Revenue">
               <span>${formatHugeNumber(revenue)}</span>
-            </div>
+            </Detail>
           )}
 
           {number_of_seasons && (
-            <div className="flex">
-              <span className="w-40 text-slate-300">Seasons</span>
+            <Detail detail="Seasons">
               <span>
                 {number_of_seasons}{" "}
                 {number_of_seasons === 1 ? "season" : "seasons"}
               </span>
               <span>{in_production && "Ongoing"}</span>
-            </div>
+            </Detail>
           )}
 
           {number_of_episodes && (
-            <div className="flex">
-              <span className="w-40 text-slate-300">Episodes</span>
+            <Detail detail="Episodes">
               <span>{number_of_episodes} episodes</span>
-            </div>
+            </Detail>
           )}
 
           {production_companies.length > 0 && (
-            <div className="flex ">
-              <span className="w-40 text-slate-300">Produced By</span>
-              <ul className="flex flex-col">
-                {production_companies.map((studio) => (
+            <Detail detail="Produced By">
+              <ul className="flex-1 flex flex-wrap gap-2 gap-y-0">
+                {production_companies.map((studio, index) => (
                   <Link className="hover:text-blue-400" key={studio.id}>
                     {studio.name}{" "}
                     <span className="text-slate-300 text-sm">
                       {studio.origin_country && `(${studio.origin_country})`}
+                      {production_companies.length - 1 !== index ? ", " : ""}
                     </span>
                   </Link>
                 ))}
               </ul>
-            </div>
+            </Detail>
           )}
 
           {origin_country.length > 0 && (
-            <div className="flex">
-              <span className="w-40 text-slate-300">Origin Country</span>
-              <ul
-                className={`flex gap-2 ${
-                  origin_country.length > 7 ? "flex-col" : "flex-row"
-                }`}
-              >
+            <Detail detail="Origin Country">
+              <ul className="flex-1 flex flex-wrap gap-2 gap-y-0">
                 {origin_country.map((country, index) => (
                   <li key={index}>
                     {country}
@@ -196,17 +178,12 @@ const ShowDetails = () => {
                   </li>
                 ))}
               </ul>
-            </div>
+            </Detail>
           )}
 
           {spoken_languages.length > 0 && (
-            <div className="flex">
-              <span className="w-40 text-slate-300">Spoken Languages</span>
-              <ul
-                className={`flex gap-2 ${
-                  spoken_languages.length > 3 ? "flex-col" : "flex-row"
-                }`}
-              >
+            <Detail detail="Spoken Languages">
+              <ul className="flex-1 flex flex-wrap gap-2 gap-y-0">
                 {spoken_languages.map((language, index) => (
                   <li key={index}>
                     {language.english_name === "No Language"
@@ -219,11 +196,11 @@ const ShowDetails = () => {
                   </li>
                 ))}
               </ul>
-            </div>
+            </Detail>
           )}
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

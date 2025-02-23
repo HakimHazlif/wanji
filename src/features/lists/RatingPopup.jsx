@@ -104,7 +104,7 @@ const RatingPopup = ({ setClosePopup, item, showRate = 0 }) => {
         </button>
 
         <div className="text-center">
-          <h2 className="text-xl font-semibold text-white mb-6">
+          <h2 className="text-xl font-semibold text-white mb-6 capitalize">
             Rate this {type}
           </h2>
 
@@ -137,11 +137,17 @@ const RatingPopup = ({ setClosePopup, item, showRate = 0 }) => {
             <button
               onClick={handleSubmit}
               disabled={!rating || isAdding || isUpading}
-              className="mt-4 w-full py-3 px-4 bg-blue-600 text-white rounded-lg font-medium
-                   hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed
+              className="mt-4 w-full py-3 px-4 bg-orange-amber text-slate-900 rounded-lg font-medium
+                   hover:bg-amber-500 disabled:opacity-50 disabled:cursor-not-allowed
                    transition-colors duration-200 flex justify-center items-center"
             >
-              {isAdding || isUpading ? <SpinnerMini /> : "Add Rating"}
+              {isAdding || isUpading ? (
+                <SpinnerMini />
+              ) : rating ? (
+                "Update Rating"
+              ) : (
+                "Add Rating"
+              )}
             </button>
           </div>
         </div>

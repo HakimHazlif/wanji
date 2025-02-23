@@ -7,9 +7,14 @@ import { LuHeart } from "react-icons/lu";
 import { Tooltip } from "@mui/material";
 import SpinnerMini from "../../ui/SpinnerMini";
 import { useListsContext } from "../../context/ListsContext";
+import { useItemStatus } from "./useItemStatus";
 
-const FavoriteButton = ({ item }) => {
+const FavoriteButton = ({
+  item,
+  iconSize = "md:text-xl sm:text-lg text-base",
+}) => {
   const { isLoggedIn } = useSelector((state) => state.user);
+  const { isLoading: isStatusLoading } = useItemStatus();
 
   const { itemsStatusMap, setItemsStatusMap } = useListsContext();
 
@@ -73,25 +78,20 @@ const FavoriteButton = ({ item }) => {
     }
   }
 
-  // const isFavorited = useMemo(
-  //   () => favoriteList?.items_list.some((el) => el.item_id == itemId),
-  //   [itemId, favoriteList?.items_list]
-  // );
-
   let content;
-  if (isAdding || isDeleting || isLoading) {
-    content = <SpinnerMini />;
+  if (isAdding || isDeleting || isLoading || isStatusLoading) {
+    content = <SpinnerMini iconSize={iconSize} />;
   } else {
     if (isFavorited) {
       content = (
         <>
-          <FaHeart className="text-gray-200 md:text-xl sm:text-lg text-base" />
+          <FaHeart className={`text-gray-200 ${iconSize}`} />
         </>
       );
     } else {
       content = (
         <>
-          <LuHeart className="text-gray-200 md:text-xl sm:text-lg text-base" />
+          <LuHeart className={`text-gray-200 ${iconSize}`} />
         </>
       );
     }

@@ -7,7 +7,7 @@ import {
 } from "../../utils/helper";
 
 import Rating from "@mui/material/Rating";
-import { Box } from "@mui/material";
+import { Box, Tooltip } from "@mui/material";
 
 import { Link, useParams } from "react-router";
 import { useShow } from "./useShow";
@@ -74,20 +74,20 @@ const ShowIntro = () => {
             <img
               src={getPictureUrlFormat(poster_path, 1280)}
               alt="movie poster"
-              className="rounded-xl min-w-[200px] w-[260px] max-w-[280px]"
+              className="rounded-xl max-w-[180px] sm:max-w-[200px] md:max-w-[220px] lg:max-w-[250px] xl:max-w-[300px] min-w-[160px]"
             />
           </div>
-          <div>
-            <h2 className="text-4xl font-bold">
+          <div className="w-full flex-1">
+            <h2 className="xl:text-5xl lg:text-4xl md:text-3xl text-2xl font-bold">
               {title}{" "}
               {originalTitle === title ? null : (
-                <span className="text-2xl text-slate-300">
+                <span className="xl:text-3xl lg:text-2xl md:text-xl text-lg text-slate-300">
                   ({originalTitle})
                 </span>
               )}
             </h2>
 
-            <ul className="flex items-center gap-2 text-sm whitespace-nowrap my-2 text-white">
+            <ul className="flex items-center gap-2 md:text-sm text-xs whitespace-nowrap my-2 text-white">
               <li>{category === "movie" ? "Movie" : "TV Show"}</li>
               <span>&#x2022;</span>
               <li className="whitespace-nowrap">{dateFormat}</li>
@@ -114,7 +114,7 @@ const ShowIntro = () => {
               )}
             </ul>
             <div className="flex items-center gap-2 mb-2">
-              <Box>
+              <Box className="flex items-center">
                 <Rating
                   name="percentage-rating"
                   value={Number(vote_average)}
@@ -122,70 +122,84 @@ const ShowIntro = () => {
                   readOnly
                   max={10}
                   sx={{
+                    "& .MuiRating-icon": {
+                      fontSize: "20px",
+                      "@media (min-width: 425px)": { fontSize: "21px" },
+                      "@media (min-width: 640px)": { fontSize: "24px" },
+                      "@media (min-width: 768px)": { fontSize: "27px" },
+                      "@media (min-width: 1024px)": { fontSize: "30px" },
+                    },
                     "& .MuiRating-iconEmpty": {
                       color: "#ffffff",
-                      fontSize: "30px",
                     },
                     "& .MuiRating-iconFilled": {
                       color: "#FFD700",
-                      fontSize: "30px",
                     },
                   }}
                 />
               </Box>
-              <p className="px-2 py-0.5 rounded-sm bg-orange-amber text-gray-800 font-semibold">
+              <p className="md:px-3 px-2 py-0.5 rounded-sm bg-orange-amber text-gray-800 font-semibold lg:text-base md:text-sm text-xs">
                 {formatNumber(vote_average)}
               </p>
             </div>
 
-            <div className="flex w-full gap-20 items-center justify-between">
-              <ul className="flex gap-2">
-                {genres.map((genre) => (
-                  <Link
-                    key={genre.id}
-                    to={`/genre/${genre.name
-                      .split(" ")
-                      .map(
-                        (word) => word.charAt(0).toLowerCase() + word.slice(1)
-                      )
-                      .join("-")}/${genre.id}/${category}?page=1`}
-                    className="py-2 px-4 rounded-lg bg-black/20 hover:bg-black/60 backdrop-blur-md text-white font-medium text-sm"
-                  >
-                    {genre.name}
-                  </Link>
-                ))}
-              </ul>
-              {trailer && (
-                <button
-                  onClick={() => handlePlayVideo(trailer)}
-                  className="px-4 py-2 bg-orange-coral text-white rounded flex gap-2 items-center text-sm font-medium hover:bg-orange-amber hover:scale-110"
+            <ul className="flex gap-2">
+              {genres.map((genre) => (
+                <Link
+                  key={genre.id}
+                  to={`/genre/${genre.name
+                    .split(" ")
+                    .map((word) => word.charAt(0).toLowerCase() + word.slice(1))
+                    .join("-")}/${genre.id}/${category}?page=1`}
+                  className="py-2 px-4 rounded-lg bg-black/20 hover:bg-black/60 backdrop-blur-md text-white font-medium sm:text-sm text-xs text-nowrap"
                 >
-                  <FaPlay />
-                  Play Trailer
-                </button>
-              )}
-            </div>
+                  {genre.name}
+                </Link>
+              ))}
+            </ul>
 
-            <div className="mt-8">
-              <Ellipsis text={overview} />
+            <div className="mt-4 ">
+              <Ellipsis
+                text={overview}
+                lines="xl:line-clamp-6 lg:line-clamp-5 sm:line-clamp-4 line-clamp-3"
+              />
             </div>
           </div>
         </div>
-        <hr className="border-1 border-slate-400 w-full my-4" />
-        {isLoggedIn && (
-          <div className="flex justify-between items-center">
-            <div className="flex gap-2 items-center">
-              <WatchlistButton item={item} />
-              <FavoriteButton item={item} />
-              <ButtonAddToList
-                item={item}
-                image={poster_path}
-                showTitle={title}
-              />
-            </div>
+        <hr className="border-1 border-slate-700 w-full my-4" />
+        <div className="md:flex block justify-between items-center">
+          <div className="flex gap-2 items-center">
+            <WatchlistButton
+              item={item}
+              iconSize="md:text-3xl sm:text-xl text-lg"
+            />
+            <FavoriteButton
+              item={item}
+              iconSize="md:text-3xl sm:text-xl text-lg"
+            />
+            <ButtonAddToList
+              item={item}
+              image={poster_path}
+              showTitle={title}
+            />
+          </div>
+          <div className="flex max-md:justify-end max-md:w-full max-md:mt-4 gap-2">
+            {trailer && (
+              <Tooltip title="Watch Trailer">
+                <span className="flex justify-center items-center">
+                  <button
+                    onClick={() => handlePlayVideo(trailer)}
+                    className="px-4 py-2 rounded-lg flex gap-2 items-center border-none md:text-lg text-sm font-medium hover:scale-105 transition-all duration-300 bg-orange-100 text-amber-700 hover:bg-orange-200 hover:text-amber-800 "
+                  >
+                    <FaPlay />
+                    Play Trailer
+                  </button>
+                </span>
+              </Tooltip>
+            )}
             <RateUser item={item} />
           </div>
-        )}
+        </div>
       </div>
       {selectedVideo && (
         <VideoPlayer

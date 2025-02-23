@@ -28,17 +28,19 @@ const RateUser = ({ item }) => {
         <span>
           <button
             onClick={() => setIsPopupOpen(true)}
-            className="py-3 px-5 rounded-lg bg-black/20 backdrop-blur-lg text-white font-medium text-sm flex items-center gap-2 hover:text-orange-amber duration-300 ease-linear transition-colors cursor-pointer"
+            className="px-5 py-[9px] rounded-lg bg-black/20 backdrop-blur-lg text-white font-medium text-sm flex items-center justify-center gap-2 hover:text-orange-amber ease-linear cursor-pointer hover:scale-105 transition-all duration-300"
           >
             {rating ? (
               <>
                 <FaStar className="text-xl text-orange-amber" />
-                <p className="font-bold text-lg"> {rating}/10</p>
+                <p className="font-bold md:text-lg text-sm"> {rating}/10</p>
               </>
             ) : (
               <>
-                <span className="text-lg">Add your rate</span>
-                <FaRegStar className="text-2xl" />
+                <span className="md:text-lg text-sm font-medium">
+                  Add Your Rate
+                </span>
+                <FaRegStar className="md:text-2xl text-lg" />
               </>
             )}
           </button>
