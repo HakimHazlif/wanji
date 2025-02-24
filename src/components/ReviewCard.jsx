@@ -107,7 +107,121 @@ const ReviewCard = ({
   };
 
   return (
-    <div className="bg-bluish-black py-5 px-8 rounded-lg">
+    <div
+      className={`${isUser ? "" : "border-t border-bluish-black"} pt-6 pb-10`}
+    >
+      <div className="flex gap-6">
+        {isProfileList && (
+          <div className="w-32 flex-shrink-0">
+            <Tooltip title={review?.title}>
+              <div
+                className="rounded-lg overflow-hidden shadow-lg cursor-pointer"
+                onClick={() => navigate(`/${review.type}/${review.itemId}`)}
+              >
+                <img
+                  src={getImageViaPath(review?.posterPath, 400)}
+                  alt={review?.title}
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+            </Tooltip>
+          </div>
+        )}
+
+        <div className="flex sm:flex-row flex-col items-start gap-10">
+          <div className="flex sm:flex-col flex-row gap-5 max-sm:w-full max-sm:justify-between max-sm:items-center">
+            <div className="flex gap-4 items-start md:w-60 w-52 ">
+              <div>
+                {author_details?.avatar_path ? (
+                  <img
+                    src={avatar}
+                    alt={`${author}'s avatar`}
+                    className="lg:w-[75px] md:w-[70px] sm:w-[65px] w-[50px]  aspect-square rounded-full object-cover ring-2 ring-orange-coral"
+                  />
+                ) : (
+                  <div className="lg:w-[75px] md:w-[70px] sm:w-[65px] w-[50px] aspect-square rounded-full bg-green-500 capitalize text-3xl flex justify-center items-center">
+                    {getFirstLetterFromAuthor}
+                  </div>
+                )}
+              </div>
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center gap-4">
+                  <h2 className={`md:text-lg text-base font-medium`}>
+                    {author}
+                  </h2>
+                </div>
+                <p className="text-slate-400 md:text-sm text-xs">
+                  {updateDateFormat(created_at)}
+                </p>
+              </div>
+            </div>
+            {isUser && (
+              <div className="">
+                <button
+                  ref={triggerRef}
+                  onClick={() => setOpenReviewPopup(true)}
+                  className="sm:w-full xs:px-7 px-4 py-2 bg-slate-600 rounded-full hover:bg-slate-500 transition-colors duration-200 font-semibold sm:text-base xs:text-sm text-xs"
+                >
+                  Edit Review
+                </button>
+                {openReviewPopup && (
+                  <ReviewPopup
+                    show={show}
+                    type={type}
+                    onClose={() => setOpenReviewPopup(false)}
+                    triggerRef={triggerRef}
+                    forUpdateReview={true}
+                  />
+                )}
+              </div>
+            )}
+          </div>
+
+          <div className="flex-1 ">
+            <div className="mb-5 flex w-full justify-between">
+              {renderRating()}
+              {url && (
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex
+              items-center gap-2 text-slate-400 hover:text-white transition-colors
+              duration-200"
+                >
+                  <span>TMDB</span>
+                  <FiExternalLink />
+                </a>
+              )}
+            </div>
+            <div className="">
+              <div
+                className={`prose prose-invert max-w-none md:text-base text-sm ${
+                  !isReadMore && "line-clamp-4"
+                } space-y-4`}
+                dangerouslySetInnerHTML={{ __html: formattedContent }}
+              />
+
+              {content.length > 300 && (
+                <button
+                  onClick={() => setIsReadMore(!isReadMore)}
+                  className="mt-5 text-slate-400 hover:text-white font-medium ml-auto block transition-colors duration-200"
+                >
+                  {isReadMore ? "Show less" : "Read more"}
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ReviewCard;
+
+/*
+<div className="bg-bluish-black py-5 px-8 rounded-lg">
       <div className="flex gap-6">
         {isProfileList && (
           <div className="w-32 flex-shrink-0">
@@ -174,19 +288,7 @@ const ReviewCard = ({
               </div>
             )}
 
-            {url && (
-              <a
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex
-              items-center gap-2 text-slate-400 hover:text-white transition-colors
-              duration-200"
-              >
-                <span>TMDB</span>
-                <FiExternalLink />
-              </a>
-            )}
+            
           </div>
 
           <div className="mt-4 space-y-2">
@@ -209,7 +311,4 @@ const ReviewCard = ({
         </div>
       </div>
     </div>
-  );
-};
-
-export default ReviewCard;
+*/

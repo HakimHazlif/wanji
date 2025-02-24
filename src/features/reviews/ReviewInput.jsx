@@ -5,7 +5,7 @@ const ReviewInput = ({
   setContainsSpoilers,
 }) => {
   return (
-    <div className="border-y border-slate-700 py-4 px-4">
+    <div className="border-y border-slate-700 py-4 sm:px-4 px-1">
       <label className="text-sm font-medium text-slate-300 hidden">
         Your Review
       </label>

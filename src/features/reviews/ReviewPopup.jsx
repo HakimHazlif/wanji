@@ -150,7 +150,7 @@ const ReviewPopup = ({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40">
       <div
         ref={modalRef}
-        className="h-[460px] rounded-xl bg-bluish-black py-4 px-5 absolute z-40 max-w-[70vw] w-full mx-4 max-h-[90vh] overflow-y-auto scrollbar-custom"
+        className="rounded-xl bg-bluish-black py-4 px-5 absolute z-40 w-full h-full mx-4 max-h-[90vh] xl:max-w-[70vw] lg:max-w-[80vw] sm:max-w-[85vw] max-w-[90vw] overflow-y-auto scrollbar-custom"
       >
         <div className="flex justify-between items-center mb-6 pl-4">
           <h2 className="text-2xl font-semibold">Your Review</h2>
@@ -171,7 +171,7 @@ const ReviewPopup = ({
           setContainsSpoilers={setContainsSpoilers}
         />
 
-        <div className="py-2 pb-4 px-4 border-b border-slate-700">
+        <div className="py-2 pb-4 sm:px-4 px-1 border-b border-slate-700">
           <div className="mb-3">
             <h3 className="font-medium">Dates Watched</h3>
             <p className="text-sm text-slate-400">
@@ -221,18 +221,18 @@ const ReviewPopup = ({
           </button>
         </div>
 
-        <div className="p-4 flex justify-between">
-          <div className="flex justify-start gap-3">
+        <div className="py-4 sm:px-4 px-1 flex sm:flex-row flex-col gap-4 sm:justify-between ">
+          <div className="flex sm:justify-start gap-3 max-sm:flex-1">
             <button
               onClick={handleSubmit}
               disabled={!reviewInput || isAdding || isUpdating}
-              className="px-6 py-2 bg-orange-amber text-gray-900 font-medium rounded-lg hover:bg-amber-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="max-sm:w-3/5 px-6 py-2 bg-orange-amber text-gray-900 font-medium rounded-lg hover:bg-amber-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {forUpdateReview ? "Update Review" : "Add Review"}
             </button>
             <button
               onClick={onClose}
-              className="px-6 py-2 bg-gray-600 text-white font-medium rounded-lg hover:bg-gray-500 transition-colors duration-200 flex items-center gap-2"
+              className="max-sm:w-2/5 px-6 py-2 bg-gray-600 text-white font-medium rounded-lg hover:bg-gray-500 transition-colors duration-200 flex items-center justify-center gap-2"
             >
               Cancel
             </button>
@@ -240,7 +240,7 @@ const ReviewPopup = ({
           {forUpdateReview && (
             <button
               onClick={() => setIsDeleteConfirmation(true)}
-              className="px-6 py-2 bg-gray-600 text-white font-medium rounded-lg hover:bg-gray-500 transition-colors duration-200 flex items-center gap-2"
+              className="px-6 py-2 bg-gray-600 text-white font-medium rounded-lg hover:bg-gray-500 transition-colors duration-200 flex items-center justify-center gap-2"
             >
               Delete Review
             </button>

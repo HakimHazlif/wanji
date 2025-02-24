@@ -21,14 +21,14 @@ const ImageViewer = ({ images, initialIndex, onClose }) => {
     <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center">
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 text-white hover:text-orange-amber p-2"
+        className="absolute z-30 top-4 right-4 text-white hover:text-orange-amber p-2"
       >
         <IoMdClose size={30} />
       </button>
 
       <button
         onClick={handlePrevious}
-        className="absolute left-4 text-white hover:text-orange-amber p-2"
+        className="absolute z-30 left-4 text-white hover:text-orange-amber p-2"
       >
         <IoIosArrowBack size={40} />
       </button>
@@ -51,7 +51,7 @@ const ImageViewer = ({ images, initialIndex, onClose }) => {
 
       <button
         onClick={handleNext}
-        className="absolute right-4 text-white hover:text-orange-amber p-2"
+        className="absolute z-30 right-4 text-white hover:text-orange-amber p-2"
       >
         <IoIosArrowForward size={40} />
       </button>

@@ -9,7 +9,7 @@ const ReviewPopupHeader = ({ show }) => {
           <img
             src={getPictureUrlFormat(show?.poster_path)}
             alt="poster"
-            className="rounded-md w-[100px] object-cover"
+            className="rounded-md w-[100px] min-w-[80px] object-cover"
           />
         ) : (
           <EmptyPoster />

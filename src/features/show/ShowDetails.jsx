@@ -9,10 +9,8 @@ import Detail from "../../components/Detail";
 import ShowImages from "./ShowImages";
 
 const ShowDetails = () => {
-  const { details, credits, images } = useShow();
+  const { details, credits } = useShow();
   const {
-    tagline,
-    overview,
     status,
     budget,
     revenue,
@@ -29,30 +27,66 @@ const ShowDetails = () => {
   const { directing, writing } = crew;
 
   return (
-    <div className="">
-      <h2 className="text-4xl font-semibold border-b border-slate-700 pb-3">
+    <section className="mt-20">
+      <h2 className="heading-title-1 font-semibold border-b border-slate-700 pb-3">
         {details["title"] ? "Movie" : "Tv Show"} details
       </h2>
-      <div className="flex md:flex-row flex-col items-start justify-between xl:gap-32 md:gap-20 gap-16 mt-8">
-        <div className="md:w-2/5 w-full flex md:flex-col flex-row justify-between gap-10">
-          <div className="md:w-full w-1/2">
-            {tagline && (
-              <h3 className="font-medium text-xl text-slate-200">
-                Tagline: {tagline}
-              </h3>
-            )}
-            <p className="mt-4 text-slate-400">{overview}</p>
-          </div>
-          <div className="flex-1">
-            <ShowImages images={images} />
-          </div>
-        </div>
 
-        <div className="md:w-3/5 w-full font-medium flex flex-col gap-4">
+      <div className="w-full font-medium flex md:flex-row flex-col md:gap-10 gap-4 mt-7">
+        <div className="md:w-2/5 w-full flex flex-col gap-4">
           <Detail detail="Status">
             <span>{status}</span>
           </Detail>
 
+          {(details["release_date"] || details["first_air_date"]) && (
+            <Detail
+              detail={
+                details["release_date"] ? "Release Date" : "First Air Date"
+              }
+            >
+              <span>
+                {updateDateFormat(
+                  details["release_date"] || details["first_air_date"]
+                )}
+              </span>
+            </Detail>
+          )}
+
+          {details["last_air_date"] && (
+            <Detail detail="Last Air Date">
+              <span>{updateDateFormat(details["last_air_date"])}</span>
+            </Detail>
+          )}
+
+          {budget > 0 && (
+            <Detail detail="Badget">
+              <span>${formatHugeNumber(budget)}</span>
+            </Detail>
+          )}
+
+          {revenue > 0 && (
+            <Detail detail="Revenue">
+              <span>${formatHugeNumber(revenue)}</span>
+            </Detail>
+          )}
+
+          {number_of_seasons && (
+            <Detail detail="Seasons">
+              <span>
+                {number_of_seasons}{" "}
+                {number_of_seasons === 1 ? "season" : "seasons"}
+              </span>
+              <span>{in_production && "Ongoing"}</span>
+            </Detail>
+          )}
+
+          {number_of_episodes && (
+            <Detail detail="Episodes">
+              <span>{number_of_episodes} episodes</span>
+            </Detail>
+          )}
+        </div>
+        <div className="md:w-3/5 w-full flex flex-col gap-4">
           {directing?.length > 0 && (
             <Detail detail="Directed By">
               <ul className="flex-1 flex flex-wrap gap-2 gap-y-0">
@@ -104,54 +138,6 @@ const ShowDetails = () => {
             </Detail>
           )}
 
-          {(details["release_date"] || details["first_air_date"]) && (
-            <Detail
-              detail={
-                details["release_date"] ? "Release Date" : "First Air Date"
-              }
-            >
-              <span>
-                {updateDateFormat(
-                  details["release_date"] || details["first_air_date"]
-                )}
-              </span>
-            </Detail>
-          )}
-
-          {details["last_air_date"] && (
-            <Detail detail="Last Air Date">
-              <span>{updateDateFormat(details["last_air_date"])}</span>
-            </Detail>
-          )}
-
-          {budget > 0 && (
-            <Detail detail="Badget">
-              <span>${formatHugeNumber(budget)}</span>
-            </Detail>
-          )}
-
-          {revenue > 0 && (
-            <Detail detail="Revenue">
-              <span>${formatHugeNumber(revenue)}</span>
-            </Detail>
-          )}
-
-          {number_of_seasons && (
-            <Detail detail="Seasons">
-              <span>
-                {number_of_seasons}{" "}
-                {number_of_seasons === 1 ? "season" : "seasons"}
-              </span>
-              <span>{in_production && "Ongoing"}</span>
-            </Detail>
-          )}
-
-          {number_of_episodes && (
-            <Detail detail="Episodes">
-              <span>{number_of_episodes} episodes</span>
-            </Detail>
-          )}
-
           {production_companies.length > 0 && (
             <Detail detail="Produced By">
               <ul className="flex-1 flex flex-wrap gap-2 gap-y-0">
@@ -200,7 +186,7 @@ const ShowDetails = () => {
           )}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -119,15 +119,15 @@ const ItemsList = ({ list, item }) => {
       content = <LuListCheck className="text-3xl text-[#e7bd15]" />;
     } else {
       content = (
-        <FaPlus className="text-slate-400 text-xl group-hover:text-orange-coral" />
+        <FaPlus className="text-slate-400 text-xl group-hover:text-orange-coral transition-colors duration-200" />
       );
     }
   }
 
   return (
-    <div className="w-full p-4 flex items-center gap-4 justify-between hover:bg-slate-800 rounded-md transition-colors">
+    <div className="w-full p-4 flex items-center gap-4 justify-between hover:bg-slate-800 rounded-md transition-colors duration-200 group">
       <button
-        className="flex items-center gap-3 w-full group"
+        className="flex items-center gap-3 w-full "
         onClick={isAdded ? handleDeleteFromList : handleAddToList}
       >
         <div>{content}</div>

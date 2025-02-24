@@ -5,7 +5,7 @@ const UserAvatar = ({ size, textSize = "text-lg" }) => {
 
   return (
     <div
-      className={`${size} rounded-full overflow-hidden ring-2 ring-orange-coral`}
+      className={`${size} aspect-square rounded-full overflow-hidden ring-2 ring-orange-coral`}
     >
       {avatar ? (
         <img

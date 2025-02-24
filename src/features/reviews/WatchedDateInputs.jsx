@@ -14,7 +14,7 @@ const WatchedDateInputs = ({
     <div className="flex items-center justify-between w-full">
       <div className="flex gap-6">
         <div className="flex gap-2 items-center">
-          <label className="text-sm font-medium text-slate-300 text-nowrap">
+          <label className="text-sm font-medium text-slate-300 text-nowrap max-sm:hidden">
             {type === "tv" ? "Date Started:" : "Date Watched:"}
           </label>
           <input
@@ -34,7 +34,7 @@ const WatchedDateInputs = ({
               type="date"
               value={finishedValue}
               onChange={(e) => handleChange(e, "finishedDate", index)}
-              className="px-2 py-1 text-sm bg-slate-800 border border-slate-500 rounded-lg focuse:border-orange-colar outline-none transition-colors"
+              className="text-sm bg-slate-800 border border-slate-500 rounded-lg focuse:border-orange-colar outline-none transition-colors"
             />
             <SetTodayButton setToday={() => setToday("finishedDate", index)} />
           </div>

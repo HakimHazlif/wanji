@@ -45,19 +45,25 @@ const ShowReviews = ({ reviews, show, category }) => {
     return usersReviewList;
   }, [usersReview]);
 
+  const reviewsNumber =
+    usersReview?.length + reviews?.length + (userReviewData ? 1 : 0);
+
   // if !uid or reviews?.length === 0 return a reuseable component that invint the user to sign in
 
   if (isReviewLoading || isReviewsLoading) return <Spinner />;
 
   return (
     <section className="">
-      <div className="mb-6 border-b border-slate-700 pb-3">
-        <h2 className="text-4xl font-semibold">Reviews</h2>
+      <div className="mb-6 border-b border-slate-700 pb-3 flex justify-between items-end">
+        <h2 className="heading-title-1 font-semibold">Reviews</h2>
+        <span className="text-xl text-slate-400 cursor-pointer">
+          {reviewsNumber} {reviewsNumber === 1 ? "Review" : "Reviews"}
+        </span>
       </div>
       {uid && (
-        <div className="mb-14">
+        <div className="mb-20">
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold ">My Reviews</h3>
+            <h3 className="heading-title-2 font-semibold ">My Review</h3>
           </div>
           {userReviewData ? (
             <ReviewCard
@@ -75,7 +81,9 @@ const ShowReviews = ({ reviews, show, category }) => {
       {usersReview?.length > 0 && (
         <div className="mb-14">
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold ">Community Reviews</h3>
+            <h3 className="heading-title-2 font-semibold ">
+              Community Reviews
+            </h3>
           </div>
           <div className="grid grid-flow-row gap-3">
             {usersReviewList?.map((review) => {
@@ -88,7 +96,7 @@ const ShowReviews = ({ reviews, show, category }) => {
       {reviews?.length > 0 && (
         <div>
           <div className="mb-6">
-            <h3 className="text-2xl font-semibold ">
+            <h3 className="heading-title-2 font-semibold ">
               TMDB Users&apos; Reviews
             </h3>
           </div>

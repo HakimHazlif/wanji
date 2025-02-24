@@ -13,6 +13,7 @@ import SeasonsList from "../features/lists/SeasonsList";
 import { useParams } from "react-router";
 import { useItemStatus } from "../features/lists/useItemStatus";
 import CreditCard from "../components/CreditCard";
+import ShowOverview from "../features/show/ShowOverview";
 
 const Show = () => {
   const { isLoading, details, similar, images, credits, reviews } = useShow();
@@ -23,12 +24,19 @@ const Show = () => {
   if (isLoading) return <Spinner />;
 
   return (
-    <div className=" pb-20 padding-x">
+    <div className="pb-20 padding-x">
       <ShowIntro />
 
-      <section className="pt-28">
-        <ShowDetails />
+      <section className="pt-20 flex md:flex-row flex-col items-start justify-between xl:gap-32 md:gap-20 gap-16 mt-8">
+        <ShowOverview />
+        {images?.length > 0 && (
+          <div className="md:w-3/5 w-full font-medium flex flex-col gap-4">
+            <ShowImages images={images} />
+          </div>
+        )}
       </section>
+
+      <ShowDetails />
 
       {category === "tv" && (
         <section className="pt-32">
@@ -62,12 +70,6 @@ const Show = () => {
         </section>
       )}
 
-      {images?.length > 0 && (
-        <section className="pt-32">
-          <ShowImages images={images} />
-        </section>
-      )}
-
       <section className="pt-32">
         <ListScroll title="More like this">
           {similar?.map((show) => (
@@ -89,7 +91,7 @@ const Show = () => {
           alt={`${details?.title || details?.name}'s backdrop`}
           className="h-[600px] w-full object-cover object-center masking"
         />
-        <div className="bg-[#272831] opacity-60 masking h-[600px] w-full absolute bottom-0 right-0 z-10"></div>
+        <div className="bg-[#27283192] opacity-60 masking h-[600px] w-full absolute bottom-0 right-0 z-10"></div>
       </div>
     </div>
   );

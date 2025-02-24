@@ -10,6 +10,25 @@ const DeleteListConfirm = ({
 }) => {
   const popupRef = useRef();
 
+  const getThName = () => {
+    if (type === "deleteItem") {
+      return (
+        <>
+          <span className="font-semibold text-red-500">{name}</span> from this
+          list
+        </>
+      );
+    } else if (type === "deleteList") {
+      return (
+        <>
+          the list <span className="font-semibold text-red-500">name</span>
+        </>
+      );
+    } else if (type === "deleteReview") {
+      return "this review";
+    }
+  };
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (popupRef.current && !popupRef.current.contains(event.target)) {
@@ -28,24 +47,16 @@ const DeleteListConfirm = ({
       disabled
     >
       <div
-        className="fixed z-[100] w-[600px] bg-gray-800 rounded-lg shadow-xl  mx-auto py-6 px-20 text-center"
+        className="fixed z-[100] sm:max-w-[600px] max-w-[90vw] bg-gray-800 rounded-lg shadow-xl mx-auto py-6 sm:px-20 px-10 text-center"
         ref={popupRef}
       >
-        <h3 className="text-lg font-semibold ">
+        <h3 className="text-lg font-semibold mb-5">
           {type === "deleteItem" && "Delete Item"}
           {type === "deleteList" && "Delete List"}
           {type === "deleteReview" && "Delete Review"}
         </h3>
         <p>
-          Are you sure you want to delete{" "}
-          {type === "DeleteItem" &&
-            `${(
-              <span className="font-semibold text-red-500">{name}</span>
-            )} from  this list`}
-          {type === "DeleteList" &&
-            `the list 
-            ${(<span className="font-semibold text-red-500">{name}</span>)}`}
-          {type === "deleteReview" && "this review"}? This action cannot be
+          Are you sure you want to delete {getThName()}? This action cannot be
           undone.
         </p>
 

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { FaEdit, FaListUl, FaPlus } from "react-icons/fa";
 import { MdOutlineRemoveCircleOutline } from "react-icons/md";
 import { RiDeleteBin2Fill } from "react-icons/ri";
+import { useLists } from "../features/lists/useLists";
 
 const ItemsListOption = ({
   list,
@@ -17,31 +18,44 @@ const ItemsListOption = ({
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
   const popupRef = useRef();
+  const [position, setPosition] = useState(null);
+  const [openUpward, setOpenUpward] = useState(false);
 
-  const [position, setPositon] = useState({ top: 0, right: 0 });
-
-  useEffect(() => {
+  const calculatePosition = () => {
     if (buttonRef.current) {
       const rect = buttonRef.current.getBoundingClientRect();
-      const wouldOverflowBottom = rect.bottom + 160 > window.innerHeight;
+      const popupHeight = 170;
+      const padding = 5;
 
-      setPositon({
-        top: wouldOverflowBottom ? rect.bottom - 195 : rect.bottom + 10,
-        right: rect.right - 510,
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const shouldOpenUpward = spaceBelow < popupHeight;
+      setOpenUpward(shouldOpenUpward);
+
+      let topPosition;
+      if (shouldOpenUpward) {
+        topPosition = rect.top - popupHeight + padding;
+      } else {
+        topPosition = rect.bottom + padding;
+      }
+
+      const rightPosition = window.innerWidth - rect.right - 15;
+
+      setPosition({
+        top: Math.max(padding, topPosition),
+        right: Math.max(padding, rightPosition),
       });
     }
+  };
+
+  useEffect(() => {
+    calculatePosition();
 
     const handleScroll = () => {
-      if (buttonRef.current) {
-        const rect = buttonRef.current.getBoundingClientRect();
+      calculatePosition();
+    };
 
-        const wouldOverflowBottom = rect.bottom + 160 > window.innerHeight;
-
-        setPositon({
-          top: wouldOverflowBottom ? rect.bottom - 195 : rect.bottom + 10,
-          right: rect.right - 510,
-        });
-      }
+    const handleResize = () => {
+      calculatePosition();
     };
 
     const handleClickOutside = (event) => {
@@ -57,22 +71,30 @@ const ItemsListOption = ({
 
     document.addEventListener("mousedown", handleClickOutside);
     window.addEventListener("scroll", handleScroll);
-    // window.addEventListener("resize", handleScroll);
+    window.addEventListener("resize", handleResize);
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       window.removeEventListener("scroll", handleScroll);
-      // window.removeEventListener("resize", handleScroll);
+      window.removeEventListener("resize", handleResize);
     };
   }, [buttonRef, setIsOptionOpen]);
 
+  if (!position) {
+    return null;
+  }
+
   return (
     <div
-      className="fixed z-40 "
-      style={{ top: `${position.top}px`, right: `${position.right}px` }}
+      className={`fixed z-40 ${openUpward ? "origin-bottom" : "origin-top"}`}
+      style={{
+        top: `${position.top}px`,
+        right: `${position.right}px`,
+        opacity: 1,
+      }}
     >
       <ul
-        className="bg-slate-600 rounded-md w-[200px] text-start "
+        className="bg-slate-600 rounded-md w-[200px] text-start shadow-lg overflow-hidden"
         ref={popupRef}
       >
         <li
@@ -80,7 +102,7 @@ const ItemsListOption = ({
             if (isAdded) deleteFromList();
             else addToList();
           }}
-          className="w-full py-2 px-5 flex items-center gap-3 text-base hover:bg-slate-800 cursor-pointer"
+          className="w-full py-2 px-5 flex items-center gap-3 text-base hover:bg-slate-500 transition-colors duration-200 cursor-pointer"
         >
           {isAdded ? (
             <MdOutlineRemoveCircleOutline className="w-6 h-6" />
@@ -95,13 +117,12 @@ const ItemsListOption = ({
               `/u/${user.username.replace(" ", "-")}/Lists?listId=${list.id}`
             )
           }
-          className="w-full py-2 px-5 flex items-center gap-3 text-base hover:bg-slate-800 cursor-pointer"
+          className="w-full py-2 px-5 flex items-center gap-3 text-base hover:bg-slate-500 transition-colors duration-200 cursor-pointer"
         >
           <FaListUl className="w-5 h-5" />
-
           <span>Go to list</span>
         </li>
-        <li className="w-full py-2 px-5 flex items-center gap-3 text-base hover:bg-slate-800 cursor-pointer">
+        <li className="w-full py-2 px-5 flex items-center gap-3 text-base hover:bg-slate-500 transition-colors duration-200 cursor-pointer">
           <FaEdit className="w-5 h-5" />
           <span>Edit list</span>
         </li>
@@ -109,7 +130,7 @@ const ItemsListOption = ({
           onClick={() => {
             setForConfirmDelete(true);
           }}
-          className="w-full py-2 px-5 flex items-center gap-3 text-base hover:bg-slate-800 cursor-pointer"
+          className="w-full py-2 px-5 flex items-center gap-3 text-base hover:bg-slate-500 transition-colors duration-200 cursor-pointer"
         >
           <RiDeleteBin2Fill className="w-6 h-6" />
           <span>Remove list</span>

@@ -16,13 +16,14 @@ import Ellipsis from "../../ui/Ellipsis";
 import WatchlistButton from "../lists/WatchlistButton";
 import FavoriteButton from "../lists/FavoriteButton";
 import ButtonAddToList from "../lists/ButtonAddToList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import VideoPlayer from "../../components/VideoPlayer";
 import { FaPlay } from "react-icons/fa";
 import { useSelector } from "react-redux";
 
 const ShowIntro = () => {
-  const { isLoggedIn } = useSelector((state) => state.user);
+  const [maxRating, setMaxRating] = useState(10);
+
   const [selectedVideo, setSelectedVideo] = useState(null);
 
   const { details, videos } = useShow();
@@ -65,6 +66,22 @@ const ShowIntro = () => {
   const handlePlayVideo = (video) => {
     setSelectedVideo(video);
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setMaxRating(5);
+      } else {
+        setMaxRating(10);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <section>
@@ -117,10 +134,14 @@ const ShowIntro = () => {
               <Box className="flex items-center">
                 <Rating
                   name="percentage-rating"
-                  value={Number(vote_average)}
+                  value={
+                    maxRating === 5
+                      ? Math.ceil(Number(vote_average) / 2)
+                      : Number(vote_average)
+                  }
                   precision={0.1}
                   readOnly
-                  max={10}
+                  max={maxRating}
                   sx={{
                     "& .MuiRating-icon": {
                       fontSize: "20px",
@@ -143,7 +164,7 @@ const ShowIntro = () => {
               </p>
             </div>
 
-            <ul className="flex gap-2">
+            <ul className="flex-1 flex flex-wrap gap-2 gap-y-1">
               {genres.map((genre) => (
                 <Link
                   key={genre.id}
@@ -183,7 +204,7 @@ const ShowIntro = () => {
               showTitle={title}
             />
           </div>
-          <div className="flex max-md:justify-end max-md:w-full max-md:mt-4 gap-2">
+          <div className="flex max-md:mt-4 gap-2">
             {trailer && (
               <Tooltip title="Watch Trailer">
                 <span className="flex justify-center items-center">
