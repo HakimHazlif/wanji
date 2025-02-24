@@ -85,7 +85,7 @@ const ShowReviews = ({ reviews, show, category }) => {
               Community Reviews
             </h3>
           </div>
-          <div className="grid grid-flow-row gap-3">
+          <div className="grid grid-flow-row gap-3 w-full">
             {usersReviewList?.map((review) => {
               return <ReviewCard key={review.id} review={review} />;
             })}
@@ -100,7 +100,7 @@ const ShowReviews = ({ reviews, show, category }) => {
               TMDB Users&apos; Reviews
             </h3>
           </div>
-          <div className="grid grid-flow-row gap-3">
+          <div className="grid grid-flow-row gap-3 ">
             {reviews.map((review) => {
               return <ReviewCard key={review.id} review={review} />;
             })}
