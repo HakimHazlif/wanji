@@ -14,10 +14,12 @@ const EpisodesList = () => {
   return (
     <section className="">
       <div className="mb-10 border-b border-slate-700 pb-4 flex justify-between items-center">
-        <h2 className="text-4xl font-semibold">
+        <h2 className="heading-title-1">
           Episodes of the {seasonDetails.name}
         </h2>
-        <p className="text-2xl font-semibold">{episodes.length} Episodes</p>
+        <p className="heading-title-2 text-slate-400">
+          {episodes.length} Episodes
+        </p>
       </div>
       <div className="grid grid-flow-row gap-8">
         {episodes.length > 0 ? (

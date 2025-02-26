@@ -20,10 +20,9 @@ import { useEffect, useState } from "react";
 import VideoPlayer from "../../components/VideoPlayer";
 import { FaPlay } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import RatingBox from "../../components/RatingBox";
 
 const ShowIntro = () => {
-  const [maxRating, setMaxRating] = useState(10);
-
   const [selectedVideo, setSelectedVideo] = useState(null);
 
   const { details, videos } = useShow();
@@ -66,22 +65,6 @@ const ShowIntro = () => {
   const handlePlayVideo = (video) => {
     setSelectedVideo(video);
   };
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 640) {
-        setMaxRating(5);
-      } else {
-        setMaxRating(10);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    // handleResize();
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   return (
     <section>
@@ -130,39 +113,10 @@ const ShowIntro = () => {
                 </>
               )}
             </ul>
-            <div className="flex items-center gap-2 mb-2">
-              <Box className="flex items-center">
-                <Rating
-                  name="percentage-rating"
-                  value={
-                    maxRating === 5
-                      ? Math.ceil(Number(vote_average) / 2)
-                      : Number(vote_average)
-                  }
-                  precision={0.1}
-                  readOnly
-                  max={maxRating}
-                  sx={{
-                    "& .MuiRating-icon": {
-                      fontSize: "20px",
-                      "@media (min-width: 425px)": { fontSize: "21px" },
-                      "@media (min-width: 640px)": { fontSize: "24px" },
-                      "@media (min-width: 768px)": { fontSize: "27px" },
-                      "@media (min-width: 1024px)": { fontSize: "30px" },
-                    },
-                    "& .MuiRating-iconEmpty": {
-                      color: "#ffffff",
-                    },
-                    "& .MuiRating-iconFilled": {
-                      color: "#FFD700",
-                    },
-                  }}
-                />
-              </Box>
-              <p className="md:px-3 px-2 py-0.5 rounded-sm bg-orange-amber text-gray-800 font-semibold lg:text-base md:text-sm text-xs">
-                {formatNumber(vote_average)}
-              </p>
-            </div>
+            <RatingBox
+              rating={vote_average}
+              styleOfSpan="md:px-3 px-2 py-0.5 rounded-sm bg-orange-amber text-gray-800 font-semibold lg:text-base md:text-sm text-xs"
+            />
 
             <ul className="flex-1 flex flex-wrap gap-2 gap-y-1">
               {genres.map((genre) => (

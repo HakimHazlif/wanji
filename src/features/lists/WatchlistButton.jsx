@@ -11,6 +11,7 @@ import { useItemStatus } from "./useItemStatus";
 const WatchlistButton = ({
   item,
   iconSize = "md:text-xl sm:text-lg text-base",
+  width = "md:w-[100px] sm:w-[92px] w-[85px]",
 }) => {
   const { isLoggedIn } = useSelector((state) => state.user);
   const { isLoading: isStatusLoading } = useItemStatus();
@@ -103,7 +104,7 @@ const WatchlistButton = ({
             isWatchlist
               ? "bg-amber-500 hover:bg-amber-400"
               : "bg-slate-700 hover:bg-slate-600"
-          } md:w-[100px] sm:w-[92px] w-[85px] py-2 font-bold rounded-lg flex items-center justify-center gap-2 transition-colors duration-200 shadow-lg`}
+          } ${width} py-2 font-bold rounded-lg flex items-center justify-center gap-2 transition-colors duration-200 shadow-lg`}
           onClick={
             isWatchlist ? handleDeleteFromWatchlist : handleAddToWatchlist
           }

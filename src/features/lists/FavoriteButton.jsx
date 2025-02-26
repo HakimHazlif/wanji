@@ -12,6 +12,7 @@ import { useItemStatus } from "./useItemStatus";
 const FavoriteButton = ({
   item,
   iconSize = "md:text-xl sm:text-lg text-base",
+  width = "md:w-[100px] sm:w-[92px] w-[85px]",
 }) => {
   const { isLoggedIn } = useSelector((state) => state.user);
   const { isLoading: isStatusLoading } = useItemStatus();
@@ -105,7 +106,7 @@ const FavoriteButton = ({
             isFavorited
               ? "bg-strawberry hover:bg-red-600"
               : "bg-slate-700 hover:bg-slate-600"
-          } md:w-[100px] sm:w-[92px] w-[85px] py-2 font-bold rounded-lg flex items-center justify-center gap-2 transition-colors duration-200 shadow-lg`}
+          } ${width} py-2 font-bold rounded-lg flex items-center justify-center gap-2 transition-colors duration-200 shadow-lg`}
           onClick={isFavorited ? handleDeleteFromFavorite : handleAddToFavorite}
           disabled={isLoading || isAdding || isDeleting}
         >
