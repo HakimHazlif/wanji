@@ -9,10 +9,9 @@ import Ellipsis from "../../ui/Ellipsis";
 import { Link } from "react-router";
 import { useEffect, useState } from "react";
 import RatingBox from "../../components/RatingBox";
+import EmptyPoster from "../../components/EmptyPoster";
 
 const SeasonIntro = () => {
-  const [maxRating, setMaxRating] = useState(10);
-
   const { seasonDetails, episodes } = useSeason();
   const {
     title,
@@ -26,31 +25,19 @@ const SeasonIntro = () => {
     status,
   } = seasonDetails;
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 640) {
-        setMaxRating(5);
-      } else {
-        setMaxRating(10);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    // handleResize();
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   return (
-    <section className="pt-20">
+    <section className="">
       <div className="flex xs:flex-row flex-col gap-4 items-end">
         <div>
-          <img
-            src={getPictureUrlFormat(poster_path, 1280)}
-            alt={`season ${season_number}`}
-            className="rounded-xl max-w-[180px] sm:max-w-[200px] md:max-w-[220px] lg:max-w-[250px] xl:max-w-[300px] min-w-[160px]"
-          />
+          {poster_path ? (
+            <img
+              src={getPictureUrlFormat(poster_path, 1280)}
+              alt={`season ${season_number}`}
+              className="rounded-xl max-w-[180px] sm:max-w-[200px] md:max-w-[220px] lg:max-w-[250px] xl:max-w-[300px] min-w-[160px]"
+            />
+          ) : (
+            <EmptyPoster style="rounded-xl max-w-[180px] sm:max-w-[200px] md:max-w-[220px] lg:max-w-[250px] xl:max-w-[300px] min-w-[160px]" />
+          )}
         </div>
         <div className="w-full flex-1">
           <div className="mb-2 text-white font-bold">

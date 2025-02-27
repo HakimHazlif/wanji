@@ -74,15 +74,15 @@ const ShowDetails = () => {
             <Detail detail="Seasons">
               <span>
                 {number_of_seasons}{" "}
-                {number_of_seasons === 1 ? "season" : "seasons"}
-              </span>
-              <span>{in_production && "Ongoing"}</span>
+                {number_of_seasons === 1 ? "Season" : "Seasons"}
+              </span>{" "}
+              <span>{in_production && "- Ongoing"}</span>
             </Detail>
           )}
 
           {number_of_episodes && (
             <Detail detail="Episodes">
-              <span>{number_of_episodes} episodes</span>
+              <span>{number_of_episodes} Episodes</span>
             </Detail>
           )}
         </div>

@@ -4,6 +4,7 @@ import { getPictureUrlFormat, getYearMonthFormat } from "../../utils/helper";
 import ListScroll from "./ListScroll";
 import { FaStar } from "react-icons/fa";
 import { Tooltip } from "@mui/material";
+import EmptyPoster from "../../components/EmptyPoster";
 
 const SeasonsList = () => {
   const navigate = useNavigate();
@@ -25,12 +26,16 @@ const SeasonsList = () => {
           <div key={season.id} className="w-52 text-white">
             <div>
               <Tooltip title={season.name}>
-                <img
-                  src={getPictureUrlFormat(season.poster_path, 500)}
-                  alt="show poster"
-                  className="relative w-full rounded-md object-cover cursor-pointer"
-                  onClick={() => handleNavigate(season.season_number)}
-                />
+                {season.poster_path ? (
+                  <img
+                    src={getPictureUrlFormat(season.poster_path, 500)}
+                    alt="show poster"
+                    className="relative w-full rounded-md object-cover cursor-pointer"
+                    onClick={() => handleNavigate(season.season_number)}
+                  />
+                ) : (
+                  <EmptyPoster />
+                )}
               </Tooltip>
               <div className="px-3 mt-2">
                 <div className="flex justify-between items-center">

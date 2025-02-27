@@ -12,7 +12,7 @@ const ShowImages = ({ images }) => {
   return (
     <section className="">
       <div className="flex items-center justify-between gap-3 mb-6 border-b border-slate-700 pb-3">
-        <h2 className="heading-title-1 font-semibold ">Photos </h2>
+        <h2 className="heading-title-1">Photos </h2>
         <span
           className="text-xl text-slate-400 cursor-pointer"
           onClick={() => handleImageClick(0)}

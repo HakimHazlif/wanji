@@ -15,6 +15,7 @@ const RatingBox = ({
     "@media (min-width: 1024px)": { fontSize: "30px" },
   },
   initialStars = 10,
+  minWidth = 640,
 }) => {
   const [maxRating, setMaxRating] = useState(initialStars);
 

@@ -14,6 +14,7 @@ import { useParams } from "react-router";
 import { useItemStatus } from "../features/lists/useItemStatus";
 import CreditCard from "../components/CreditCard";
 import ShowOverview from "../features/show/ShowOverview";
+import HeaderBackDrop from "../ui/HeaderBackDrop";
 
 const Show = () => {
   const { isLoading, details, similar, images, credits, reviews } = useShow();
@@ -93,6 +94,8 @@ const Show = () => {
         />
         <div className="bg-[#27283192] opacity-60 masking h-[600px] w-full absolute bottom-0 right-0 z-10"></div>
       </div>
+
+      {/* <HeaderBackDrop backdrop={details?.backdrop_path || details?.poster_path} alt="backdrop" height="h-[600px]" /> */}
     </div>
   );
 };

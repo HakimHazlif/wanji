@@ -17,6 +17,8 @@ import FavoriteButton from "../lists/FavoriteButton";
 import ButtonAddToList from "../lists/ButtonAddToList";
 import RateUser from "../lists/RateUser";
 import { useParams } from "react-router";
+import RatingBox from "../../components/RatingBox";
+import EmptyPoster from "../../components/EmptyPoster";
 
 const EpisodeInfo = () => {
   const { episodeDetails } = useEpisode();
@@ -44,59 +46,53 @@ const EpisodeInfo = () => {
 
   return (
     <section>
-      <div className="flex gap-10 items-end">
+      <div className="flex lg:flex-row flex-col-reverse gap-10 items-end">
         <div className="flex flex-col gap-2">
           <h2 className="text-5xl font-bold mb-3">{name}</h2>
           <h3 className="text-xl font-semibold text-slate-200">
-            {`Episode ${episode_number} - season ${season_number}`}
+            {`Episode ${episode_number} - Season ${season_number}`}
           </h3>
           <ul className="flex gap-2 text-sm font-semibold text-slate-300">
             <li>{updateDateFormat(air_date)}</li>
             <span>&#x2022;</span>
-            <li>{updateRuntime(runtime)}</li>
+            <li>{runtime} min</li>
           </ul>
-          <div className="flex items-center gap-2">
-            <Box>
-              <Rating
-                name="percentage-rating"
-                value={Number(vote_average)}
-                precision={0.1}
-                readOnly
-                max={10}
-                sx={{
-                  "& .MuiRating-iconEmpty": {
-                    color: "#ffffff",
-                    fontSize: "30px",
-                  },
-                  "& .MuiRating-iconFilled": {
-                    color: "#FFD700",
-                    fontSize: "30px",
-                  },
-                }}
-              />
-            </Box>
-            <p className="px-2 py-0.5 rounded-sm bg-orange-amber text-white font-semibold">
-              {formatNumber(vote_average)}
-            </p>
-          </div>
+          <RatingBox
+            rating={vote_average}
+            styleOfSpan="px-2 py-0.5 rounded-sm bg-orange-amber text-white font-semibold"
+            minWidth={1024}
+          />
+
           <Ellipsis text={overview} />
         </div>
         <div>
-          <img
-            src={getPictureUrlFormat(still_path, 1280)}
-            alt="movie poster"
-            className="rounded-xl min-w-[400px] w-[800px]"
-          />
+          {still_path ? (
+            <img
+              src={getPictureUrlFormat(still_path, 1280)}
+              alt="movie poster"
+              className="rounded-xl xl:max-w-[560px] lg:max-w-[500px] md:max-w-[560px]"
+            />
+          ) : (
+            <EmptyPoster size={80} style="rounded-xl max-w-[500px]" />
+          )}
         </div>
       </div>
       <hr className="border-1 border-slate-400 w-full my-4" />
-      <div className="flex justify-between items-center">
+      <div className="md:flex block justify-between items-center gap-2">
         <div className="flex gap-2 items-center">
-          <WatchlistButton item={item} size={30} />
-          <FavoriteButton item={item} size={30} />
+          <WatchlistButton
+            item={item}
+            iconSize="md:text-3xl sm:text-xl text-lg"
+          />
+          <FavoriteButton
+            item={item}
+            iconSize="md:text-3xl sm:text-xl text-lg"
+          />
           <ButtonAddToList item={item} image={still_path} showTitle={name} />
         </div>
-        <RateUser itemId={id} type="episode" />
+        <div className="flex max-md:mt-4 gap-2">
+          <RateUser item={item} />
+        </div>
       </div>
     </section>
   );

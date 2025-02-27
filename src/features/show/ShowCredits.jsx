@@ -13,8 +13,8 @@ const ShowCredite = ({ title, creditsList }) => {
 
   return (
     <section className="">
-      <div className="flex items-end justify-between border-b border-slate-700 pb-4">
-        <h3 className="text-4xl font-semibold">{title}</h3>
+      <div className="flex items-end justify-between border-b border-slate-700 pb-3">
+        <h2 className="heading-title-1">{title}</h2>
         {creditsList.length > 12 && (
           <button
             className="text-sm font-medium flex items-center  hover:text-orange-amber duration-150 transition-colors"
@@ -37,13 +37,13 @@ const ShowCredite = ({ title, creditsList }) => {
           viewMore ? "bg-bluish-black h-[400px]" : ""
         }`}
       >
-        <div className="grid grid-cols-4 gap-10 text-center px-5">
+        <div className="grid grid-cols-2 gap-10 text-center px-5">
           {displayedCast.map((person, index) => (
             <CreditCard
               key={`${person.id}-${index}`}
               person={person}
               direction="row"
-              size="small"
+              size="meduim"
             />
           ))}
         </div>
