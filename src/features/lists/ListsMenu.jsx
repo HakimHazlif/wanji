@@ -1,14 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { useLists } from "./useLists";
 import { FaInfoCircle, FaPlus } from "react-icons/fa";
-import { useShow } from "../show/useShow";
-import { useParams } from "react-router";
 import { useAddShow } from "./useAddShow";
-import { useDispatch, useSelector } from "react-redux";
-import Spinner from "../../ui/Spinner";
+import { useSelector } from "react-redux";
 import ItemsList from "./ItemsList";
 import { useCreateList } from "./useCreateList";
-import { getPictureUrlFormat, getYearFormat } from "../../utils/helper";
+import { getPictureUrlFormat } from "../../utils/helper";
 import { useListsContext } from "../../context/ListsContext";
 import { MAX_NAME_LENGTH } from "../../constants/variables";
 import SpinnerMini from "../../ui/SpinnerMini";
