@@ -3,6 +3,7 @@ import { getPictureUrlFormat } from "../utils/helper";
 import { useAddShow } from "../features/lists/useAddShow";
 import SpinnerMini from "../ui/SpinnerMini";
 import { useQueryClient } from "react-query";
+import toast from "react-hot-toast";
 
 const AddSearchQuery = ({ show, list, onClose }) => {
   const queryClient = useQueryClient();
@@ -36,7 +37,7 @@ const AddSearchQuery = ({ show, list, onClose }) => {
           }
         );
       } else {
-        console.log(`This ${category} already exist in this list`);
+        toast.error(`This ${category} already exist in this list`);
       }
     }
   }

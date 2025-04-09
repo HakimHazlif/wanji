@@ -61,7 +61,7 @@ export async function getItemsByList(list, page, id, type) {
 
     return moviesList?.data ?? [];
   } catch (err) {
-    console.log(err);
+    throw new Error(err);
   }
 }
 
@@ -219,15 +219,11 @@ export async function getUserInterests(movieId, tvId) {
   if (tvId) {
     const tvShows = await axios.get(tvShowsUrl, options);
 
-    console.log({
-      moviesInterest: null,
-      tvShowsInterest: tvShows?.data?.results,
-    });
     return {
       moviesInterest: null,
       tvShowsInterest: tvShows?.data?.results,
     };
   }
 
-  if (!movieId && !tvId) console.log("movieId or tvId are undefinded");
+  if (!movieId && !tvId) throw new Error("movieId or tvId are undefinded");
 }

@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
 import { getRatingList } from "../../services/apiLists";
+import toast from "react-hot-toast";
 
 export function useRatingList() {
   const { uid } = useSelector((state) => state.user.user);
@@ -8,8 +9,8 @@ export function useRatingList() {
   const { data, isLoading } = useQuery({
     queryKey: ["ratingList", uid],
     queryFn: () => getRatingList({ userId: uid }),
-    onError: (error) => {
-      console.log(error);
+    onError: () => {
+      toast.error("Failed to load ratings");
     },
   });
 

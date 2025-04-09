@@ -18,8 +18,6 @@ const Person = () => {
   const [isReadMore, setIsReadMore] = useState(false);
   const { isLoading, personDetails, personImages } = usePerson();
 
-  console.log(personImages);
-
   return (
     <main className="padding-x pb-20">
       <div className="mb-20">

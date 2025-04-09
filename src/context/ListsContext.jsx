@@ -10,8 +10,6 @@ function ListsContextProvider({ children }) {
     episode: {},
   });
 
-  console.log(itemsStatusMap);
-
   const { favoriteList, watchlist } = useLists();
 
   const favoriteListId = favoriteList?.id;

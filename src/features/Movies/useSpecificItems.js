@@ -2,6 +2,7 @@ import { useQuery } from "react-query";
 import { useSearchParams } from "react-router";
 import { getItemsByList } from "../../services/apiShows";
 import { useItemsStatus } from "../lists/useItemsStatus";
+import toast from "react-hot-toast";
 
 export function useSpecificItems(id, type) {
   const [searchParams] = useSearchParams();
@@ -17,8 +18,8 @@ export function useSpecificItems(id, type) {
     queryKey: ["specificMovies", listName, page],
     queryFn: () => getItemsByList(listName, page, id, type),
     enabled: isIdExist && !!page && !!listName && !!type,
-    onError: (error) => {
-      console.log(error);
+    onError: () => {
+      toast.error("Failed to load this page");
     },
   });
 

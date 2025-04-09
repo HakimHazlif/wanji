@@ -6,6 +6,7 @@ import { useSession } from "../context/UserContext";
 import { useSelector } from "react-redux";
 import Spinner from "../ui/Spinner";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 const SignLog = ({ type }) => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const SignLog = ({ type }) => {
 
   if (status === "loading") return <Spinner />;
 
-  if (error) console.log(error);
+  if (error) toast.error(error);
 
   return (
     <main className="h-screen w-full flex justify-center items-start pt-10">

@@ -2,6 +2,7 @@ import { useQuery } from "react-query";
 import { useSearchParams } from "react-router";
 import { useParams } from "react-router";
 import { getShowsByGenre } from "../../services/apiShows";
+import toast from "react-hot-toast";
 
 export function useGenre() {
   const { genreId, category } = useParams();
@@ -11,8 +12,8 @@ export function useGenre() {
   const { data: genreList, isLoading } = useQuery({
     queryKey: ["genre", genreId, category, page],
     queryFn: () => getShowsByGenre(genreId, category, page),
-    onError: (err) => {
-      console.log(err.message);
+    onError: () => {
+      toast.error("Failed to load genres");
     },
   });
 

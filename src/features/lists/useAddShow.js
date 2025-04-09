@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "react-query";
 import { insertShow } from "../../services/apiLists";
+import toast from "react-hot-toast";
 
 export function useAddShow(type) {
   const queryClient = useQueryClient();
@@ -18,9 +19,10 @@ export function useAddShow(type) {
       queryClient.invalidateQueries({
         queryKey: ["itemStatus", type],
       });
+      toast.success(`This ${type} has been added successfully`);
     },
     onError: () => {
-      console.log("the adding is failed");
+      toast.error(`Failed to add this ${type}`);
     },
   });
 

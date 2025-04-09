@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
 import { getEpisodeData } from "../../services/apiShows";
+import toast from "react-hot-toast";
 
 export function useEpisode() {
   const { id, seasonNum, episodeNum } = useParams();
@@ -8,8 +9,8 @@ export function useEpisode() {
   const { data: episode, isLoading } = useQuery({
     queryKey: ["episode", id, seasonNum, episodeNum],
     queryFn: () => getEpisodeData({ id, seasonNum, episodeNum }),
-    onError: (err) => {
-      console.log(err);
+    onError: () => {
+      toast.error("Failed to load this episode");
     },
   });
 

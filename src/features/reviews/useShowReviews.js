@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { fetchReviewsList } from "../../services/apiReviews";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
+import toast from "react-hot-toast";
 
 export function useShowReviews() {
   const { uid } = useSelector((state) => state.user.user);
@@ -11,8 +12,8 @@ export function useShowReviews() {
     queryKey: ["reviewsList", id, category],
     queryFn: () => fetchReviewsList(id, category, uid),
     enabled: uid !== "",
-    onError: (error) => {
-      console.log(error);
+    onError: () => {
+      toast.error("Failed to load reviews");
     },
   });
 
