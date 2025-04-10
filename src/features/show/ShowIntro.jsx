@@ -2,24 +2,20 @@ import {
   getPictureUrlFormat,
   getYearMonthFormat,
   updateDateFormat,
-  formatNumber,
   updateRuntime,
 } from "../../utils/helper";
+import { Tooltip } from "@mui/material";
 
-import Rating from "@mui/material/Rating";
-import { Box, Tooltip } from "@mui/material";
-
-import { Link, useParams } from "react-router";
+import { Link, useParams } from "react-router-dom";
 import { useShow } from "./useShow";
 import RateUser from "../lists/RateUser";
 import Ellipsis from "../../ui/Ellipsis";
 import WatchlistButton from "../lists/WatchlistButton";
 import FavoriteButton from "../lists/FavoriteButton";
 import ButtonAddToList from "../lists/ButtonAddToList";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import VideoPlayer from "../../components/VideoPlayer";
 import { FaPlay } from "react-icons/fa";
-import { useSelector } from "react-redux";
 import RatingBox from "../../components/RatingBox";
 
 const ShowIntro = () => {

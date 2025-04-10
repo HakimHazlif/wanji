@@ -1,15 +1,12 @@
 import ProfileElements from "./ProfileElement";
-import { profileMenuElements } from "../constants/uiElements";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
 import { FaRegUser } from "react-icons/fa";
-import { useLists } from "../features/lists/useLists";
 import { BsBookmarkCheck } from "react-icons/bs";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { MdChecklistRtl } from "react-icons/md";
 import { IoLogOutOutline, IoSettingsOutline } from "react-icons/io5";
-import { fetchItemsList } from "../services/apiLists";
 import { logout } from "../services/apiAuth";
 import UserAvatar from "../ui/UserAvatar";
 import { FaRegStar } from "react-icons/fa6";

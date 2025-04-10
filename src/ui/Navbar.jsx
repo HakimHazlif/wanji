@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { FiMenu } from "react-icons/fi";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink } from "react-router-dom";
 import ProfileElements from "../components/ProfileElement";
 import { FaFilm } from "react-icons/fa";
 import { IoHomeOutline, IoTvOutline } from "react-icons/io5";

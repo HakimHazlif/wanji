@@ -1,13 +1,7 @@
-import { Box, Rating } from "@mui/material";
-import {
-  formatNumber,
-  getPictureUrlFormat,
-  updateDateFormat,
-} from "../../utils/helper";
+import { getPictureUrlFormat, updateDateFormat } from "../../utils/helper";
 import { useSeason } from "./useSeason";
 import Ellipsis from "../../ui/Ellipsis";
-import { Link } from "react-router";
-import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import RatingBox from "../../components/RatingBox";
 import EmptyPoster from "../../components/EmptyPoster";
 

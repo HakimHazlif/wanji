@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
-import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { FaEdit, FaListUl, FaPlus } from "react-icons/fa";
 import { MdOutlineRemoveCircleOutline } from "react-icons/md";
 import { RiDeleteBin2Fill } from "react-icons/ri";
-import { useLists } from "../features/lists/useLists";
+import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const ItemsListOption = ({
   list,
@@ -15,7 +15,7 @@ const ItemsListOption = ({
   setForConfirmDelete,
   buttonRef,
 }) => {
-  const navigate = useNavigate();
+  const { transitionNavigate } = useTransitionNavigate();
   const { user } = useSelector((state) => state.user);
   const popupRef = useRef();
   const [position, setPosition] = useState(null);
@@ -113,7 +113,7 @@ const ItemsListOption = ({
         </li>
         <li
           onClick={() =>
-            navigate(
+            transitionNavigate(
               `/u/${user.username.replace(" ", "-")}/Lists?listId=${list.id}`
             )
           }

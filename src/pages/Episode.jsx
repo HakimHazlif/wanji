@@ -1,17 +1,9 @@
 import { useEpisode } from "../features/episode/useEpisode";
 import Spinner from "../ui/Spinner";
 import { getPictureUrlFormat } from "../utils/helper";
-
 import EpisodeInfo from "../features/episode/EpisodeInfo";
 import ShowImages from "../features/show/ShowImages";
-import Crew from "../features/episode/Crew";
-import Casting from "../features/episode/Casting";
-import { Link, useParams } from "react-router";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import ShowCredite from "../features/show/ShowCredits";
-import EpisodesList from "../features/season/EpisodesList";
 import ListScroll from "../features/lists/ListScroll";
-import ShowCard from "../ui/ShowCard";
 import CreditCard from "../components/CreditCard";
 import HeaderBackDrop from "../ui/HeaderBackDrop";
 import EpisodeCard from "../features/episode/EpisodeCard";
@@ -28,7 +20,7 @@ const Episode = () => {
   if (isLoading) return <Spinner />;
 
   const { episode_number, season_number } = episodeDetails;
-  const showId = episodesList?.[0]?.show_id;
+  // const showId = episodesList?.[0]?.show_id;
 
   const episodes = episodesList?.filter(
     (episode) => episode.episode_number !== episode_number

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SendPasswordResetEmail from "../features/authentication/SendPasswordResetEmail";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { useSession } from "../context/UserContext";
 import ConfirmationMessage from "../ui/ConfirmationMessage";
 

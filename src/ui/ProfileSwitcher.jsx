@@ -1,14 +1,15 @@
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import ProfileMenu from "../components/ProfileMenu";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { getUser } from "../services/apiAuth";
+import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const styleClassName =
   "font-medium font-roboto text-sm rounded-lg lg:w-[100px] md:w-[88px] w-[70px] duration-200 transition-colors";
 
 const ProfileSwitcher = () => {
-  const navigate = useNavigate();
+  const { transitionNavigate } = useTransitionNavigate();
   const dispatch = useDispatch();
 
   const buttonRef = useRef();
@@ -66,13 +67,13 @@ const ProfileSwitcher = () => {
         <div className="md:flex gap-2 hidden">
           <button
             className={`${styleClassName} bg-orange-100 text-amber-700 hover:bg-orange-200 hover:text-amber-800 py-1.5`}
-            onClick={() => navigate("/signup")}
+            onClick={() => transitionNavigate("/signup")}
           >
             Sign up
           </button>
           <button
             className={`${styleClassName} bg-orange-amber hover:bg-orange-coral text-amber-900 py-2`}
-            onClick={() => navigate("/login")}
+            onClick={() => transitionNavigate("/login")}
           >
             Log in
           </button>

@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { getEpisodeData } from "../../services/apiShows";
 import toast from "react-hot-toast";
 
@@ -12,6 +12,8 @@ export function useEpisode() {
     onError: () => {
       toast.error("Failed to load this episode");
     },
+    staleTime: 1000 * 60 * 30,
+    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   const episodeDetails = episode?.episodeDetails || null;

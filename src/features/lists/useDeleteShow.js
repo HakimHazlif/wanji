@@ -19,6 +19,8 @@ export function useDeleteShow(type) {
         queryKey: ["itemStatus", type],
       });
     },
+    staleTime: 1000 * 60 * 30,
+    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   return { deleteShow, error, isLoading };

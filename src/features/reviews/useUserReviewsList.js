@@ -12,6 +12,8 @@ export function useUserReviewsList() {
     onError: () => {
       toast.error("Failed to load user review");
     },
+    staleTime: 1000 * 60 * 30,
+    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   const reviewsList = data?.reviews;

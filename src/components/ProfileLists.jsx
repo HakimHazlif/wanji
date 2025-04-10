@@ -4,17 +4,17 @@ import { useLists } from "../features/lists/useLists";
 import { useRatingList } from "../features/lists/useRatingList";
 import { useShortLists } from "../features/userLists/useShortLists";
 import Spinner from "../ui/Spinner";
-import { useCallback, useMemo } from "react";
+import { useMemo, useTransition } from "react";
 import ShowCard from "../ui/ShowCard";
-import CustomListCard from "../ui/CustomListCard";
 import ProfileCustomLists from "./ProfileCustomLists";
 import EmptyShortList from "./EmptyShortList";
 import { useUserReviewsList } from "../features/reviews/useUserReviewsList";
 import ProfileReviews from "../features/reviews/ProfileReviews";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
+import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const ProfileLists = () => {
-  const navigate = useNavigate();
+  const { transitionNavigate } = useTransitionNavigate();
   const { username } = useSelector((state) => state.user.user);
   const usernameUrl = username.replace(" ", "-");
   const { watchlist, favoriteList } = useLists();
@@ -72,7 +72,7 @@ const ProfileLists = () => {
   }, [shortReviews, reviewsListItems]);
 
   function navigateToPopularMovies() {
-    navigate("/movies?movie-tag=popular&page=1");
+    transitionNavigate("/movies?movie-tag=popular&page=1");
   }
 
   if (isLoading) return <Spinner />;

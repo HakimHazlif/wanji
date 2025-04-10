@@ -1,22 +1,11 @@
-import { IoStarOutline } from "react-icons/io5";
 import { useEpisode } from "./useEpisode";
-import {
-  formatNumber,
-  getPictureUrlFormat,
-  getYearFormat,
-  updateDateFormat,
-  updateRuntime,
-} from "../../utils/helper";
-import { Box, Rating } from "@mui/material";
-import WatchlistIcon from "../lists/WatchlistIcon";
-import FavoriteIcon from "../lists/FavoriteIcon";
-import { MdAddToPhotos } from "react-icons/md";
+import { getPictureUrlFormat, updateDateFormat } from "../../utils/helper";
 import Ellipsis from "../../ui/Ellipsis";
 import WatchlistButton from "../lists/WatchlistButton";
 import FavoriteButton from "../lists/FavoriteButton";
 import ButtonAddToList from "../lists/ButtonAddToList";
 import RateUser from "../lists/RateUser";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import RatingBox from "../../components/RatingBox";
 import EmptyPoster from "../../components/EmptyPoster";
 

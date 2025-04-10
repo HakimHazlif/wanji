@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { bgPopcorn } from "../assets/icons";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useCreateList } from "../features/lists/useCreateList";
 import SpinnerMini from "../ui/SpinnerMini";
 import { useSelector } from "react-redux";
@@ -11,9 +11,10 @@ import {
   MAX_NAME_LENGTH,
 } from "../constants/variables";
 import CancelButton from "../components/CancelButton";
+import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const CreateNewList = () => {
-  const navigate = useNavigate();
+  const { transitionNavigate } = useTransitionNavigate();
   const queryClient = useQueryClient();
   const { uid, username } = useSelector((state) => state.user.user);
 
@@ -59,8 +60,7 @@ const CreateNewList = () => {
                 ? [...oldData, data.listData[0]]
                 : [data.listData[0]];
             });
-
-            navigate(
+            transitionNavigate(
               `/u/${username.replace(" ", "-")}/Lists?listId=${
                 data.listData[0].id
               }`,

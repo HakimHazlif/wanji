@@ -1,6 +1,6 @@
 import { RiAccountCircleLine, RiProfileLine } from "react-icons/ri";
 import { useSelector } from "react-redux";
-import { Link, Outlet, useLocation } from "react-router";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import HeaderBackDrop from "../ui/HeaderBackDrop";
 
 const Settings = () => {

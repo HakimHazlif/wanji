@@ -1,20 +1,16 @@
 import { useShow } from "../features/show/useShow";
 import ShowIntro from "../features/show/ShowIntro";
 import ShowDetails from "../features/show/ShowDetails";
-import ShowCredits from "../features/show/ShowCredits";
 import ListScroll from "../features/lists/ListScroll";
 import ShowReviews from "../features/show/ShowReviews";
-
 import Spinner from "../ui/Spinner";
 import { getPictureUrlFormat } from "../utils/helper";
 import ShowCard from "../ui/ShowCard";
 import ShowImages from "../features/show/ShowImages";
 import SeasonsList from "../features/lists/SeasonsList";
-import { useParams } from "react-router";
-import { useItemStatus } from "../features/lists/useItemStatus";
+import { useParams } from "react-router-dom";
 import CreditCard from "../components/CreditCard";
 import ShowOverview from "../features/show/ShowOverview";
-import HeaderBackDrop from "../ui/HeaderBackDrop";
 
 const Show = () => {
   const { isLoading, details, similar, images, credits, reviews } = useShow();

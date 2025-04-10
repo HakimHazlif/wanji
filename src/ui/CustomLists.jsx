@@ -1,20 +1,13 @@
-import { useNavigate, useSearchParams } from "react-router";
 import { useLists } from "../features/lists/useLists";
-import { IoIosTv, IoMdArrowDropdown } from "react-icons/io";
 import CreateListButton from "./CreateListButton";
-import { updateDateFormat } from "../utils/helper";
-import { FaFolderOpen, FaPen } from "react-icons/fa";
-import { BiSolidFilm } from "react-icons/bi";
-import { MdOutlinePlayCircleFilled } from "react-icons/md";
-import { FaPencil } from "react-icons/fa6";
-import { useSelector } from "react-redux";
+import { FaFolderOpen } from "react-icons/fa";
 import CustomListCard from "./CustomListCard";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import OptionsSelector from "./OptionsSelector";
 
 const CustomLists = () => {
-  const navigate = useNavigate();
-  const { user } = useSelector((state) => state.user);
+  // const navigate = useNavigate();
+  // const { user } = useSelector((state) => state.user);
 
   const { remainLists } = useLists();
 

@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router";
 import { useLists } from "../features/lists/useLists";
 import CustomListCard from "../ui/CustomListCard";
 import EmptyShortList from "./EmptyShortList";
+import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const ProfileCustomLists = () => {
-  const navigate = useNavigate();
+  const { transitionNavigate } = useTransitionNavigate();
   const { username } = useSelector((state) => state.user.user);
   const { remainLists } = useLists();
 
@@ -49,7 +50,9 @@ const ProfileCustomLists = () => {
           <EmptyShortList listNmae="List">
             <button
               onClick={() =>
-                navigate(`/u/${username.replace(" ", "-")}/list/create`)
+                transitionNavigate(
+                  `/u/${username.replace(" ", "-")}/list/create`
+                )
               }
               className="px-10 py-[10px] bg-orange-amber rounded-full flex justify-center items-center hover:bg-orange-coral transition-colors duration-300 text-gray-900 font-medium"
             >

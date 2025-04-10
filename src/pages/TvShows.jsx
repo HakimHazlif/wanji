@@ -1,12 +1,10 @@
-import { useSearchParams } from "react-router";
+import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Spinner from "../ui/Spinner";
 import Discover from "../components/Discover";
 import { getImageViaPath } from "../utils/helper";
 import ShowCard from "../ui/ShowCard";
-
 import Pagination from "../components/Pagination";
-import { useLists } from "../features/lists/useLists";
 import { useLastFavorite } from "../features/lists/useLastFavorite";
 import { useSpecificItems } from "../features/movies/useSpecificItems";
 import { useListsContext } from "../context/ListsContext";

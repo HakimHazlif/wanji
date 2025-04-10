@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { fetchReviewsList } from "../../services/apiReviews";
 import { useQuery } from "react-query";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 
 export function useShowReviews() {
@@ -15,6 +15,8 @@ export function useShowReviews() {
     onError: () => {
       toast.error("Failed to load reviews");
     },
+    staleTime: 1000 * 60 * 30,
+    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   return { usersReview, isLoading };

@@ -2,8 +2,6 @@ import { createContext, useContext, useState } from "react";
 import { emailRegex } from "../constants/variables";
 import { useDispatch, useSelector } from "react-redux";
 import { login, signup, updateAuthPassword } from "../services/apiAuth";
-import { useNavigate } from "react-router";
-// import { useNavigate } from "react-router";
 
 const SessionContext = createContext();
 

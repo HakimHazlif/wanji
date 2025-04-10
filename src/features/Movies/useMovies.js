@@ -10,7 +10,8 @@ export function useMovies() {
   } = useQuery({
     queryKey: ["movies"],
     queryFn: getMovies,
-    staleTime: 1000 * 60 * 24,
+    staleTime: 1000 * 60 * 30,
+    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   const popularMovies = movies?.popularMovies.slice(0, 8) ?? [];

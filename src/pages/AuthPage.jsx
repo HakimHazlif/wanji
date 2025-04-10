@@ -1,23 +1,23 @@
-import { Link, replace, useNavigate } from "react-router";
-
+import { Link, useNavigate } from "react-router-dom";
 import LoginForm from "../features/authentication/LoginForm";
 import SignupForm from "../features/authentication/SignupForm";
 import { useSession } from "../context/UserContext";
 import { useSelector } from "react-redux";
 import Spinner from "../ui/Spinner";
-import { useEffect } from "react";
+import { useEffect, useTransition } from "react";
 import toast from "react-hot-toast";
+import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const SignLog = ({ type }) => {
-  const navigate = useNavigate();
+  const { transitionNavigate } = useTransitionNavigate();
   const { removeAllAuthFields } = useSession();
   const isLogin = type === "login";
 
   const { status, isLoggedIn, error } = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (isLoggedIn) navigate("/", { replace: true });
-  }, [navigate, isLoggedIn]);
+    transitionNavigate("/", { replace: true });
+  }, [isLoggedIn, transitionNavigate]);
 
   if (status === "loading") return <Spinner />;
 

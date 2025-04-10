@@ -3,18 +3,18 @@ import {
   getYearFormat,
   updateDateFormat,
 } from "../utils/helper";
-import { useNavigate } from "react-router";
 import { FaStar } from "react-icons/fa";
 import Ellipsis from "./Ellipsis";
 import { Tooltip } from "@mui/material";
-import { lazy, Suspense, useState } from "react";
+import { useMemo, useState } from "react";
 import { TiDelete } from "react-icons/ti";
 import DeleteListConfirm from "./DeleteListConfirm";
 import EmptyPoster from "../components/EmptyPoster";
 
-const WatchlistButton = lazy(() => import("../features/lists/WatchlistButton"));
-const FavoriteButton = lazy(() => import("../features/lists/FavoriteButton"));
-const UserRateMini = lazy(() => import("../features/lists/UserRateMini"));
+import WatchlistButton from "../features/lists/WatchlistButton";
+import FavoriteButton from "../features/lists/FavoriteButton";
+import UserRateMini from "../features/lists/UserRateMini";
+import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const ShowCard = ({
   show,
@@ -25,7 +25,7 @@ const ShowCard = ({
   forEditList = false,
   isDeleting = false,
 }) => {
-  const navigate = useNavigate();
+  const { transitionNavigate } = useTransitionNavigate();
   const [deletePopup, setDeletePopup] = useState(false);
 
   const rate = show?.vote_average;
@@ -35,18 +35,19 @@ const ShowCard = ({
   const title = show?.title || show?.name;
   const poster = show?.poster_path || show?.still_path;
 
-  function handleDate() {
+  const formattedDate = useMemo(() => {
     if (show?.release_date) return getYearFormat(show?.release_date);
     else if (show?.first_air_date) return getYearFormat(show?.first_air_date);
     else if (show?.air_date) return updateDateFormat(show?.air_date);
-  }
+  });
+  const roundedRate = useMemo(() => rate?.toFixed(1), [rate]);
 
   function handleNavigate() {
     if (category === "episode")
-      navigate(
+      transitionNavigate(
         `/tv/${parentShowId}}/season/${season_number}/episode/${episode_number}`
       );
-    else navigate(`/${category}/${id}`);
+    else transitionNavigate(`/${category}/${id}`);
   }
   // const { setIsMovie } = useSession();
 
@@ -82,26 +83,18 @@ const ShowCard = ({
               <Tooltip title="TMDB rate">
                 <div className="rounded-md bg-orange-amber text-gray-700 w-[45px] h-6 flex items-center justify-center gap-1 text-xs font-bold">
                   <FaStar className="text-white" />
-                  <p>{rate?.toFixed(1)}</p>
+                  <p>{roundedRate}</p>
                 </div>
               </Tooltip>
 
-              <Suspense
-                fallback={
-                  <div className="rounded-md bg-orange-coral w-[45px] h-6 flex items-center justify-center gap-1 text-xs font-bold">
-                    <FaStar />
-                  </div>
-                }
-              >
-                <UserRateMini
-                  item={item}
-                  buttonStyle="rounded-md bg-orange-coral w-[45px] text-gray-700 h-6 flex items-center justify-center gap-1 text-xs font-bold"
-                />
-              </Suspense>
+              <UserRateMini
+                item={item}
+                buttonStyle="rounded-md bg-orange-coral w-[45px] text-gray-700 h-6 flex items-center justify-center gap-1 text-xs font-bold"
+              />
             </div>
             <div>
               <span className="text-xs text-slate-400 font-medium">
-                {handleDate()}
+                {formattedDate}
               </span>
             </div>
           </div>
@@ -117,12 +110,10 @@ const ShowCard = ({
             </Tooltip>
           </div>
           {additions && (
-            <Suspense fallback={<div>Loading</div>}>
-              <div className="flex justify-between gap-2 mt-4">
-                <WatchlistButton item={item} />
-                <FavoriteButton item={item} />
-              </div>
-            </Suspense>
+            <div className="flex justify-between gap-2 mt-4">
+              <WatchlistButton item={item} />
+              <FavoriteButton item={item} />
+            </div>
           )}
         </div>
       </div>

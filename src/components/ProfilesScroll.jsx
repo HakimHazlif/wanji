@@ -1,7 +1,7 @@
 import { useState } from "react";
 import CreditCard from "./CreditCard";
 import { IoIosArrowForward } from "react-icons/io";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 const CreditsScroll = ({ title, credits }) => {
   const [isHoveredTitle, setIsHoveredTitle] = useState(false);

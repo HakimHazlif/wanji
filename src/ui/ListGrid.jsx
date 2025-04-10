@@ -1,5 +1,5 @@
 import { IoIosArrowForward } from "react-icons/io";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 const ListGrid = ({ path, title, children }) => {
   return (

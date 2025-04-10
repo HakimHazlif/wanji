@@ -8,6 +8,8 @@ export function usePopularPeople() {
     onError: (err) => {
       console.error(err);
     },
+    staleTime: 1000 * 60 * 30,
+    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   return { popularPeople, isLoading };

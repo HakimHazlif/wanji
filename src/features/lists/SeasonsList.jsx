@@ -1,18 +1,21 @@
 import { useShow } from "../show/useShow";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { getPictureUrlFormat, getYearMonthFormat } from "../../utils/helper";
 import ListScroll from "./ListScroll";
 import { FaStar } from "react-icons/fa";
 import { Tooltip } from "@mui/material";
 import EmptyPoster from "../../components/EmptyPoster";
+import { useTransition } from "react";
+import { useTransitionNavigate } from "../../hooks/useTransitionNavigate";
 
 const SeasonsList = () => {
-  const navigate = useNavigate();
+  const { transitionNavigate } = useTransitionNavigate();
+
   const { details } = useShow();
   const { seasons } = details;
 
   function handleNavigate(number) {
-    navigate(`/tv/${details.id}/season/${number}`);
+    transitionNavigate(`/tv/${details.id}/season/${number}`);
   }
 
   const seasonsWithoutSpecial = seasons?.filter(

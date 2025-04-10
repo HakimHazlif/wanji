@@ -1,15 +1,12 @@
-import { useRef, useState } from "react";
-import {
-  getImageViaPath,
-  getYearFormat,
-  updateDateFormat,
-} from "../utils/helper";
+import { useRef, useState, useTransition } from "react";
+import { getImageViaPath, updateDateFormat } from "../utils/helper";
 import { FaStar } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";
-import { Box, Button, Rating, Tooltip } from "@mui/material";
+import { Box, Rating, Tooltip } from "@mui/material";
 import RatingPopup from "../features/lists/RatingPopup";
 import ReviewPopup from "../features/reviews/ReviewPopup";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
+import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const ReviewCard = ({
   review,
@@ -18,7 +15,7 @@ const ReviewCard = ({
   show = null,
   type = null,
 }) => {
-  const navigate = useNavigate();
+  const { transitionNavigate } = useTransitionNavigate();
   const [openRatingPopup, setOpenRatingPopup] = useState(false);
   const [openReviewPopup, setOpenReviewPopup] = useState(false);
   const [isReadMore, setIsReadMore] = useState(false);
@@ -116,7 +113,9 @@ const ReviewCard = ({
             <Tooltip title={review?.title}>
               <div
                 className="rounded-lg overflow-hidden shadow-lg cursor-pointer"
-                onClick={() => navigate(`/${review.type}/${review.itemId}`)}
+                onClick={() =>
+                  transitionNavigate(`/${review.type}/${review.itemId}`)
+                }
               >
                 <img
                   src={getImageViaPath(review?.posterPath, 400)}

@@ -12,7 +12,8 @@ export function useLists() {
   } = useQuery({
     queryKey: ["lists", uid],
     queryFn: () => uid && getAllUserLists(uid),
-    staleTime: 0,
+    staleTime: 1000 * 60 * 30,
+    cacheTime: 1000 * 60 * 60 * 24,
     refetchOnMount: true,
   });
 

@@ -1,7 +1,7 @@
 import Spinner from "../ui/Spinner";
 
 import { useSelector } from "react-redux";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 const ProfileElements = ({ icon, itemName, route, onClose = null }) => {
   const { status } = useSelector((state) => state.user);

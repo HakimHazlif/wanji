@@ -1,8 +1,10 @@
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { getProfileImageUrl } from "../utils/helper";
 import { Tooltip } from "@mui/material";
 import { MdTrendingUp } from "react-icons/md";
 import EmptyCredit from "./EmptyCredit";
+import { useTransition } from "react";
+import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const CreditCard = ({
   person,
@@ -10,7 +12,7 @@ const CreditCard = ({
   size = "big",
   inHomePage = false,
 }) => {
-  const navigate = useNavigate();
+  const { transitionNavigate } = useTransitionNavigate();
   const { id, name, profile_path, known_for_department, popularity } = person;
 
   const role = person.character || person.job;
@@ -31,7 +33,7 @@ const CreditCard = ({
   }
 
   function handleNavigate() {
-    navigate(`/person/${id}`);
+    transitionNavigate(`/person/${id}`);
   }
 
   return (

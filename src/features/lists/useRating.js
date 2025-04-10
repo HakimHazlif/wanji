@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { getShowRating } from "../../services/apiLists";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 export function useRating(type = null, itemId = null) {
@@ -23,6 +23,8 @@ export function useRating(type = null, itemId = null) {
     onError: (err) => {
       throw new Error(err);
     },
+    staleTime: 1000 * 60 * 30,
+    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   const showRate = data?.[0]?.rate ?? null;

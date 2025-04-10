@@ -3,8 +3,7 @@ import { useSelector } from "react-redux";
 import { emailRegex } from "../../constants/variables";
 import { useSession } from "../../context/UserContext";
 import InputText from "../../ui/InputText";
-import { Link, useNavigate } from "react-router";
-import Spinner from "../../ui/Spinner";
+import { Link } from "react-router";
 
 const LoginForm = () => {
   // const dispatch = useDispatch();

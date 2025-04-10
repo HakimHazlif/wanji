@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { getShow } from "../../services/apiShows";
 
 export function useShow() {
@@ -11,6 +11,8 @@ export function useShow() {
     onError: (error) => {
       console.error("Error fetching show:", error.message);
     },
+    staleTime: 1000 * 60 * 30,
+    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   const details = show?.showDetails || null;

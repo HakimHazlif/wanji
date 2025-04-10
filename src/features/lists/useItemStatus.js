@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { useListsContext } from "../../context/ListsContext";
 import { fetchItemStatus } from "../../services/apiLists";
 import { useSelector } from "react-redux";
@@ -37,6 +37,8 @@ export function useItemStatus() {
 
       setItemsStatusMap((prev) => ({ ...prev, [category]: mergedData }));
     },
+    staleTime: 1000 * 60 * 30,
+    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   return { isLoading };

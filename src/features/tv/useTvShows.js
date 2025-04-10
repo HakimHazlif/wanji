@@ -10,6 +10,8 @@ export function useTvShows() {
   } = useQuery({
     queryKey: ["tvShows"],
     queryFn: getTvShows,
+    staleTime: 1000 * 60 * 30,
+    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   const popularTV = tvShows?.popularTv?.slice(0, 8) ?? [];

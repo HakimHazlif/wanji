@@ -3,23 +3,26 @@ import { FaPencil } from "react-icons/fa6";
 import { IoIosTv } from "react-icons/io";
 import { MdOutlinePlayCircleFilled } from "react-icons/md";
 import { updateDateFormat } from "../utils/helper";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Ellipsis from "./Ellipsis";
-import { Toolbar, Tooltip } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import { RiDeleteBinFill } from "react-icons/ri";
 import DeleteListConfirm from "./DeleteListConfirm";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { useDeleteList } from "../features/lists/useDeleteList";
+import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const CustomListCard = ({ list }) => {
-  const navigate = useNavigate();
+  const { transitionNavigate } = useTransitionNavigate();
   const { username, uid } = useSelector((state) => state.user.user);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const { deleteList, isLoading } = useDeleteList();
 
   function handleNavigate(listId) {
-    navigate(`/u/${username.replace(" ", "-")}/Lists?listId=${listId}`);
+    transitionNavigate(
+      `/u/${username.replace(" ", "-")}/Lists?listId=${listId}`
+    );
   }
 
   function handleDeleteList() {

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router";
 
 const Pagination = ({ totalPages, currentPage, changePage, range = 5 }) => {
   const [rangeState, setRangeState] = useState(range);

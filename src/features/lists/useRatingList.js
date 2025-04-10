@@ -12,6 +12,8 @@ export function useRatingList() {
     onError: () => {
       toast.error("Failed to load ratings");
     },
+    staleTime: 1000 * 60 * 30,
+    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   const ratingList = data?.rating;

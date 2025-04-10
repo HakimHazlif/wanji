@@ -1,14 +1,15 @@
 import SpinnerMini from "../ui/SpinnerMini";
 import { useDispatch, useSelector } from "react-redux";
 import { BiUpload } from "react-icons/bi";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { updateProfile } from "../services/apiAuth";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import UserAvatar from "../ui/UserAvatar";
 import { MAX_BIO_LENGTH, MAX_USERNAME_LENGTH } from "../constants/variables";
+import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const ProfileEdit = () => {
-  const navigate = useNavigate();
+  const { transitionNavigate } = useTransitionNavigate();
   const dispatch = useDispatch();
   const { status } = useSelector((state) => state.user);
   const { uid, username, bio, avatar } = useSelector(
@@ -100,7 +101,7 @@ const ProfileEdit = () => {
     if (uid) {
       dispatch(updateProfile(usernameInput, bioInput, avatarInput));
 
-      navigate(`/u/${username.replace(" ", "-")}`);
+      transitionNavigate(`/u/${username.replace(" ", "-")}`);
     }
   }
 

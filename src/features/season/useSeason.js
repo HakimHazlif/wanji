@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { getSeasonData } from "../../services/apiShows";
 import toast from "react-hot-toast";
 
@@ -12,6 +12,8 @@ export function useSeason() {
     onError: () => {
       toast.error("Failed to load this season");
     },
+    staleTime: 1000 * 60 * 30,
+    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   const seasonDetails = seasonData?.seasonDetails || null;

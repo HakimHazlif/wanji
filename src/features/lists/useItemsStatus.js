@@ -28,6 +28,8 @@ export function useItemsStatus(itemIds, type) {
 
       setItemsStatusMap((prev) => ({ ...prev, [type]: mergedData }));
     },
+    staleTime: 1000 * 60 * 30,
+    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   return { data, isLoading };

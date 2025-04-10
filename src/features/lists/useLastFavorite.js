@@ -6,6 +6,8 @@ export const useLastFavorite = (favoriteId) => {
     queryKey: ["lastFavorite"],
     queryFn: () => fetchLastFavorite(favoriteId),
     enabled: !!favoriteId,
+    staleTime: 1000 * 60 * 30,
+    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   const movieId = data?.movieId ?? null;

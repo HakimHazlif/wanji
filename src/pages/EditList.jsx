@@ -1,11 +1,7 @@
-import { Link, useNavigate, useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { bgPopcorn } from "../assets/icons";
 import { useLists } from "../features/lists/useLists";
 import { useSelector } from "react-redux";
-import { formatDistanceToNow } from "date-fns";
-import { useState } from "react";
-import SearchBar from "../components/SearchBar";
-
 import EditingName from "../components/EditingName";
 import EditingDescription from "../components/EditingDescription";
 import ListView from "../components/ListView";
@@ -13,9 +9,11 @@ import AddingSearchBar from "../components/AddingSearchbar";
 import { IoIosArrowBack } from "react-icons/io";
 import CreatedByAuth from "../components/CreatedByAuth";
 import HeaderBackDrop from "../ui/HeaderBackDrop";
+import { useTransition } from "react";
+import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const EditList = () => {
-  const navigate = useNavigate();
+  const { transitionNavigate } = useTransitionNavigate();
   const [searchParams] = useSearchParams();
   const listId = searchParams.get("listId");
   const { username } = useSelector((state) => state.user.user);
@@ -33,7 +31,7 @@ const EditList = () => {
             <div className="mb-6">
               <button
                 className="flex items-center gap-2 group text-lg font-semibold hover:text-white text-gray-400 transition-colors duration-100 ease-out"
-                onClick={() => navigate(-1)}
+                onClick={() => transitionNavigate(-1)}
               >
                 <IoIosArrowBack
                   className="group-hover:animate-zigzag transition-all duration-200 ease-linear"

@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePassword } from "../services/apiAuth";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import SpinnerMini from "../ui/SpinnerMini";
+import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const AccountEdit = () => {
-  const navigate = useNavigate();
+  const { transitionNavigate } = useTransitionNavigate();
   const dispatch = useDispatch();
   const { error, user, status } = useSelector((state) => state.user);
   const { uid, email, username } = user;
@@ -89,10 +90,10 @@ const AccountEdit = () => {
       }));
 
     if (status === "succeeded" && sendChange) {
-      navigate(`/u/${username.replace(" ", "-")}`);
+      transitionNavigate(`/u/${username.replace(" ", "-")}`);
       setSendChang(false);
     }
-  }, [error, status, navigate, sendChange]);
+  }, [error, status, transitionNavigate, sendChange, username]);
 
   return (
     <section>

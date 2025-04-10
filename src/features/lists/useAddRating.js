@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "react-query";
 import { addRateToShow } from "../../services/apiLists";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 
 export function useAddRating(type) {
   const { category, id } = useParams();
@@ -23,6 +23,8 @@ export function useAddRating(type) {
     onError: (err) => {
       throw new Error(err);
     },
+    staleTime: 1000 * 60 * 30,
+    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   return { addRating, isLoading };

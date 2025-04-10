@@ -3,20 +3,19 @@ import {
   getPictureUrlFormat,
   updateDateFormat,
 } from "../../utils/helper";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import Ellipsis from "../../ui/Ellipsis";
-import { IoMdStar } from "react-icons/io";
 import UserRateMini from "../lists/UserRateMini";
 import { FaStar } from "react-icons/fa";
 import EmptyPoster from "../../components/EmptyPoster";
-import WatchlistIcon from "../lists/WatchlistIcon";
-import FavoriteIcon from "../lists/FavoriteIcon";
 import WatchlistButton from "../lists/WatchlistButton";
 import FavoriteButton from "../lists/FavoriteButton";
 import ButtonAddToList from "../lists/ButtonAddToList";
+import { useTransition } from "react";
+import { useTransitionNavigate } from "../../hooks/useTransitionNavigate";
 
 const WorkCard = ({ show, category }) => {
-  const navigate = useNavigate();
+  const { transitionNavigate } = useTransitionNavigate();
 
   const {
     id,
@@ -44,7 +43,7 @@ const WorkCard = ({ show, category }) => {
   };
 
   function handleNavigate() {
-    navigate(`/${category}/${id}`);
+    transitionNavigate(`/${category}/${id}`);
   }
 
   return (

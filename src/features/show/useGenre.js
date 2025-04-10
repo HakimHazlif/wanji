@@ -1,6 +1,5 @@
 import { useQuery } from "react-query";
-import { useSearchParams } from "react-router";
-import { useParams } from "react-router";
+import { useParams, useSearchParams } from "react-router-dom";
 import { getShowsByGenre } from "../../services/apiShows";
 import toast from "react-hot-toast";
 
@@ -15,6 +14,8 @@ export function useGenre() {
     onError: () => {
       toast.error("Failed to load genres");
     },
+    staleTime: 1000 * 60 * 30,
+    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   return { genreList, isLoading };

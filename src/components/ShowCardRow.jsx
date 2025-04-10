@@ -5,7 +5,7 @@ import {
   updateDateFormat,
   updateRuntime,
 } from "../utils/helper";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import ShowStatus from "../ui/ShowStatus";
 import Ellipsis from "../ui/Ellipsis";
 import { IoMdStar } from "react-icons/io";
@@ -13,7 +13,8 @@ import CreditView from "../ui/CreditView";
 import DeleteListConfirm from "../ui/DeleteListConfirm";
 import { TiDelete } from "react-icons/ti";
 import { Tooltip } from "@mui/material";
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const ShowCardRow = ({
   show,
@@ -24,8 +25,7 @@ const ShowCardRow = ({
   isDeleting = false,
 }) => {
   const [deletePopup, setDeletePopup] = useState(false);
-
-  const navigate = useNavigate();
+  const { transitionNavigate } = useTransitionNavigate();
 
   const {
     vote_average: rate,
@@ -75,10 +75,10 @@ const ShowCardRow = ({
         className="w-[200px] h-full object-cover cursor-pointer"
         onClick={() => {
           if (category === "episode")
-            navigate(
+            transitionNavigate(
               `/tv/${parentShowId}/season/${season_number}/episode/${episode_number}`
             );
-          else navigate(`/${category}/${id}`);
+          else transitionNavigate(`/${category}/${id}`);
         }}
       />
       <div className="p-5">

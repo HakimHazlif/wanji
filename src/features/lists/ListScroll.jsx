@@ -4,7 +4,7 @@ import {
   IoIosArrowDroprightCircle,
   IoIosArrowForward,
 } from "react-icons/io";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 const ListScroll = ({ title, path = "", children }) => {
   const containerRef = useRef(null);

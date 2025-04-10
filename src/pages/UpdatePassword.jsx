@@ -2,17 +2,17 @@ import { useSelector } from "react-redux";
 import { useSession } from "../context/UserContext";
 import InputText from "../ui/InputText";
 import Spinner from "../ui/Spinner";
-import { useNavigate } from "react-router";
 import { useEffect } from "react";
+import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const UpdatePassword = () => {
-  const navigate = useNavigate();
+  const { transitionNavigate } = useTransitionNavigate();
   const { status, isLoggedIn } = useSelector((state) => state.user);
   const { user, handleUpdatePassword, isConfirmed } = useSession();
 
   useEffect(() => {
-    if (isLoggedIn) navigate("/");
-  }, [isLoggedIn, navigate]);
+    if (isLoggedIn) transitionNavigate("/");
+  }, [isLoggedIn, transitionNavigate]);
 
   if (status === "loading") return <Spinner />;
 

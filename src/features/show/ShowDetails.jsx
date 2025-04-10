@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import {
   formatHugeNumber,
   getMainCrewRolls,
@@ -6,7 +6,6 @@ import {
 } from "../../utils/helper";
 import { useShow } from "./useShow";
 import Detail from "../../components/Detail";
-import ShowImages from "./ShowImages";
 
 const ShowDetails = () => {
   const { details, credits } = useShow();

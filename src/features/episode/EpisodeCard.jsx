@@ -1,20 +1,20 @@
-import { Box, Rating, Tooltip } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import {
-  formatNumber,
   getMainCrewRolls,
   getPictureUrlFormat,
   updateDateFormat,
-  updateRuntime,
 } from "../../utils/helper";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import WatchlistButton from "../lists/WatchlistButton";
 import FavoriteButton from "../lists/FavoriteButton";
 import UserRateMini from "../lists/UserRateMini";
 import RatingBox from "../../components/RatingBox";
 import EmptyPoster from "../../components/EmptyPoster";
+import { useTransition } from "react";
+import { useTransitionNavigate } from "../../hooks/useTransitionNavigate";
 
 const EpisodeCard = ({ episode }) => {
-  const navigate = useNavigate();
+  const { transitionNavigate } = useTransitionNavigate();
   const {
     id,
     name,
@@ -41,7 +41,7 @@ const EpisodeCard = ({ episode }) => {
   const { directing, writing } = mainCrewRolls;
 
   function handleNavigate() {
-    navigate(
+    transitionNavigate(
       `/tv/${show_id}/season/${season_number}/episode/${episode_number}`
     );
   }

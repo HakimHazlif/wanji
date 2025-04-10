@@ -1,18 +1,12 @@
 import { useSelector } from "react-redux";
-import { Link, useLocation, useNavigate, useParams } from "react-router";
+import { useLocation, useParams } from "react-router-dom";
 import { useLists } from "../features/lists/useLists";
-
-import { formatDistanceToNow } from "date-fns";
 import { useMemo } from "react";
 import { bgPopcorn } from "../assets/icons";
 import ListView from "../components/ListView";
 import CreateListButton from "../ui/CreateListButton";
 import CustomLists from "../ui/CustomLists";
-import { IoIosArrowBack } from "react-icons/io";
-import { FaPencil } from "react-icons/fa6";
 import EditingDescription from "../components/EditingDescription";
-import EditButton from "../components/EditButton";
-import { ImPencil } from "react-icons/im";
 import AddingSearchBar from "../components/AddingSearchbar";
 import EditingName from "../components/EditingName";
 import HeaderBackDrop from "../ui/HeaderBackDrop";
@@ -20,8 +14,6 @@ import CreatedByAuth from "../components/CreatedByAuth";
 import { useRatingList } from "../features/lists/useRatingList";
 
 const List = () => {
-  const navigate = useNavigate();
-
   const { user } = useSelector((state) => state.user);
   const { username } = user;
   const { list } = useParams();
@@ -80,7 +72,7 @@ const List = () => {
     targetList?.name,
   ]);
 
-  const { listId, createdDate, listName, description } = listData;
+  const { createdDate, listName, description } = listData;
 
   return (
     <main className="padding-x py-32 w-full">

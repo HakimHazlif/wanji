@@ -1,10 +1,12 @@
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import EpisodeCard from "../episode/EpisodeCard";
 import { useSeason } from "./useSeason";
 import Pagination from "../../components/Pagination";
+import { useTransition } from "react";
+import { useTransitionNavigate } from "../../hooks/useTransitionNavigate";
 
 const EpisodesList = () => {
-  const navigate = useNavigate();
+  const { transitionNavigate } = useTransitionNavigate();
   const { episodes, seasonDetails } = useSeason();
   const { season_number, showId, seasons } = seasonDetails;
   const totalPages = seasons.filter(
@@ -44,7 +46,7 @@ const EpisodesList = () => {
             currentPage={season_number}
             changePage={(page) => {
               if (typeof page === "number" && page >= 1 && page <= totalPages) {
-                navigate(`/tv/${showId}/season/${page}`);
+                transitionNavigate(`/tv/${showId}/season/${page}`);
               }
             }}
           />

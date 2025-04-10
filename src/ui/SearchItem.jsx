@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { getPictureUrlFormat } from "../utils/helper";
 
 const SearchItem = ({ id, image, title, originalTitle, mediaType }) => {

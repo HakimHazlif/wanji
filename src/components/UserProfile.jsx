@@ -1,13 +1,13 @@
 import { useSelector } from "react-redux";
 import { useLists } from "../features/lists/useLists";
 import { bgPopcorn } from "../assets/icons";
-import { Outlet } from "react-router";
+import { Outlet } from "react-router-dom";
 import { updateDateFormat } from "../utils/helper";
 import UserAvatar from "../ui/UserAvatar";
 
 const UserProfile = () => {
-  const { user, isLoggedin } = useSelector((state) => state.user);
-  const { avatar, username, createdAt } = user;
+  const { user } = useSelector((state) => state.user);
+  const { username, createdAt } = user;
 
   const { remainLists, watchlist, favoriteList } = useLists();
 

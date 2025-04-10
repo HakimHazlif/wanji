@@ -9,6 +9,8 @@ export function useUserInterests(movieId, tvId) {
     onError: (error) => {
       throw new Error(error);
     },
+    staleTime: 1000 * 60 * 30,
+    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   return { recommendedShows, isLoading };
