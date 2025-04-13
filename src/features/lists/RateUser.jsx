@@ -1,6 +1,5 @@
 import { useState } from "react";
 import RatingPopup from "./RatingPopup";
-import { useRating } from "./useRating";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import SpinnerMini from "../../ui/SpinnerMini";
 import { useAddRating } from "./useAddRating";

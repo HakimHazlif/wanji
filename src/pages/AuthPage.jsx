@@ -15,9 +15,9 @@ const SignLog = ({ type }) => {
 
   const { status, isLoggedIn, error } = useSelector((state) => state.user);
 
-  useEffect(() => {
-    transitionNavigate("/", { replace: true });
-  }, [isLoggedIn, transitionNavigate]);
+  // useEffect(() => {
+  //   transitionNavigate("/", { replace: true });
+  // }, [isLoggedIn, transitionNavigate]);
 
   if (status === "loading") return <Spinner />;
 

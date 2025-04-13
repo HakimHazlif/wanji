@@ -28,20 +28,19 @@ export function useLists() {
         : null,
       remainLists: lists
         ? lists.filter(
-            (item) =>
-              item.name !== "watchlist" &&
-              item.name !== "favorite" &&
-              item.name !== "rated"
+            (item) => item.name !== "watchlist" && item.name !== "favorite"
           )
         : null,
     };
   }, [lists]);
 
+  console.log({ userLists, lists });
+
   return {
     isLoading,
     lists,
     remainLists: userLists.remainLists,
-    watchlist: useLists.watchlist,
+    watchlist: userLists.watchlist,
     favoriteList: userLists.favoriteList,
     error,
   };

@@ -25,11 +25,14 @@ const FavoriteButton = ({
 
   const isFavorited = typeMap?.get(String(itemId))?.get("inFavorites") ?? false;
 
+  // console.log({ isFavorited, itemId });
+
   const { favoriteList, isLoading } = useLists();
   const { isLoading: isAdding, addShow } = useAddShow(type);
   const { isLoading: isDeleting, deleteShow } = useDeleteShow(type);
 
   function handleAddToFavorite() {
+    console.log(favoriteList);
     if (isLoggedIn && favoriteList) {
       const listId = favoriteList.id;
       addShow(
@@ -43,6 +46,7 @@ const FavoriteButton = ({
         },
         {
           onSuccess: () => {
+            console.log("hey");
             setItemsStatusMap((prev) => {
               const newMap = new Map(prev);
               const items = new Map(newMap.get(type));

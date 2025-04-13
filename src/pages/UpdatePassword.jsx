@@ -10,9 +10,9 @@ const UpdatePassword = () => {
   const { status, isLoggedIn } = useSelector((state) => state.user);
   const { user, handleUpdatePassword, isConfirmed } = useSession();
 
-  useEffect(() => {
-    if (isLoggedIn) transitionNavigate("/");
-  }, [isLoggedIn, transitionNavigate]);
+  // useEffect(() => {
+  //   if (isLoggedIn) transitionNavigate("/");
+  // }, [isLoggedIn, transitionNavigate]);
 
   if (status === "loading") return <Spinner />;
 

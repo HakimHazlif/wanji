@@ -99,7 +99,13 @@ const ProfileEdit = () => {
     const avatarInput = userData.avatar;
 
     if (uid) {
-      dispatch(updateProfile(usernameInput, bioInput, avatarInput));
+      dispatch(
+        updateProfile({
+          username: usernameInput,
+          bio: bioInput,
+          avatar: avatarInput,
+        })
+      );
 
       transitionNavigate(`/u/${username.replace(" ", "-")}`);
     }

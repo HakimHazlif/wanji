@@ -76,7 +76,7 @@ const AccountEdit = () => {
     const isConfirmed = confirmNewPassword();
 
     if (isConfirmed && uid) {
-      dispatch(updatePassword(email, oldPassword, newPassword));
+      dispatch(updatePassword({ email, oldPassword, newPassword }));
       setSendChang(true);
     }
   }

@@ -14,8 +14,6 @@ function ListsContextProvider({ children }) {
     ]);
   });
 
-  console.log(itemsStatusMap);
-
   const { movies } = useMovies();
   const { tvShows } = useTvShows();
 
