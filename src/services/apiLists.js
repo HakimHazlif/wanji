@@ -322,6 +322,7 @@ export async function fetchItemsStatus({
   userId,
 }) {
   if (!itemIds?.length) return {};
+  if (!itemIds?.length || !watchlistId || !favoriteListId || !userId) return {};
 
   try {
     const [watchlistResponse, favoritesResponse, ratingsResponse] =
