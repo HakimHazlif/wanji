@@ -1,12 +1,17 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
+import { Suspense } from "react";
 import Header from "./Header";
+import Spinner from "../ui/Spinner";
 
 const AppLayout = () => {
+  // const location = useLocation();
   return (
     <>
       <Header />
       <main className="">
-        <Outlet />
+        <Suspense fallback={<Spinner />}>
+          <Outlet />
+        </Suspense>
       </main>
     </>
   );

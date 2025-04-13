@@ -3,29 +3,85 @@ import Spinner from "../ui/Spinner";
 import { useMovies } from "../features/movies/useMovies";
 import { getImageViaPath } from "../utils/helper";
 
-import TrendingPeople from "../features/person/TrendingPeople";
-import PopularPeople from "../features/person/PopularPeople";
 import { useTvShows } from "../features/tv/useTvShows";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
+import { useListsContext } from "../context/ListsContext";
+import { useItemsStatus } from "../features/lists/useItemsStatus";
 
-import Recommended from "../components/Recommended";
-import MoviesList from "../features/movies/MoviesList";
-import TvShowsList from "../features/tv/TvShowsList";
+const Recommended = lazy(() => import("../components/Recommended"));
+const MoviesList = lazy(() => import("../features/movies/MoviesList"));
+const TvShowsList = lazy(() => import("../features/tv/TvShowsList"));
+const TrendingPeople = lazy(() => import("../features/person/TrendingPeople"));
+const PopularPeople = lazy(() => import("../features/person/PopularPeople"));
 
 const Home = () => {
+  const [showExtra, setShowExtra] = useState(false);
+
   const { isLoading: isMoviesLoading, movies } = useMovies();
-  const { isLoading: isTvsLoading, tvShows } = useTvShows();
+  const { isLoading: isTvsLoading } = useTvShows();
+  const {
+    popularMovies,
+    topRatedMovies,
+    nowPlaynigMovies,
+    upcomingMovies,
+    popularTv,
+    topRatedTv,
+    onTheAir,
+    airingTodayTV,
+  } = useListsContext();
 
-  const popularMovies = movies?.popularMovies?.slice(0, 8) ?? [];
-  const topRatedMovies = movies?.topRatedMovies?.slice(0, 8) ?? [];
-  const nowPlaynigMovies = movies?.nowPlaynigMovies?.slice(0, 8) ?? [];
-  const popularTv = tvShows?.popularTv?.slice(0, 8) ?? [];
-  const topRatedTv = tvShows?.topRatedTv?.slice(0, 8) ?? [];
-  const onTheAir = tvShows?.onTheAir?.slice(0, 8) ?? [];
+  const moviesSet = useMemo(() => {
+    return Array.from(
+      new Set(
+        [
+          ...popularMovies,
+          ...topRatedMovies,
+          ...nowPlaynigMovies,
+          ...upcomingMovies,
+        ].map((movie) => movie.id)
+      )
+    );
+  }, [upcomingMovies, nowPlaynigMovies, topRatedMovies, popularMovies]);
 
-  const image =
-    getImageViaPath(movies?.popularMovies?.[0]?.backdrop_path, 1280) || null;
+  const { isLoading: isFeaturesLoading1 } = useItemsStatus(
+    moviesSet.length ? moviesSet : null,
+    "movie"
+  );
 
-  if (isMoviesLoading || isTvsLoading) return <Spinner />;
+  const tvShowsSet = useMemo(() => {
+    return Array.from(
+      new Set(
+        [...popularTv, ...topRatedTv, ...onTheAir, ...airingTodayTV].map(
+          (show) => show.id
+        )
+      )
+    );
+  }, [airingTodayTV, onTheAir, topRatedTv, popularTv]);
+
+  const { isLoading: isFeaturesLoading2 } = useItemsStatus(
+    tvShowsSet.length ? tvShowsSet : null,
+    "tv"
+  );
+
+  const image = useMemo(() => {
+    return (
+      getImageViaPath(movies?.popularMovies?.[0]?.backdrop_path, 1280) || null
+    );
+  }, [movies?.popularMovies]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowExtra(true), 300);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (
+    isMoviesLoading ||
+    isTvsLoading ||
+    isFeaturesLoading1 ||
+    isFeaturesLoading2
+  )
+    return <Spinner />;
 
   return (
     <>
@@ -34,17 +90,42 @@ const Home = () => {
       {isMoviesLoading ? (
         <Spinner />
       ) : (
-        <div>
-          <MoviesList listKey="popularMovies" movies={popularMovies} />
-          <TvShowsList listKey="popularTv" tvShows={popularTv} />
-          <TrendingPeople />
-          <Recommended />
-          <MoviesList listKey="topRatedMovies" movies={topRatedMovies} />
-          <TvShowsList listKey="topRatedTv" tvShows={topRatedTv} />
-          <PopularPeople />
-          <MoviesList listKey="nowPlaynigMovies" movies={nowPlaynigMovies} />
-          <TvShowsList listKey="onTheAir" tvShows={onTheAir} />
-        </div>
+        <>
+          <Suspense fallback={<Spinner />}>
+            <MoviesList listKey="popularMovies" movies={popularMovies} />
+          </Suspense>
+          <Suspense fallback={<Spinner />}>
+            <TvShowsList listKey="popularTv" tvShows={popularTv} />
+          </Suspense>
+          <Suspense fallback={<Spinner />}>
+            <TrendingPeople />
+          </Suspense>
+          <Suspense fallback={<Spinner />}>
+            <Recommended />
+          </Suspense>
+          {showExtra && (
+            <>
+              <Suspense fallback={<Spinner />}>
+                <MoviesList listKey="topRatedMovies" movies={topRatedMovies} />
+              </Suspense>
+              <Suspense fallback={<Spinner />}>
+                <TvShowsList listKey="topRatedTv" tvShows={topRatedTv} />
+              </Suspense>
+              <Suspense fallback={<Spinner />}>
+                <PopularPeople />
+              </Suspense>
+              <Suspense fallback={<Spinner />}>
+                <MoviesList
+                  listKey="nowPlaynigMovies"
+                  movies={nowPlaynigMovies}
+                />
+              </Suspense>
+              <Suspense fallback={<Spinner />}>
+                <TvShowsList listKey="onTheAir" tvShows={onTheAir} />
+              </Suspense>
+            </>
+          )}
+        </>
       )}
     </>
   );

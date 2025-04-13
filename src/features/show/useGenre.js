@@ -14,8 +14,6 @@ export function useGenre() {
     onError: () => {
       toast.error("Failed to load genres");
     },
-    staleTime: 1000 * 60 * 30,
-    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   return { genreList, isLoading };

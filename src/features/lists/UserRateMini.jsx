@@ -6,14 +6,14 @@ import { Box, Rating, Tooltip } from "@mui/material";
 import { useUpadetRating } from "./useUpadetRating";
 import { useAddRating } from "./useAddRating";
 import { useListsContext } from "../../context/ListsContext";
-import { useItemsStatus } from "./useItemsStatus";
 
 const UserRateMini = ({ item, addStars = false, buttonStyle }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const { itemsStatusMap } = useListsContext();
 
-  const rating = itemsStatusMap?.[item?.type]?.[item?.itemId]?.rating ?? 0;
+  const typeMap = itemsStatusMap.get(item?.type);
+  const rating = typeMap?.get(String(item?.itemId))?.get("rating") ?? 0;
 
   // const { ratingList } = useRatingList();
 
@@ -61,8 +61,8 @@ const UserRateMini = ({ item, addStars = false, buttonStyle }) => {
           )}
           <button className={buttonStyle}>
             {!addStars && <FaStar className="text-white" />}
-            {addStars && rating === 0 && 0}
-            {rating > 0 && <p>{rating}</p>}
+            {addStars && rating === 0 && <span>0</span>}
+            {rating > 0 && <span>{rating}</span>}
           </button>
         </span>
       </Tooltip>

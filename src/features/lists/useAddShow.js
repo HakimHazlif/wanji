@@ -24,8 +24,6 @@ export function useAddShow(type) {
     onError: () => {
       toast.error(`Failed to add this ${type}`);
     },
-    staleTime: 1000 * 60 * 30,
-    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   return { addShow, error, isLoading };

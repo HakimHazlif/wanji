@@ -21,7 +21,9 @@ const FavoriteButton = ({
 
   const { itemId, type, parentId, episode, season } = item;
 
-  const isFavorited = itemsStatusMap?.[type]?.[itemId]?.inFavorites ?? false;
+  const typeMap = itemsStatusMap.get(type);
+
+  const isFavorited = typeMap?.get(String(itemId))?.get("inFavorites") ?? false;
 
   const { favoriteList, isLoading } = useLists();
   const { isLoading: isAdding, addShow } = useAddShow(type);
@@ -41,16 +43,20 @@ const FavoriteButton = ({
         },
         {
           onSuccess: () => {
-            setItemsStatusMap((prev) => ({
-              ...prev,
-              [type]: {
-                ...prev[type],
-                [itemId]: {
-                  ...prev[type]?.[itemId],
-                  inFavorites: true,
-                },
-              },
-            }));
+            setItemsStatusMap((prev) => {
+              const newMap = new Map(prev);
+              const items = new Map(newMap.get(type));
+
+              if (!items.has(itemId)) {
+                items.set(itemId, new Map());
+              }
+
+              items.get(itemId)?.set("inFavorites", true);
+
+              newMap.set(type, items);
+
+              return newMap;
+            });
           },
         }
       );
@@ -63,16 +69,20 @@ const FavoriteButton = ({
         { id: itemId, listId, type },
         {
           onSuccess: () => {
-            setItemsStatusMap((prev) => ({
-              ...prev,
-              [type]: {
-                ...prev[type],
-                [itemId]: {
-                  ...prev[type]?.[itemId],
-                  inFavorites: false,
-                },
-              },
-            }));
+            setItemsStatusMap((prev) => {
+              const newMap = new Map(prev);
+              const items = new Map(newMap.get(type));
+
+              if (!items.has(itemId)) {
+                items.set(itemId, new Map());
+              }
+
+              items.get(itemId)?.set("inFavorites", false);
+
+              newMap.set(type, items);
+
+              return newMap;
+            });
           },
         }
       );

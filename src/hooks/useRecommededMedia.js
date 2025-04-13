@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useItemsStatus } from "../features/lists/useItemsStatus";
 import { useLastFavorite } from "../features/lists/useLastFavorite";
 import { useLists } from "../features/lists/useLists";
@@ -17,34 +18,35 @@ export function useRecommendedMedia() {
     tvId
   );
 
-  const isLoading =
-    isFetchingLists || isFetchingLastFavorite || isFetchingInterest;
+  const recommendeds = useMemo(() => {
+    const movies = recommendedShows?.moviesInterest?.slice(0, 8);
+    const shows = recommendedShows?.tvShowsInterest?.slice(0, 8);
 
-  const recommendedMovies = recommendedShows?.moviesInterest ?? [];
-  const recommendedTvShows = recommendedShows?.tvShowsInterest ?? [];
+    return {
+      movies,
+      shows,
+    };
+  }, [recommendedShows?.tvShowsInterest, recommendedShows?.moviesInterest]);
 
-  const recommendedMoviesId = recommendedMovies
-    ?.slice(0, 8)
-    ?.map((item) => item.id);
-  const recommendedTvShowsId = recommendedTvShows
-    ?.slice(0, 8)
-    ?.map((item) => item.id);
+  // const recommendedIds = useMemo(() => {
+  //   const moviesIds = recommendeds?.movies.map((item) => item.id);
+  //   const showsIds = recommendeds?.shows.map((item) => item.id);
 
-  const { isLoading: isFeaturesLoading1 } = useItemsStatus(
-    recommendedMoviesId.length ? recommendedMoviesId : null,
-    "movie"
-  );
-  const { isLoading: isFeaturesLoading2 } = useItemsStatus(
-    recommendedTvShowsId.length ? recommendedTvShowsId : null,
-    "tv"
-  );
+  //   return { moviesIds, showsIds };
+  // }, [recommendeds?.movies, recommendeds?.shows]);
 
-  const isFeaturesLoading = isFeaturesLoading1 || isFeaturesLoading2;
+  // const { isLoading: isFeaturesLoading1 } = useItemsStatus(
+  //   recommendedIds?.moviesIds?.length ? recommendedIds?.moviesIds : null,
+  //   "movie"
+  // );
+  // const { isLoading: isFeaturesLoading2 } = useItemsStatus(
+  //   recommendedIds?.showsIds?.length ? recommendedIds?.showsIds : null,
+  //   "tv"
+  // );
 
   return {
-    isLoading,
-    isFeaturesLoading,
-    recommendedMovies,
-    recommendedTvShows,
+    isLoading: isFetchingInterest || isFetchingLists || isFetchingLastFavorite,
+    recommendedMovies: recommendeds?.movies,
+    recommendedTvShows: recommendeds?.shows,
   };
 }

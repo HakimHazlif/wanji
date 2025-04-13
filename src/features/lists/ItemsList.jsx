@@ -3,7 +3,7 @@ import { useAddShow } from "./useAddShow";
 import { useSelector } from "react-redux";
 import SpinnerMini from "../../ui/SpinnerMini";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useDeleteShow } from "./useDeleteShow";
 import { LuListCheck } from "react-icons/lu";
 import { SlOptionsVertical } from "react-icons/sl";
@@ -18,9 +18,9 @@ const ItemsList = ({ list, item }) => {
   const { itemId, type, parentId, episode, season } = item;
   const { itemsStatusMap, setItemsStatusMap } = useListsContext();
 
-  const isAdded = itemsStatusMap?.[type]?.[itemId]?.remainLists?.some(
-    (listItem) => listItem.list_id === list.id
-  );
+  const typeMap = itemsStatusMap.get(type);
+  const isAdded =
+    typeMap?.get(String(itemId))?.get("remainLists")?.has(list.id) ?? false;
 
   const [isOptionOpen, setIsOptionOpen] = useState(false);
   const [forConfirmDelete, setForConfirmDelete] = useState(false);
@@ -45,20 +45,29 @@ const ItemsList = ({ list, item }) => {
       addShow(row, {
         onSuccess: () => {
           setItemsStatusMap((prev) => {
-            const prevLists = prev[type]?.[itemId]?.remainLists || [];
-            return {
-              ...prev,
-              [type]: {
-                ...prev[type],
-                [itemId]: {
-                  ...prev[type]?.[itemId],
-                  remainLists: [
-                    ...new Set([...prevLists, { list_id: list.id }]),
-                  ],
-                },
-              },
-            };
+            const newMap = new Map(prev);
+            const items = new Map(newMap.get(type));
+
+            if (!items.has(itemId)) {
+              items.set(itemId, new Map());
+            }
+
+            if (!items.get(itemId).has("remainLists"))
+              items.get(itemId).set("remainLists", new Set());
+
+            items?.get(itemId).get("remainLists")?.add(list.id);
+
+            return newMap;
           });
+
+          // if (!typeMap.has(itemId)) {
+          //   typeMap.set(itemId, new Map());
+          // }
+
+          // if (!typeMap.get(itemId).has("remainLists"))
+          //   typeMap.get(itemId).set("remainLists", new Set());
+
+          // typeMap?.get(itemId).get("remainLists")?.add(list.id);
         },
       });
       setIsOptionOpen(false);
@@ -72,18 +81,19 @@ const ItemsList = ({ list, item }) => {
         {
           onSuccess: () => {
             setItemsStatusMap((prev) => {
-              const prevLists = prev[type]?.[itemId]?.remainLists || [];
+              const newMap = new Map(prev);
+              const items = new Map(newMap.get(type));
 
-              return {
-                ...prev,
-                [type]: {
-                  ...prev[type],
-                  [itemId]: {
-                    ...prev[type]?.[itemId],
-                    remainLists: prevLists.filter((l) => l.list_id !== list.id),
-                  },
-                },
-              };
+              if (!items.has(itemId)) {
+                items.set(itemId, new Map());
+              }
+
+              if (!items.get(itemId).has("remainLists"))
+                items.get(itemId).set("remainLists", new Set());
+
+              items?.get(itemId).get("remainLists")?.delete(list.id);
+
+              return newMap;
             });
           },
         }

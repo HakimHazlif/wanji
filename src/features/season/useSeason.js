@@ -12,8 +12,6 @@ export function useSeason() {
     onError: () => {
       toast.error("Failed to load this season");
     },
-    staleTime: 1000 * 60 * 30,
-    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   const seasonDetails = seasonData?.seasonDetails || null;

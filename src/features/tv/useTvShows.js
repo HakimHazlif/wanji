@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import { getTvShows } from "../../services/apiShows";
 import { useItemsStatus } from "../lists/useItemsStatus";
+import { useMemo } from "react";
 
 export function useTvShows() {
   const {
@@ -10,30 +11,36 @@ export function useTvShows() {
   } = useQuery({
     queryKey: ["tvShows"],
     queryFn: getTvShows,
-    staleTime: 1000 * 60 * 30,
-    cacheTime: 1000 * 60 * 60 * 24,
   });
 
-  const popularTV = tvShows?.popularTv?.slice(0, 8) ?? [];
-  const topRatedTV = tvShows?.topRatedTv?.slice(0, 8) ?? [];
-  const nowPlayingTV = tvShows?.onTheAir?.slice(0, 8) ?? [];
-  const airingTodayTV = tvShows?.airingToday?.slice(0, 8) ?? [];
+  // const tvShowsSet = useMemo(() => {
+  //   const popularTv = tvShows?.popularTv?.slice(0, 8) ?? [];
+  //   const topRatedTv = tvShows?.topRatedTv?.slice(0, 8) ?? [];
+  //   const onTheAir = tvShows?.onTheAir?.slice(0, 8) ?? [];
+  //   const airingTodayTV = tvShows?.airingToday?.slice(0, 8) ?? [];
 
-  const allShows = [
-    ...popularTV,
-    ...topRatedTV,
-    ...nowPlayingTV,
-    ...airingTodayTV,
-  ];
+  //   return Array.from(
+  //     new Set(
+  //       [...popularTv, ...topRatedTv, ...onTheAir, ...airingTodayTV].map(
+  //         (show) => show.id
+  //       )
+  //     )
+  //   );
+  // }, [
+  //   tvShows?.airingToday,
+  //   tvShows?.onTheAir,
+  //   tvShows?.topRatedTv,
+  //   tvShows?.popularTv,
+  // ]);
 
-  const uniqueTvShows = Array.from(
-    new Map(allShows.map((show) => [`${show.id}`, show.id])).values()
-  );
+  // const { isLoading: isFeaturesLoading } = useItemsStatus(
+  //   tvShowsSet.length ? tvShowsSet : null,
+  //   "tv"
+  // );
 
-  const { isLoading: isFeaturesLoading } = useItemsStatus(
-    uniqueTvShows.length ? uniqueTvShows : null,
-    "tv"
-  );
-
-  return { isLoading, isFeaturesLoading, error, tvShows };
+  return {
+    isLoading,
+    error,
+    tvShows,
+  };
 }

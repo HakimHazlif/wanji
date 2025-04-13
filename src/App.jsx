@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import SessionContextProvider from "./context/UserContext";
 import { Provider } from "react-redux";
 import store from "./store/store";
@@ -28,10 +28,32 @@ const Season = lazy(() => import("./pages/Season"));
 const Episode = lazy(() => import("./pages/Episode"));
 const TvShows = lazy(() => import("./pages/TvShows"));
 const Movies = lazy(() => import("./pages/Movies"));
+// import Home from "./pages/Home";
+// import AppLayout from "./components/AppLayout";
+// import AuthPage from "./pages/AuthPage";
+// import Show from "./pages/Show";
+// import Profile from "./pages/Profile";
+// import List from "./pages/List";
+// import Settings from "./pages/Settings";
+// import ResetPassword from "./pages/ResetPassword";
+// import PageNotFound from "./pages/PageNotFound";
+// import Genre from "./pages/Genre";
+// import CreateNewList from "./pages/CreateNewList";
+// import EditList from "./pages/EditList";
+// import ProfileSettings from "./pages/ProfileSettings";
+// import AccountSettings from "./pages/AccountSettings";
+// import UpdatePassword from "./pages/UpdatePassword";
+// import Person from "./pages/Person";
+// import Season from "./pages/Season";
+// import Episode from "./pages/Episode";
+// import TvShows from "./pages/TvShows";
+// import Movies from "./pages/Movies";
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
+      staleTime: 1000 * 60,
+      // cacheTime: 1000 * 60 * 60 * 24,
       suspense: false,
       refetchOnWindowFocus: false,
     },
@@ -39,14 +61,13 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-  const lacation = useLocation();
-
+  const location = useLocation();
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <SessionContextProvider>
           <ListsContextProvider>
-            <Suspense key={location} fallback={<Spinner />}>
+            <Suspense key={location.pathname} fallback={<Spinner />}>
               <Routes>
                 <Route path="/" element={<AppLayout />}>
                   <Route index element={<Home />} />

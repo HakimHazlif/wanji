@@ -15,8 +15,6 @@ export function useFetchInfiniteItems(listId, list) {
     getNextPageParam: (lastPage) => {
       return lastPage.nextPoint < list?.length ? lastPage.nextPoint : undefined;
     },
-    cacheTime: 1000 * 60 * 30,
-    staleTime: 1000 * 60 * 5,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     keepPreviousData: true,

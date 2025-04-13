@@ -6,17 +6,18 @@ import {
 import { FaStar } from "react-icons/fa";
 import Ellipsis from "./Ellipsis";
 import { Tooltip } from "@mui/material";
-import { useMemo, useState } from "react";
+import { lazy, memo, Suspense, useMemo, useState } from "react";
 import { TiDelete } from "react-icons/ti";
 import DeleteListConfirm from "./DeleteListConfirm";
 import EmptyPoster from "../components/EmptyPoster";
+import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 import WatchlistButton from "../features/lists/WatchlistButton";
 import FavoriteButton from "../features/lists/FavoriteButton";
-import UserRateMini from "../features/lists/UserRateMini";
-import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
+import SuspenseRateMini from "./SuspenseRateMini";
+const UserRateMini = lazy(() => import("../features/lists/UserRateMini"));
 
-const ShowCard = ({
+const ShowCard = memo(function ShowCard({
   show,
   category,
   additions = true,
@@ -24,7 +25,7 @@ const ShowCard = ({
   deleteShow = null,
   forEditList = false,
   isDeleting = false,
-}) => {
+}) {
   const { transitionNavigate } = useTransitionNavigate();
   const [deletePopup, setDeletePopup] = useState(false);
 
@@ -71,6 +72,7 @@ const ShowCard = ({
                 className="relative w-full md:h-[320px] sm:h-[290px] h-[260px]  object-cover rounded-md shadow-2xl cursor-pointer"
                 onClick={handleNavigate}
                 loading="lazy"
+                decoding="async"
               />
             ) : (
               <EmptyPoster />
@@ -87,10 +89,12 @@ const ShowCard = ({
                 </div>
               </Tooltip>
 
-              <UserRateMini
-                item={item}
-                buttonStyle="rounded-md bg-orange-coral w-[45px] text-gray-700 h-6 flex items-center justify-center gap-1 text-xs font-bold"
-              />
+              <Suspense fallback={<SuspenseRateMini />}>
+                <UserRateMini
+                  item={item}
+                  buttonStyle="rounded-md bg-orange-coral w-[45px] text-gray-700 h-6 flex items-center justify-center gap-1 text-xs font-bold"
+                />
+              </Suspense>
             </div>
             <div>
               <span className="text-xs text-slate-400 font-medium">
@@ -143,6 +147,6 @@ const ShowCard = ({
       )}
     </div>
   );
-};
+});
 
 export default ShowCard;

@@ -16,8 +16,6 @@ export function useShortLists(
       favoriteList?.length > 0 ||
       ratingsList?.length > 0 ||
       reviewsList?.length > 0,
-    staleTime: 1000 * 60 * 30,
-    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   const shortWatchlist = data?.shortWatchlist ?? [];

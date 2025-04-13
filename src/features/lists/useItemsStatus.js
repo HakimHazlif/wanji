@@ -5,8 +5,7 @@ import { useSelector } from "react-redux";
 
 export function useItemsStatus(itemIds, type) {
   const { uid } = useSelector((state) => state.user.user);
-  const { watchlistId, favoriteListId, itemsStatusMap, setItemsStatusMap } =
-    useListsContext();
+  const { watchlistId, favoriteListId, setItemsStatusMap } = useListsContext();
 
   const { data, isLoading } = useQuery({
     queryKey: ["itemsStatus", type, { ids: itemIds }],
@@ -18,18 +17,23 @@ export function useItemsStatus(itemIds, type) {
         favoriteListId,
         userId: uid,
       }),
-    enabled:
-      !!itemIds?.length && !!type && !!watchlistId && !!favoriteListId && !!uid,
+    // enabled:
+    // !!itemIds?.length && !!type && !!watchlistId && !!favoriteListId && !!uid,
     onSuccess: (data) => {
-      const prevData = itemsStatusMap[type] || {};
-      const mergedData = Object.fromEntries(
-        new Map([...Object.entries(prevData), ...Object.entries(data)])
-      ); // This is to prevent duplicate keys
+      setItemsStatusMap((prev) => {
+        const newMap = new Map(prev);
+        const items = newMap.get(type);
 
-      setItemsStatusMap((prev) => ({ ...prev, [type]: mergedData }));
+        if (data instanceof Map) {
+          data?.forEach((newItemData, itemId) => {
+            items.set(itemId, newItemData);
+          });
+        }
+
+        // newMap.set(type, items);
+        return newMap;
+      });
     },
-    staleTime: 1000 * 60 * 30,
-    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   return { data, isLoading };

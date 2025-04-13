@@ -19,7 +19,8 @@ const WatchlistButton = ({
   const { itemsStatusMap, setItemsStatusMap } = useListsContext();
   const { itemId, type, parentId, episode, season } = item;
 
-  const isWatchlist = itemsStatusMap?.[type]?.[itemId]?.inWatchlist ?? false;
+  const typeMap = itemsStatusMap.get(type);
+  const isWatchlist = typeMap?.get(String(itemId))?.get("inWatchlist") ?? false;
 
   const { watchlist, isLoading } = useLists();
   const { isLoading: isAdding, addShow } = useAddShow(type);
@@ -39,16 +40,10 @@ const WatchlistButton = ({
         },
         {
           onSuccess: () => {
-            setItemsStatusMap((prev) => ({
-              ...prev,
-              [type]: {
-                ...prev[type],
-                [itemId]: {
-                  ...prev[type]?.[itemId],
-                  inWatchlist: true,
-                },
-              },
-            }));
+            if (!typeMap.has(itemId)) {
+              typeMap.set(itemId, new Map());
+            }
+            typeMap.get(itemId)?.set("inWatchlist", true);
           },
         }
       );
@@ -61,16 +56,10 @@ const WatchlistButton = ({
         { id: itemId, listId: listId, type },
         {
           onSuccess: () => {
-            setItemsStatusMap((prev) => ({
-              ...prev,
-              [type]: {
-                ...prev[type],
-                [itemId]: {
-                  ...prev[type]?.[itemId],
-                  inWatchlist: false,
-                },
-              },
-            }));
+            if (!typeMap.has(itemId)) {
+              typeMap.set(itemId, new Map());
+            }
+            typeMap.get(itemId)?.set("inFavorites", false);
           },
         }
       );

@@ -16,7 +16,8 @@ const RateUser = ({ item }) => {
 
   const { itemsStatusMap } = useListsContext();
 
-  const rating = itemsStatusMap?.[type]?.[itemId]?.rating ?? 0;
+  const typeMap = itemsStatusMap.get(type);
+  const rating = typeMap?.get(String(itemId))?.get("rating") ?? 0;
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 

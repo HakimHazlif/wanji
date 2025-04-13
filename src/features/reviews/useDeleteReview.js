@@ -15,8 +15,6 @@ export function useDeleteReview() {
     onError: (err) => {
       throw new Error(err);
     },
-    staleTime: 1000 * 60 * 30,
-    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   return { deleteReview, isLoading };

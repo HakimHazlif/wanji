@@ -13,7 +13,7 @@ import SpinnerMini from "../../ui/SpinnerMini";
 const ListsMenu = ({ isPopupOpen, setIsPopupOpen, otherProps }) => {
   const { image, showTitle, item } = otherProps;
   const { itemId, type, parentId, episode, season } = item;
-  const { itemsStatusMap, setItemsStatusMap } = useListsContext();
+  const { setItemsStatusMap } = useListsContext();
 
   const [newListName, setNewListName] = useState("");
   const popupRef = useRef();
@@ -47,20 +47,18 @@ const ListsMenu = ({ isPopupOpen, setIsPopupOpen, otherProps }) => {
             setNewListName("");
 
             const listId = data?.listData[0].id;
+
             setItemsStatusMap((prev) => {
-              const prevLists = prev[type]?.[itemId]?.remainLists || [];
-              return {
-                ...prev,
-                [type]: {
-                  ...prev[type],
-                  [itemId]: {
-                    ...prev[type]?.[itemId],
-                    remainLists: [
-                      ...new Set([...prevLists, { list_id: listId }]),
-                    ],
-                  },
-                },
-              };
+              const newMap = new Map(prev);
+
+              if (!newMap.get(type).has(itemId)) {
+                newMap.get(type).set(itemId, new Map());
+              }
+
+              if (!newMap.get(type).get(itemId).has("remainLists"))
+                newMap.get(type).get(itemId).set("remainLists", new Set());
+
+              newMap.get(type)?.get(itemId)?.get("remainLists").add(listId);
             });
           },
         }

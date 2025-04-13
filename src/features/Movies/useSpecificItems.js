@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { getItemsByList } from "../../services/apiShows";
 import { useItemsStatus } from "../lists/useItemsStatus";
 import toast from "react-hot-toast";
+import { useMemo } from "react";
 
 export function useSpecificItems(id, type) {
   const [searchParams] = useSearchParams();
@@ -14,23 +15,23 @@ export function useSpecificItems(id, type) {
 
   const isIdExist = listName === "for_you" ? (id ? true : false) : true;
 
-  const { data: itemsList, isLoading } = useQuery({
+  const { data: itemsList, isLoading: isItemsLoading } = useQuery({
     queryKey: ["specificMovies", listName, page],
     queryFn: () => getItemsByList(listName, page, id, type),
     enabled: isIdExist && !!page && !!listName && !!type,
     onError: () => {
       toast.error("Failed to load this page");
     },
-    staleTime: 1000 * 60 * 30,
-    cacheTime: 1000 * 60 * 60 * 24,
   });
 
-  const uniqueMedia = itemsList?.results?.map((show) => show.id);
+  // const uniqueMedia = useMemo(() => {
+  //   return itemsList?.results?.map((show) => show.id);
+  // }, [itemsList?.results]);
 
-  const { isLoading: isFeaturesLoading } = useItemsStatus(
-    uniqueMedia?.length ? uniqueMedia : null,
-    type
-  );
+  // const { isLoading: isFeaturesLoading } = useItemsStatus(
+  //   uniqueMedia?.length ? uniqueMedia : null,
+  //   type
+  // );
 
-  return { itemsList, isLoading, isFeaturesLoading };
+  return { itemsList, isLoading: isItemsLoading };
 }

@@ -321,7 +321,7 @@ export async function fetchItemsStatus({
   favoriteListId,
   userId,
 }) {
-  if (!itemIds.length) return {};
+  if (!itemIds?.length) return {};
 
   try {
     const [watchlistResponse, favoritesResponse, ratingsResponse] =
@@ -362,15 +362,23 @@ export async function fetchItemsStatus({
       ratingsResponse.data.map((item) => [item.item_id, item.rate])
     );
 
-    return itemIds.reduce((acc, id) => {
+    const itemsMap = new Map();
+
+    itemIds.forEach((id) => {
       const idString = id.toString();
-      acc[idString] = {
-        inWatchlist: watchlistSet.has(idString),
-        inFavorites: favoritesSet.has(idString),
-        rating: ratingsMap.get(idString) || null,
-      };
-      return acc;
-    }, {});
+
+      if (!itemsMap.has(idString)) {
+        itemsMap.set(idString, new Map());
+      }
+
+      const itemData = itemsMap.get(idString);
+
+      itemData.set("inWatchlist", watchlistSet.has(idString));
+      itemData.set("inFavorites", favoritesSet.has(idString));
+      itemData.set("rating", ratingsMap.get(idString) || null);
+    });
+
+    return itemsMap;
   } catch (error) {
     console.error("Error fetching items status:", error);
     throw new Error(`Failed to fetch items status: ${error.message}`);
@@ -407,19 +415,24 @@ export async function fetchItemStatus(
 
     const listIds = new Set(listsResponse?.data?.map((item) => item.list_id));
 
-    return {
-      [id]: {
-        inWatchlist: listIds.has(watchlistId),
-        inFavorites: listIds.has(favoriteListId),
-        rating: ratingsResponse?.data[0]?.rate || null,
-        remainLists: listsResponse?.data?.reduce((acc, item) => {
-          if (item.list_id !== watchlistId && item.list_id !== favoriteListId) {
-            acc.push(item);
-          }
-          return acc;
-        }, []),
-      },
-    };
+    const itemMap = new Map();
+    itemMap.set(id, new Map());
+    itemMap.get(id).set("inWatchlist", listIds.has(watchlistId));
+    itemMap.get(id).set("inFavorites", listIds.has(favoriteListId));
+    itemMap.get(id).set("rating", ratingsResponse?.data[0]?.rate || null);
+    itemMap
+      .get(id)
+      .set(
+        "remainLists",
+        new Set(
+          listsResponse?.data?.filter(
+            (item) =>
+              item.list_id !== watchlistId && item.list_id !== favoriteListId
+          )
+        )
+      );
+
+    return itemMap;
   } catch (error) {
     console.error("Error fetching item status:", error);
     throw new Error(`Failed to fetch item status: ${error.message}`);

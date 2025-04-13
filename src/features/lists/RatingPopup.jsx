@@ -38,16 +38,16 @@ const RatingPopup = ({ setClosePopup, item, showRate = 0 }) => {
       if (!showRate)
         addRating(rowQuery, {
           onSuccess: () => {
-            setItemsStatusMap((prev) => ({
-              ...prev,
-              [type]: {
-                ...prev[type],
-                [itemId]: {
-                  ...prev[type]?.[itemId],
-                  rating,
-                },
-              },
-            }));
+            setItemsStatusMap((prev) => {
+              const newMap = new Map(prev);
+
+              if (!newMap.get(type).has(itemId)) {
+                newMap.get(type).set(itemId, new Map());
+              }
+              newMap.get(type).get(itemId)?.set("rating", rating);
+
+              return newMap;
+            });
 
             setClosePopup();
           },
@@ -55,16 +55,14 @@ const RatingPopup = ({ setClosePopup, item, showRate = 0 }) => {
       else
         updateRating(rowQuery, {
           onSuccess: () => {
-            setItemsStatusMap((prev) => ({
-              ...prev,
-              [type]: {
-                ...prev[type],
-                [itemId]: {
-                  ...prev[type]?.[itemId],
-                  rating,
-                },
-              },
-            }));
+            setItemsStatusMap((prev) => {
+              const newMap = new Map(prev);
+
+              if (!newMap.get(type).has(itemId)) {
+                newMap.get(type).set(itemId, new Map());
+              }
+              newMap.get(type).get(itemId)?.set("rating", rating);
+            });
 
             setClosePopup();
           },

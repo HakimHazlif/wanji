@@ -1,14 +1,54 @@
-import { createContext, useContext, useRef, useState } from "react";
+import { createContext, useContext, useMemo, useRef, useState } from "react";
 import { useLists } from "../features/lists/useLists";
+import { useMovies } from "../features/movies/useMovies";
+import { useTvShows } from "../features/tv/useTvShows";
 
 const ListsContext = createContext();
 
 function ListsContextProvider({ children }) {
-  const [itemsStatusMap, setItemsStatusMap] = useState({
-    movie: {},
-    tv: {},
-    episode: {},
+  const [itemsStatusMap, setItemsStatusMap] = useState(() => {
+    return new Map([
+      ["movie", new Map()],
+      ["tv", new Map()],
+      ["episode", new Map()],
+    ]);
   });
+
+  console.log(itemsStatusMap);
+
+  const { movies } = useMovies();
+  const { tvShows } = useTvShows();
+
+  const {
+    popularMovies,
+    topRatedMovies,
+    nowPlaynigMovies,
+    upcomingMovies,
+    popularTv,
+    topRatedTv,
+    onTheAir,
+    airingTodayTV,
+  } = useMemo(() => {
+    return {
+      popularMovies: movies?.popularMovies?.slice(0, 8) ?? [],
+      topRatedMovies: movies?.topRatedMovies?.slice(0, 8) ?? [],
+      nowPlaynigMovies: movies?.nowPlaynigMovies?.slice(0, 8) ?? [],
+      upcomingMovies: movies?.upcomingMovies.slice(0, 8) ?? [],
+      popularTv: tvShows?.popularTv?.slice(0, 8) ?? [],
+      topRatedTv: tvShows?.topRatedTv?.slice(0, 8) ?? [],
+      onTheAir: tvShows?.onTheAir?.slice(0, 8) ?? [],
+      airingTodayTV: tvShows?.airingToday?.slice(0, 8) ?? [],
+    };
+  }, [
+    movies?.popularMovies,
+    movies?.topRatedMovies,
+    movies?.nowPlaynigMovies,
+    movies?.upcomingMovies,
+    tvShows?.popularTv,
+    tvShows?.topRatedTv,
+    tvShows?.onTheAir,
+    tvShows?.airingToday,
+  ]);
 
   const { favoriteList, watchlist } = useLists();
 
@@ -30,6 +70,14 @@ function ListsContextProvider({ children }) {
         watchlistId,
         itemsStatusMap,
         setItemsStatusMap,
+        popularMovies,
+        topRatedMovies,
+        nowPlaynigMovies,
+        upcomingMovies,
+        popularTv,
+        topRatedTv,
+        onTheAir,
+        airingTodayTV,
       }}
     >
       {children}

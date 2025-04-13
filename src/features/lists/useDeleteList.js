@@ -13,8 +13,6 @@ export function useDeleteList() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["lists"] });
     },
-    staleTime: 1000 * 60 * 30,
-    cacheTime: 1000 * 60 * 60 * 24,
   });
 
   return { deleteList, isLoading, error };

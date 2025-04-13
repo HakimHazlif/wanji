@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Spinner from "../ui/Spinner";
 import Discover from "../components/Discover";
 import { getImageViaPath } from "../utils/helper";
@@ -8,6 +8,7 @@ import { useSpecificItems } from "../features/movies/useSpecificItems";
 import Pagination from "../components/Pagination";
 import { useLastFavorite } from "../features/lists/useLastFavorite";
 import { useListsContext } from "../context/ListsContext";
+import { useItemsStatus } from "../features/lists/useItemsStatus";
 
 const Movies = () => {
   const category = "movie";
@@ -18,6 +19,15 @@ const Movies = () => {
     useLastFavorite(favoriteListId);
 
   const { isLoading, itemsList } = useSpecificItems(movieId, category);
+
+  const uniqueMedia = useMemo(() => {
+    return itemsList?.results?.map((show) => show.id);
+  }, [itemsList?.results]);
+
+  const { isLoading: isFeaturesLoading } = useItemsStatus(
+    uniqueMedia?.length ? uniqueMedia : null,
+    category
+  );
 
   const [searchParams, setSearchParams] = useSearchParams();
   const movieTag = searchParams.get("movies-tag");
@@ -59,7 +69,7 @@ const Movies = () => {
     }
   }, [movieTag]);
 
-  if (isLoading || movieIdLoading) return <Spinner />;
+  if (isLoading || movieIdLoading || isFeaturesLoading) return <Spinner />;
 
   return (
     <div className="">

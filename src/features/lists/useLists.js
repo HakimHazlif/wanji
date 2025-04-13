@@ -1,6 +1,8 @@
 import { useQuery } from "react-query";
 import { getAllUserLists } from "../../services/apiLists";
 import { useSelector } from "react-redux";
+import { useMatch } from "react-router-dom";
+import { useMemo } from "react";
 
 export function useLists() {
   const { uid } = useSelector((state) => state.user.user);
@@ -12,25 +14,35 @@ export function useLists() {
   } = useQuery({
     queryKey: ["lists", uid],
     queryFn: () => uid && getAllUserLists(uid),
-    staleTime: 1000 * 60 * 30,
-    cacheTime: 1000 * 60 * 60 * 24,
+
     refetchOnMount: true,
   });
 
-  const watchlist = lists
-    ? lists.filter((item) => item.name === "watchlist")[0]
-    : null;
-  const favoriteList = lists
-    ? lists.filter((item) => item.name === "favorite")[0]
-    : null;
-  const remainLists = lists
-    ? lists.filter(
-        (item) =>
-          item.name !== "watchlist" &&
-          item.name !== "favorite" &&
-          item.name !== "rated"
-      )
-    : null;
+  const userLists = useMemo(() => {
+    return {
+      watchlist: lists
+        ? lists.filter((item) => item.name === "watchlist")[0]
+        : null,
+      favoriteList: lists
+        ? lists.filter((item) => item.name === "favorite")[0]
+        : null,
+      remainLists: lists
+        ? lists.filter(
+            (item) =>
+              item.name !== "watchlist" &&
+              item.name !== "favorite" &&
+              item.name !== "rated"
+          )
+        : null,
+    };
+  }, [lists]);
 
-  return { isLoading, lists, remainLists, watchlist, favoriteList, error };
+  return {
+    isLoading,
+    lists,
+    remainLists: userLists.remainLists,
+    watchlist: useLists.watchlist,
+    favoriteList: userLists.favoriteList,
+    error,
+  };
 }
