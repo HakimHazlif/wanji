@@ -19,8 +19,7 @@ const WatchlistButton = ({
   const { itemsStatusMap, setItemsStatusMap } = useListsContext();
   const { itemId, type, parentId, episode, season } = item;
 
-  const typeMap = itemsStatusMap.get(type);
-  const isWatchlist = typeMap?.get(String(itemId))?.get("inWatchlist") ?? false;
+  const isWatchlist = itemsStatusMap?.[type]?.get(itemId)?.inWatchlist ?? false;
 
   const { watchlist, isLoading } = useLists();
   const { isLoading: isAdding, addShow } = useAddShow(type);
@@ -40,10 +39,22 @@ const WatchlistButton = ({
         },
         {
           onSuccess: () => {
-            if (!typeMap.has(itemId)) {
-              typeMap.set(itemId, new Map());
-            }
-            typeMap.get(itemId)?.set("inWatchlist", true);
+            setItemsStatusMap((prev) => {
+              const newMap = new Map(prev[type]);
+
+              if (!newMap.has(itemId))
+                newMap.set(itemId, {
+                  inWatchlist: true,
+                  inFavorites: false,
+                  rating: null,
+                });
+              else newMap.get(itemId).inWatchlist = true;
+
+              return {
+                ...prev,
+                [type]: newMap,
+              };
+            });
           },
         }
       );
@@ -56,10 +67,22 @@ const WatchlistButton = ({
         { id: itemId, listId: listId, type },
         {
           onSuccess: () => {
-            if (!typeMap.has(itemId)) {
-              typeMap.set(itemId, new Map());
-            }
-            typeMap.get(itemId)?.set("inFavorites", false);
+            setItemsStatusMap((prev) => {
+              const newMap = new Map(prev[type]);
+
+              if (!newMap.has(itemId))
+                newMap.set(itemId, {
+                  inWatchlist: false,
+                  inFavorites: false,
+                  rating: null,
+                });
+              else newMap.get(itemId).inWatchlist = false;
+
+              return {
+                ...prev,
+                [type]: newMap,
+              };
+            });
           },
         }
       );

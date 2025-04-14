@@ -6,13 +6,13 @@ import { useTvShows } from "../features/tv/useTvShows";
 const ListsContext = createContext();
 
 function ListsContextProvider({ children }) {
-  const [itemsStatusMap, setItemsStatusMap] = useState(() => {
-    return new Map([
-      ["movie", new Map()],
-      ["tv", new Map()],
-      ["episode", new Map()],
-    ]);
+  const [itemsStatusMap, setItemsStatusMap] = useState({
+    movie: new Map(),
+    tv: new Map(),
+    episode: new Map(),
   });
+
+  console.log(itemsStatusMap);
 
   const { movies } = useMovies();
   const { tvShows } = useTvShows();

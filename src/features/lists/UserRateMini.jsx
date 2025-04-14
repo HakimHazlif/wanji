@@ -1,10 +1,8 @@
 import { FaStar } from "react-icons/fa";
 import { useState } from "react";
 import RatingPopup from "./RatingPopup";
-import SpinnerMini from "../../ui/SpinnerMini";
 import { Box, Rating, Tooltip } from "@mui/material";
-import { useUpadetRating } from "./useUpadetRating";
-import { useAddRating } from "./useAddRating";
+
 import { useListsContext } from "../../context/ListsContext";
 
 const UserRateMini = ({ item, addStars = false, buttonStyle }) => {
@@ -12,8 +10,7 @@ const UserRateMini = ({ item, addStars = false, buttonStyle }) => {
 
   const { itemsStatusMap } = useListsContext();
 
-  const typeMap = itemsStatusMap.get(item?.type);
-  const rating = typeMap?.get(String(item?.itemId))?.get("rating") ?? 0;
+  const rating = itemsStatusMap?.[item?.type]?.get(item?.itemId)?.rating ?? 0;
 
   // const { ratingList } = useRatingList();
 

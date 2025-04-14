@@ -21,9 +21,9 @@ const FavoriteButton = ({
 
   const { itemId, type, parentId, episode, season } = item;
 
-  const typeMap = itemsStatusMap.get(type);
+  const isFavorited = itemsStatusMap?.[type]?.get(itemId)?.inFavorites ?? false;
 
-  const isFavorited = typeMap?.get(String(itemId))?.get("inFavorites") ?? false;
+  // const isFavorited = typeMap?.get(String(itemId))?.get("inFavorites") ?? false;
 
   const { favoriteList, isLoading } = useLists();
   const { isLoading: isAdding, addShow } = useAddShow(type);
@@ -45,18 +45,20 @@ const FavoriteButton = ({
         {
           onSuccess: () => {
             setItemsStatusMap((prev) => {
-              const newMap = new Map(prev);
-              const items = new Map(newMap.get(type));
+              const newMap = new Map(prev[type]);
 
-              if (!items.has(itemId)) {
-                items.set(itemId, new Map());
-              }
+              if (!newMap.has(itemId))
+                newMap.set(itemId, {
+                  inWatchlist: false,
+                  inFavorites: true,
+                  rating: null,
+                });
+              else newMap.get(itemId).inFavorites = true;
 
-              items.get(itemId)?.set("inFavorites", true);
-
-              newMap.set(type, items);
-
-              return newMap;
+              return {
+                ...prev,
+                [type]: newMap,
+              };
             });
           },
         }
@@ -71,18 +73,17 @@ const FavoriteButton = ({
         {
           onSuccess: () => {
             setItemsStatusMap((prev) => {
-              const newMap = new Map(prev);
-              const items = new Map(newMap.get(type));
+              const prevItems = { ...prev };
 
-              if (!items.has(itemId)) {
-                items.set(itemId, new Map());
-              }
+              if (!prevItems[type].has(itemId))
+                prevItems[type].set(itemId, {
+                  inWatchlist: false,
+                  inFavorites: false,
+                  rating: null,
+                });
+              else prevItems[type].get(itemId).inFavorites = false;
 
-              items.get(itemId)?.set("inFavorites", false);
-
-              newMap.set(type, items);
-
-              return newMap;
+              return prevItems;
             });
           },
         }

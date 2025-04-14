@@ -49,16 +49,21 @@ const ListsMenu = ({ isPopupOpen, setIsPopupOpen, otherProps }) => {
             const listId = data?.listData[0].id;
 
             setItemsStatusMap((prev) => {
-              const newMap = new Map(prev);
+              const newMap = new Map(prev[type]);
 
-              if (!newMap.get(type).has(itemId)) {
-                newMap.get(type).set(itemId, new Map());
-              }
+              if (!newMap.has(itemId))
+                newMap.set(itemId, {
+                  inWatchlist: false,
+                  inFavorites: false,
+                  rating: null,
+                  remainLists: new Set([listId]),
+                });
+              else newMap.get(itemId).remainLists.add(listId);
 
-              if (!newMap.get(type).get(itemId).has("remainLists"))
-                newMap.get(type).get(itemId).set("remainLists", new Set());
-
-              newMap.get(type)?.get(itemId)?.get("remainLists").add(listId);
+              return {
+                ...prev,
+                [type]: newMap,
+              };
             });
           },
         }

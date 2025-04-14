@@ -327,6 +327,12 @@ export async function fetchItemsStatus({
   try {
     const [watchlistResponse, favoritesResponse, ratingsResponse] =
       await Promise.all([
+        // supabase
+        // .from("lists")
+        // .select("id, items_list!inner(item_id)")
+        // .eq("user_id", userId)
+        // .in("items_list.item_id", itemIds),
+
         supabase
           .from("items_list")
           .select("item_id")
@@ -354,32 +360,24 @@ export async function fetchItemsStatus({
     if (ratingsResponse.error) throw ratingsResponse.error;
 
     const watchlistSet = new Set(
-      watchlistResponse.data.map((item) => item.item_id)
+      watchlistResponse.data.map((item) => Number(item.item_id))
     );
     const favoritesSet = new Set(
-      favoritesResponse.data.map((item) => item.item_id)
+      favoritesResponse.data.map((item) => Number(item.item_id))
     );
     const ratingsMap = new Map(
-      ratingsResponse.data.map((item) => [item.item_id, item.rate])
+      ratingsResponse.data.map((item) => [Number(item.item_id), item.rate])
     );
 
-    const itemsMap = new Map();
+    return itemIds.reduce((acc, id) => {
+      acc[id] = {
+        inWatchlist: watchlistSet.has(id),
+        inFavorites: favoritesSet.has(id),
+        rating: ratingsMap.get(id) || null,
+      };
 
-    itemIds.forEach((id) => {
-      const idString = id.toString();
-
-      if (!itemsMap.has(idString)) {
-        itemsMap.set(idString, new Map());
-      }
-
-      const itemData = itemsMap.get(idString);
-
-      itemData.set("inWatchlist", watchlistSet.has(idString));
-      itemData.set("inFavorites", favoritesSet.has(idString));
-      itemData.set("rating", ratingsMap.get(idString) || null);
-    });
-
-    return itemsMap;
+      return acc;
+    }, {});
   } catch (error) {
     console.error("Error fetching items status:", error);
     throw new Error(`Failed to fetch items status: ${error.message}`);
@@ -398,10 +396,10 @@ export async function fetchItemStatus(
   try {
     const [listsResponse, ratingsResponse] = await Promise.all([
       supabase
-        .from("items_list")
-        .select("list_id")
-        .eq("type", type)
-        .eq("item_id", id),
+        .from("lists")
+        .select("id, items_list!inner(item_id)")
+        .eq("user_id", userId)
+        .eq("items_list.item_id", id),
 
       supabase
         .from("rating")
@@ -414,24 +412,21 @@ export async function fetchItemStatus(
     if (listsResponse.error) throw listsResponse.error;
     if (ratingsResponse.error) throw ratingsResponse.error;
 
-    const listIds = new Set(listsResponse?.data?.map((item) => item.list_id));
+    const listIds = new Set(listsResponse?.data?.map((item) => item.id));
+    const inWatchlist = listIds.has(watchlistId);
+    const inFavorites = listIds.has(favoriteListId);
+
+    listIds.delete(watchlistId);
+    listIds.delete(favoriteListId);
 
     const itemMap = new Map();
-    itemMap.set(id, new Map());
-    itemMap.get(id).set("inWatchlist", listIds.has(watchlistId));
-    itemMap.get(id).set("inFavorites", listIds.has(favoriteListId));
-    itemMap.get(id).set("rating", ratingsResponse?.data[0]?.rate || null);
-    itemMap
-      .get(id)
-      .set(
-        "remainLists",
-        new Set(
-          listsResponse?.data?.filter(
-            (item) =>
-              item.list_id !== watchlistId && item.list_id !== favoriteListId
-          )
-        )
-      );
+
+    itemMap.set(id, {
+      inWatchlist,
+      inFavorites,
+      rating: ratingsResponse?.data[0]?.rate ?? null,
+      remainLists: listIds,
+    });
 
     return itemMap;
   } catch (error) {

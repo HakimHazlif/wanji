@@ -39,14 +39,20 @@ const RatingPopup = ({ setClosePopup, item, showRate = 0 }) => {
         addRating(rowQuery, {
           onSuccess: () => {
             setItemsStatusMap((prev) => {
-              const newMap = new Map(prev);
+              const newMap = new Map(prev[type]);
 
-              if (!newMap.get(type).has(itemId)) {
-                newMap.get(type).set(itemId, new Map());
-              }
-              newMap.get(type).get(itemId)?.set("rating", rating);
+              if (!newMap.has(itemId))
+                newMap.set(itemId, {
+                  inWatchlist: false,
+                  inFavorites: false,
+                  rating,
+                });
+              else newMap.get(itemId).rating = rating;
 
-              return newMap;
+              return {
+                ...prev,
+                [type]: newMap,
+              };
             });
 
             setClosePopup();
@@ -56,12 +62,20 @@ const RatingPopup = ({ setClosePopup, item, showRate = 0 }) => {
         updateRating(rowQuery, {
           onSuccess: () => {
             setItemsStatusMap((prev) => {
-              const newMap = new Map(prev);
+              const newMap = new Map(prev[type]);
 
-              if (!newMap.get(type).has(itemId)) {
-                newMap.get(type).set(itemId, new Map());
-              }
-              newMap.get(type).get(itemId)?.set("rating", rating);
+              if (!newMap.has(itemId))
+                newMap.set(itemId, {
+                  inWatchlist: false,
+                  inFavorites: false,
+                  rating,
+                });
+              else newMap.get(itemId).rating = rating;
+
+              return {
+                ...prev,
+                [type]: newMap,
+              };
             });
 
             setClosePopup();

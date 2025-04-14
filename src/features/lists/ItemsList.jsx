@@ -18,9 +18,8 @@ const ItemsList = ({ list, item }) => {
   const { itemId, type, parentId, episode, season } = item;
   const { itemsStatusMap, setItemsStatusMap } = useListsContext();
 
-  const typeMap = itemsStatusMap.get(type);
   const isAdded =
-    typeMap?.get(String(itemId))?.get("remainLists")?.has(list.id) ?? false;
+    itemsStatusMap?.[type]?.get(itemId)?.remainLists?.has(list.id) ?? false;
 
   const [isOptionOpen, setIsOptionOpen] = useState(false);
   const [forConfirmDelete, setForConfirmDelete] = useState(false);
@@ -45,29 +44,22 @@ const ItemsList = ({ list, item }) => {
       addShow(row, {
         onSuccess: () => {
           setItemsStatusMap((prev) => {
-            const newMap = new Map(prev);
-            const items = new Map(newMap.get(type));
+            const newMap = new Map(prev[type]);
 
-            if (!items.has(itemId)) {
-              items.set(itemId, new Map());
-            }
+            if (!newMap.has(itemId))
+              newMap.set(itemId, {
+                inWatchlist: false,
+                inFavorites: false,
+                rating: null,
+                remainLists: new Set([list.id]),
+              });
+            else newMap.get(itemId).remainLists.add(list.id);
 
-            if (!items.get(itemId).has("remainLists"))
-              items.get(itemId).set("remainLists", new Set());
-
-            items?.get(itemId).get("remainLists")?.add(list.id);
-
-            return newMap;
+            return {
+              ...prev,
+              [type]: newMap,
+            };
           });
-
-          // if (!typeMap.has(itemId)) {
-          //   typeMap.set(itemId, new Map());
-          // }
-
-          // if (!typeMap.get(itemId).has("remainLists"))
-          //   typeMap.get(itemId).set("remainLists", new Set());
-
-          // typeMap?.get(itemId).get("remainLists")?.add(list.id);
         },
       });
       setIsOptionOpen(false);
@@ -81,19 +73,21 @@ const ItemsList = ({ list, item }) => {
         {
           onSuccess: () => {
             setItemsStatusMap((prev) => {
-              const newMap = new Map(prev);
-              const items = new Map(newMap.get(type));
+              const newMap = new Map(prev[type]);
 
-              if (!items.has(itemId)) {
-                items.set(itemId, new Map());
-              }
+              if (!newMap.has(itemId))
+                newMap.set(itemId, {
+                  inWatchlist: false,
+                  inFavorites: false,
+                  rating: null,
+                  remainLists: new Set([list.id]),
+                });
+              else newMap.get(itemId).remainLists.delete(list.id);
 
-              if (!items.get(itemId).has("remainLists"))
-                items.get(itemId).set("remainLists", new Set());
-
-              items?.get(itemId).get("remainLists")?.delete(list.id);
-
-              return newMap;
+              return {
+                ...prev,
+                [type]: newMap,
+              };
             });
           },
         }

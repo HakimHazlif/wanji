@@ -17,15 +17,13 @@ export function useItemStatus() {
       fetchItemStatus(id, category, watchlistId, favoriteListId, uid),
     enabled: !!uid && !!category && !!watchlistId && !!favoriteListId && !!id,
     onSuccess: (data) => {
+      const dataMap =
+        data instanceof Map ? data : new Map(Object.entries(data));
       setItemsStatusMap((prev) => {
-        const newMap = new Map(prev);
-        const items = newMap.get(category);
-        const itemMap = data instanceof Map ? data?.get(id) : new Map();
-
-        items.set(id, itemMap);
-        newMap.set(category, items);
-
-        return newMap;
+        return {
+          ...prev,
+          [category]: new Map([...(prev[category] || []), ...dataMap]),
+        };
       });
     },
   });

@@ -34,8 +34,6 @@ export function useLists() {
     };
   }, [lists]);
 
-  console.log({ userLists, lists });
-
   return {
     isLoading,
     lists,

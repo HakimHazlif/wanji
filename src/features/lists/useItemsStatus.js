@@ -20,18 +20,15 @@ export function useItemsStatus(itemIds, type) {
     // enabled:
     // !!itemIds?.length && !!type && !!watchlistId && !!favoriteListId && !!uid,
     onSuccess: (data) => {
+      console.log(data);
+      const dataMap =
+        data instanceof Map ? data : new Map(Object.entries(data));
+
       setItemsStatusMap((prev) => {
-        const newMap = new Map(prev);
-        const items = newMap.get(type);
-
-        if (data instanceof Map) {
-          data?.forEach((newItemData, itemId) => {
-            items.set(itemId, newItemData);
-          });
-        }
-
-        // newMap.set(type, items);
-        return newMap;
+        return {
+          ...prev,
+          [type]: new Map([...(prev[type] || []), ...dataMap]),
+        };
       });
     },
   });
