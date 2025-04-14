@@ -4,9 +4,10 @@ import { useMovies } from "../features/movies/useMovies";
 import { getImageViaPath } from "../utils/helper";
 
 import { useTvShows } from "../features/tv/useTvShows";
-import { lazy, Suspense, useEffect, useMemo, useState } from "react";
+import { lazy, Suspense, useMemo } from "react";
 import { useListsContext } from "../context/ListsContext";
 import { useItemsStatus } from "../features/lists/useItemsStatus";
+import SuspenseList from "../ui/SuspenseList";
 
 const Recommended = lazy(() => import("../components/Recommended"));
 const MoviesList = lazy(() => import("../features/movies/MoviesList"));
@@ -15,8 +16,6 @@ const TrendingPeople = lazy(() => import("../features/person/TrendingPeople"));
 const PopularPeople = lazy(() => import("../features/person/PopularPeople"));
 
 const Home = () => {
-  const [showExtra, setShowExtra] = useState(false);
-
   const { isLoading: isMoviesLoading, movies } = useMovies();
   const { isLoading: isTvsLoading } = useTvShows();
   const {
@@ -69,12 +68,6 @@ const Home = () => {
     );
   }, [movies?.popularMovies]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => setShowExtra(true), 300);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   if (
     isMoviesLoading ||
     isTvsLoading ||
@@ -91,40 +84,33 @@ const Home = () => {
         <Spinner />
       ) : (
         <>
-          <Suspense fallback={<Spinner />}>
+          <Suspense fallback={<SuspenseList />}>
             <MoviesList listKey="popularMovies" movies={popularMovies} />
           </Suspense>
-          <Suspense fallback={<Spinner />}>
+          <Suspense fallback={<SuspenseList />}>
             <TvShowsList listKey="popularTv" tvShows={popularTv} />
           </Suspense>
-          <Suspense fallback={<Spinner />}>
+          <Suspense fallback={<SuspenseList />}>
             <TrendingPeople />
           </Suspense>
-          <Suspense fallback={<Spinner />}>
+          <Suspense fallback={<SuspenseList />}>
             <Recommended />
           </Suspense>
-          {showExtra && (
-            <>
-              <Suspense fallback={<Spinner />}>
-                <MoviesList listKey="topRatedMovies" movies={topRatedMovies} />
-              </Suspense>
-              <Suspense fallback={<Spinner />}>
-                <TvShowsList listKey="topRatedTv" tvShows={topRatedTv} />
-              </Suspense>
-              <Suspense fallback={<Spinner />}>
-                <PopularPeople />
-              </Suspense>
-              <Suspense fallback={<Spinner />}>
-                <MoviesList
-                  listKey="nowPlaynigMovies"
-                  movies={nowPlaynigMovies}
-                />
-              </Suspense>
-              <Suspense fallback={<Spinner />}>
-                <TvShowsList listKey="onTheAir" tvShows={onTheAir} />
-              </Suspense>
-            </>
-          )}
+          <Suspense fallback={<SuspenseList />}>
+            <MoviesList listKey="topRatedMovies" movies={topRatedMovies} />
+          </Suspense>
+          <Suspense fallback={<SuspenseList />}>
+            <TvShowsList listKey="topRatedTv" tvShows={topRatedTv} />
+          </Suspense>
+          <Suspense fallback={<SuspenseList />}>
+            <PopularPeople />
+          </Suspense>
+          <Suspense fallback={<SuspenseList />}>
+            <MoviesList listKey="nowPlaynigMovies" movies={nowPlaynigMovies} />
+          </Suspense>
+          <Suspense fallback={<SuspenseList />}>
+            <TvShowsList listKey="onTheAir" tvShows={onTheAir} />
+          </Suspense>
         </>
       )}
     </>

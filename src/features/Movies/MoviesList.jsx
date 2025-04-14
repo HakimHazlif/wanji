@@ -1,6 +1,5 @@
 import ShowCard from "../../ui/ShowCard";
 import ListScroll from "../lists/ListScroll";
-import { useMovies } from "./useMovies";
 
 const MoviesList = ({ listKey, movies }) => {
   const category = "movie";

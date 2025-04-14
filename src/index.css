@@ -44,10 +44,26 @@ html {
   .heading-title-2 {
     @apply text-lg sm:text-xl md:text-2xl font-semibold text-slate-300;
   }
+
+  .spinner-mini {
+    animation: rotation 1.5s infinite linear;
+  }
+
+  .suspense {
+    animation: fadeInOut 3s infinite;
+  }
 }
 
-.spinner-mini {
-  animation: rotation 1.5s infinite linear;
+@keyframes fadeInOut {
+  0% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.4;
+  }
 }
 
 @keyframes rotation {

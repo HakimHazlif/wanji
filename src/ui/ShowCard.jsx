@@ -67,7 +67,7 @@ const ShowCard = memo(function ShowCard({
             <img
               src={getPictureUrlFormat(poster, 500)}
               alt={title}
-              className="relative w-full md:h-[320px] sm:h-[290px] h-[260px]  object-cover rounded-md shadow-2xl cursor-pointer"
+              className="relative w-full md:h-[320px] sm:h-[290px] h-[260px] object-cover rounded-md shadow-2xl cursor-pointer"
               onClick={handleNavigate}
               loading="lazy"
               decoding="async"
