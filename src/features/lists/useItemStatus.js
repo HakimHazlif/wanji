@@ -3,13 +3,11 @@ import { useParams } from "react-router-dom";
 import { useListsContext } from "../../context/ListsContext";
 import { fetchItemStatus } from "../../services/apiLists";
 import { useSelector } from "react-redux";
-import { it } from "date-fns/locale";
 
 export function useItemStatus() {
   const { uid } = useSelector((state) => state.user.user);
   const { category, id } = useParams();
-  const { watchlistId, favoriteListId, setItemsStatusMap, itemsStatusMap } =
-    useListsContext();
+  const { watchlistId, favoriteListId, setItemsStatusMap } = useListsContext();
 
   const { isLoading } = useQuery({
     queryKey: ["itemStatus", category],

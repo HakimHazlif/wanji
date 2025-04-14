@@ -3,17 +3,17 @@ import { FaPencil } from "react-icons/fa6";
 import { IoIosTv } from "react-icons/io";
 import { MdOutlinePlayCircleFilled } from "react-icons/md";
 import { updateDateFormat } from "../utils/helper";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Ellipsis from "./Ellipsis";
-import { Tooltip } from "@mui/material";
 import { RiDeleteBinFill } from "react-icons/ri";
 import DeleteListConfirm from "./DeleteListConfirm";
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { useDeleteList } from "../features/lists/useDeleteList";
 import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
+import { useNavigate } from "react-router-dom";
 
 const CustomListCard = ({ list }) => {
+  const navigate = useNavigate();
   const { transitionNavigate } = useTransitionNavigate();
   const { username, uid } = useSelector((state) => state.user.user);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
@@ -42,16 +42,14 @@ const CustomListCard = ({ list }) => {
     <li className="bg-bluish-black rounded-xl shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 border border-gray-700 overflow-hidden">
       <div className="p-5">
         <div className="flex gap-4 justify-between items-center mb-3">
-          <Tooltip title={list.name}>
-            <span>
-              <h3
-                className="text-xl font-semibold hover:text-orange-amber cursor-pointer"
-                onClick={() => handleNavigate(list.id)}
-              >
-                <Ellipsis lines="line-clamp-1" text={list.name} />
-              </h3>
-            </span>
-          </Tooltip>
+          <span>
+            <h3
+              className="text-xl font-semibold hover:text-orange-amber cursor-pointer"
+              onClick={() => handleNavigate(list.id)}
+            >
+              <Ellipsis lines="line-clamp-1" text={list.name} />
+            </h3>
+          </span>
           <span className="bg-slate-700 text-blue-200 text-xs px-3 py-1.5 rounded-full text-nowrap">
             Has {list.items_list.length}{" "}
             {list.items_list.length <= 1 ? "title" : "titles"}
@@ -104,33 +102,29 @@ const CustomListCard = ({ list }) => {
             Created at {updateDateFormat(list.created_at)}
           </p>
           <div>
-            <Tooltip title="Edit this list">
-              <span>
-                <button
-                  className="text-blue-400 hover:bg-slate-700 hover:text-blue-600 rounded-full p-2 transition-colors"
-                  onClick={() =>
-                    navigate(
-                      `/u/${username.replace(" ", "-")}/list/edit?listId=${
-                        list.id
-                      }`
-                    )
-                  }
-                >
-                  <FaPencil size={18} />
-                </button>
-              </span>
-            </Tooltip>
+            <span>
+              <button
+                className="text-blue-400 hover:bg-slate-700 hover:text-blue-600 rounded-full p-2 transition-colors"
+                onClick={() =>
+                  navigate(
+                    `/u/${username.replace(" ", "-")}/list/edit?listId=${
+                      list.id
+                    }`
+                  )
+                }
+              >
+                <FaPencil size={18} />
+              </button>
+            </span>
 
-            <Tooltip title="Delete this list">
-              <span>
-                <button
-                  className="text-slate-400 hover:bg-slate-700 rounded-full p-2 transition-colors"
-                  onClick={() => setDeleteConfirm(true)}
-                >
-                  <RiDeleteBinFill size={21} />
-                </button>
-              </span>
-            </Tooltip>
+            <span>
+              <button
+                className="text-slate-400 hover:bg-slate-700 rounded-full p-2 transition-colors"
+                onClick={() => setDeleteConfirm(true)}
+              >
+                <RiDeleteBinFill size={21} />
+              </button>
+            </span>
           </div>
         </div>
       </div>

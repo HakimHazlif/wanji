@@ -1,4 +1,4 @@
-import { Box, Rating, Tooltip } from "@mui/material";
+import { Box, Rating } from "@mui/material";
 import { formatNumber } from "../utils/helper";
 import { useEffect, useState } from "react";
 
@@ -38,30 +38,28 @@ const RatingBox = ({
   }, [initialStars]);
 
   return (
-    <Tooltip title="TMDB rate">
-      <div className="flex items-center gap-2">
-        <Box className="flex items-center">
-          <Rating
-            value={
-              maxRating === 5 ? Math.ceil(Number(rating) / 2) : Number(rating)
-            }
-            precision={0.1}
-            readOnly
-            max={maxRating}
-            sx={{
-              "& .MuiRating-icon": starsSize,
-              "& .MuiRating-iconEmpty": {
-                color: emptyStarsColor,
-              },
-              "& .MuiRating-iconFilled": {
-                color: filledStarsColor,
-              },
-            }}
-          />
-        </Box>
-        <span className={styleOfSpan}>{formatNumber(rating)}</span>
-      </div>
-    </Tooltip>
+    <div className="flex items-center gap-2">
+      <Box className="flex items-center">
+        <Rating
+          value={
+            maxRating === 5 ? Math.ceil(Number(rating) / 2) : Number(rating)
+          }
+          precision={0.1}
+          readOnly
+          max={maxRating}
+          sx={{
+            "& .MuiRating-icon": starsSize,
+            "& .MuiRating-iconEmpty": {
+              color: emptyStarsColor,
+            },
+            "& .MuiRating-iconFilled": {
+              color: filledStarsColor,
+            },
+          }}
+        />
+      </Box>
+      <span className={styleOfSpan}>{formatNumber(rating)}</span>
+    </div>
   );
 };
 

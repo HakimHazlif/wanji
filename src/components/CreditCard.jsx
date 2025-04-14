@@ -1,9 +1,6 @@
-import { useNavigate } from "react-router-dom";
 import { getProfileImageUrl } from "../utils/helper";
-import { Tooltip } from "@mui/material";
 import { MdTrendingUp } from "react-icons/md";
 import EmptyCredit from "./EmptyCredit";
-import { useTransition } from "react";
 import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const CreditCard = ({
@@ -48,14 +45,12 @@ const CreditCard = ({
         className={`relative ${getPictureSize()} overflow-hidden rounded-full flex-shrink-0 cursor-pointer`}
       >
         {profilePath ? (
-          <Tooltip title={name}>
-            <img
-              src={profilePath}
-              alt="cast picture"
-              className={`${getPictureSize()} object-cover cursor-pointer`}
-              onClick={handleNavigate}
-            />
-          </Tooltip>
+          <img
+            src={profilePath}
+            alt="cast picture"
+            className={`${getPictureSize()} object-cover cursor-pointer`}
+            onClick={handleNavigate}
+          />
         ) : (
           <EmptyCredit
             iconSize={size}
@@ -67,14 +62,12 @@ const CreditCard = ({
       </div>
 
       <div className="w-full mt-2">
-        <Tooltip title={name}>
-          <h2
-            className="text-sm font-medium mb-1 cursor-pointer hover:text-blue-500 duration-200 transition-colors"
-            onClick={handleNavigate}
-          >
-            {name}
-          </h2>
-        </Tooltip>
+        <h2
+          className="text-sm font-medium mb-1 cursor-pointer hover:text-blue-500 duration-200 transition-colors"
+          onClick={handleNavigate}
+        >
+          {name}
+        </h2>
         {!inHomePage ? (
           <h3 className="text-[11px] font-medium text-slate-400">{role}</h3>
         ) : (

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { RiPlayListAddFill } from "react-icons/ri";
 import ListsMenu from "./ListsMenu";
-import { Tooltip } from "@mui/material";
 import SpinnerMini from "../../ui/SpinnerMini";
 import { useItemStatus } from "./useItemStatus";
 
@@ -11,23 +10,19 @@ const ButtonAddToList = ({ ...props }) => {
 
   return (
     <>
-      <Tooltip title="Add to new list">
-        <span>
-          <button
-            disabled={isLoading}
-            className="bg-slate-700 md:w-[100px] sm:w-[92px] w-[85px] py-2 font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-slate-500"
-            onClick={() => {
-              setIsPopupOpen(true);
-            }}
-          >
-            {isLoading ? (
-              <SpinnerMini iconSize="md:text-3xl sm:text-xl text-base" />
-            ) : (
-              <RiPlayListAddFill className="text-slate-200 md:text-3xl sm:text-xl text-base" />
-            )}
-          </button>
-        </span>
-      </Tooltip>
+      <button
+        disabled={isLoading}
+        className="bg-slate-700 md:w-[100px] sm:w-[92px] w-[85px] py-2 font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-slate-500"
+        onClick={() => {
+          setIsPopupOpen(true);
+        }}
+      >
+        {isLoading ? (
+          <SpinnerMini iconSize="md:text-3xl sm:text-xl text-base" />
+        ) : (
+          <RiPlayListAddFill className="text-slate-200 md:text-3xl sm:text-xl text-base" />
+        )}
+      </button>
 
       {isPopupOpen && (
         <ListsMenu

@@ -1,11 +1,10 @@
-import { useRef, useState, useTransition } from "react";
+import { useRef, useState } from "react";
 import { getImageViaPath, updateDateFormat } from "../utils/helper";
 import { FaStar } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";
-import { Box, Rating, Tooltip } from "@mui/material";
+import { Box, Rating } from "@mui/material";
 import RatingPopup from "../features/lists/RatingPopup";
 import ReviewPopup from "../features/reviews/ReviewPopup";
-import { useNavigate } from "react-router-dom";
 import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const ReviewCard = ({
@@ -48,14 +47,7 @@ const ReviewCard = ({
     return (
       <>
         {rating !== null && (
-          <Tooltip
-            title={
-              isUser
-                ? !rating
-                  ? "Add Your Rating"
-                  : "Update Your Rating"
-                : `${author}'s Rating`
-            }
+          <div
             className={`flex items-center gap-2  ${
               isUser ? "cursor-pointer" : ""
             }`}
@@ -63,34 +55,32 @@ const ReviewCard = ({
               isUser && setOpenRatingPopup(true);
             }}
           >
-            <span>
-              <Box className="flex items-center">
-                <Rating
-                  name="rating"
-                  value={Math.floor(rating / 2)}
-                  precision={0.5}
-                  readOnly
-                  max={5}
-                  size="small"
-                  sx={{
-                    "& .MuiRating-icon": {
-                      color: "#9CA3AF",
-                    },
-                    "& .MuiRating-iconFilled": {
-                      color: "#FFA726",
-                    },
-                  }}
-                />
-              </Box>
-              <div className="px-2 py-0.5 text-xs rounded-sm bg-orange-amber text-gray-800 font-semibold">
-                {rating === 0 ? (
-                  <FaStar className="text-white" size={14} />
-                ) : (
-                  rating.toFixed(1)
-                )}
-              </div>
-            </span>
-          </Tooltip>
+            <Box className="flex items-center">
+              <Rating
+                name="rating"
+                value={Math.floor(rating / 2)}
+                precision={0.5}
+                readOnly
+                max={5}
+                size="small"
+                sx={{
+                  "& .MuiRating-icon": {
+                    color: "#9CA3AF",
+                  },
+                  "& .MuiRating-iconFilled": {
+                    color: "#FFA726",
+                  },
+                }}
+              />
+            </Box>
+            <div className="px-2 py-0.5 text-xs rounded-sm bg-orange-amber text-gray-800 font-semibold">
+              {rating === 0 ? (
+                <FaStar className="text-white" size={14} />
+              ) : (
+                rating.toFixed(1)
+              )}
+            </div>
+          </div>
         )}
         {openRatingPopup && (
           <RatingPopup
@@ -110,20 +100,18 @@ const ReviewCard = ({
       <div className="flex gap-6 w-full">
         {isProfileList && (
           <div className="w-32 flex-shrink-0">
-            <Tooltip title={review?.title}>
-              <div
-                className="rounded-lg overflow-hidden shadow-lg cursor-pointer"
-                onClick={() =>
-                  transitionNavigate(`/${review.type}/${review.itemId}`)
-                }
-              >
-                <img
-                  src={getImageViaPath(review?.posterPath, 400)}
-                  alt={review?.title}
-                  className="w-full h-auto object-cover"
-                />
-              </div>
-            </Tooltip>
+            <div
+              className="rounded-lg overflow-hidden shadow-lg cursor-pointer"
+              onClick={() =>
+                transitionNavigate(`/${review.type}/${review.itemId}`)
+              }
+            >
+              <img
+                src={getImageViaPath(review?.posterPath, 400)}
+                alt={review?.title}
+                className="w-full h-auto object-cover"
+              />
+            </div>
           </div>
         )}
 

@@ -1,4 +1,3 @@
-import { Tooltip } from "@mui/material";
 import { FaUser } from "react-icons/fa";
 
 const EmptyCredit = ({
@@ -21,14 +20,12 @@ const EmptyCredit = ({
   }
 
   return (
-    <Tooltip title={personName}>
-      <div
-        className={`${pictureSize} rounded-full flex justify-center items-center bg-slate-900`}
-        onClick={onNavigate}
-      >
-        <FaUser className={`${getIconSize()} text-slate-400`} />
-      </div>
-    </Tooltip>
+    <div
+      className={`${pictureSize} rounded-full flex justify-center items-center bg-slate-900`}
+      onClick={onNavigate}
+    >
+      <FaUser className={`${getIconSize()} text-slate-400`} />
+    </div>
   );
 };
 

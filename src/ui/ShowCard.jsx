@@ -5,7 +5,6 @@ import {
 } from "../utils/helper";
 import { FaStar } from "react-icons/fa";
 import Ellipsis from "./Ellipsis";
-import { Tooltip } from "@mui/material";
 import { lazy, memo, Suspense, useMemo, useState } from "react";
 import { TiDelete } from "react-icons/ti";
 import DeleteListConfirm from "./DeleteListConfirm";
@@ -40,7 +39,7 @@ const ShowCard = memo(function ShowCard({
     if (show?.release_date) return getYearFormat(show?.release_date);
     else if (show?.first_air_date) return getYearFormat(show?.first_air_date);
     else if (show?.air_date) return updateDateFormat(show?.air_date);
-  });
+  }, [show?.release_date, show?.air_date, show?.first_air_date]);
   const roundedRate = useMemo(() => rate?.toFixed(1), [rate]);
 
   function handleNavigate() {
@@ -63,31 +62,27 @@ const ShowCard = memo(function ShowCard({
   return (
     <div className="md:w-52 sm:w-48 w-44 relative">
       <div className="">
-        <Tooltip title={title}>
-          <span>
-            {poster ? (
-              <img
-                src={getPictureUrlFormat(poster, 500)}
-                alt={title}
-                className="relative w-full md:h-[320px] sm:h-[290px] h-[260px]  object-cover rounded-md shadow-2xl cursor-pointer"
-                onClick={handleNavigate}
-                loading="lazy"
-                decoding="async"
-              />
-            ) : (
-              <EmptyPoster />
-            )}
-          </span>
-        </Tooltip>
+        <span>
+          {poster ? (
+            <img
+              src={getPictureUrlFormat(poster, 500)}
+              alt={title}
+              className="relative w-full md:h-[320px] sm:h-[290px] h-[260px]  object-cover rounded-md shadow-2xl cursor-pointer"
+              onClick={handleNavigate}
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <EmptyPoster />
+          )}
+        </span>
         <div className="mt-2">
           <div className="flex w-full justify-between items-center">
             <div className="flex md:gap-3 gap-2">
-              <Tooltip title="TMDB rate">
-                <div className="rounded-md bg-orange-amber text-gray-700 w-[45px] h-6 flex items-center justify-center gap-1 text-xs font-bold">
-                  <FaStar className="text-white" />
-                  <p>{roundedRate}</p>
-                </div>
-              </Tooltip>
+              <div className="rounded-md bg-orange-amber text-gray-700 w-[45px] h-6 flex items-center justify-center gap-1 text-xs font-bold">
+                <FaStar className="text-white" />
+                <p>{roundedRate}</p>
+              </div>
 
               <Suspense fallback={<SuspenseRateMini />}>
                 <UserRateMini
@@ -104,14 +99,12 @@ const ShowCard = memo(function ShowCard({
           </div>
 
           <div className="flex flex-col gap-1 mt-2">
-            <Tooltip title={title}>
-              <h2
-                onClick={handleNavigate}
-                className="text-sm font-medium cursor-pointer hover:text-orange-amber inline-block"
-              >
-                <Ellipsis text={title} lines="line-clamp-1" />
-              </h2>
-            </Tooltip>
+            <h2
+              onClick={handleNavigate}
+              className="text-sm font-medium cursor-pointer hover:text-orange-amber inline-block"
+            >
+              <Ellipsis text={title} lines="line-clamp-1" />
+            </h2>
           </div>
           {additions && (
             <div className="flex justify-between gap-2 mt-4">
@@ -124,16 +117,14 @@ const ShowCard = memo(function ShowCard({
 
       {forEditList && (
         <div className="absolute z-40 top-1 right-1">
-          <Tooltip title="Delete this Item">
-            <span>
-              <button onClick={() => setDeletePopup(true)}>
-                <TiDelete
-                  size={35}
-                  className="text-gray-300 hover:text-red-400 duration-200 transition-colors"
-                />
-              </button>
-            </span>
-          </Tooltip>
+          <span>
+            <button onClick={() => setDeletePopup(true)}>
+              <TiDelete
+                size={35}
+                className="text-gray-300 hover:text-red-400 duration-200 transition-colors"
+              />
+            </button>
+          </span>
         </div>
       )}
       {deletePopup && (

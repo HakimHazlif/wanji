@@ -3,7 +3,6 @@ import { useLists } from "./useLists";
 import { useAddShow } from "./useAddShow";
 import { useDeleteShow } from "./useDeleteShow";
 import { BsBookmarkCheckFill, BsBookmarkPlus } from "react-icons/bs";
-import { Tooltip } from "@mui/material";
 import SpinnerMini from "../../ui/SpinnerMini";
 import { useListsContext } from "../../context/ListsContext";
 import { useItemStatus } from "./useItemStatus";
@@ -109,23 +108,17 @@ const WatchlistButton = ({
   }
 
   return (
-    <Tooltip title={isWatchlist ? "Delete from Watchlist" : "Add to Watchlist"}>
-      <span>
-        <button
-          className={`${
-            isWatchlist
-              ? "bg-amber-500 hover:bg-amber-400"
-              : "bg-slate-700 hover:bg-slate-600"
-          } ${width} py-2 font-bold rounded-lg flex items-center justify-center gap-2 transition-colors duration-200 shadow-lg`}
-          onClick={
-            isWatchlist ? handleDeleteFromWatchlist : handleAddToWatchlist
-          }
-          disabled={isLoading || isAdding || isDeleting}
-        >
-          {content}
-        </button>
-      </span>
-    </Tooltip>
+    <button
+      className={`${
+        isWatchlist
+          ? "bg-amber-500 hover:bg-amber-400"
+          : "bg-slate-700 hover:bg-slate-600"
+      } ${width} py-2 font-bold rounded-lg flex items-center justify-center gap-2 transition-colors duration-200 shadow-lg`}
+      onClick={isWatchlist ? handleDeleteFromWatchlist : handleAddToWatchlist}
+      disabled={isLoading || isAdding || isDeleting}
+    >
+      {content}
+    </button>
   );
 };
 

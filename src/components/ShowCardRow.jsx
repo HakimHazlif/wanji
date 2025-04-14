@@ -5,15 +5,14 @@ import {
   updateDateFormat,
   updateRuntime,
 } from "../utils/helper";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ShowStatus from "../ui/ShowStatus";
 import Ellipsis from "../ui/Ellipsis";
 import { IoMdStar } from "react-icons/io";
 import CreditView from "../ui/CreditView";
 import DeleteListConfirm from "../ui/DeleteListConfirm";
 import { TiDelete } from "react-icons/ti";
-import { Tooltip } from "@mui/material";
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const ShowCardRow = ({
@@ -179,16 +178,14 @@ const ShowCardRow = ({
       </div>
       {forEditList && (
         <div className="absolute z-40 top-1 right-1">
-          <Tooltip title="Delete this Item">
-            <span>
-              <button onClick={() => setDeletePopup(true)}>
-                <TiDelete
-                  size={35}
-                  className="text-gray-300 hover:text-red-400 duration-200 transition-colors"
-                />
-              </button>
-            </span>
-          </Tooltip>
+          <span>
+            <button onClick={() => setDeletePopup(true)}>
+              <TiDelete
+                size={35}
+                className="text-gray-300 hover:text-red-400 duration-200 transition-colors"
+              />
+            </button>
+          </span>
         </div>
       )}
       {deletePopup && (

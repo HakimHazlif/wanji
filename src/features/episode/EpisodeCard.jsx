@@ -1,16 +1,14 @@
-import { Tooltip } from "@mui/material";
 import {
   getMainCrewRolls,
   getPictureUrlFormat,
   updateDateFormat,
 } from "../../utils/helper";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import WatchlistButton from "../lists/WatchlistButton";
 import FavoriteButton from "../lists/FavoriteButton";
 import UserRateMini from "../lists/UserRateMini";
 import RatingBox from "../../components/RatingBox";
 import EmptyPoster from "../../components/EmptyPoster";
-import { useTransition } from "react";
 import { useTransitionNavigate } from "../../hooks/useTransitionNavigate";
 
 const EpisodeCard = ({ episode }) => {
@@ -49,21 +47,19 @@ const EpisodeCard = ({ episode }) => {
   return (
     <div className="flex md:flex-row flex-col rounded-2xl border-t-2 border-l-2 border-bluish-black shadow-lg transition-shadow duration-300 p-2 xl:gap-6 lg:gap-4 gap-0">
       <div className="relative group">
-        <Tooltip title={`Episode ${episode_number}`}>
-          {still_path ? (
-            <img
-              src={getPictureUrlFormat(still_path)}
-              alt="backdrop episode"
-              className="max-w-full xl:max-w-[360px] lg:max-w-[300px] md:max-w-[260px] h-full rounded-xl object-cover cursor-pointer group-hover:brightness-110 transition-all duration-200"
-              onClick={handleNavigate}
-            />
-          ) : (
-            <EmptyPoster
-              size={50}
-              style="max-w-full xl:max-w-[360px] lg:max-w-[300px] md:max-w-[260px] h-full rounded-xl"
-            />
-          )}
-        </Tooltip>
+        {still_path ? (
+          <img
+            src={getPictureUrlFormat(still_path)}
+            alt="backdrop episode"
+            className="max-w-full xl:max-w-[360px] lg:max-w-[300px] md:max-w-[260px] h-full rounded-xl object-cover cursor-pointer group-hover:brightness-110 transition-all duration-200"
+            onClick={handleNavigate}
+          />
+        ) : (
+          <EmptyPoster
+            size={50}
+            style="max-w-full xl:max-w-[360px] lg:max-w-[300px] md:max-w-[260px] h-full rounded-xl"
+          />
+        )}
       </div>
 
       <div className="flex-1 lg:p-4 xs:p-2 flex flex-col">

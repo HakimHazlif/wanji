@@ -4,7 +4,6 @@ import { useAddShow } from "./useAddShow";
 import { useDeleteShow } from "./useDeleteShow";
 import { FaHeart } from "react-icons/fa";
 import { LuHeart } from "react-icons/lu";
-import { Tooltip } from "@mui/material";
 import SpinnerMini from "../../ui/SpinnerMini";
 import { useListsContext } from "../../context/ListsContext";
 import { useItemStatus } from "./useItemStatus";
@@ -111,21 +110,17 @@ const FavoriteButton = ({
   }
 
   return (
-    <Tooltip title={isFavorited ? "Delete from Favorites" : "Add to Favorites"}>
-      <span>
-        <button
-          className={`${
-            isFavorited
-              ? "bg-strawberry hover:bg-red-600"
-              : "bg-slate-700 hover:bg-slate-600"
-          } ${width} py-2 font-bold rounded-lg flex items-center justify-center gap-2 transition-colors duration-200 shadow-lg`}
-          onClick={isFavorited ? handleDeleteFromFavorite : handleAddToFavorite}
-          disabled={isLoading || isAdding || isDeleting}
-        >
-          {content}
-        </button>
-      </span>
-    </Tooltip>
+    <button
+      className={`${
+        isFavorited
+          ? "bg-strawberry hover:bg-red-600"
+          : "bg-slate-700 hover:bg-slate-600"
+      } ${width} py-2 font-bold rounded-lg flex items-center justify-center gap-2 transition-colors duration-200 shadow-lg`}
+      onClick={isFavorited ? handleDeleteFromFavorite : handleAddToFavorite}
+      disabled={isLoading || isAdding || isDeleting}
+    >
+      {content}
+    </button>
   );
 };
 
