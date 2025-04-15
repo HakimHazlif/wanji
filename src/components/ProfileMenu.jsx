@@ -7,7 +7,7 @@ import { BsBookmarkCheck } from "react-icons/bs";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { MdChecklistRtl } from "react-icons/md";
 import { IoLogOutOutline, IoSettingsOutline } from "react-icons/io5";
-import { logout } from "../services/apiAuth";
+import { logout } from "../features/authentication/api/apiAuth";
 import UserAvatar from "../ui/UserAvatar";
 import { FaRegStar } from "react-icons/fa6";
 

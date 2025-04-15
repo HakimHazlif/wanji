@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useLists } from "../features/lists/useLists";
+import { useLists } from "../features/userLists/hooks/useLists";
 import { updateDateFormat } from "../utils/helper";
 import EditNavigateButton from "./EditNavigateButton";
 import UserAvatar from "../ui/UserAvatar";

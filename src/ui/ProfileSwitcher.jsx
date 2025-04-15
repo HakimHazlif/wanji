@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import ProfileMenu from "../components/ProfileMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState, useTransition } from "react";
-import { getUser } from "../services/apiAuth";
+import { getUser } from "../features/authentication/api/apiAuth";
 import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const styleClassName =

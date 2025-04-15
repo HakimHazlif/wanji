@@ -1,16 +1,15 @@
 import { useSelector } from "react-redux";
-import ListScroll from "../features/lists/ListScroll";
-import { useLists } from "../features/lists/useLists";
-import { useRatingList } from "../features/lists/useRatingList";
+import ListScroll from "../components/ListScroll";
+import { useLists } from "../features/userLists/hooks/useLists";
+import { useRatingList } from "../features/userLists/hooks/useRatingList";
 import { useShortLists } from "../features/userLists/useShortLists";
 import Spinner from "../ui/Spinner";
-import { useMemo, useTransition } from "react";
-import ShowCard from "../ui/ShowCard";
+import { useMemo } from "react";
+import MediaCard from "../ui/MediaCard";
 import ProfileCustomLists from "./ProfileCustomLists";
 import EmptyShortList from "./EmptyShortList";
-import { useUserReviewsList } from "../features/reviews/useUserReviewsList";
-import ProfileReviews from "../features/reviews/ProfileReviews";
-import { useNavigate } from "react-router-dom";
+import { useUserReviewsList } from "../features/reviews/hooks/useUserReviewsList";
+import ProfileReviews from "../features/reviews/components/ProfileReviews";
 import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const ProfileLists = () => {
@@ -83,7 +82,7 @@ const ProfileLists = () => {
         <ListScroll title="My Ratings" path={`/u/${usernameUrl}/Ratings`}>
           {shortRatingsItems?.length > 0 ? (
             shortRatingsItems?.map((item) => (
-              <ShowCard
+              <MediaCard
                 key={item?.id}
                 show={item}
                 category={
@@ -109,7 +108,7 @@ const ProfileLists = () => {
         <ListScroll title="My Watchlist" path={`/u/${usernameUrl}/Watchlist`}>
           {shortWatchlistItems?.length > 0 ? (
             shortWatchlistItems?.map((item) => (
-              <ShowCard
+              <MediaCard
                 key={item?.id}
                 show={item}
                 category={
@@ -135,7 +134,7 @@ const ProfileLists = () => {
         <ListScroll title="My Favorites" path={`/u/${usernameUrl}/Favorites`}>
           {shortFavoritesItems?.length > 0 ? (
             shortFavoritesItems?.map((item) => (
-              <ShowCard
+              <MediaCard
                 key={item?.id}
                 show={item}
                 category={

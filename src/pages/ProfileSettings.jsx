@@ -2,7 +2,7 @@ import SpinnerMini from "../ui/SpinnerMini";
 import { useDispatch, useSelector } from "react-redux";
 import { BiUpload } from "react-icons/bi";
 import { useState, useTransition } from "react";
-import { updateProfile } from "../services/apiAuth";
+import { updateProfile } from "../features/authentication/api/apiAuth";
 import { useNavigate } from "react-router-dom";
 import UserAvatar from "../ui/UserAvatar";
 import { MAX_BIO_LENGTH, MAX_USERNAME_LENGTH } from "../constants/variables";

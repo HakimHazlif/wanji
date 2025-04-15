@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import SearchFilter from "../ui/SearchFilter";
-import { options, URL_Base } from "../constants/variables";
+import { options, URL_Base } from "../services/variables";
 import SearchItem from "../ui/SearchItem";
 import { IoMdSearch } from "react-icons/io";
 import Spinner from "../ui/Spinner";

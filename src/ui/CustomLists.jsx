@@ -1,4 +1,4 @@
-import { useLists } from "../features/lists/useLists";
+import { useLists } from "../features/userLists/hooks/useLists";
 import CreateListButton from "./CreateListButton";
 import { FaFolderOpen } from "react-icons/fa";
 import CustomListCard from "./CustomListCard";
@@ -6,9 +6,6 @@ import { useMemo, useState } from "react";
 import OptionsSelector from "./OptionsSelector";
 
 const CustomLists = () => {
-  // const navigate = useNavigate();
-  // const { user } = useSelector((state) => state.user);
-
   const { remainLists } = useLists();
 
   const [isOpen, setIOpen] = useState(false);

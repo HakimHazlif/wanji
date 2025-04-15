@@ -1,6 +1,6 @@
 import SpinnerMini from "../ui/SpinnerMini";
 import { useEffect, useState } from "react";
-import { useRenameList } from "../features/lists/useRenameList";
+import { useRenameList } from "../features/userLists/hooks/useRenameList";
 import EditButton from "./EditButton";
 import { useSelector } from "react-redux";
 import InputEditButton from "./InputEditButton";

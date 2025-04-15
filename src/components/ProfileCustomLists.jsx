@@ -2,7 +2,7 @@ import React, { useState, useTransition } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router";
-import { useLists } from "../features/lists/useLists";
+import { useLists } from "../features/userLists/hooks/useLists";
 import CustomListCard from "../ui/CustomListCard";
 import EmptyShortList from "./EmptyShortList";
 import { useTransitionNavigate } from "../hooks/useTransitionNavigate";

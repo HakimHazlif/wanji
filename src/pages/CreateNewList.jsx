@@ -1,7 +1,7 @@
 import { useState, useTransition } from "react";
 import { bgPopcorn } from "../assets/icons";
 import { useNavigate } from "react-router-dom";
-import { useCreateList } from "../features/lists/useCreateList";
+import { useCreateList } from "../features/userLists/hooks/useCreateList";
 import SpinnerMini from "../ui/SpinnerMini";
 import { useSelector } from "react-redux";
 import { FiAlertCircle } from "react-icons/fi";

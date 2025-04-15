@@ -1,7 +1,7 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import SessionContextProvider from "./context/UserContext";
 import { Provider } from "react-redux";
-import store from "./store/store";
+import store from "./app/store/store";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ListsContextProvider from "./context/ListsContext";
 import { lazy, Suspense } from "react";
@@ -10,44 +10,30 @@ import { Toaster } from "react-hot-toast";
 
 const Home = lazy(() => import("./pages/Home"));
 const AppLayout = lazy(() => import("./components/AppLayout"));
-const AuthPage = lazy(() => import("./pages/AuthPage"));
-const Show = lazy(() => import("./pages/Show"));
+const AuthPage = lazy(() => import("./features/authentication/pages/AuthPage"));
+const VitualMedia = lazy(() =>
+  import("./features/vitualMedia/pages/VisualMedia")
+);
 const Profile = lazy(() => import("./pages/Profile"));
-const List = lazy(() => import("./pages/List"));
+const List = lazy(() => import("./features/userLists/pages/List"));
 const Settings = lazy(() => import("./pages/Settings"));
-const ResetPassword = lazy(() => import("./pages/ResetPassword"));
+const ResetPassword = lazy(() =>
+  import("./features/authentication/pages/ResetPassword")
+);
 const PageNotFound = lazy(() => import("./pages/PageNotFound"));
-const Genre = lazy(() => import("./pages/Genre"));
+const Genre = lazy(() => import("./features/genre/pages/Genre"));
 const CreateNewList = lazy(() => import("./pages/CreateNewList"));
 const EditList = lazy(() => import("./pages/EditList"));
 const ProfileSettings = lazy(() => import("./pages/ProfileSettings"));
 const AccountSettings = lazy(() => import("./pages/AccountSettings"));
-const UpdatePassword = lazy(() => import("./pages/UpdatePassword"));
-const Person = lazy(() => import("./pages/Person"));
-const Season = lazy(() => import("./pages/Season"));
-const Episode = lazy(() => import("./pages/Episode"));
-const TvShows = lazy(() => import("./pages/TvShows"));
-const Movies = lazy(() => import("./pages/Movies"));
-// import Home from "./pages/Home";
-// import AppLayout from "./components/AppLayout";
-// import AuthPage from "./pages/AuthPage";
-// import Show from "./pages/Show";
-// import Profile from "./pages/Profile";
-// import List from "./pages/List";
-// import Settings from "./pages/Settings";
-// import ResetPassword from "./pages/ResetPassword";
-// import PageNotFound from "./pages/PageNotFound";
-// import Genre from "./pages/Genre";
-// import CreateNewList from "./pages/CreateNewList";
-// import EditList from "./pages/EditList";
-// import ProfileSettings from "./pages/ProfileSettings";
-// import AccountSettings from "./pages/AccountSettings";
-// import UpdatePassword from "./pages/UpdatePassword";
-// import Person from "./pages/Person";
-// import Season from "./pages/Season";
-// import Episode from "./pages/Episode";
-// import TvShows from "./pages/TvShows";
-// import Movies from "./pages/Movies";
+const UpdatePassword = lazy(() =>
+  import("./features/authentication/pages/UpdatePassword")
+);
+const Person = lazy(() => import("./features/person/pages/Person"));
+const Season = lazy(() => import("./features/season/pages/Season"));
+const Episode = lazy(() => import("./features/episode/pages/Episode"));
+const TvShows = lazy(() => import("./features/tv/pages/TvShows"));
+const Movies = lazy(() => import("./features/movies/pages/Movies"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -78,7 +64,7 @@ function App() {
                     path="genre/:genre/:genreId/:category"
                     element={<Genre />}
                   />
-                  <Route path="/:category/:id" element={<Show />} />
+                  <Route path="/:category/:id" element={<VitualMedia />} />
                   <Route
                     path="/:category/:id/season/:seasonNum"
                     element={<Season />}

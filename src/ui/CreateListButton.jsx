@@ -1,7 +1,5 @@
-import { useTransition } from "react";
 import { FaPlus } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const CreateListButton = () => {

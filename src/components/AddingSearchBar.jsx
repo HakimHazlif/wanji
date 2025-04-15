@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { BiSearch } from "react-icons/bi";
-import { IoIosArrowDown } from "react-icons/io";
-import { options, URL_Base } from "../constants/variables";
+import { options, URL_Base } from "../services/variables";
 import AddSearchQuery from "./AddSearchQuery";
 import OptionsSelector from "../ui/OptionsSelector";
 import { useListsContext } from "../context/ListsContext";

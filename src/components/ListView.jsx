@@ -1,21 +1,20 @@
-import ShowCard from "../ui/ShowCard";
-import { useFetchInfiniteItems } from "../features/userLists/useFetchItemsList ";
+import MediaCard from "../ui/MediaCard";
+import { useFetchInfiniteItems } from "../features/userLists/hooks/useFetchItemsList ";
 import Spinner from "../ui/Spinner";
-import SpinnerMini from "../ui/SpinnerMini";
 import { BsFillGrid3X3GapFill } from "react-icons/bs";
 import { FaListUl } from "react-icons/fa";
 import { FaPencil } from "react-icons/fa6";
 import EmptyList from "../ui/EmptyList";
-import ShowCardRow from "./ShowCardRow";
+import MediaCardRow from "./MediaCardRow";
 import OptionsSelector from "../ui/OptionsSelector";
 import { useListsContext } from "../context/ListsContext";
-import { useDeleteShow } from "../features/lists/useDeleteShow";
+import { useDeleteVisualMedia } from "../features/userLists/hooks/useDeleteVisualMedia";
 import { useEffect, useMemo, useState } from "react";
 import EditNavigateButton from "./EditNavigateButton";
 import { useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import LoadMoreButton from "./LoadMoreButton";
-import { useRatingList } from "../features/lists/useRatingList";
+import { useRatingList } from "../features/userLists/hooks/useRatingList";
 
 const ListView = ({ targetList, forEditList = false }) => {
   const queryClient = useQueryClient();
@@ -45,7 +44,7 @@ const ListView = ({ targetList, forEditList = false }) => {
   const [filteredOption, setFilteredOption] = useState(filterOptions[0]);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
 
-  const { isLoading: isDeleting, deleteShow } = useDeleteShow();
+  const { isLoading: isDeleting, deleteVisualMedia } = useDeleteVisualMedia();
   const { ratingList } = useRatingList();
 
   const listId = targetList?.id ?? uid;
@@ -62,7 +61,7 @@ const ListView = ({ targetList, forEditList = false }) => {
 
   function handleDeleteItem(id, type) {
     if (uid) {
-      deleteShow({ id, listId, type });
+      deleteVisualMedia({ id, listId, type });
     }
   }
 
@@ -255,7 +254,7 @@ const ListView = ({ targetList, forEditList = false }) => {
               {sortedList?.length > 0 &&
                 sortedList?.map((item, index) => {
                   return (
-                    <ShowCard
+                    <MediaCard
                       key={item?.id || index}
                       show={item}
                       parentShowId={
@@ -273,7 +272,7 @@ const ListView = ({ targetList, forEditList = false }) => {
                           : "tv"
                       }
                       forEditList={forEditList}
-                      deleteShow={forEditList ? handleDeleteItem : null}
+                      deleteVisualMedia={forEditList ? handleDeleteItem : null}
                       isDeleting={isDeleting}
                     />
                   );
@@ -284,7 +283,7 @@ const ListView = ({ targetList, forEditList = false }) => {
               {sortedList?.length > 0 &&
                 sortedList?.map((item, index) => {
                   return (
-                    <ShowCardRow
+                    <MediaCardRow
                       key={item?.id || index}
                       show={item}
                       parentShowId={
@@ -302,7 +301,7 @@ const ListView = ({ targetList, forEditList = false }) => {
                           : "tv"
                       }
                       forEditList={forEditList}
-                      deleteShow={forEditList ? handleDeleteItem : null}
+                      deleteVisualMedia={forEditList ? handleDeleteItem : null}
                       isDeleting={isDeleting}
                     />
                   );

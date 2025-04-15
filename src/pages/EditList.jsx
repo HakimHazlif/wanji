@@ -1,6 +1,6 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { bgPopcorn } from "../assets/icons";
-import { useLists } from "../features/lists/useLists";
+import { useLists } from "../features/userLists/hooks/useLists";
 import { useSelector } from "react-redux";
 import EditingName from "../components/EditingName";
 import EditingDescription from "../components/EditingDescription";
@@ -9,7 +9,6 @@ import AddingSearchBar from "../components/AddingSearchbar";
 import { IoIosArrowBack } from "react-icons/io";
 import CreatedByAuth from "../components/CreatedByAuth";
 import HeaderBackDrop from "../ui/HeaderBackDrop";
-import { useTransition } from "react";
 import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const EditList = () => {

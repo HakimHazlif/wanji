@@ -3,8 +3,8 @@ import { getImageViaPath, updateDateFormat } from "../utils/helper";
 import { FaStar } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";
 import { Box, Rating } from "@mui/material";
-import RatingPopup from "../features/lists/RatingPopup";
-import ReviewPopup from "../features/reviews/ReviewPopup";
+import RatingPopup from "../features/userLists/components/RatingPopup";
+import ReviewPopup from "../features/reviews/components/ReviewPopup";
 import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const ReviewCard = ({

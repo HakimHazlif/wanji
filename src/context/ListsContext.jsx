@@ -1,7 +1,7 @@
 import { createContext, useContext, useMemo, useRef, useState } from "react";
-import { useLists } from "../features/lists/useLists";
-import { useMovies } from "../features/movies/useMovies";
-import { useTvShows } from "../features/tv/useTvShows";
+import { useLists } from "../features/userLists/hooks/useLists";
+import { useMovies } from "../features/movies/hooks/useMovies";
+import { useTvShows } from "../features/tv/hooks/useTvShows";
 
 const ListsContext = createContext();
 
@@ -11,8 +11,6 @@ function ListsContextProvider({ children }) {
     tv: new Map(),
     episode: new Map(),
   });
-
-  console.log(itemsStatusMap);
 
   const { movies } = useMovies();
   const { tvShows } = useTvShows();

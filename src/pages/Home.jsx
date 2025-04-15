@@ -1,19 +1,27 @@
 import Discover from "../components/Discover";
 import Spinner from "../ui/Spinner";
-import { useMovies } from "../features/movies/useMovies";
+import { useMovies } from "../features/movies/hooks/useMovies";
 import { getImageViaPath } from "../utils/helper";
 
-import { useTvShows } from "../features/tv/useTvShows";
+import { useTvShows } from "../features/tv/hooks/useTvShows";
 import { lazy, Suspense, useMemo } from "react";
 import { useListsContext } from "../context/ListsContext";
-import { useItemsStatus } from "../features/lists/useItemsStatus";
+import { useItemsStatus } from "../features/userLists/hooks/useItemsStatus";
 import SuspenseList from "../ui/SuspenseList";
 
-const Recommended = lazy(() => import("../components/Recommended"));
-const MoviesList = lazy(() => import("../features/movies/MoviesList"));
-const TvShowsList = lazy(() => import("../features/tv/TvShowsList"));
-const TrendingPeople = lazy(() => import("../features/person/TrendingPeople"));
-const PopularPeople = lazy(() => import("../features/person/PopularPeople"));
+const RecommendedMedias = lazy(() =>
+  import("../features/vitualMedia/components/RecommendedMedias")
+);
+const MoviesList = lazy(() =>
+  import("../features/movies/components/MoviesList")
+);
+const TvShowsList = lazy(() => import("../features/tv/components/TvShowsList"));
+const TrendingPeople = lazy(() =>
+  import("../features/person/components/TrendingPeople")
+);
+const PopularPeople = lazy(() =>
+  import("../features/person/components/PopularPeople")
+);
 
 const Home = () => {
   const { isLoading: isMoviesLoading, movies } = useMovies();
@@ -94,7 +102,7 @@ const Home = () => {
             <TrendingPeople />
           </Suspense>
           <Suspense fallback={<SuspenseList />}>
-            <Recommended />
+            <RecommendedMedias />
           </Suspense>
           <Suspense fallback={<SuspenseList />}>
             <MoviesList listKey="topRatedMovies" movies={topRatedMovies} />

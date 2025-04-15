@@ -8,7 +8,7 @@ import Ellipsis from "./Ellipsis";
 import { RiDeleteBinFill } from "react-icons/ri";
 import DeleteListConfirm from "./DeleteListConfirm";
 import { useState } from "react";
-import { useDeleteList } from "../features/lists/useDeleteList";
+import { useDeleteList } from "../features/userLists/hooks/useDeleteList";
 import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 import { useNavigate } from "react-router-dom";
 

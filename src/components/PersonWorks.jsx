@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
+import { usePerson } from "../features/person/hooks/usePerson";
 import { IoMdArrowDropdown } from "react-icons/io";
-import { usePerson } from "../features/person/usePerson";
-import WorkCard from "../features/person/WorkCard";
-import ShowCardRow from "./ShowCardRow";
+import WorkCard from "../features/person/components/WorkCard";
 
 const PersonWorks = () => {
   const [activeTab, setActiveTab] = useState("movies");
