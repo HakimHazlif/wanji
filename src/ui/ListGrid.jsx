@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const ListGrid = ({ path, title, children }) => {
   return (
-    <div className="">
+    <div className="w-full">
       <div className="flex items-center justify-between mb-10">
         <h2 className="heading-title-1 flex items-end gap-4 group ">{title}</h2>
         {path && (
@@ -16,10 +16,8 @@ const ListGrid = ({ path, title, children }) => {
           </Link>
         )}
       </div>
-      <div className="">
-        <div className="grid 2xl:grid-cols-5 lg:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 justify-items-center w-full xs:gap-y-20 gap-10 gap-y-10 pb-8">
-          {children}
-        </div>
+      <div className="flex flex-wrap justify-center w-full gap-10 gap-y-10 pb-8 ">
+        {children}
       </div>
     </div>
   );
