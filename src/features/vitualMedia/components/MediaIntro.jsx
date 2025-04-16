@@ -64,7 +64,7 @@ const MediaIntro = () => {
   return (
     <section>
       <div>
-        <div className="flex gap-4 items-end">
+        <div className="flex gap-4 items-end xs:flex-row flex-col">
           <div>
             <img
               src={getPictureUrlFormat(poster_path, 1280)}
