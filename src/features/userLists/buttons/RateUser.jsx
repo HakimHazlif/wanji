@@ -25,7 +25,7 @@ const RateUser = ({ item }) => {
       <span>
         <button
           onClick={() => setIsPopupOpen(true)}
-          className="px-5 py-[9px] rounded-lg bg-[#0000]/30 backdrop-blur-lg hover:bg-[#0000]/60 ease-linear cursor-pointer hover:scale-105 transition-all text-white font-medium text-sm flex items-center justify-center gap-2 hover:text-orange-amber duration-300"
+          className="px-5 sm:py-[9px] xs:py-[7px] py-[9px] rounded-lg bg-[#0000]/30 backdrop-blur-lg hover:bg-[#0000]/60 ease-linear cursor-pointer hover:scale-105 transition-all text-white font-medium text-sm flex items-center justify-center gap-2 hover:text-orange-amber duration-300"
         >
           {rating ? (
             <>
@@ -34,7 +34,7 @@ const RateUser = ({ item }) => {
             </>
           ) : (
             <>
-              <span className="md:text-lg text-sm font-medium">
+              <span className="md:text-lg text-sm text-nowrap">
                 Add Your Rate
               </span>
               <FaRegStar className="md:text-2xl text-lg" />

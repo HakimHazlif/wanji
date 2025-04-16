@@ -67,8 +67,8 @@ const EpisodeInfo = () => {
         </div>
       </div>
       <hr className="border-1 border-slate-400 w-full my-4" />
-      <div className="md:flex block justify-between items-center gap-2">
-        <div className="flex gap-2 items-center">
+      <div className="md:flex justify-between items-center gap-2">
+        <div className="flex flex-wrap gap-2 items-center">
           <WatchlistButton
             item={item}
             iconSize="md:text-3xl sm:text-xl text-lg"
@@ -77,9 +77,17 @@ const EpisodeInfo = () => {
             item={item}
             iconSize="md:text-3xl sm:text-xl text-lg"
           />
-          <AddToListButton item={item} image={still_path} showTitle={name} />
+          <AddToListButton
+            item={item}
+            image={still_path}
+            showTitle={name}
+            iconSize="md:text-3xl sm:text-xl text-lg"
+          />
+          <div className="md:hidden">
+            <RateUser item={item} />
+          </div>
         </div>
-        <div className="flex max-md:mt-4 gap-2">
+        <div className="max-md:hidden flex max-md:mt-4 gap-2">
           <RateUser item={item} />
         </div>
       </div>
