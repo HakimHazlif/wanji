@@ -10,6 +10,7 @@ import WatchlistButton from "../../userLists/buttons/WatchlistButton";
 import FavoriteButton from "../../userLists/buttons/FavoriteButton";
 import RatingBox from "../../../components/RatingBox";
 import UserRateMini from "../../userLists/buttons/UserRateMini";
+import AddToListButton from "../../userLists/buttons/AddToListButton";
 
 const EpisodeCard = ({ episode }) => {
   const { transitionNavigate } = useTransitionNavigate();
@@ -45,7 +46,7 @@ const EpisodeCard = ({ episode }) => {
   }
 
   return (
-    <div className="flex md:flex-row flex-col rounded-2xl border-t-2 border-l-2 border-bluish-black shadow-lg transition-shadow duration-300 p-2 xl:gap-6 lg:gap-4 gap-0">
+    <div className="flex md:flex-row flex-col rounded-2xl bg-[#0000]/20 shadow-lg transition-shadow duration-300 p-2 xl:gap-6 lg:gap-4 gap-0">
       <div className="relative group">
         {still_path ? (
           <img
@@ -63,25 +64,34 @@ const EpisodeCard = ({ episode }) => {
       </div>
 
       <div className="flex-1 lg:p-4 xs:p-2 flex flex-col">
-        <div className="flex xs:flex-row flex-col-reverse xs:justify-between w-full">
+        <div className="flex flex-wrap-reverse gap-y-2 xs:flex-row flex-col-reverse xs:justify-between w-full mb-2">
           <div
             onClick={handleNavigate}
-            className="flex gap-2 font-semibold xl:text-2xl text-xl text-white cursor-pointer text-nowrap text-ellipsis"
+            className="flex gap-2 font-semibold xl:text-2xl text-xl text-white cursor-pointer"
           >
             <span>{episode_number}.</span>
-            <h2>{name}</h2>
+            <h2 className="">{name}</h2>
           </div>
-          <div className="flex gap-2 max-xs:w-full max-xs:my-2">
-            <div className="max-xs:w-1/2">
+          <div className="flex flex-1 justify-end gap-2 max-xs:w-full max-xs:my-2">
+            <div className="max-xs:w-1/3">
               <WatchlistButton
                 item={item}
                 iconSize="lg:text-lg text-md"
                 width="lg:w-[85px] xs:w-[70px] w-full"
               />
             </div>
-            <div className="max-xs:w-1/2">
+            <div className="max-xs:w-1/3">
               <FavoriteButton
                 item={item}
+                iconSize="lg:text-lg text-md"
+                width="lg:w-[85px] xs:w-[70px] w-full"
+              />
+            </div>
+            <div className="max-xs:w-1/3">
+              <AddToListButton
+                item={item}
+                image={still_path}
+                showTitle={name}
                 iconSize="lg:text-lg text-md"
                 width="lg:w-[85px] xs:w-[70px] w-full"
               />
@@ -112,7 +122,7 @@ const EpisodeCard = ({ episode }) => {
             <UserRateMini
               item={item}
               addStars={true}
-              buttonStyle="px-3  text-sm rounded-sm bg-orange-amber font-semibold text-gray-800"
+              buttonStyle="px-3 text-sm rounded-sm bg-orange-amber font-semibold text-gray-800"
             />
           </div>
         </div>
@@ -155,9 +165,7 @@ const EpisodeCard = ({ episode }) => {
           )}
         </div>
 
-        <div className="w-full flex-1 flex flex-col gap-2">
-          <p className="text-sm font-semibold text-slate-400">{overview}</p>
-        </div>
+        <p className="text-sm font-semibold text-slate-400">{overview}</p>
       </div>
     </div>
   );

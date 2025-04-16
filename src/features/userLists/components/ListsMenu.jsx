@@ -89,7 +89,7 @@ const ListsMenu = ({ isPopupOpen, setIsPopupOpen, otherProps }) => {
   return (
     <div className="fixed z-30 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
       <div
-        className="sm:max-h-[90vh] max-h-[95vh] h-full w-full xl:max-w-[70vw] lg:max-w-[80vw] sm:max-w-[85vw] xs:max-w-[90vw] max-w-[95vw] rounded-xl bg-bluish-black py-4 px-5 absolute z-50 flex flex-col "
+        className="sm:max-h-[90vh] max-h-[95vh] h-full w-full xl:max-w-[70vw] lg:max-w-[80vw] sm:max-w-[85vw] xs:max-w-[90vw] max-w-[95vw] rounded-xl bg-bluish-black py-4 px-5 absolute z-50 flex flex-col"
         ref={popupRef}
       >
         <div className="p-4 border-b border-slate-700 flex items-end gap-4 ">
