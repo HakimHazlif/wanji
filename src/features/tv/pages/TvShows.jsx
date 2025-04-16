@@ -10,7 +10,7 @@ import { getImageViaPath } from "../../../utils/helper";
 import MediaSectionHeader from "../../../components/MediaSectionHeader";
 import MediaGrid from "../../../components/MediaGrid";
 import MediaCard from "../../../ui/MediaCard";
-import { Pagination } from "@mui/material";
+import Pagination from "../../../components/Pagination";
 
 const Shows = () => {
   const category = "tv";
@@ -62,7 +62,7 @@ const Shows = () => {
         );
         break;
       default:
-        setTitle("Popular Movies");
+        setTitle("Popular TV Shows");
         setDescription(
           "TV shows currently popular among viewers, based on high search volume or recent buzz, according to TMDB."
         );

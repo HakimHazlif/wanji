@@ -10,7 +10,7 @@ import Spinner from "../../../ui/Spinner";
 import MediaSectionHeader from "../../../components/MediaSectionHeader";
 import MediaGrid from "../../../components/MediaGrid";
 import MediaCard from "../../../ui/MediaCard";
-import { Pagination } from "@mui/material";
+import Pagination from "../../../components/Pagination";
 
 const Movies = () => {
   const category = "movie";

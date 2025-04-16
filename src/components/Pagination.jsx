@@ -25,10 +25,12 @@ const Pagination = ({ totalPages, currentPage, changePage, range = 5 }) => {
 
   useEffect(() => {
     function updateRange() {
-      if (window.innerWidth <= 375) {
+      if (window.innerWidth <= 440) {
+        setRangeState(0);
+      } else if (window.innerWidth <= 560) {
         setRangeState(1);
       } else if (window.innerWidth < 640) {
-        setRangeState(3);
+        setRangeState(2);
       } else {
         setRangeState(range);
       }
@@ -38,7 +40,7 @@ const Pagination = ({ totalPages, currentPage, changePage, range = 5 }) => {
     window.addEventListener("resize", updateRange);
 
     return () => window.removeEventListener("resize", updateRange);
-  }, []);
+  }, [range]);
 
   return (
     <div className="flex gap-2">
