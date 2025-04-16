@@ -113,8 +113,8 @@ const WatchlistButton = ({
       className={`${
         isWatchlist
           ? "bg-amber-500 hover:bg-amber-400"
-          : "bg-slate-700 hover:bg-slate-600"
-      } ${width} py-2 font-bold rounded-lg flex items-center justify-center gap-2 transition-colors duration-200 shadow-lg`}
+          : "bg-[#0000]/30 backdrop-blur-lg hover:bg-[#0000]/60"
+      } ${width} py-2 font-bold rounded-lg flex items-center justify-center gap-2 ease-linear cursor-pointer hover:scale-105 transition-all duration-300 shadow-lg`}
       onClick={isWatchlist ? handleDeleteFromWatchlist : handleAddToWatchlist}
       disabled={isLoading || isAdding || isDeleting}
     >

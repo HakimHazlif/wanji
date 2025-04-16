@@ -155,15 +155,13 @@ const MediaIntro = () => {
           </div>
           <div className="flex max-md:mt-4 gap-2">
             {trailer && (
-              <span className="flex justify-center items-center">
-                <button
-                  onClick={() => handlePlayVideo(trailer)}
-                  className="px-4 py-2 rounded-lg flex gap-2 items-center border-none md:text-lg text-sm font-medium hover:scale-105 transition-all duration-300 bg-orange-100 text-amber-700 hover:bg-orange-200 hover:text-amber-800 "
-                >
-                  <FaPlay />
-                  Play Trailer
-                </button>
-              </span>
+              <button
+                onClick={() => handlePlayVideo(trailer)}
+                className="px-4 py-2 rounded-lg flex gap-2 items-center border-none md:text-lg text-sm font-medium bg-[#0000]/30 backdrop-blur-lg hover:bg-[#0000]/60 ease-linear cursor-pointer hover:scale-105 transition-all"
+              >
+                <FaPlay />
+                <span>Play Trailer</span>
+              </button>
             )}
             <RateUser item={item} />
           </div>

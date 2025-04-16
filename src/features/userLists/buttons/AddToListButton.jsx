@@ -12,7 +12,7 @@ const AddToListButton = ({ ...props }) => {
     <>
       <button
         disabled={isLoading}
-        className="bg-slate-700 md:w-[100px] sm:w-[92px] w-[85px] py-2 font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-slate-500"
+        className="bg-[#0000]/30 backdrop-blur-lg hover:bg-[#0000]/60 ease-linear cursor-pointer hover:scale-105 transition-all duration-300 md:w-[100px] sm:w-[92px] w-[85px] py-2 font-bold rounded-lg flex items-center justify-center gap-2"
         onClick={() => {
           setIsPopupOpen(true);
         }}
