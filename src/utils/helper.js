@@ -62,9 +62,7 @@ export function getPictureUrlFormat(paramId, width = 1280) {
   // for poster_sizes: ["w92", "w154", "w185", "w342", "w500", "w780", "original"],
   // for profile_sizes "w45", "w185", "h632", "original",
   // for still_sizes "w92", "w185", "w300", "original",
-  return paramId
-    ? `https://image.tmdb.org/t/p/w${width}${paramId}`
-    : "https://image.tmdb.org/t/p/w300_and_h450_bestv2/5vV52TSEIhe4ZZLWwv3i7nfv8we.jpg";
+  return paramId ? `https://image.tmdb.org/t/p/w${width}${paramId}` : null;
 }
 
 export function getProfileImageUrl(path) {

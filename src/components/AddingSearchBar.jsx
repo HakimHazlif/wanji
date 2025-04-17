@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { options, URL_Base } from "../services/variables";
 import AddSearchQuery from "./AddSearchQuery";
 import OptionsSelector from "../ui/OptionsSelector";
 import { useListsContext } from "../context/ListsContext";
+import useClickOutside from "../hooks/useClickOutside";
 
 const AddingSearchBar = ({ list }) => {
   const { addingSearchBarRef } = useListsContext();
@@ -47,20 +48,10 @@ const AddingSearchBar = ({ list }) => {
     }
   };
 
-  useEffect(() => {
-    function handleClosePopup(e) {
-      if (selectorRef.current && !selectorRef.current.contains(e.target)) {
-        setShowSelector(false);
-      }
-      if (resultsRef.current && !resultsRef.current.contains(e.target)) {
-        setShowResults(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClosePopup);
-
-    return () => document.removeEventListener("mousedown", handleClosePopup);
-  }, []);
+  useClickOutside([
+    { ref: selectorRef, setter: setShowSelector },
+    { ref: resultsRef, setter: setShowResults },
+  ]);
 
   return (
     <div className="relative w-full" id="adding-search-bar">

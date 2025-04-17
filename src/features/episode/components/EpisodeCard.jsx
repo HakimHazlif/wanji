@@ -46,13 +46,13 @@ const EpisodeCard = ({ episode }) => {
   }
 
   return (
-    <div className="flex md:flex-row flex-col rounded-2xl bg-[#0000]/20 shadow-lg transition-shadow duration-300 p-2 xl:gap-6 lg:gap-4 gap-0">
-      <div className="relative group">
+    <div className="flex md:flex-row flex-col rounded-2xl bg-[#0000]/20 shadow-lg transition-shadow duration-300 p-2 xl:gap-6 lg:gap-4 gap-1">
+      <div className="">
         {still_path ? (
           <img
             src={getPictureUrlFormat(still_path)}
             alt="backdrop episode"
-            className="max-w-full xl:max-w-[360px] lg:max-w-[300px] md:max-w-[260px] h-full rounded-xl object-cover cursor-pointer group-hover:brightness-110 transition-all duration-200"
+            className="max-w-full xl:max-w-[360px] lg:max-w-[300px] md:max-w-[260px] h-full rounded-xl object-cover cursor-pointer transition-all duration-200"
             onClick={handleNavigate}
           />
         ) : (
@@ -72,6 +72,7 @@ const EpisodeCard = ({ episode }) => {
             <span>{episode_number}.</span>
             <h2 className="">{name}</h2>
           </div>
+
           <div className="flex flex-1 justify-end gap-2 max-xs:w-full max-xs:my-2">
             <div className="max-xs:w-1/3">
               <WatchlistButton

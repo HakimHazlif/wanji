@@ -7,6 +7,7 @@ import ListsContextProvider from "./context/ListsContext";
 import { lazy, Suspense } from "react";
 import Spinner from "./ui/Spinner";
 import { Toaster } from "react-hot-toast";
+import PersonWorksProvider from "./context/PersonWorksContext";
 
 const Home = lazy(() => import("./pages/Home"));
 const AppLayout = lazy(() => import("./components/AppLayout"));
@@ -73,7 +74,14 @@ function App() {
                     path="/:category/:id/season/:seasonNum/episode/:episodeNum"
                     element={<Episode />}
                   />
-                  <Route path="person/:personId" element={<Person />} />
+                  <Route
+                    path="person/:personId"
+                    element={
+                      <PersonWorksProvider>
+                        <Person />
+                      </PersonWorksProvider>
+                    }
+                  />
                   <Route path={`u/:user`} element={<Profile />} />
 
                   <Route path="u/:user/settings" element={<Settings />}>
