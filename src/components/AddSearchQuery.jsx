@@ -2,7 +2,6 @@ import { FaPlus } from "react-icons/fa";
 import { getPictureUrlFormat } from "../utils/helper";
 import { useAddVisualMedia } from "../features/userLists/hooks/useAddVisualMedia";
 import SpinnerMini from "../ui/SpinnerMini";
-import { useQueryClient } from "react-query";
 import toast from "react-hot-toast";
 
 const AddSearchQuery = ({ show, list, onClose }) => {

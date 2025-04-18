@@ -1,16 +1,16 @@
 import { useSelector } from "react-redux";
-import ListScroll from "../components/ListScroll";
+import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 import { useLists } from "../features/userLists/hooks/useLists";
 import { useRatingList } from "../features/userLists/hooks/useRatingList";
-import { useShortLists } from "../features/userLists/useShortLists";
-import Spinner from "../ui/Spinner";
 import { useMemo } from "react";
+import Spinner from "../ui/Spinner";
+import ListScroll from "./ListScroll";
 import MediaCard from "../ui/MediaCard";
-import ProfileCustomLists from "./ProfileCustomLists";
-import EmptyShortList from "./EmptyShortList";
 import { useUserReviewsList } from "../features/reviews/hooks/useUserReviewsList";
+import { useShortLists } from "../features/userLists/hooks/useShortLists";
+import EmptyShortList from "./EmptyShortList";
+import ProfileCustomLists from "./ProfileCustomLists";
 import ProfileReviews from "../features/reviews/components/ProfileReviews";
-import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const ProfileLists = () => {
   const { transitionNavigate } = useTransitionNavigate();
@@ -20,10 +20,26 @@ const ProfileLists = () => {
   const { ratingList } = useRatingList();
   const { reviewsList } = useUserReviewsList();
 
-  const watchlistItems = watchlist?.items_list.slice(0, 8);
-  const favoriteListItems = favoriteList?.items_list.slice(0, 8);
-  const ratingListItems = ratingList?.slice(0, 8);
-  const reviewsListItems = reviewsList?.slice(0, 4);
+  const profileLists = useMemo(() => {
+    return {
+      watchlistItems: watchlist?.items_list?.slice(0, 8) ?? [],
+      favoriteListItems: favoriteList?.items_list?.slice(0, 8) ?? [],
+      ratingListItems: ratingList?.slice(0, 8) ?? [],
+      reviewsListItems: reviewsList?.slice(0, 4) ?? [],
+    };
+  }, [
+    watchlist?.items_list,
+    favoriteList?.items_list,
+    reviewsList,
+    ratingList,
+  ]);
+
+  const {
+    watchlistItems,
+    favoriteListItems,
+    ratingListItems,
+    reviewsListItems,
+  } = profileLists;
 
   const {
     shortWatchlist,

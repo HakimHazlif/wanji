@@ -22,6 +22,10 @@ const FavoriteButton = ({
 
   const isFavorited = itemsStatusMap?.[type]?.get(itemId)?.inFavorites ?? false;
 
+  // if (type === "tv" && itemId === 2261) {
+  //   console.log({ isFavorited, itemsStatusMap });
+  // }
+
   // const isFavorited = typeMap?.get(String(itemId))?.get("inFavorites") ?? false;
 
   const { favoriteList, isLoading } = useLists();
@@ -30,7 +34,6 @@ const FavoriteButton = ({
     useDeleteVisualMedia(type);
 
   function handleAddToFavorite() {
-    console.log(favoriteList);
     if (isLoggedIn && favoriteList) {
       const listId = favoriteList.id;
       addVisualMedia(

@@ -21,15 +21,15 @@ export function useLists() {
     return {
       watchlist: lists
         ? lists.filter((item) => item.name === "watchlist")[0]
-        : null,
+        : [],
       favoriteList: lists
         ? lists.filter((item) => item.name === "favorite")[0]
-        : null,
+        : [],
       remainLists: lists
         ? lists.filter(
             (item) => item.name !== "watchlist" && item.name !== "favorite"
           )
-        : null,
+        : [],
     };
   }, [lists]);
 

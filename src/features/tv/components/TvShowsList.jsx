@@ -24,7 +24,6 @@ const TvShowsList = ({ listKey, tvShows }) => {
       {tvShows.length > 0 && (
         <ListScroll title={listTitle} path={path} viewAll={true}>
           {tvShows.map((tv) => {
-            console.log(tv);
             return <MediaCard key={tv.id} show={tv} category={category} />;
           })}
         </ListScroll>

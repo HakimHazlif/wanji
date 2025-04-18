@@ -17,8 +17,8 @@ export function useItemsStatus(itemIds, type) {
         favoriteListId,
         userId: uid,
       }),
-    // enabled:
-    // !!itemIds?.length && !!type && !!watchlistId && !!favoriteListId && !!uid,
+    enabled:
+      !!itemIds?.length && !!type && !!watchlistId && !!favoriteListId && !!uid,
     onSuccess: (data) => {
       const dataMap =
         data instanceof Map ? data : new Map(Object.entries(data));

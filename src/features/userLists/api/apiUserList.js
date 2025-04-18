@@ -28,18 +28,13 @@ export async function fetchItemsStatus({
   favoriteListId,
   userId,
 }) {
-  if (!itemIds?.length) return {};
-  if (!itemIds?.length || !watchlistId || !favoriteListId || !userId) return {};
+  if (!itemIds?.length) return new Map();
+  if (!itemIds?.length || !watchlistId || !favoriteListId || !userId)
+    return new Map();
 
   try {
     const [watchlistResponse, favoritesResponse, ratingsResponse] =
       await Promise.all([
-        // supabase
-        // .from("lists")
-        // .select("id, items_list!inner(item_id)")
-        // .eq("user_id", userId)
-        // .in("items_list.item_id", itemIds),
-
         supabase
           .from("items_list")
           .select("item_id")
@@ -76,15 +71,26 @@ export async function fetchItemsStatus({
       ratingsResponse.data.map((item) => [Number(item.item_id), item.rate])
     );
 
-    return itemIds.reduce((acc, id) => {
-      acc[id] = {
-        inWatchlist: watchlistSet.has(id),
-        inFavorites: favoritesSet.has(id),
-        rating: ratingsMap.get(id) || null,
-      };
+    // return itemIds.reduce((acc, id) => {
+    //   acc[id] = {
+    //     inWatchlist: watchlistSet.has(id),
+    //     inFavorites: favoritesSet.has(id),
+    //     rating: ratingsMap.get(id) || null,
+    //   };
 
-      return acc;
-    }, {});
+    //   return acc;
+    // }, {});
+
+    return new Map(
+      itemIds.map((id) => [
+        id,
+        {
+          inWatchlist: watchlistSet.has(id),
+          inFavorites: favoritesSet.has(id),
+          rating: ratingsMap.get(id) || null,
+        },
+      ])
+    );
   } catch (error) {
     console.error("Error fetching items status:", error);
     throw new Error(`Failed to fetch items status: ${error.message}`);
@@ -98,7 +104,7 @@ export async function fetchItemStatus(
   favoriteListId,
   userId
 ) {
-  if (!id || !type || !userId) return {};
+  if (!id || !type || !userId) return new Map();
 
   try {
     const [listsResponse, ratingsResponse] = await Promise.all([

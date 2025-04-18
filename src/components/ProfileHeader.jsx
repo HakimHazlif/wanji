@@ -3,29 +3,43 @@ import { useLists } from "../features/userLists/hooks/useLists";
 import { updateDateFormat } from "../utils/helper";
 import EditNavigateButton from "./EditNavigateButton";
 import UserAvatar from "../ui/UserAvatar";
+import { useMemo } from "react";
 
 const ProfileHeader = () => {
-  const { user, isLoggedin } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);
   const { bio, username, createdAt } = user;
 
   const { remainLists, watchlist, favoriteList } = useLists();
 
-  const allShowsOfRemainLists = remainLists?.flatMap((list) => list.items_list);
+  const mediaStat = useMemo(() => {
+    const allShowsOfRemainLists = remainLists?.flatMap(
+      (list) => list.items_list
+    );
+    const watchlistItems = watchlist?.items_list ?? [];
+    const favoriteListItems = favoriteList?.items_list ?? [];
 
-  const allShows = allShowsOfRemainLists && [
-    ...allShowsOfRemainLists,
-    ...watchlist.items_list,
-    ...favoriteList.items_list,
-  ];
+    const allShows = allShowsOfRemainLists && [
+      ...allShowsOfRemainLists,
+      ...watchlistItems,
+      ...favoriteListItems,
+    ];
 
-  const uniqueShows = Array.from(
-    new Map(
-      allShows?.map((show) => [`${show.item_id}-${show.type}`, show])
-    ).values()
-  );
+    const uniqueShows = Array.from(
+      new Map(
+        allShows?.map((show) => [`${show.item_id}-${show.type}`, show])
+      ).values()
+    );
 
-  const moviesNum = uniqueShows.filter((show) => show.type === "movie").length;
-  const tvNum = uniqueShows.filter((show) => show.type === "tv").length;
+    const moviesNum =
+      uniqueShows?.filter((show) => show.type === "movie")?.length ?? 0;
+    const tvNum =
+      uniqueShows?.filter((show) => show.type === "tv")?.length ?? 0;
+
+    return {
+      moviesNum,
+      tvNum,
+    };
+  }, [remainLists, watchlist?.items_list, favoriteList?.items_list]);
 
   return (
     <section className="pt-40 padding-x">
@@ -45,12 +59,14 @@ const ProfileHeader = () => {
               <div className="flex flex-wrap gap-4 text-gray-400">
                 <div className="py-3 px-4 rounded-lg bg-black/20 backdrop-blur-lg text-white font-medium text-sm">
                   <span>
-                    {moviesNum} {moviesNum <= 1 ? "Movie" : "Movies"}
+                    {mediaStat.moviesNum}{" "}
+                    {mediaStat.moviesNum <= 1 ? "Movie" : "Movies"}
                   </span>
                 </div>
                 <div className="py-3 px-4 rounded-lg bg-black/20 backdrop-blur-lg text-white font-medium text-sm">
                   <span>
-                    {tvNum} {tvNum <= 1 ? "TV Show" : "TV Shows"}
+                    {mediaStat.tvNum}{" "}
+                    {mediaStat.tvNum <= 1 ? "TV Show" : "TV Shows"}
                   </span>
                 </div>
                 <div className="py-3 px-4 rounded-lg bg-black/20 backdrop-blur-lg text-white font-medium text-sm">
