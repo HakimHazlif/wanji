@@ -8,6 +8,7 @@ import { lazy, Suspense } from "react";
 import Spinner from "./ui/Spinner";
 import { Toaster } from "react-hot-toast";
 import PersonWorksProvider from "./context/PersonWorksContext";
+import ProtectRoute from "./components/ProtectRoute";
 
 const Home = lazy(() => import("./pages/Home"));
 const AppLayout = lazy(() => import("./components/AppLayout"));
@@ -82,28 +83,58 @@ function App() {
                       </PersonWorksProvider>
                     }
                   />
-                  <Route path={`u/:user`} element={<Profile />} />
 
-                  <Route path="u/:user/settings" element={<Settings />}>
+                  <Route
+                    path={`u/:user`}
+                    element={
+                      <ProtectRoute>
+                        <Profile />
+                      </ProtectRoute>
+                    }
+                  />
+
+                  <Route
+                    path="u/:user/settings"
+                    element={
+                      <ProtectRoute>
+                        <Settings />
+                      </ProtectRoute>
+                    }
+                  >
                     <Route path="profile" element={<ProfileSettings />} />
                     <Route path="account" element={<AccountSettings />} />
                   </Route>
 
-                  <Route path="u/:user/:list" element={<List />} />
+                  <Route
+                    path="u/:user/:list"
+                    element={
+                      <ProtectRoute>
+                        <List />
+                      </ProtectRoute>
+                    }
+                  />
                   <Route
                     path="u/:user/list/create"
-                    element={<CreateNewList />}
+                    element={
+                      <ProtectRoute>
+                        <CreateNewList />
+                      </ProtectRoute>
+                    }
                   />
-                  <Route path="u/:user/:list/edit" element={<EditList />} />
-
-                  {/* <Route path="u/:user/:list" element={<List />} /> */}
-
-                  <Route path="reset-password" element={<ResetPassword />} />
-                  <Route path="update-password" element={<UpdatePassword />} />
+                  <Route
+                    path="u/:user/:list/edit"
+                    element={
+                      <ProtectRoute>
+                        <EditList />
+                      </ProtectRoute>
+                    }
+                  />
                 </Route>
 
                 <Route path="login" element={<AuthPage type="login" />} />
                 <Route path="signup" element={<AuthPage type="signup" />} />
+                <Route path="reset-password" element={<ResetPassword />} />
+                <Route path="update-password" element={<UpdatePassword />} />
 
                 <Route path="*" element={<PageNotFound />} />
               </Routes>
