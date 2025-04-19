@@ -1,9 +1,8 @@
 import SpinnerMini from "../ui/SpinnerMini";
 import { useDispatch, useSelector } from "react-redux";
 import { BiUpload } from "react-icons/bi";
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { updateProfile } from "../features/authentication/api/apiAuth";
-import { useNavigate } from "react-router-dom";
 import UserAvatar from "../ui/UserAvatar";
 import { MAX_BIO_LENGTH, MAX_USERNAME_LENGTH } from "../constants/variables";
 import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
@@ -118,16 +117,19 @@ const ProfileEdit = () => {
         Update your username or bio to let people know a little bit about you
       </p>
       <form className="space-y-6" onSubmit={handleSaveUserData}>
-        <div className="mb-8 w-full flex items-center gap-4">
-          <UserAvatar size="w-[100px] h-[100px]" textSize="text-5xl" />
+        <div className="mb-8 w-full flex flex-col sm:flex-row items-center gap-4">
+          <UserAvatar
+            size="sm:w-[100px] sm:h-[100px] w-[120px] h-[120px]"
+            textSize="sm:text-5xl text-6xl"
+          />
 
           <div className="flex flex-col items-center gap-3 py-4 px-10 flex-1 bg-slate-800 border border-slate-400 rounded-lg shadow-lg">
-            <p className="text-sm text-gray-400">
+            <p className="text-sm text-center text-gray-400">
               Upload an image with a max size of 25MB.
             </p>
             <label
               htmlFor="file-upload"
-              className="flex gap-2 items-center justify-center font-medium py-2 px-8 hover:bg-slate-600 bg-slate-700 duration-200 transition-colors rounded-full cursor-pointer"
+              className="flex gap-2 items-center justify-center font-medium py-2 px-8 hover:bg-slate-600 bg-slate-700 duration-200 transition-colors rounded-full cursor-pointer text-sm sm:text-base"
             >
               <BiUpload className="w-5 h-5" /> Select a file
             </label>
