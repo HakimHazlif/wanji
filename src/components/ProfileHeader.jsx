@@ -4,6 +4,7 @@ import { updateDateFormat } from "../utils/helper";
 import EditNavigateButton from "./EditNavigateButton";
 import UserAvatar from "../ui/UserAvatar";
 import { useMemo } from "react";
+import Stat from "./Stat";
 
 const ProfileHeader = () => {
   const { user } = useSelector((state) => state.user);
@@ -42,12 +43,19 @@ const ProfileHeader = () => {
   }, [remainLists, watchlist?.items_list, favoriteList?.items_list]);
 
   return (
-    <section className="pt-40 padding-x">
+    <section className="sm:pt-24 xs:pt-14 pt-4 padding-x">
       <div className="">
-        <div className="flex items-start gap-5">
-          <UserAvatar size="w-48 h-48" textSize="text-8xl" />
+        <div className="flex xs:flex-row flex-col items-start  max-xs:justify-center gap-5">
+          <div className="flex justify-center max-xs:w-full">
+            <UserAvatar
+              size="md:w-48 md:h-48 sm:h-44 sm:w-44 w-36 h-36"
+              textSize="text-8xl"
+            />
+          </div>
           <div className="flex-1 flex flex-col gap-3">
-            <h1 className="text-5xl font-bold ">{username}</h1>
+            <h1 className="lg:text-5xl md:text-4xl text-3xl font-bold ">
+              {username}
+            </h1>
             <p className="text-sm font-semibold">
               Member since{" "}
               <span className="text-orange-amber">
@@ -55,32 +63,36 @@ const ProfileHeader = () => {
               </span>
             </p>
 
-            <div className="flex items-center justify-between w-full">
-              <div className="flex flex-wrap gap-4 text-gray-400">
-                <div className="py-3 px-4 rounded-lg bg-black/20 backdrop-blur-lg text-white font-medium text-sm">
+            <div className="flex md:flex-row flex-col md:items-center items-start justify-between w-full gap-y-6">
+              <div className="flex flex-wrap md:gap-4 gap-2 text-gray-400">
+                <Stat>
                   <span>
                     {mediaStat.moviesNum}{" "}
                     {mediaStat.moviesNum <= 1 ? "Movie" : "Movies"}
                   </span>
-                </div>
-                <div className="py-3 px-4 rounded-lg bg-black/20 backdrop-blur-lg text-white font-medium text-sm">
+                </Stat>
+                <Stat>
                   <span>
                     {mediaStat.tvNum}{" "}
                     {mediaStat.tvNum <= 1 ? "TV Show" : "TV Shows"}
                   </span>
-                </div>
-                <div className="py-3 px-4 rounded-lg bg-black/20 backdrop-blur-lg text-white font-medium text-sm">
+                </Stat>
+                <Stat>
                   <span>{remainLists?.length + 2} Lists</span>
-                </div>
+                </Stat>
               </div>
               <EditNavigateButton navigateLink="settings/profile">
-                Profile Edit
+                <span className="text-nowrap">Profile Edit</span>
               </EditNavigateButton>
             </div>
-            <div className="my-2">
+
+            <div className="my-2 md:block hidden">
               <p className="text-gray-300 mb-5">{bio}</p>
             </div>
           </div>
+        </div>
+        <div className="my-4 md:hidden block ">
+          <p className="text-gray-300 mb-5">{bio}</p>
         </div>
       </div>
     </section>

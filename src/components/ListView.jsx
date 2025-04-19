@@ -197,12 +197,9 @@ const ListView = ({ targetList, forEditList = false }) => {
         </div>
         <div className="flex items-center gap-5">
           {!forEditList && (
-            <EditNavigateButton
-              navigateLink={`edit?listId=${listId}`}
-              tooltipTitle="Edit List"
-            >
+            <EditNavigateButton navigateLink={`edit?listId=${listId}`}>
               <FaPencil />
-              Edit List
+              <span>Edit List</span>
             </EditNavigateButton>
           )}
 

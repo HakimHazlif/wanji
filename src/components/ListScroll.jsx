@@ -6,7 +6,7 @@ import {
 } from "react-icons/io";
 import { Link } from "react-router-dom";
 
-const ListScroll = ({ title, path = "", children }) => {
+const ListScroll = ({ title, path = "", children, emptyChildren = false }) => {
   const containerRef = useRef(null);
 
   const [isScrolledLeft, setIsScrolledLeft] = useState(true);
@@ -120,7 +120,9 @@ const ListScroll = ({ title, path = "", children }) => {
           }`}
         />
         <div
-          className="grid justify-items-start justify-start md:gap-6 sm:gap-4 gap-2 grid-flow-col overflow-x-auto scrollbar-custom space-x-2 scroll-smooth pb-5 pr-1"
+          className={`grid justify-items-start ${
+            emptyChildren ? "justify-center" : "justify-start"
+          } md:gap-6 sm:gap-4 gap-2 grid-flow-col overflow-x-auto scrollbar-custom space-x-2 scroll-smooth pb-5 pr-1`}
           ref={containerRef}
         >
           {children}

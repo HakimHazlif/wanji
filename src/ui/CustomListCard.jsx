@@ -41,7 +41,7 @@ const CustomListCard = ({ list }) => {
   return (
     <li className="bg-bluish-black rounded-xl shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 border border-gray-700 overflow-hidden">
       <div className="p-5">
-        <div className="flex gap-4 justify-between items-center mb-3">
+        <div className="flex md:gap-4 gap-2 justify-between items-center mb-3">
           <span>
             <h3
               className="text-xl font-semibold hover:text-orange-amber cursor-pointer"

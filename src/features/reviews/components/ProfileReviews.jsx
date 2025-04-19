@@ -42,7 +42,7 @@ const ProfileReviews = ({ reviews }) => {
           ))}
         </div>
       ) : (
-        <EmptyShortList listNmae="Review"></EmptyShortList>
+        <EmptyShortList listName="Review" />
       )}
     </div>
   );

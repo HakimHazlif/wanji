@@ -6,6 +6,7 @@ import { useLists } from "../features/userLists/hooks/useLists";
 import CustomListCard from "../ui/CustomListCard";
 import EmptyShortList from "./EmptyShortList";
 import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
+import EmptyListButton from "./EmptyListButton";
 
 const ProfileCustomLists = () => {
   const { transitionNavigate } = useTransitionNavigate();
@@ -41,23 +42,22 @@ const ProfileCustomLists = () => {
       </div>
       <div className="">
         {remainLists?.length > 0 ? (
-          <ul className="grid grid-cols-2 gap-4">
+          <ul className="grid sm:grid-cols-2 grid-cols-1 grid-flow-row gap-4">
             {remainLists?.slice(0, 4)?.map((list) => (
               <CustomListCard key={list.id} list={list} />
             ))}
           </ul>
         ) : (
-          <EmptyShortList listNmae="List">
-            <button
-              onClick={() =>
+          <EmptyShortList listName="List">
+            <EmptyListButton
+              handleClick={() =>
                 transitionNavigate(
                   `/u/${username.replace(" ", "-")}/list/create`
                 )
               }
-              className="px-10 py-[10px] bg-orange-amber rounded-full flex justify-center items-center hover:bg-orange-coral transition-colors duration-300 text-gray-900 font-medium"
             >
               Create a List
-            </button>
+            </EmptyListButton>
           </EmptyShortList>
         )}
       </div>

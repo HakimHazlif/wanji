@@ -11,6 +11,7 @@ import { useShortLists } from "../features/userLists/hooks/useShortLists";
 import EmptyShortList from "./EmptyShortList";
 import ProfileCustomLists from "./ProfileCustomLists";
 import ProfileReviews from "../features/reviews/components/ProfileReviews";
+import EmptyListButton from "./EmptyListButton";
 
 const ProfileLists = () => {
   const { transitionNavigate } = useTransitionNavigate();
@@ -95,7 +96,11 @@ const ProfileLists = () => {
   return (
     <section className="padding-x">
       <div className="mt-32">
-        <ListScroll title="My Ratings" path={`/u/${usernameUrl}/Ratings`}>
+        <ListScroll
+          title="My Ratings"
+          path={`/u/${usernameUrl}/Ratings`}
+          emptyChildren={shortRatingsItems?.length > 0 ? false : true}
+        >
           {shortRatingsItems?.length > 0 ? (
             shortRatingsItems?.map((item) => (
               <MediaCard
@@ -108,20 +113,21 @@ const ProfileLists = () => {
               />
             ))
           ) : (
-            <EmptyShortList listNmae="Rating">
-              <button
-                onClick={navigateToPopularMovies}
-                className="px-10 py-[10px] bg-orange-amber rounded-full flex justify-center items-center hover:bg-orange-coral transition-colors duration-300 text-gray-900 font-medium"
-              >
+            <EmptyShortList listName="Rating">
+              <EmptyListButton handleClick={navigateToPopularMovies}>
                 Explore the Popular movies
-              </button>
+              </EmptyListButton>
             </EmptyShortList>
           )}
         </ListScroll>
       </div>
 
       <div className="mt-32">
-        <ListScroll title="My Watchlist" path={`/u/${usernameUrl}/Watchlist`}>
+        <ListScroll
+          title="My Watchlist"
+          path={`/u/${usernameUrl}/Watchlist`}
+          emptyChildren={shortWatchlistItems?.length > 0 ? false : true}
+        >
           {shortWatchlistItems?.length > 0 ? (
             shortWatchlistItems?.map((item) => (
               <MediaCard
@@ -134,20 +140,21 @@ const ProfileLists = () => {
               />
             ))
           ) : (
-            <EmptyShortList listNmae="Watchlist">
-              <button
-                onClick={navigateToPopularMovies}
-                className="px-10 py-[10px] bg-orange-amber rounded-full flex justify-center items-center hover:bg-orange-coral transition-colors duration-300 text-gray-900 font-medium"
-              >
+            <EmptyShortList listName="Watchlist">
+              <EmptyListButton handleClick={navigateToPopularMovies}>
                 Explore the Popular movies
-              </button>
+              </EmptyListButton>
             </EmptyShortList>
           )}
         </ListScroll>
       </div>
 
       <div className="mt-32">
-        <ListScroll title="My Favorites" path={`/u/${usernameUrl}/Favorites`}>
+        <ListScroll
+          title="My Favorites"
+          path={`/u/${usernameUrl}/Favorites`}
+          emptyChildren={shortFavoritesItems?.length > 0 ? false : true}
+        >
           {shortFavoritesItems?.length > 0 ? (
             shortFavoritesItems?.map((item) => (
               <MediaCard
@@ -160,13 +167,10 @@ const ProfileLists = () => {
               />
             ))
           ) : (
-            <EmptyShortList listNmae="Favorite">
-              <button
-                onClick={navigateToPopularMovies}
-                className="px-10 py-[10px] bg-orange-amber rounded-full flex justify-center items-center hover:bg-orange-coral transition-colors duration-300 text-gray-900 font-medium"
-              >
+            <EmptyShortList listName="Favorite">
+              <EmptyListButton handleClick={navigateToPopularMovies}>
                 Explore the Popular movies
-              </button>
+              </EmptyListButton>
             </EmptyShortList>
           )}
         </ListScroll>
