@@ -1,7 +1,6 @@
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePassword } from "../features/authentication/api/apiAuth";
-import { useNavigate } from "react-router-dom";
 import SpinnerMini from "../ui/SpinnerMini";
 import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 

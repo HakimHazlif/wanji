@@ -151,13 +151,14 @@ const MediaIntro = () => {
               item={item}
               image={poster_path}
               showTitle={title}
+              iconSize="md:text-3xl sm:text-xl text-lg"
             />
           </div>
           <div className="flex max-md:mt-4 gap-2">
             {trailer && (
               <button
                 onClick={() => handlePlayVideo(trailer)}
-                className="px-4 py-2 rounded-lg flex gap-2 items-center border-none md:text-lg text-sm font-medium bg-[#0000]/30 backdrop-blur-lg hover:bg-[#0000]/60 ease-linear cursor-pointer hover:scale-105 transition-all"
+                className="px-4 py-2 rounded-lg flex gap-2 items-center border-none md:text-lg text-sm font-medium bg-[#0000]/30 backdrop-blur-lg hover:bg-[#0000]/60 ease-linear cursor-pointer hover:scale-105 transition-all text-nowrap"
               >
                 <FaPlay />
                 <span>Play Trailer</span>
