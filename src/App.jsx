@@ -9,6 +9,7 @@ import Spinner from "./ui/Spinner";
 import { Toaster } from "react-hot-toast";
 import PersonWorksProvider from "./context/PersonWorksContext";
 import ProtectRoute from "./components/ProtectRoute";
+import ListContextProvider from "./context/ListContext";
 
 const Home = lazy(() => import("./pages/Home"));
 const AppLayout = lazy(() => import("./components/AppLayout"));
@@ -108,9 +109,11 @@ function App() {
                   <Route
                     path="u/:user/:list"
                     element={
-                      <ProtectRoute>
-                        <List />
-                      </ProtectRoute>
+                      <ListContextProvider>
+                        <ProtectRoute>
+                          <List />
+                        </ProtectRoute>
+                      </ListContextProvider>
                     }
                   />
                   <Route

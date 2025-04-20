@@ -4,7 +4,7 @@ import { useLists } from "../features/userLists/hooks/useLists";
 import { useSelector } from "react-redux";
 import EditingName from "../components/EditingName";
 import EditingDescription from "../components/EditingDescription";
-import ListView from "../components/ListView";
+import ListView from "../features/userLists/components/ListView";
 import AddingSearchBar from "../components/AddingSearchbar";
 import { IoIosArrowBack } from "react-icons/io";
 import CreatedByAuth from "../components/CreatedByAuth";

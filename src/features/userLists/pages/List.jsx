@@ -8,7 +8,7 @@ import { bgPopcorn } from "../../../assets/icons";
 import EditingName from "../../../components/EditingName";
 import CreatedByAuth from "../../../components/CreatedByAuth";
 import AddingSearchBar from "../../../components/AddingSearchbar";
-import ListView from "../../../components/ListView";
+import ListView from "../components/ListView";
 import CreateListButton from "../../../ui/CreateListButton";
 import CustomLists from "../../../ui/CustomLists";
 import EditingDescription from "../../../components/EditingDescription";
@@ -78,13 +78,13 @@ const List = () => {
     <main className="padding-x py-32 w-full">
       <HeaderBackDrop backdrop={bgPopcorn} alt="backdrop" height="h-[400px]" />
 
-      <section className="mb-20 flex items-end justify-between">
-        <div className="w-3/5">
+      <section className="mb-20 flex md:flex-row flex-col md:items-end items-start gap-y-10 justify-between">
+        <div className="md:w-3/5 w-full">
           {list === "Watchlist" ||
           list === "Favorites" ||
           list === "Ratings" ||
           isListsPage ? (
-            <h2 className="font-bold text-5xl mb-5">
+            <h2 className="font-bold md:text-5xl sm:text-4xl text-3xl mb-5">
               {!selectedListId && "My"} {listName}
             </h2>
           ) : (
@@ -97,7 +97,7 @@ const List = () => {
           list === "Favorites" ||
           list === "Ratings" ||
           isListsPage ? (
-            <p className="font-sembold text-xl text-gray-300 mt-5">
+            <p className="font-sembold md:text-xl sm:text-lg text-base text-gray-300 mt-5">
               {description}
             </p>
           ) : (

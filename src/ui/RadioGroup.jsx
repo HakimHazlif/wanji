@@ -1,4 +1,4 @@
-const RadioGroup = ({ value, onChange, options, header }) => {
+const RadioGroup = ({ value, onChange, onClose, options, header }) => {
   return (
     <div>
       <h4 className="font-bold text-gray-300 pb-1 mb-2 border-b border-slate-700">
@@ -12,7 +12,10 @@ const RadioGroup = ({ value, onChange, options, header }) => {
               type="radio"
               value={option.value}
               checked={value === option.value}
-              onChange={onChange}
+              onChange={(e) => {
+                onClose();
+                onChange(e);
+              }}
             />{" "}
             <span className="text-nowrap">{option.label}</span>
           </label>

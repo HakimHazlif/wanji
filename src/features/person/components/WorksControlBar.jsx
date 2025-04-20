@@ -1,16 +1,13 @@
 import { IoFilter } from "react-icons/io5";
 import Selector from "../../../ui/Selector";
-import { FaSort } from "react-icons/fa";
 import {
   activeTabs,
   departmentOptions,
   sortPersonWorks,
 } from "../utils/constants";
-import { useRef, useState } from "react";
-import WorksFilter from "./WorksFilter";
-import WorksSortBy from "./WorksSortBy";
 import { usePersonWorksContext } from "../../../context/PersonWorksContext";
 import { BiSort } from "react-icons/bi";
+import MiniMultiRadio from "../../../components/MiniMultiRadio";
 
 const WorksControlBar = () => {
   const {
@@ -21,10 +18,30 @@ const WorksControlBar = () => {
     sortBy,
     handleChangeSort,
   } = usePersonWorksContext();
-  const [openFilter, setOpenFilter] = useState(false);
-  const [openSort, setOpenSort] = useState(false);
-  const filterButton = useRef(null);
-  const sortButton = useRef(null);
+
+  const filterGroups = [
+    {
+      header: "Category",
+      value: activeTab,
+      onChange: handleChangeTab,
+      options: activeTabs,
+    },
+    {
+      header: "Departments",
+      value: departmentFilter,
+      onChange: handleChangeFilter,
+      options: departmentOptions,
+    },
+  ];
+
+  const sortGroups = [
+    {
+      header: "Sort by",
+      value: sortBy,
+      onChange: handleChangeSort,
+      options: sortPersonWorks,
+    },
+  ];
 
   return (
     <div className="flex justify-between items-center gap-4 border-b border-slate-700 pb-3">
@@ -51,42 +68,13 @@ const WorksControlBar = () => {
       </div>
 
       <div className="sm:hidden flex gap-4">
-        <div className="relative">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
+        <MiniMultiRadio radioGroups={filterGroups}>
+          <IoFilter size={22} />
+        </MiniMultiRadio>
 
-              setOpenFilter((prev) => !prev);
-            }}
-            ref={filterButton}
-          >
-            <IoFilter size={22} />
-          </button>
-          {openFilter && (
-            <WorksFilter
-              onClose={() => setOpenFilter(false)}
-              buttonRef={filterButton}
-            />
-          )}
-        </div>
-        <div className="relative">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-
-              setOpenSort((prev) => !prev);
-            }}
-            ref={sortButton}
-          >
-            <BiSort size={22} />
-          </button>
-          {openSort && (
-            <WorksSortBy
-              onClose={() => setOpenSort(false)}
-              buttonRef={sortButton}
-            />
-          )}
-        </div>
+        <MiniMultiRadio radioGroups={sortGroups}>
+          <BiSort size={22} />
+        </MiniMultiRadio>
       </div>
     </div>
   );

@@ -1,48 +1,22 @@
-import MediaCard from "../ui/MediaCard";
-import { useFetchInfiniteItems } from "../features/userLists/hooks/useFetchItemsList ";
-import Spinner from "../ui/Spinner";
-import { BsFillGrid3X3GapFill } from "react-icons/bs";
-import { FaListUl } from "react-icons/fa";
-import { FaPencil } from "react-icons/fa6";
-import EmptyList from "../ui/EmptyList";
-import MediaCardRow from "./MediaCardRow";
-import OptionsSelector from "../ui/OptionsSelector";
-import { useListsContext } from "../context/ListsContext";
-import { useDeleteVisualMedia } from "../features/userLists/hooks/useDeleteVisualMedia";
-import { useEffect, useMemo, useState } from "react";
-import EditNavigateButton from "./EditNavigateButton";
+import MediaCard from "../../../ui/MediaCard";
+import { useFetchInfiniteItems } from "../hooks/useFetchItemsList ";
+import Spinner from "../../../ui/Spinner";
+import EmptyList from "../../../ui/EmptyList";
+import MediaCardRow from "../../../components/MediaCardRow";
+import { useDeleteVisualMedia } from "../hooks/useDeleteVisualMedia";
+import { useEffect, useMemo } from "react";
 import { useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
-import LoadMoreButton from "./LoadMoreButton";
-import { useRatingList } from "../features/userLists/hooks/useRatingList";
+import LoadMoreButton from "../../../components/LoadMoreButton";
+import { useRatingList } from "../hooks/useRatingList";
+import { useListContext } from "../../../context/ListContext";
+import ListControlBar from "./ListControlBar";
+import MediaGrid from "../../../components/MediaGrid";
 
 const ListView = ({ targetList, forEditList = false }) => {
   const queryClient = useQueryClient();
   const { uid } = useSelector((state) => state.user.user);
-  const { isGridView, setIsGridView } = useListsContext();
-
-  const sortOptions = [
-    "Date Added (Oldest)",
-    "Date Added (Newest)",
-    "TMDB Rating (Highest)",
-    "TMDB Rating (Lowest)",
-    "Your Rating (Highest)",
-    "Your Rating (Lowest)",
-    "Popularity (Highest)",
-    "Popularity (Lowest)",
-    "Release Date (Oldest)",
-    "Release Date (Newest)",
-    "Runtime (Longest)",
-    "Runtime (Shortest)",
-    "Alphabetical (A-Z)",
-    "Alphabetical (Z-A)",
-  ];
-  const [selectedOption, setSelectedOption] = useState(sortOptions[0]);
-  const [isOpenSort, setIsOpenSort] = useState(false);
-
-  const filterOptions = ["All", "Movies", "TV Shows", "Episodes"];
-  const [filteredOption, setFilteredOption] = useState(filterOptions[0]);
-  const [isOpenFilter, setIsOpenFilter] = useState(false);
+  const { isGridView, filteredOption, selectedOption } = useListContext();
 
   const { isLoading: isDeleting, deleteVisualMedia } = useDeleteVisualMedia();
   const { ratingList } = useRatingList();
@@ -63,14 +37,6 @@ const ListView = ({ targetList, forEditList = false }) => {
     if (uid) {
       deleteVisualMedia({ id, listId, type });
     }
-  }
-
-  function handleSelectSortOption(option) {
-    setSelectedOption(option);
-  }
-
-  function handleSelectFilterOption(option) {
-    setFilteredOption(option);
   }
 
   const itemsListWithUserRating = useMemo(() => {
@@ -185,69 +151,17 @@ const ListView = ({ targetList, forEditList = false }) => {
 
   return (
     <section className="mt-5 relative z-10">
-      <div className="flex justify-between items-center border-b border-slate-600 pb-5">
-        <div>
-          <h3 className="bg-bluish-black text-gray-400 text-lg px-6 py-2 rounded-full font-medium text-center">
-            {itemsList?.length < list.length
-              ? `1-${itemsList?.length} ${
-                  itemsList?.length <= 1 ? "title" : "titles"
-                } / ${list.length}`
-              : `${list.length} ${list.length <= 1 ? "title" : "titles"}`}
-          </h3>
-        </div>
-        <div className="flex items-center gap-5">
-          {!forEditList && (
-            <EditNavigateButton navigateLink={`edit?listId=${listId}`}>
-              <FaPencil />
-              <span>Edit List</span>
-            </EditNavigateButton>
-          )}
-
-          <OptionsSelector
-            selectedOption={filteredOption}
-            handleToggle={setIsOpenFilter}
-            sortOptions={filterOptions}
-            isOpen={isOpenFilter}
-            handleSelect={handleSelectFilterOption}
-          />
-
-          <OptionsSelector
-            selectedOption={selectedOption}
-            handleToggle={setIsOpenSort}
-            sortOptions={sortOptions}
-            isOpen={isOpenSort}
-            handleSelect={handleSelectSortOption}
-          />
-
-          <button
-            className={`w-9 h-9 rounded-full flex justify-center items-center  ${
-              isGridView
-                ? "bg-slate-700 cursor-not-allowed"
-                : "hover:bg-slate-600 cursor-pointer"
-            }`}
-            onClick={() => setIsGridView(true)}
-            disabled={isGridView}
-          >
-            <BsFillGrid3X3GapFill size={20} />
-          </button>
-          <button
-            className={`w-9 h-9 rounded-full flex justify-center items-center  ${
-              !isGridView
-                ? "bg-slate-700 cursor-not-allowed"
-                : "hover:bg-slate-600 cursor-pointer"
-            }`}
-            onClick={() => setIsGridView(false)}
-            disabled={!isGridView}
-          >
-            <FaListUl size={20} />
-          </button>
-        </div>
-      </div>
+      <ListControlBar
+        itemsList={itemsList}
+        list={list}
+        listId={listId}
+        forEditList={forEditList}
+      />
 
       <div>
         {sortedList?.length > 0 ? (
           isGridView ? (
-            <div className="grid grid-cols-4 gap-10 py-14">
+            <MediaGrid>
               {sortedList?.length > 0 &&
                 sortedList?.map((item, index) => {
                   return (
@@ -274,9 +188,9 @@ const ListView = ({ targetList, forEditList = false }) => {
                     />
                   );
                 })}
-            </div>
+            </MediaGrid>
           ) : (
-            <div className="grid grid-flow-row gap-10 py-14">
+            <MediaGrid>
               {sortedList?.length > 0 &&
                 sortedList?.map((item, index) => {
                   return (
@@ -303,7 +217,7 @@ const ListView = ({ targetList, forEditList = false }) => {
                     />
                   );
                 })}
-            </div>
+            </MediaGrid>
           )
         ) : (
           <div className="bg-bluish-black flex justify-center items-center rounded-md w-full h-[200px] mt-8">

@@ -6,7 +6,7 @@ export function usePerson() {
   const { personId } = useParams();
 
   const { isLoading, data: personData } = useQuery({
-    queryKey: ["person"],
+    queryKey: ["person", personId],
     queryFn: () => getPersonData(personId),
     onError: (err) => {
       console.error(err);

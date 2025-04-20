@@ -53,16 +53,11 @@ function ListsContextProvider({ children }) {
   const favoriteListId = favoriteList?.id;
   const watchlistId = watchlist?.id;
 
-  // maintain status of list view
-  const [isGridView, setIsGridView] = useState(true);
-
   const addingSearchBarRef = useRef(null);
 
   return (
     <ListsContext.Provider
       value={{
-        isGridView,
-        setIsGridView,
         addingSearchBarRef,
         favoriteListId,
         watchlistId,

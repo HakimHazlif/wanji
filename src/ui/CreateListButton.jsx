@@ -8,7 +8,7 @@ const CreateListButton = () => {
 
   return (
     <button
-      className="max-w-60 w-72 py-3 bg-orange-amber rounded-full flex justify-center items-center hover:bg-orange-coral transition-colors duration-300"
+      className="max-w-72 lg:w-60 md:w-52 w-60 py-3 bg-orange-amber rounded-full flex justify-center items-center hover:bg-orange-coral transition-colors duration-300"
       onClick={() =>
         transitionNavigate(`/u/${username.replace(" ", "-")}/list/create`)
       }

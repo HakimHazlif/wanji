@@ -2,34 +2,35 @@ import { useLists } from "../features/userLists/hooks/useLists";
 import CreateListButton from "./CreateListButton";
 import { FaFolderOpen } from "react-icons/fa";
 import CustomListCard from "./CustomListCard";
-import { useMemo, useState } from "react";
-import OptionsSelector from "./OptionsSelector";
+import { useMemo } from "react";
+import { useListContext } from "../context/ListContext";
+import Selector from "./Selector";
+import { listsSortOptions } from "../features/userLists/constant/options";
+import MiniMultiRadio from "../components/MiniMultiRadio";
+import { BiSort } from "react-icons/bi";
 
 const CustomLists = () => {
   const { remainLists } = useLists();
+  const { listsSortOption, handleSelectListsSort } = useListContext();
 
-  const [isOpen, setIOpen] = useState(false);
-  const sortOptions = [
-    "Date Created (Newest)",
-    "Date Created (Oldest)",
-    "Number of Titles (Most)",
-    "Number of Titles (Fewest)",
-    "Alphabetical (A-Z)",
-    "Alphabetical (Z-A)",
-  ];
-  const [selectedOption, setSelectedOption] = useState(sortOptions[0]);
+  // const [isOpen, setIOpen] = useState(false);
+  // const sortOptions = [
+  //   "Date Created (Newest)",
+  //   "Date Created (Oldest)",
+  //   "Number of Titles (Most)",
+  //   "Number of Titles (Fewest)",
+  //   "Alphabetical (A-Z)",
+  //   "Alphabetical (Z-A)",
+  // ];
+  // const [selectedOption, setSelectedOption] = useState(sortOptions[0]);
 
-  function handleSelectOption(selectedOption) {
-    setSelectedOption(selectedOption);
-  }
-
-  // function handleNavigate(listId) {
-  //   navigate(`/u/${user.username}/Lists?listId=${listId}`);
+  // function handleSelectOption(selectedOption) {
+  //   setSelectedOption(selectedOption);
   // }
 
   const newList = useMemo(() => {
     const newList = remainLists?.sort((a, b) => {
-      switch (selectedOption) {
+      switch (listsSortOption) {
         case "Date Created (Newest)":
           return new Date(b.created_at) - new Date(a.created_at);
         case "Date Created (Oldest)":
@@ -48,7 +49,16 @@ const CustomLists = () => {
     });
 
     return newList;
-  }, [remainLists, selectedOption]);
+  }, [remainLists, listsSortOption]);
+
+  const sortGroups = [
+    {
+      header: "Sort by",
+      value: listsSortOption,
+      onChange: handleSelectListsSort,
+      options: listsSortOptions,
+    },
+  ];
 
   if (remainLists?.length < 1 || !remainLists)
     return (
@@ -68,19 +78,30 @@ const CustomLists = () => {
   return (
     <section className="w-full space-y-4 p-4 mt-2">
       <div className="flex justify-between items-center mb-10 border-b border-slate-600 pb-5">
-        <h3 className="flex items-center justify-center gap-2 bg-bluish-black text-gray-400 text-lg px-5 py-2 rounded-full w-[140px] font-bold">
-          <FaFolderOpen />
-          {remainLists?.length} {remainLists?.length <= 1 ? "list" : "lists"}
-        </h3>
-        <OptionsSelector
-          selectedOption={selectedOption}
-          sortOptions={sortOptions}
-          isOpen={isOpen}
-          handleToggle={setIOpen}
-          handleSelect={handleSelectOption}
-        />
+        <div>
+          <h3 className="flex items-center justify-center gap-2 bg-bluish-black text-gray-400 text-lg px-5 py-2 rounded-full w-[140px] font-bold">
+            <FaFolderOpen />
+            {remainLists?.length} {remainLists?.length <= 1 ? "list" : "lists"}
+          </h3>
+        </div>
+
+        <div className="md:flex hidden items-center lg:gap-4 gap-2">
+          <Selector
+            value={listsSortOption}
+            onChange={handleSelectListsSort}
+            options={listsSortOptions}
+          />
+        </div>
+
+        <div className="md:hidden flex items-center md:gap-4 gap-2">
+          <div className="w-9 h-9 rounded-full flex justify-center items-center bg-bluish-black hover:bg-bluish-black/50">
+            <MiniMultiRadio radioGroups={sortGroups}>
+              <BiSort size={22} />
+            </MiniMultiRadio>
+          </div>
+        </div>
       </div>
-      <ul className="grid grid-cols-2 gap-4">
+      <ul className="grid md:grid-cols-2 grid-cols-1 grid-flow-row gap-4">
         {newList?.map((list) => (
           <CustomListCard key={list.id} list={list} />
         ))}
