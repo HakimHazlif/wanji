@@ -127,9 +127,11 @@ function App() {
                   <Route
                     path="u/:user/:list/edit"
                     element={
-                      <ProtectRoute>
-                        <EditList />
-                      </ProtectRoute>
+                      <ListContextProvider>
+                        <ProtectRoute>
+                          <EditList />
+                        </ProtectRoute>
+                      </ListContextProvider>
                     }
                   />
                 </Route>

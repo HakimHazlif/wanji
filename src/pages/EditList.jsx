@@ -24,7 +24,7 @@ const EditList = () => {
     <main className="padding-x py-32">
       <HeaderBackDrop backdrop={bgPopcorn} height="h-[400px]" />
 
-      {list?.id && (
+      {list?.id && ( // instead of doing that I should make a useEffect to navigate to NotFoundPage
         <section className="w-full mb-20 flex items-center gap-20">
           <div className="w-full">
             <div className="mb-6">
@@ -39,8 +39,9 @@ const EditList = () => {
                 Back
               </button>
             </div>
+
             {list?.name === "watchlist" || list?.name === "favorite" ? (
-              <h1 className="font-bold text-5xl mb-5 capitalize">
+              <h1 className="font-bold mb-5 capitalize md:text-5xl sm:text-4xl text-3xl">
                 {list?.name}
               </h1>
             ) : (
@@ -50,7 +51,7 @@ const EditList = () => {
             <CreatedByAuth createdDate={list?.created_at} username={username} />
 
             {list?.name === "watchlist" || list?.name === "favorite" ? (
-              <p className="font-sembold text-xl text-gray-300 mb-5">
+              <p className="font-sembold text-gray-300 mb-5 md:text-xl sm:text-lg text-base">
                 {list?.description}
               </p>
             ) : (

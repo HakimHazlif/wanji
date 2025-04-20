@@ -1,6 +1,5 @@
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { bgPopcorn } from "../assets/icons";
-import { useNavigate } from "react-router-dom";
 import { useCreateList } from "../features/userLists/hooks/useCreateList";
 import SpinnerMini from "../ui/SpinnerMini";
 import { useSelector } from "react-redux";
@@ -12,6 +11,7 @@ import {
 } from "../constants/variables";
 import CancelButton from "../components/CancelButton";
 import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
+import HeaderBackDrop from "../ui/HeaderBackDrop";
 
 const CreateNewList = () => {
   const { transitionNavigate } = useTransitionNavigate();
@@ -91,21 +91,14 @@ const CreateNewList = () => {
 
   return (
     <main>
-      <div className="absolute top-0 right-0 w-full -z-10 ">
-        <img
-          src={bgPopcorn}
-          alt="backdrop of movie"
-          className="h-[400px] w-full object-cover object-center masking"
-        />
-        <div className="bg-[#272831] opacity-60 masking h-[600px] w-full absolute bottom-0 right-0 z-10"></div>
-      </div>
+      <HeaderBackDrop backdrop={bgPopcorn} alt="backdrop" height="h-[400px]" />
 
-      <section className="padding-x py-32">
+      <section className="padding-x py-14">
         <div className="mb-20">
-          <h2 className="font-bold text-6xl leading-relaxed">
+          <h2 className="font-bold lg:text-6xl md:text-5xl sm:text-4xl text-3xl mb-5">
             Create a new list
           </h2>
-          <p className="font-medium text-gray-300 leading-relaxed">
+          <p className="font-medium text-gray-300 lg:text-base md:text-sm text-xs leading-relaxed">
             Create and customize lists to organize your movies and TV shows
             however you like. Whether by genre, mood, or theme, these lists give
             you full control over curating and managing your collection.
@@ -207,7 +200,7 @@ const CreateNewList = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="px-6 py-3 text-gray-800 font-medium rounded-lg bg-orange-amber transition-colors duration-200 flex items-center justify-center gap-2"
+                className="px-6 md:py-3 py-2 text-gray-800 font-medium rounded-lg bg-orange-amber transition-colors duration-200 flex items-center justify-center gap-2 md:text-base text-sm"
               >
                 {isLoading ? <SpinnerMini size={25} /> : "Create List"}
               </button>

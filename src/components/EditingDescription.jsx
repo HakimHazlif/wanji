@@ -42,38 +42,41 @@ const EditingName = ({ list }) => {
   return (
     <div className="flex items-center gap-4 mb-5">
       {editingDescription ? (
-        <div className="flex items-end gap-2 w-full">
+        <div className="flex sm:flex-row flex-col items-end gap-2 w-full mt-5">
           <textarea
             value={newDescription}
             onChange={(e) => setNewDescription(e.target.value)}
             maxLength={MAX_DESCRIPTION_LENGTH}
-            className="block w-full p-3 bg-slate-800 border outline-none rounded-lg shadow-sm focus:ring-2 focus:ring-orange-coral focus:border-transparent transition-colors"
+            className="block w-full p-3 bg-slate-800 border outline-none rounded-lg shadow-sm focus:ring-2 focus:ring-orange-coral focus:border-transparent transition-colors md:text-lg sm:text-base text-sm"
             rows="3"
           />
-          <InputEditButton
-            handleClick={() => setEditingDescription(false)}
-            isLoading={isLoading}
-            backgroundColor="bg-slate-500"
-            textColor="text-white"
-            hover="hover:bg-slate-400"
-          >
-            Cancel
-          </InputEditButton>
-          <InputEditButton
-            handleClick={handleDescriptionSave}
-            isLoading={isLoading}
-            backgroundColor="bg-amber-400"
-            textColor="text-gray-800"
-            hover="hover:bg-amber-300"
-          >
-            {isLoading ? <SpinnerMini /> : "Save"}
-          </InputEditButton>
+
+          <div className="flex gap-2">
+            <InputEditButton
+              handleClick={() => setEditingDescription(false)}
+              isLoading={isLoading}
+              backgroundColor="bg-slate-500"
+              textColor="text-white"
+              hover="hover:bg-slate-400"
+            >
+              Cancel
+            </InputEditButton>
+            <InputEditButton
+              handleClick={handleDescriptionSave}
+              isLoading={isLoading}
+              backgroundColor="bg-amber-400"
+              textColor="text-gray-800"
+              hover="hover:bg-amber-300"
+            >
+              {isLoading ? <SpinnerMini /> : "Save"}
+            </InputEditButton>
+          </div>
         </div>
       ) : (
         <>
           {list?.description ? (
             <div className="flex items-end gap-2">
-              <p className="font-sembold text-xl text-gray-300 mt-5">
+              <p className="font-sembold text-gray-300 mt-5 md:text-xl sm:text-lg text-base">
                 {list?.description}
               </p>
               <EditButton
