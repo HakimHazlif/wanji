@@ -10,6 +10,7 @@ import profile from "./profile.svg";
 import rightArrow from "./right-arrow.svg";
 import leftArrow from "./left-arrow.svg";
 import bgPopcorn from "../bg-popcorn.jpg";
+import spaceman from "../spaceman.png";
 
 export {
   logoDark,
@@ -23,4 +24,5 @@ export {
   rightArrow,
   leftArrow,
   bgPopcorn,
+  spaceman,
 };
