@@ -1,5 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import SessionContextProvider from "./context/UserContext";
+import SessionProvider from "./context/SessionContext";
 import { Provider } from "react-redux";
 import store from "./app/store/store";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -54,7 +54,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <SessionContextProvider>
+        <SessionProvider>
           <ListsContextProvider>
             <Suspense key={location.pathname} fallback={<Spinner />}>
               <Routes>
@@ -170,7 +170,7 @@ function App() {
               }}
             />
           </ListsContextProvider>
-        </SessionContextProvider>
+        </SessionProvider>
       </Provider>
     </QueryClientProvider>
   );

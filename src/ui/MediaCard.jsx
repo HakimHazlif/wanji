@@ -51,7 +51,6 @@ const MediaCard = memo(function MediaCard({
       );
     else transitionNavigate(`/${category}/${id}`);
   }
-  // const { setIsMovie } = useSession();
 
   const item = {
     itemId: id,

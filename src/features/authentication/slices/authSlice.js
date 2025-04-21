@@ -105,12 +105,4 @@ const authSlice = createSlice({
   },
 });
 
-// export const {
-//   authStart,
-//   authSuccess,
-//   authFailure,
-//   logOutSuccess,
-//   setUser,
-//   resetPassword,
-// } = authSlice.actions;
 export default authSlice.reducer;

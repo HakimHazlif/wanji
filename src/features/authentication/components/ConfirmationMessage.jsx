@@ -1,6 +1,9 @@
 import { messageIconSvg } from "../../../constants/uiElements";
+import { useSession } from "../../../context/SessionContext";
 
-const ConfirmationMessage = ({ email }) => {
+const ConfirmationMessage = () => {
+  const { email } = useSession();
+
   return (
     <div className="flex flex-col text-center justify-center items-center gap-5 p-10">
       <svg
