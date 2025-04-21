@@ -9,12 +9,19 @@ const SignLog = ({ type }) => {
     <main className="h-screen w-full flex justify-center items-start pt-10">
       <section className="w-[450px] rounded-xl bg-slate-50 text-black">
         <div className="py-8 px-16">
-          <h2 className="mb-10 text-2xl text-center font-medium">
-            {isLogin ? "Log" : "Create"}{" "}
-            <span className="text-orange-coral">
-              {isLogin ? "in" : "account"}
-            </span>
-          </h2>
+          <div className="mb-5">
+            <h1 className="text-2xl text-center font-medium">
+              {isLogin ? "Welcome" : "Create your"}{" "}
+              <span className="text-orange-coral">
+                {isLogin ? "back" : "account"}
+              </span>
+            </h1>
+            <p className="text-gray-600 text-center mt-2 text-sm">
+              {isLogin
+                ? "Access your lists, ratings, and reviews in a click"
+                : "Sign up to get started — it only takes a minute"}
+            </p>
+          </div>
 
           {isLogin ? <LoginForm /> : <SignupForm />}
 
