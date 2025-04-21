@@ -6,9 +6,9 @@ const SignLog = ({ type }) => {
   const isLogin = type === "login";
 
   return (
-    <main className="h-screen w-full flex justify-center items-start pt-10">
-      <section className="w-[450px] rounded-xl bg-slate-50 text-black">
-        <div className="py-8 px-16">
+    <main className="h-screen w-full flex justify-center items-center">
+      <section className="xl:[550px] lg:w-[500px] w-[450px] rounded-xl bg-slate-100 text-black">
+        <div className="py-8 sm:px-16 xs:px-8 px-4">
           <div className="mb-5">
             <h1 className="text-2xl text-center font-medium">
               {isLogin ? "Welcome" : "Create your"}{" "}
