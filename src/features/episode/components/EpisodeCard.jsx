@@ -131,13 +131,13 @@ const EpisodeCard = ({ episode }) => {
           {directing.length > 0 && (
             <div className="flex gap-2 text-sm text-slate-300">
               <h3 className="font-medium">Director:</h3>
-              <ul className="flex gap-2 font-bold">
+              <ul className="flex flex-wrap gap-y-0 gap-2 font-bold">
                 {directing.map((director, index) => (
-                  <li key={director.id}>
+                  <li key={director.id} className="">
                     {index !== 0 && <span>&#x2022;</span>}
                     <Link
                       to={`/person/${director.id}`}
-                      className="hover:text-blue-600 duration-300 transition-colors"
+                      className="ml-2 hover:text-blue-600 duration-300 transition-colors"
                     >
                       {director.name}
                     </Link>
@@ -149,7 +149,7 @@ const EpisodeCard = ({ episode }) => {
           {writing.length > 0 && (
             <div className="flex gap-2 text-sm text-slate-300">
               <h3 className="font-medium">Writer:</h3>
-              <ul className="flex gap-2 font-bold">
+              <ul className="flex flex-wrap gap-y-0 gap-2 font-bold">
                 {writing.map((writer, index) => (
                   <li key={writer.id}>
                     {index !== 0 && <span>&#x2022;</span>}
