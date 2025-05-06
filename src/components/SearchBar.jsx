@@ -23,8 +23,6 @@ const SearchBar = () => {
     setSearchQuery(e.target.value);
   }
 
-  if (results.length) console.log(results);
-
   useEffect(() => {
     const fetchResults = async () => {
       const queryURI = encodeURIComponent(searchQuery);
