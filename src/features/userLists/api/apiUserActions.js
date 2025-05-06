@@ -148,7 +148,7 @@ export async function updateList({
 
     return { data, error };
   }
-  if (newDescription) {
+  if (newDescription || newDescription === "") {
     const { data, error } = await supabase
       .from("lists")
       .update({ description: newDescription })

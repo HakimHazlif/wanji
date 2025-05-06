@@ -43,13 +43,25 @@ const EditingName = ({ list }) => {
     <div className="flex items-center gap-4 mb-5">
       {editingName ? (
         <div className="flex sm:flex-row flex-col items-end gap-2 w-full">
-          <input
-            type="text"
-            value={newName}
-            maxLength={MAX_NAME_LENGTH}
-            onChange={(e) => setNewName(e.target.value)}
-            className="block w-full px-3 py-1 md:text-4xl sm:text-3xl text-2xl bg-slate-800 border outline-none rounded-lg shadow-sm focus:ring-2 focus:ring-orange-coral focus:border-transparent transition-colors"
-          />
+          <div>
+            <div>
+              <label htmlFor="list-name" className="hidden">
+                List name
+              </label>
+              <p className="w-full text-gray-300 text-sm text-end pr-1">
+                {newName.length} / {MAX_NAME_LENGTH} character
+              </p>
+            </div>
+            <input
+              type="text"
+              id="list-name"
+              name="list-name"
+              value={newName}
+              maxLength={MAX_NAME_LENGTH}
+              onChange={(e) => setNewName(e.target.value)}
+              className="block w-full px-3 py-1 md:text-4xl sm:text-3xl text-2xl bg-slate-800 border outline-none rounded-lg shadow-sm focus:ring-2 focus:ring-orange-coral focus:border-transparent transition-colors"
+            />
+          </div>
 
           <div className="flex gap-2">
             <InputEditButton

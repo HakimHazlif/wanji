@@ -74,16 +74,19 @@ const List = () => {
 
   const { createdDate, listName, description } = listData;
 
+  const toNotUpdate =
+    list === "Watchlist" ||
+    list === "Favorites" ||
+    list === "Ratings" ||
+    isListsPage;
+
   return (
     <main className="padding-x py-32 w-full">
       <HeaderBackDrop backdrop={bgPopcorn} alt="backdrop" height="h-[400px]" />
 
-      <section className="mb-20 flex md:flex-row flex-col md:items-end items-start gap-y-10 justify-between">
+      <section className="mb-20 flex md:flex-row flex-col md:items-end items-start gap-5 gap-y-10 justify-between">
         <div className="md:w-3/5 w-full">
-          {list === "Watchlist" ||
-          list === "Favorites" ||
-          list === "Ratings" ||
-          isListsPage ? (
+          {toNotUpdate ? (
             <h2 className="font-bold md:text-5xl sm:text-4xl text-3xl mb-5">
               {!selectedListId && "My"} {listName}
             </h2>
@@ -93,10 +96,7 @@ const List = () => {
 
           <CreatedByAuth createdDate={createdDate} username={username} />
 
-          {list === "Watchlist" ||
-          list === "Favorites" ||
-          list === "Ratings" ||
-          isListsPage ? (
+          {toNotUpdate ? (
             <p className="font-sembold md:text-xl sm:text-lg text-base text-gray-300 mt-5">
               {description}
             </p>

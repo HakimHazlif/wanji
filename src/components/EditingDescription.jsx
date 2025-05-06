@@ -43,13 +43,23 @@ const EditingDescription = ({ list }) => {
     <div className="flex items-center gap-4 mb-5">
       {editingDescription ? (
         <div className="flex sm:flex-row flex-col items-end gap-2 w-full mt-5">
-          <textarea
-            value={newDescription}
-            onChange={(e) => setNewDescription(e.target.value)}
-            maxLength={MAX_DESCRIPTION_LENGTH}
-            className="block w-full p-3 bg-slate-800 border outline-none rounded-lg shadow-sm focus:ring-2 focus:ring-orange-coral focus:border-transparent transition-colors md:text-lg sm:text-base text-sm"
-            rows="3"
-          />
+          <div className="w-full">
+            <div>
+              <label htmlFor="list-name" className="hidden">
+                List description
+              </label>
+              <p className="w-full text-gray-300 text-sm text-end pr-1">
+                {newDescription.length} / {MAX_DESCRIPTION_LENGTH} character
+              </p>
+            </div>
+            <textarea
+              value={newDescription}
+              onChange={(e) => setNewDescription(e.target.value)}
+              maxLength={MAX_DESCRIPTION_LENGTH}
+              className="block w-full p-3 bg-slate-800 border outline-none rounded-lg shadow-sm focus:ring-2 focus:ring-orange-coral focus:border-transparent transition-colors md:text-lg sm:text-base text-sm"
+              rows="3"
+            />
+          </div>
 
           <div className="flex gap-2">
             <InputEditButton
