@@ -7,7 +7,7 @@ import InputEditButton from "./InputEditButton";
 import { ImPencil } from "react-icons/im";
 import { MAX_DESCRIPTION_LENGTH } from "../constants/variables";
 
-const EditingName = ({ list }) => {
+const EditingDescription = ({ list }) => {
   const { isLoading, renameList } = useRenameList();
   const { uid } = useSelector((state) => state.user.user);
 
@@ -103,4 +103,4 @@ const EditingName = ({ list }) => {
   );
 };
 
-export default EditingName;
+export default EditingDescription;
