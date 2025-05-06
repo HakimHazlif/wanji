@@ -13,7 +13,7 @@ const SearchBar = () => {
   const [isOpenResults, setIsOpenResults] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const resultsRef = useRef(null);
+  const searchbarRef = useRef(null);
 
   function handleSelectOpetion(value) {
     setSelectedValue(value);
@@ -22,6 +22,8 @@ const SearchBar = () => {
   function handleChange(e) {
     setSearchQuery(e.target.value);
   }
+
+  if (results.length) console.log(results);
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -36,9 +38,10 @@ const SearchBar = () => {
         const data = await res.json();
 
         setResults(data.results);
-        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching search results:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -50,7 +53,7 @@ const SearchBar = () => {
 
   useEffect(() => {
     const closeResults = (e) => {
-      if (resultsRef.current && !resultsRef.current.contains(e.target)) {
+      if (searchbarRef.current && !searchbarRef.current.contains(e.target)) {
         setIsOpenResults(false);
       }
     };
@@ -62,7 +65,10 @@ const SearchBar = () => {
 
   return (
     <>
-      <div className="relative flex items-center bg-white rounded-3xl p-1 w-full">
+      <div
+        className="relative flex items-center bg-white rounded-3xl p-1 w-full"
+        ref={searchbarRef}
+      >
         <IoMdSearch className="text-slate-500 mx-2" size={30} />
 
         <label htmlFor="search-input" className="hidden">
@@ -82,28 +88,27 @@ const SearchBar = () => {
           handleSelectOpetion={handleSelectOpetion}
         />
         {isOpenResults && (
-          <ul
-            className="absolute w-full h-[300px] top-full left-0 bg-slate-100 rounded-lg flex flex-col z-20 overflow-y-scroll overflow-x-hidden scrollbar-hide"
-            ref={resultsRef}
-          >
+          <ul className="absolute w-full h-[300px] top-full left-0 bg-slate-100 rounded-lg flex flex-col z-20 overflow-y-scroll overflow-x-hidden scrollbar-hide">
             {!isLoading ? (
               results.map((result) => (
                 <SearchItem
                   key={result.id}
                   image={
-                    result.media_type === "person"
+                    selectedValue === "person"
                       ? result.profile_path
                       : result.poster_path
                   }
-                  title={
-                    result.media_type === "movie" ? result.title : result.name
-                  }
+                  title={selectedValue === "movie" ? result.title : result.name}
                   originalTitle={
-                    result.media_type === "movie"
+                    selectedValue === "movie"
                       ? result.original_title
                       : result.original_name
                   }
-                  mediaType={result.media_type}
+                  mediaType={
+                    selectedValue === "multi"
+                      ? result.media_type
+                      : selectedValue
+                  }
                   id={result.id}
                 />
               ))
