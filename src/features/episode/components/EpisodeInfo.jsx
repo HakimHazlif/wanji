@@ -41,7 +41,7 @@ const EpisodeInfo = () => {
           <h3 className="text-xl font-semibold text-slate-200">
             {`Episode ${episode_number} - Season ${season_number}`}
           </h3>
-          <ul className="flex gap-2 text-sm font-semibold text-slate-300">
+          <ul className="flex flex-wrap gap-2 text-sm font-semibold text-slate-300">
             <li>{updateDateFormat(air_date)}</li>
             <span>&#x2022;</span>
             <li>{runtime} min</li>

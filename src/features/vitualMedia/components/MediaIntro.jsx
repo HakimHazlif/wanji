@@ -82,7 +82,7 @@ const MediaIntro = () => {
               )}
             </h2>
 
-            <ul className="flex items-center gap-2 md:text-sm text-xs whitespace-nowrap my-2 text-white">
+            <ul className="flex flex-wrap items-center gap-2 md:text-sm text-xs my-2 text-white">
               <li>{category === "movie" ? "Movie" : "TV Show"}</li>
               <span>&#x2022;</span>
               <li className="whitespace-nowrap">{dateFormat}</li>
@@ -113,7 +113,7 @@ const MediaIntro = () => {
               styleOfSpan="md:px-3 px-2 py-0.5 rounded-sm bg-orange-amber text-gray-800 font-semibold lg:text-base md:text-sm text-xs"
             />
 
-            <ul className="flex-1 flex flex-wrap gap-2 gap-y-1">
+            <ul className="flex-1 flex flex-wrap gap-2 gap-y-1 mt-3">
               {genres.map((genre) => (
                 <Link
                   key={genre.id}
