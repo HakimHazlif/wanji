@@ -91,22 +91,10 @@ const SearchBar = () => {
               results.map((result) => (
                 <SearchItem
                   key={result.id}
-                  image={
-                    selectedValue === "person"
-                      ? result.profile_path
-                      : result.poster_path
-                  }
-                  title={selectedValue === "movie" ? result.title : result.name}
-                  originalTitle={
-                    selectedValue === "movie"
-                      ? result.original_title
-                      : result.original_name
-                  }
-                  mediaType={
-                    selectedValue === "multi"
-                      ? result.media_type
-                      : selectedValue
-                  }
+                  image={result.profile_path || result.poster_path}
+                  title={result.title || result.name}
+                  originalTitle={result.original_title || result.original_name}
+                  mediaType={result.media_type || selectedValue}
                   id={result.id}
                 />
               ))
