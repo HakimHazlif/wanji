@@ -1,5 +1,5 @@
 import ProfileElements from "./ProfileElement";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
 import { FaRegUser } from "react-icons/fa";
@@ -10,11 +10,13 @@ import { IoLogOutOutline, IoSettingsOutline } from "react-icons/io5";
 import { logout } from "../features/authentication/api/apiAuth";
 import UserAvatar from "../ui/UserAvatar";
 import { FaRegStar } from "react-icons/fa6";
+import SpinnerMini from "../ui/SpinnerMini";
 
 const ProfileMenu = ({ onClose, buttonRef }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const menuRef = useRef();
-  const { isLoggedIn, user } = useSelector((state) => state.user);
+  const { isLoggedIn, user, status } = useSelector((state) => state.user);
 
   const { username, email } = user;
   const userPath = username.replace(" ", "-");
@@ -59,6 +61,7 @@ const ProfileMenu = ({ onClose, buttonRef }) => {
           <p className="text-slate-500 font-medium text-sm">{email}</p>
         </div>
       </Link>
+
       <ul className="font-medium">
         <ProfileElements
           route={`/u/${userPath}`}
@@ -66,7 +69,14 @@ const ProfileMenu = ({ onClose, buttonRef }) => {
           icon={<FaRegUser />}
           onClose={onClose}
         />
+        <ProfileElements
+          itemName="Settings"
+          route={`/u/${userPath}/settings/profile`}
+          icon={<IoSettingsOutline />}
+          onClose={onClose}
+        />
       </ul>
+
       <hr className="border-[1.5px] my-2" />
 
       <ul className="font-medium">
@@ -95,23 +105,30 @@ const ProfileMenu = ({ onClose, buttonRef }) => {
           onClose={onClose}
         />
       </ul>
+
       <hr className="border-[1.5px] my-2" />
+
       <ul className="font-medium">
-        <ProfileElements
-          itemName="Settings"
-          route={`/u/${userPath}/settings/profile`}
-          icon={<IoSettingsOutline />}
-          onClose={onClose}
-        />
-        <ProfileElements
-          itemName="Log out"
-          route="/"
-          icon={<IoLogOutOutline />}
-          onClose={() => {
-            onClose();
-            dispatch(logout());
+        <button
+          className="w-full py-2 text-white font-medium flex items-center justify-center gap-2 bg-red-500 rounded-md"
+          onClick={() => {
+            dispatch(logout())
+              .unwrap()
+              .then(() => {
+                navigate("/");
+                onClose();
+              });
           }}
-        />
+        >
+          {status === "loading" ? (
+            <SpinnerMini />
+          ) : (
+            <>
+              <IoLogOutOutline size={16} />
+              <span>Log out</span>
+            </>
+          )}
+        </button>
       </ul>
     </aside>
   );
