@@ -7,6 +7,7 @@ import { MdAlternateEmail } from "react-icons/md";
 import SubmitionButton from "../../../ui/SubmitionButton";
 import SpinnerMini from "../../../ui/SpinnerMini";
 import { useSession } from "../../../context/SessionContext";
+import AuthError from "../components/AuthError";
 
 const resetByEmailSchema = Yup.object().shape({
   email: Yup.string()
@@ -16,7 +17,7 @@ const resetByEmailSchema = Yup.object().shape({
 
 const SendResetPasswordForm = ({ setSended }) => {
   const dispatch = useDispatch();
-  const { status } = useSelector((state) => state.user);
+  const { status, error } = useSelector((state) => state.user);
   const { setEmail } = useSession();
 
   return (
@@ -37,7 +38,7 @@ const SendResetPasswordForm = ({ setSended }) => {
       }}
     >
       {() => (
-        <Form className="w-full">
+        <Form className="w-full flex flex-col gap-3">
           <InputField
             id="email"
             label="Enter your email address"
@@ -45,6 +46,9 @@ const SendResetPasswordForm = ({ setSended }) => {
             type="email"
             placeholder="Your Email"
           />
+
+          {error && <AuthError />}
+
           <SubmitionButton>
             {status === "loading" ? <SpinnerMini /> : "Reset your password"}
           </SubmitionButton>

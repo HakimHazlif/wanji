@@ -8,13 +8,14 @@ import { login } from "../api/apiAuth";
 import InputField from "../../../ui/InputField";
 import SubmitionButton from "../../../ui/SubmitionButton";
 import SpinnerMini from "../../../ui/SpinnerMini";
+import AuthError from "../components/AuthError";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
-  const { status } = useSelector((state) => state.user);
+  const { status, error } = useSelector((state) => state.user);
 
   return (
     <Formik
@@ -52,6 +53,9 @@ const LoginForm = () => {
             showPassword={showPassword}
             setShowPassword={setShowPassword}
           />
+
+          {error && <AuthError />}
+
           <div className="flex justify-center">
             <Link
               to="/reset-password"
@@ -61,7 +65,11 @@ const LoginForm = () => {
             </Link>
           </div>
           <SubmitionButton>
-            {status === "loading" ? <SpinnerMini /> : "Log up"}
+            {status === "loading" ? (
+              <SpinnerMini iconSize="md:text-2xl sm:text-xl text-lg" />
+            ) : (
+              "Log up"
+            )}
           </SubmitionButton>
         </Form>
       )}

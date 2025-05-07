@@ -1,9 +1,14 @@
 import { Link } from "react-router-dom";
 import LoginForm from "../forms/LoginForm";
 import SignupForm from "../forms/SignupForm";
+import { useSelector } from "react-redux";
 
 const SignLog = ({ type }) => {
   const isLogin = type === "login";
+
+  const { error } = useSelector((state) => state.user);
+
+  console.log(error);
 
   return (
     <main className="h-screen w-full flex justify-center items-center">

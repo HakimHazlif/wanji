@@ -8,11 +8,12 @@ import SpinnerMini from "../../../ui/SpinnerMini";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { updateAuthPassword } from "../api/apiAuth";
+import AuthError from "../components/AuthError";
 
 const UpdatePasswordForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { status } = useSelector((state) => state.user);
+  const { status, error } = useSelector((state) => state.user);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -54,6 +55,8 @@ const UpdatePasswordForm = () => {
             showPassword={showConfirmPassword}
             setShowPassword={setShowConfirmPassword}
           />
+
+          {error && <AuthError />}
 
           <SubmitionButton>
             {status === "loading" ? <SpinnerMini /> : "Change password"}

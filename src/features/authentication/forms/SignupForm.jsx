@@ -8,6 +8,7 @@ import { FaRegUser } from "react-icons/fa";
 import { MdAlternateEmail, MdOutlineLockOpen } from "react-icons/md";
 import { useState } from "react";
 import SpinnerMini from "../../../ui/SpinnerMini";
+import AuthError from "../components/AuthError";
 
 const SignupForm = () => {
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ const SignupForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const { status } = useSelector((state) => state.user);
+  const { status, error } = useSelector((state) => state.user);
 
   return (
     <Formik
@@ -79,6 +80,9 @@ const SignupForm = () => {
             showPassword={showConfirmPassword}
             setShowPassword={setShowConfirmPassword}
           />
+
+          {error && <AuthError />}
+
           <button
             className="bg-orange-amber text-white font-semibold text-lg py-2 w-full rounded-xl my-4"
             type="submit"
