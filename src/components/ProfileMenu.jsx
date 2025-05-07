@@ -11,12 +11,14 @@ import { logout } from "../features/authentication/api/apiAuth";
 import UserAvatar from "../ui/UserAvatar";
 import { FaRegStar } from "react-icons/fa6";
 import SpinnerMini from "../ui/SpinnerMini";
+import { useListsContext } from "../context/ListsContext";
 
 const ProfileMenu = ({ onClose, buttonRef }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const menuRef = useRef();
   const { isLoggedIn, user, status } = useSelector((state) => state.user);
+  const { setItemsStatusMap } = useListsContext();
 
   const { username, email } = user;
   const userPath = username.replace(" ", "-");
@@ -117,6 +119,11 @@ const ProfileMenu = ({ onClose, buttonRef }) => {
               .then(() => {
                 navigate("/");
                 onClose();
+                setItemsStatusMap({
+                  movie: new Map(),
+                  tv: new Map(),
+                  episode: new Map(),
+                });
               });
           }}
         >
