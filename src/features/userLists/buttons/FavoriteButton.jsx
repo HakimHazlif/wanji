@@ -7,12 +7,14 @@ import { useDeleteVisualMedia } from "../hooks/useDeleteVisualMedia";
 import SpinnerMini from "../../../ui/SpinnerMini";
 import { FaHeart } from "react-icons/fa";
 import { LuHeart } from "react-icons/lu";
+import { useSession } from "../../../context/SessionContext";
 
 const FavoriteButton = ({
   item,
   iconSize = "md:text-xl sm:text-lg text-base",
   width = "md:w-[100px] sm:w-[92px] w-[85px]",
 }) => {
+  const { handleLoginAction } = useSession();
   const { isLoggedIn } = useSelector((state) => state.user);
   const { isLoading: isStatusLoading } = useItemStatus();
 
@@ -94,6 +96,11 @@ const FavoriteButton = ({
     }
   }
 
+  function handleClickOnButton() {
+    if (isFavorited) handleLoginAction(handleDeleteFromFavorite);
+    else handleLoginAction(handleAddToFavorite);
+  }
+
   let content;
   if (isAdding || isDeleting || isLoading || isStatusLoading) {
     content = <SpinnerMini iconSize={iconSize} />;
@@ -120,7 +127,7 @@ const FavoriteButton = ({
           ? "bg-strawberry hover:bg-red-600"
           : "bg-[#0000]/30 backdrop-blur-lg hover:bg-[#0000]/60 "
       } ${width} ease-linear cursor-pointer hover:scale-105 transition-all duration-300 py-2 font-bold rounded-lg flex items-center justify-center gap-2 shadow-lg`}
-      onClick={isFavorited ? handleDeleteFromFavorite : handleAddToFavorite}
+      onClick={handleClickOnButton}
       disabled={isLoading || isAdding || isDeleting}
     >
       {content}

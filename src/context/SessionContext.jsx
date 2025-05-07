@@ -1,15 +1,37 @@
 import { createContext, useContext, useState } from "react";
+import toast from "react-hot-toast";
+import { IoWarning } from "react-icons/io5";
+import { useSelector } from "react-redux";
 
 const SessionContext = createContext();
 
 function SessionProvider({ children }) {
   const [email, setEmail] = useState("");
+  const { isLoggedIn } = useSelector((state) => state.user);
+
+  const handleLoginAction = (handleSuccess) => {
+    if (isLoggedIn) handleSuccess();
+    else
+      toast.custom(
+        () => (
+          <div className="bg-[#faf7f5] text-yellow-600 py-4 px-6 rounded-lg shadow-lg text-base max-w-[500px] font-medium flex gap-2 items-center">
+            <IoWarning size={25} />
+            <span>Please sign in to access this feature</span>
+          </div>
+        ),
+        {
+          duration: 6000,
+          position: "top-center",
+        }
+      );
+  };
 
   return (
     <SessionContext.Provider
       value={{
         email,
         setEmail,
+        handleLoginAction,
       }}
     >
       {children}

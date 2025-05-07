@@ -5,8 +5,10 @@ import { useListsContext } from "../../../context/ListsContext";
 import SpinnerMini from "../../../ui/SpinnerMini";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import RatingPopup from "../components/RatingPopup";
+import { useSession } from "../../../context/SessionContext";
 
 const RateUser = ({ item }) => {
+  const { handleLoginAction } = useSession();
   const { itemId, type } = item;
 
   const { isLoading: isAdding } = useAddRating();
@@ -24,7 +26,7 @@ const RateUser = ({ item }) => {
     <>
       <span>
         <button
-          onClick={() => setIsPopupOpen(true)}
+          onClick={() => handleLoginAction(() => setIsPopupOpen(true))}
           className="px-5 sm:py-[9px] xs:py-[7px] py-[9px] rounded-lg bg-[#0000]/30 backdrop-blur-lg hover:bg-[#0000]/60 ease-linear cursor-pointer hover:scale-105 transition-all text-white font-medium text-sm flex items-center justify-center gap-2 hover:text-orange-amber duration-300"
         >
           {rating ? (

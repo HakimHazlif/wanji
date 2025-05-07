@@ -6,12 +6,14 @@ import { useAddVisualMedia } from "../hooks/useAddVisualMedia";
 import { useDeleteVisualMedia } from "../hooks/useDeleteVisualMedia";
 import SpinnerMini from "../../../ui/SpinnerMini";
 import { BsBookmarkCheckFill, BsBookmarkPlus } from "react-icons/bs";
+import { useSession } from "../../../context/SessionContext";
 
 const WatchlistButton = ({
   item,
   iconSize = "md:text-xl sm:text-lg text-base",
   width = "md:w-[100px] sm:w-[92px] w-[85px]",
 }) => {
+  const { handleLoginAction } = useSession();
   const { isLoggedIn } = useSelector((state) => state.user);
   const { isLoading: isStatusLoading } = useItemStatus();
 
@@ -89,6 +91,11 @@ const WatchlistButton = ({
     }
   }
 
+  function handleClickOnButton() {
+    if (isWatchlist) handleLoginAction(handleDeleteFromWatchlist);
+    else handleLoginAction(handleAddToWatchlist);
+  }
+
   let content;
   if (isAdding || isDeleting || isLoading || isStatusLoading) {
     content = <SpinnerMini iconSize={iconSize} />;
@@ -115,7 +122,7 @@ const WatchlistButton = ({
           ? "bg-amber-500 hover:bg-amber-400"
           : "bg-[#0000]/30 backdrop-blur-lg hover:bg-[#0000]/60"
       } ${width} py-2 font-bold rounded-lg flex items-center justify-center gap-2 ease-linear cursor-pointer hover:scale-105 transition-all duration-300 shadow-lg`}
-      onClick={isWatchlist ? handleDeleteFromWatchlist : handleAddToWatchlist}
+      onClick={handleClickOnButton}
       disabled={isLoading || isAdding || isDeleting}
     >
       {content}

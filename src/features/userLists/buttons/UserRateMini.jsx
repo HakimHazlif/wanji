@@ -3,8 +3,10 @@ import { useState } from "react";
 import { useListsContext } from "../../../context/ListsContext";
 import { Box, Rating } from "@mui/material";
 import RatingPopup from "../components/RatingPopup";
+import { useSession } from "../../../context/SessionContext";
 
 const UserRateMini = ({ item, addStars = false, buttonStyle }) => {
+  const { handleLoginAction } = useSession();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const { itemsStatusMap } = useListsContext();
@@ -23,9 +25,9 @@ const UserRateMini = ({ item, addStars = false, buttonStyle }) => {
 
   return (
     <div onClick={(e) => e.stopPropagation()}>
-      <span
+      <button
         className="flex items-center justify-center gap-2 cursor-pointer"
-        onClick={handleOpenPopup}
+        onClick={() => handleLoginAction(handleOpenPopup)}
       >
         {addStars && (
           <Box className="flex items-center">
@@ -52,12 +54,12 @@ const UserRateMini = ({ item, addStars = false, buttonStyle }) => {
             />
           </Box>
         )}
-        <button className={buttonStyle}>
+        <div className={buttonStyle}>
           {!addStars && <FaStar className="text-white" />}
           {addStars && rating === 0 && <span>0</span>}
           {rating > 0 && <span>{rating}</span>}
-        </button>
-      </span>
+        </div>
+      </button>
       {isPopupOpen && (
         <RatingPopup
           isPopupOpen={isPopupOpen}
