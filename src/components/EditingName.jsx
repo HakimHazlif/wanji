@@ -5,7 +5,7 @@ import EditButton from "./EditButton";
 import { useSelector } from "react-redux";
 import InputEditButton from "./InputEditButton";
 import { ImPencil } from "react-icons/im";
-import { MAX_NAME_LENGTH } from "../constants/variables";
+import { MAX_NAME_LENGTH } from "../constants/inputRules";
 
 const EditingName = ({ list }) => {
   const { isLoading, renameList } = useRenameList();
