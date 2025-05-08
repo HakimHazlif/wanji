@@ -80,7 +80,11 @@ const Shows = () => {
         }
       />
       <section className="padding-x py-14">
-        <MediaSectionHeader title={title} description={description} />
+        <MediaSectionHeader
+          title={title}
+          description={description}
+          typeTag="tv-tag"
+        />
 
         <MediaGrid>
           {itemsList?.results?.map((tv) => (

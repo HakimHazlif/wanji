@@ -80,8 +80,13 @@ const Movies = () => {
           getImageViaPath(itemsList?.results?.[0]?.backdrop_path, 1280) || null
         }
       />
+
       <section className="padding-x py-24">
-        <MediaSectionHeader title={title} description={description} />
+        <MediaSectionHeader
+          title={title}
+          description={description}
+          typeTag="movies-tag"
+        />
 
         <MediaGrid>
           {itemsList?.results?.map((movie) => (
