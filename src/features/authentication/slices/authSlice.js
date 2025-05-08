@@ -42,11 +42,11 @@ const authSlice = createSlice({
         state.status = "Passwordresetted";
         state.error = null;
       })
-      .addCase(getUser.rejected, (state, action) => {
+      .addCase(getUser.rejected, (state) => {
         state.user = initialState.user;
         state.status = "idle";
-        state.error = action.error;
         state.isLoggedIn = false;
+        state.error = null;
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.user = action.payload;

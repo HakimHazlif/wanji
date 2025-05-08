@@ -250,26 +250,21 @@ export const updateAuthPassword = createAsyncThunk(
 export const getUser = createAsyncThunk(
   "userAuth/getUser",
   async (_, { rejectWithValue }) => {
-    try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-      if (user) {
-        return {
-          uid: user?.id ?? "",
-          username: user?.user_metadata?.username ?? "",
-          email: user?.email ?? "",
-          bio: user?.user_metadata?.bio ?? "",
-          avatar: user?.user_metadata?.avatar ?? "",
-          createdAt: user?.created_at ?? "",
-          lastSignin: user?.last_sign_in_at ?? "",
-          lastUpdate: user?.updated_at ?? "",
-        };
-      }
-      return rejectWithValue("User not logged in");
-    } catch {
-      return rejectWithValue("User not logged in");
-    }
+    if (user) {
+      return {
+        uid: user?.id ?? "",
+        username: user?.user_metadata?.username ?? "",
+        email: user?.email ?? "",
+        bio: user?.user_metadata?.bio ?? "",
+        avatar: user?.user_metadata?.avatar ?? "",
+        createdAt: user?.created_at ?? "",
+        lastSignin: user?.last_sign_in_at ?? "",
+        lastUpdate: user?.updated_at ?? "",
+      };
+    } else return rejectWithValue("");
   }
 );
