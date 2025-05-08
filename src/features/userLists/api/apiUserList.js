@@ -266,7 +266,7 @@ export const fetchItemsList = async (listId, list, startPoint = 0) => {
     return { items: [], listId, nextPoint: null };
   }
 
-  const showsUrl = list.slice(startPoint, startPoint + 50).map((show) => {
+  const showsUrl = list?.slice(startPoint, startPoint + 50).map((show) => {
     if (show.type === "movie" || show.type === "tv")
       return `${URL_Base}${show.type}/${show.item_id}?append_to_response=credits&language=en-US`;
     if (show.type === "episode")
@@ -274,7 +274,7 @@ export const fetchItemsList = async (listId, list, startPoint = 0) => {
   });
 
   const results = await axios.all(
-    showsUrl.map((url) => axios.get(url, options))
+    showsUrl?.map((url) => axios.get(url, options))
   );
   const items = results.map((result) => result.data);
 

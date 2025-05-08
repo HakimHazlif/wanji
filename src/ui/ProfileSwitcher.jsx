@@ -1,12 +1,9 @@
-import { useNavigate } from "react-router-dom";
 import ProfileMenu from "../components/ProfileMenu";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useRef, useState, useTransition } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getUser } from "../features/authentication/api/apiAuth";
 import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
-
-const styleClassName =
-  "font-medium font-roboto text-sm rounded-lg lg:w-[100px] md:w-[88px] w-[70px] duration-200 transition-colors";
+import AuthButton from "../features/authentication/components/AuthButton";
 
 const ProfileSwitcher = () => {
   const { transitionNavigate } = useTransitionNavigate();
@@ -65,18 +62,18 @@ const ProfileSwitcher = () => {
         </div>
       ) : (
         <div className="md:flex gap-2 hidden">
-          <button
-            className={`${styleClassName} bg-orange-100 text-amber-700 hover:bg-orange-200 hover:text-amber-800 py-1.5`}
-            onClick={() => transitionNavigate("/signup")}
+          <AuthButton
+            handleClick={() => transitionNavigate("/signup")}
+            style="border border-amber-300 hover:border-amber-500 text-amber-300 hover:text-amber-500 w-[90px]"
           >
             Sign up
-          </button>
-          <button
-            className={`${styleClassName} bg-orange-amber hover:bg-orange-coral text-amber-900 py-2`}
-            onClick={() => transitionNavigate("/login")}
+          </AuthButton>
+          <AuthButton
+            handleClick={() => transitionNavigate("/login")}
+            style="bg-amber-400 hover:bg-amber-300 text-amber-700 w-[90px]"
           >
             Log in
-          </button>
+          </AuthButton>
         </div>
       )}
     </div>

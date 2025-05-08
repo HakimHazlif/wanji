@@ -12,8 +12,6 @@ function ListsContextProvider({ children }) {
     episode: new Map(),
   });
 
-  console.log(itemsStatusMap);
-
   const { movies } = useMovies();
   const { tvShows } = useTvShows();
 

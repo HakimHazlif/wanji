@@ -54,8 +54,8 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <SessionProvider>
-          <ListsContextProvider>
+        <ListsContextProvider>
+          <SessionProvider>
             <Suspense key={location.pathname} fallback={<Spinner />}>
               <Routes>
                 <Route path="/" element={<AppLayout />}>
@@ -170,8 +170,8 @@ function App() {
                 },
               }}
             />
-          </ListsContextProvider>
-        </SessionProvider>
+          </SessionProvider>
+        </ListsContextProvider>
       </Provider>
     </QueryClientProvider>
   );

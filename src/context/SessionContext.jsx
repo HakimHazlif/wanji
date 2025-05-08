@@ -1,11 +1,17 @@
 import { createContext, useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { IoWarning } from "react-icons/io5";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useListsContext } from "./ListsContext";
+import { logout } from "../features/authentication/api/apiAuth";
 
 const SessionContext = createContext();
 
 function SessionProvider({ children }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { setItemsStatusMap } = useListsContext();
   const [email, setEmail] = useState("");
   const { isLoggedIn } = useSelector((state) => state.user);
 
@@ -26,12 +32,27 @@ function SessionProvider({ children }) {
       );
   };
 
+  function handleLogOut(onClose) {
+    dispatch(logout())
+      .unwrap()
+      .then(() => {
+        navigate("/");
+        onClose();
+        setItemsStatusMap({
+          movie: new Map(),
+          tv: new Map(),
+          episode: new Map(),
+        });
+      });
+  }
+
   return (
     <SessionContext.Provider
       value={{
         email,
         setEmail,
         handleLoginAction,
+        handleLogOut,
       }}
     >
       {children}

@@ -1,29 +1,21 @@
 import ProfileElements from "./ProfileElement";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
 import { FaRegUser } from "react-icons/fa";
-import { BsBookmarkCheck } from "react-icons/bs";
-import { IoMdHeartEmpty } from "react-icons/io";
-import { MdChecklistRtl } from "react-icons/md";
 import { IoLogOutOutline, IoSettingsOutline } from "react-icons/io5";
-import { logout } from "../features/authentication/api/apiAuth";
-import UserAvatar from "../ui/UserAvatar";
-import { FaRegStar } from "react-icons/fa6";
 import SpinnerMini from "../ui/SpinnerMini";
-import { useListsContext } from "../context/ListsContext";
+import AuthButton from "../features/authentication/components/AuthButton";
+import ProfileMenuHeader from "./ProfileMenuHeader";
+import ListsNav from "../features/userLists/components/ListsNav";
+import { useSession } from "../context/SessionContext";
 
 const ProfileMenu = ({ onClose, buttonRef }) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const menuRef = useRef();
-  const { isLoggedIn, user, status } = useSelector((state) => state.user);
-  const { setItemsStatusMap } = useListsContext();
+  const { user, status } = useSelector((state) => state.user);
+  const { handleLogOut } = useSession();
 
-  const { username, email } = user;
+  const { username } = user;
   const userPath = username.replace(" ", "-");
-
-  // const { watchlist, favoriteList, remainLists } = useLists();
 
   useEffect(() => {
     function handleDropMenu(e) {
@@ -46,23 +38,7 @@ const ProfileMenu = ({ onClose, buttonRef }) => {
       className="bg-white absolute right-0 sm:top-8 top-7 z-50 text-black w-[270px] max-w-[320px] min-w-[230px]  rounded-lg py-3 px-3"
       ref={menuRef}
     >
-      <Link
-        to={`/u/${userPath}`}
-        className="flex gap-4 justify-start items-center px-3 pt-3 pb-4 "
-        onClick={onClose}
-      >
-        <div className="relative">
-          <UserAvatar size="w-11 h-11" textSize="text-xl" />
-
-          {isLoggedIn && (
-            <div className="absolute z-30 w-[10px] h-[10px] bg-green-500 rounded-full bottom-[0px] right-0"></div>
-          )}
-        </div>
-        <div>
-          <p className="font-bold text-xl">{username}</p>
-          <p className="text-slate-500 font-medium text-sm">{email}</p>
-        </div>
-      </Link>
+      <ProfileMenuHeader onClose={onClose} />
 
       <ul className="font-medium">
         <ProfileElements
@@ -81,62 +57,24 @@ const ProfileMenu = ({ onClose, buttonRef }) => {
 
       <hr className="border-[1.5px] my-2" />
 
-      <ul className="font-medium">
-        <ProfileElements
-          itemName="My Watchlist"
-          route={`/u/${userPath}/Watchlist`}
-          icon={<BsBookmarkCheck />}
-          onClose={onClose}
-        />
-        <ProfileElements
-          itemName="My Favorites"
-          route={`/u/${userPath}/Favorites`}
-          icon={<IoMdHeartEmpty />}
-          onClose={onClose}
-        />
-        <ProfileElements
-          itemName="My Lists"
-          route={`/u/${userPath}/Lists`}
-          icon={<MdChecklistRtl />}
-          onClose={onClose}
-        />
-        <ProfileElements
-          itemName="My ratings"
-          route={`/u/${userPath}/Ratings`}
-          icon={<FaRegStar />}
-          onClose={onClose}
-        />
-      </ul>
+      <ListsNav onClose={onClose} />
 
       <hr className="border-[1.5px] my-2" />
 
-      <ul className="font-medium">
-        <button
-          className="w-full py-2 text-white font-medium flex items-center justify-center gap-2 bg-red-500 rounded-md"
-          onClick={() => {
-            dispatch(logout())
-              .unwrap()
-              .then(() => {
-                navigate("/");
-                onClose();
-                setItemsStatusMap({
-                  movie: new Map(),
-                  tv: new Map(),
-                  episode: new Map(),
-                });
-              });
-          }}
-        >
-          {status === "loading" ? (
-            <SpinnerMini />
-          ) : (
-            <>
-              <IoLogOutOutline size={16} />
-              <span>Log out</span>
-            </>
-          )}
-        </button>
-      </ul>
+      <AuthButton
+        style="w-full bg-red-500 text-white hover:bg-red-600"
+        handleClick={() => handleLogOut(onClose)}
+        isHandling={status === "loading"}
+      >
+        {status === "loading" ? (
+          <SpinnerMini />
+        ) : (
+          <>
+            <IoLogOutOutline size={16} />
+            <span>Log out</span>
+          </>
+        )}
+      </AuthButton>
     </aside>
   );
 };

@@ -1,12 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { FiMenu } from "react-icons/fi";
-import { Link, NavLink } from "react-router-dom";
-import ProfileElements from "../components/ProfileElement";
-import { FaFilm } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
+import NavMenuDrop from "../components/NavMenuDrop";
 import { IoHomeOutline, IoTvOutline } from "react-icons/io5";
-
-const styleClassName =
-  "font-medium font-roboto text-sm rounded-xl w-[100px] duration-200 transition-colors";
+import { FaFilm } from "react-icons/fa";
 
 const navbarElements = [
   {
@@ -29,25 +26,10 @@ const navbarElements = [
 const Navbar = () => {
   const [isNavMenuOpen, setIsNavMenuOpen] = useState(false);
   const buttonRef = useRef(null);
-  const navMenuRef = useRef(null);
 
-  useEffect(() => {
-    function handleClickOutsideOfPopup(e) {
-      if (
-        navMenuRef.current &&
-        !navMenuRef.current.contains(e.target) &&
-        buttonRef.current &&
-        !buttonRef.current.contains(e.target)
-      ) {
-        setIsNavMenuOpen(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutsideOfPopup);
-
-    return () =>
-      document.removeEventListener("mousedown", handleClickOutsideOfPopup);
-  }, []);
+  function handleClose() {
+    setIsNavMenuOpen(false);
+  }
 
   return (
     <div className="relative flex items-center">
@@ -64,6 +46,7 @@ const Navbar = () => {
           ))}
         </ul>
       </nav>
+
       <button
         ref={buttonRef}
         className="md:hidden hover:text-orange-coral text-slate-300 transition-colors duration-150"
@@ -74,39 +57,9 @@ const Navbar = () => {
       >
         <FiMenu size={30} />
       </button>
+
       {isNavMenuOpen && (
-        <nav
-          className="px-4 py-3 rounded-lg absolute right-0 top-full bg-white font-medium z-40 text-black"
-          ref={navMenuRef}
-        >
-          <ul className="grid grid-flow-row pb-1 border-b border-slate-400">
-            {navbarElements.map((nav) => (
-              <ProfileElements
-                key={nav.itemName}
-                icon={nav.icon}
-                itemName={nav.itemName}
-                route={nav.navigationPath}
-                onClose={() => setIsNavMenuOpen(false)}
-              />
-            ))}
-          </ul>
-          <div className="flex gap-2 mt-3 mb-1">
-            <Link to="/signup">
-              <button
-                className={`${styleClassName} border-2 border-orange-coral hover:bg-orange-200 hover:text-slate-900 py-1.5`}
-              >
-                Sign up
-              </button>
-            </Link>
-            <Link to="/login">
-              <button
-                className={`${styleClassName} bg-orange-amber hover:bg-orange-coral text-slate-900 py-2`}
-              >
-                Log in
-              </button>
-            </Link>
-          </div>
-        </nav>
+        <NavMenuDrop handleClose={handleClose} buttonRef={buttonRef} />
       )}
     </div>
   );
