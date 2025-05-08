@@ -8,14 +8,12 @@ import { lazy, Suspense, useMemo } from "react";
 import { useListsContext } from "../context/ListsContext";
 import { useItemsStatus } from "../features/userLists/hooks/useItemsStatus";
 import SuspenseList from "../ui/SuspenseList";
+import MediaList from "../components/MediaList";
 
 const RecommendedMedias = lazy(() =>
   import("../features/vitualMedia/components/RecommendedMedias")
 );
-const MoviesList = lazy(() =>
-  import("../features/movies/components/MoviesList")
-);
-const TvShowsList = lazy(() => import("../features/tv/components/TvShowsList"));
+
 const TrendingPeople = lazy(() =>
   import("../features/person/components/TrendingPeople")
 );
@@ -93,10 +91,14 @@ const Home = () => {
       ) : (
         <>
           <Suspense fallback={<SuspenseList />}>
-            <MoviesList listKey="popularMovies" movies={popularMovies} />
+            <MediaList
+              listKey="popularMovies"
+              medias={popularMovies}
+              category="movie"
+            />
           </Suspense>
           <Suspense fallback={<SuspenseList />}>
-            <TvShowsList listKey="popularTv" tvShows={popularTv} />
+            <MediaList listKey="popularTv" medias={popularTv} category="tv" />
           </Suspense>
           <Suspense fallback={<SuspenseList />}>
             <TrendingPeople />
@@ -105,19 +107,31 @@ const Home = () => {
             <RecommendedMedias />
           </Suspense>
           <Suspense fallback={<SuspenseList />}>
-            <MoviesList listKey="topRatedMovies" movies={topRatedMovies} />
+            <MediaList
+              listKey="upcomingMovies"
+              medias={upcomingMovies}
+              category="movie"
+            />
           </Suspense>
           <Suspense fallback={<SuspenseList />}>
-            <TvShowsList listKey="topRatedTv" tvShows={topRatedTv} />
+            <MediaList
+              listKey="airingTodayTV"
+              medias={airingTodayTV}
+              category="tv"
+            />
           </Suspense>
           <Suspense fallback={<SuspenseList />}>
             <PopularPeople />
           </Suspense>
           <Suspense fallback={<SuspenseList />}>
-            <MoviesList listKey="nowPlaynigMovies" movies={nowPlaynigMovies} />
+            <MediaList
+              listKey="nowPlaynigMovies"
+              medias={nowPlaynigMovies}
+              category="movie"
+            />
           </Suspense>
           <Suspense fallback={<SuspenseList />}>
-            <TvShowsList listKey="onTheAir" tvShows={onTheAir} />
+            <MediaList listKey="onTheAir" medias={onTheAir} category="tv" />
           </Suspense>
         </>
       )}

@@ -1,3 +1,51 @@
+export function getListTitleAndPath(keyword) {
+  const moviePathBase = "/movies?movies-tag";
+  const tvPathBase = "/tv-shows?tv-tag";
+
+  let path, listTitle;
+
+  switch (keyword) {
+    case "popularMovies":
+      path = `${moviePathBase}=popular&page=1`;
+      listTitle = "Popular Movies";
+      break;
+    case "popularTv":
+      listTitle = "Popular TV Shows";
+      path = `${tvPathBase}=popular&page=1`;
+      break;
+    case "topRatedMovies":
+      listTitle = "Top Rated Movies";
+      path = `${moviePathBase}=top_rated&page=1`;
+      break;
+    case "topRatedTv":
+      listTitle = "Top Rated TV Shows";
+      path = `${tvPathBase}=top_rated&page=1`;
+      break;
+    case "nowPlaynigMovies":
+      listTitle = "Now Playnig Movies";
+      path = `${moviePathBase}=now_playing&page=1`;
+      break;
+    case "onTheAir":
+      listTitle = "TV Shows on the Air";
+      path = `${tvPathBase}=on_the_air&page=1`;
+      break;
+    case "upcomingMovies":
+      listTitle = "Upcoming Movies";
+      path = `${moviePathBase}=upcoming&page=1`;
+      break;
+    case "airingTodayTV":
+      listTitle = "TV Shows Airing Today";
+      path = `${tvPathBase}=airing_today&page=1`;
+      break;
+    default:
+      path = `${moviePathBase}=popular&page=1`;
+      listTitle = "Popular Movies";
+      break;
+  }
+
+  return { path, listTitle };
+}
+
 export function getImageViaPath(path, width) {
   if (!path) return null;
   return `https://image.tmdb.org/t/p/w${width}${path}`;
