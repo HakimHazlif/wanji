@@ -9,6 +9,7 @@ import { MdAlternateEmail, MdOutlineLockOpen } from "react-icons/md";
 import { useState } from "react";
 import SpinnerMini from "../../../ui/SpinnerMini";
 import AuthError from "../components/AuthError";
+import SubmitionButton from "../../../ui/SubmitionButton";
 
 const SignupForm = () => {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const SignupForm = () => {
         setSubmitting(false);
       }}
     >
-      {({ isSubmitting }) => (
+      {() => (
         <Form className="text-sm flex flex-col gap-3">
           <InputField
             id="username"
@@ -83,13 +84,13 @@ const SignupForm = () => {
 
           {error && <AuthError />}
 
-          <button
-            className="bg-orange-amber text-white font-semibold text-lg py-2 w-full rounded-xl my-4"
-            type="submit"
-            disabled={isSubmitting}
-          >
-            {status === "loading" ? <SpinnerMini /> : "Sign up"}
-          </button>
+          <SubmitionButton>
+            {status === "loading" ? (
+              <SpinnerMini iconSize="md:text-2xl sm:text-xl text-lg" />
+            ) : (
+              "Sign up"
+            )}
+          </SubmitionButton>
         </Form>
       )}
     </Formik>

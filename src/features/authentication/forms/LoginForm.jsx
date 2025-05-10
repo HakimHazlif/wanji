@@ -68,7 +68,7 @@ const LoginForm = () => {
             {status === "loading" ? (
               <SpinnerMini iconSize="md:text-2xl sm:text-xl text-lg" />
             ) : (
-              "Log up"
+              "Log in"
             )}
           </SubmitionButton>
         </Form>
