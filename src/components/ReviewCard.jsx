@@ -114,7 +114,7 @@ const ReviewCard = ({
                   item={item}
                   addStars={true}
                   starsColorFilled="#ffbf00"
-                  buttonStyle="px-2 py-0.5 bg-orange-amber text-xs text-slate-800 font-medium rounded-sm"
+                  buttonStyle="w-[32px] text-center text-sm rounded-sm bg-orange-amber font-semibold text-gray-800"
                 />
               ) : (
                 <div className="flex items-center justify-center gap-2 cursor-pointer">
@@ -142,7 +142,7 @@ const ReviewCard = ({
                     />
                   </Box>
 
-                  <div className="px-2 py-0.5 bg-orange-amber text-xs text-slate-800 font-medium rounded-sm">
+                  <div className="w-[32px] text-center text-sm rounded-sm bg-orange-amber font-semibold text-gray-800">
                     <span>{rating}</span>
                   </div>
                 </div>
