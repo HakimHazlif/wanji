@@ -11,15 +11,17 @@ import SeasonsList from "../../season/components/SeasonsList";
 import { useParams } from "react-router-dom";
 import CreditCard from "../../person/components/CreditCard";
 import MediaOverview from "../components/MediaOverview";
+import { useItemStatus } from "../../userLists/hooks/useItemStatus";
 
 const VisualMedia = () => {
   const { isLoading, details, similar, images, credits, reviews } =
     useVitualMedia();
-  // const { isLoading: isStatusLoading } = useItemStatus();
 
   const { category } = useParams();
 
-  if (isLoading) return <Spinner />;
+  const { isLoading: isFeaturesLoading } = useItemStatus();
+
+  if (isLoading || isFeaturesLoading) return <Spinner />;
 
   return (
     <div className="pb-20 padding-x">

@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux";
-import { useItemStatus } from "../hooks/useItemStatus";
 import { useListsContext } from "../../../context/ListsContext";
 import { useLists } from "../hooks/useLists";
 import { useAddVisualMedia } from "../hooks/useAddVisualMedia";
@@ -16,7 +15,6 @@ const FavoriteButton = ({
 }) => {
   const { handleLoginAction } = useSession();
   const { isLoggedIn } = useSelector((state) => state.user);
-  const { isLoading: isStatusLoading } = useItemStatus();
 
   const { itemsStatusMap, setItemsStatusMap } = useListsContext();
 
@@ -102,7 +100,7 @@ const FavoriteButton = ({
   }
 
   let content;
-  if (isAdding || isDeleting || isLoading || isStatusLoading) {
+  if (isAdding || isDeleting || isLoading) {
     content = <SpinnerMini iconSize={iconSize} />;
   } else {
     if (isFavorited) {

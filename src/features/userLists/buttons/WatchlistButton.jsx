@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux";
-import { useItemStatus } from "../hooks/useItemStatus";
 import { useListsContext } from "../../../context/ListsContext";
 import { useLists } from "../hooks/useLists";
 import { useAddVisualMedia } from "../hooks/useAddVisualMedia";
@@ -15,7 +14,6 @@ const WatchlistButton = ({
 }) => {
   const { handleLoginAction } = useSession();
   const { isLoggedIn } = useSelector((state) => state.user);
-  const { isLoading: isStatusLoading } = useItemStatus();
 
   const { itemsStatusMap, setItemsStatusMap } = useListsContext();
   const { itemId, type, parentId, episode, season } = item;
@@ -97,7 +95,7 @@ const WatchlistButton = ({
   }
 
   let content;
-  if (isAdding || isDeleting || isLoading || isStatusLoading) {
+  if (isAdding || isDeleting || isLoading) {
     content = <SpinnerMini iconSize={iconSize} />;
   } else {
     if (isWatchlist) {
