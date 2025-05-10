@@ -118,15 +118,20 @@ const ListsMenu = ({ isPopupOpen, setIsPopupOpen, otherProps }) => {
           className="py-4 sm:px-4 px-1 border-b border-slate-700"
         >
           <div className="flex gap-2">
-            <input
-              type="text"
-              disabled={isLoading || isCreating || isAdding}
-              value={newListName}
-              maxLength={MAX_NAME_LENGTH}
-              onChange={(e) => setNewListName(e.target.value)}
-              placeholder="Create new list"
-              className="flex-1 px-3 py-2 bg-slate-800 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-coral"
-            />
+            <div className="relative flex-1">
+              <input
+                type="text"
+                disabled={isLoading || isCreating || isAdding}
+                value={newListName}
+                maxLength={MAX_NAME_LENGTH}
+                onChange={(e) => setNewListName(e.target.value)}
+                placeholder="Create new list"
+                className="w-full px-3 py-2 pr-14 bg-slate-800 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-coral"
+              />
+              <p className="text-gray-500 text-sm absolute right-2 top-1/2 -translate-y-1/2">
+                {newListName.length}/{MAX_NAME_LENGTH}
+              </p>
+            </div>
             <button
               type="submit"
               disabled={
