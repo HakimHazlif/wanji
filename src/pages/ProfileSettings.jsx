@@ -4,7 +4,7 @@ import { BiUpload } from "react-icons/bi";
 import { useState } from "react";
 import { updateProfile } from "../features/authentication/api/apiAuth";
 import UserAvatar from "../ui/UserAvatar";
-import { MAX_BIO_LENGTH, MAX_USERNAME_LENGTH } from "../constants/variables";
+import { MAX_BIO_LENGTH, MAX_USERNAME_LENGTH } from "../constants/inputRules";
 import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const ProfileEdit = () => {

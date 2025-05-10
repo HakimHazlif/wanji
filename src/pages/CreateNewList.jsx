@@ -8,7 +8,7 @@ import { useQueryClient } from "react-query";
 import {
   MAX_DESCRIPTION_LENGTH,
   MAX_NAME_LENGTH,
-} from "../constants/variables";
+} from "../constants/inputRules";
 import CancelButton from "../components/CancelButton";
 import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 import HeaderBackDrop from "../ui/HeaderBackDrop";

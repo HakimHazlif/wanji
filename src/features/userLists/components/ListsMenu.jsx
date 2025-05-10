@@ -6,7 +6,7 @@ import { useAddVisualMedia } from "../hooks/useAddVisualMedia";
 import { useCreateList } from "../hooks/useCreateList";
 import { getPictureUrlFormat } from "../../../utils/helper";
 import { FaInfoCircle, FaPlus } from "react-icons/fa";
-import { MAX_NAME_LENGTH } from "../../../constants/variables";
+import { MAX_NAME_LENGTH } from "../../../constants/inputRules";
 import SpinnerMini from "../../../ui/SpinnerMini";
 import ItemsList from "./ItemsList";
 
