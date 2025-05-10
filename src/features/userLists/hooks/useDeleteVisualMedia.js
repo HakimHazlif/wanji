@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "react-query";
 import { deleteVisualMedia as deleteVisualMediaApi } from "../api/apiUserActions";
+import toast from "react-hot-toast";
 
 export function useDeleteVisualMedia(type) {
   const queryClient = useQueryClient();
@@ -18,6 +19,11 @@ export function useDeleteVisualMedia(type) {
       queryClient.invalidateQueries({
         queryKey: ["itemStatus", type],
       });
+
+      toast.success(`This ${type} has been deleted successfully`);
+    },
+    onError: () => {
+      toast.error(`Failed to delete this ${type}`);
     },
   });
 
