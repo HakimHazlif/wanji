@@ -19,7 +19,7 @@ export async function fetchReviewsList(itemId, type, userId) {
     .eq("type", type)
     .neq("user_id", userId);
 
-  if (reviewsError) console.error(reviewsError);
+  if (reviewsError) throw new Error(reviewsError);
 
   const userIds = reviewsList.map((review) => review.user_id);
 
@@ -28,7 +28,7 @@ export async function fetchReviewsList(itemId, type, userId) {
     .select("*")
     .in("id", userIds);
 
-  if (profilesError) console.error(profilesError);
+  if (profilesError) throw new Error(profilesError);
 
   const userMap = new Map(
     profiles.map((user) => [
@@ -47,7 +47,7 @@ export async function fetchReviewsList(itemId, type, userId) {
     .eq("type", type)
     .in("user_id", userIds);
 
-  if (ratingsError) console.error(ratingsError);
+  if (ratingsError) throw new Error(ratingsError);
 
   const ratingMap = new Map(ratings.map((r) => [r.user_id, r.rate]));
 

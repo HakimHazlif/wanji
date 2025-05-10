@@ -11,8 +11,8 @@ export function useReview() {
     queryKey: ["review"],
     queryFn: () => fetchUserReview(uid, id, category),
     enabled: uid !== "",
-    onError: (err) => {
-      throw new Error(err.message);
+    onError: () => {
+      throw new Error("Failed to load user review");
     },
   });
 

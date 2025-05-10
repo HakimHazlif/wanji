@@ -71,16 +71,6 @@ export async function fetchItemsStatus({
       ratingsResponse.data.map((item) => [Number(item.item_id), item.rate])
     );
 
-    // return itemIds.reduce((acc, id) => {
-    //   acc[id] = {
-    //     inWatchlist: watchlistSet.has(id),
-    //     inFavorites: favoritesSet.has(id),
-    //     rating: ratingsMap.get(id) || null,
-    //   };
-
-    //   return acc;
-    // }, {});
-
     return new Map(
       itemIds.map((id) => [
         id,
