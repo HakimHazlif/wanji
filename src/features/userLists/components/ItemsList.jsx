@@ -9,7 +9,7 @@ import SpinnerMini from "../../../ui/SpinnerMini";
 import { LuListCheck } from "react-icons/lu";
 import Ellipsis from "../../../ui/Ellipsis";
 import { SlOptionsVertical } from "react-icons/sl";
-import ItemsListOption from "../../../ui/ItemsListOption";
+import ItemsListOptions from "../../../ui/ItemsListOptions";
 import DeleteListConfirm from "../../../ui/DeleteListConfirm";
 
 const ItemsList = ({ list, item }) => {
@@ -149,13 +149,13 @@ const ItemsList = ({ list, item }) => {
         <button
           onClick={handleTogglePopup}
           ref={buttonRef}
-          className="hover:bg-blue-200 rounded-full w-7 h-7 flex justify-center items-center "
+          className="hover:bg-slate-700 rounded-full w-7 h-7 flex justify-center items-center "
         >
           <SlOptionsVertical className="w-4 h-4 text-slate-400" />
         </button>
 
         {isOptionOpen && (
-          <ItemsListOption
+          <ItemsListOptions
             buttonRef={buttonRef}
             setIsOptionOpen={setIsOptionOpen}
             isAdded={isAdded}

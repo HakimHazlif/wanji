@@ -21,7 +21,7 @@ const DeleteListConfirm = ({
     } else if (type === "deleteList") {
       return (
         <>
-          the list <span className="font-semibold text-red-500">name</span>
+          the list <span className="font-semibold text-red-500">{name}</span>
         </>
       );
     } else if (type === "deleteReview") {

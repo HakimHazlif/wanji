@@ -124,7 +124,7 @@ export async function fetchItemStatus(
 
     const itemMap = new Map();
 
-    itemMap.set(id, {
+    itemMap.set(Number(id), {
       inWatchlist,
       inFavorites,
       rating: ratingsResponse?.data[0]?.rate ?? null,
