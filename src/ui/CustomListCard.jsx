@@ -107,9 +107,7 @@ const CustomListCard = ({ list }) => {
                 className="text-blue-400 hover:bg-slate-700 hover:text-blue-600 rounded-full p-2 transition-colors"
                 onClick={() =>
                   navigate(
-                    `/u/${username.replace(" ", "-")}/list/edit?listId=${
-                      list.id
-                    }`
+                    `/u/${username.replace(" ", "-")}/list/${list.id}/edit`
                   )
                 }
               >

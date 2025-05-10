@@ -125,7 +125,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="u/:user/:list/edit"
+                    path="u/:user/list/:listId/edit"
                     element={
                       <ListContextProvider>
                         <ProtectRoute>

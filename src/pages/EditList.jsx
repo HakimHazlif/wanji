@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { bgPopcorn } from "../assets/icons";
 import { useLists } from "../features/userLists/hooks/useLists";
 import { useSelector } from "react-redux";
@@ -13,8 +13,7 @@ import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 
 const EditList = () => {
   const { transitionNavigate } = useTransitionNavigate();
-  const [searchParams] = useSearchParams();
-  const listId = searchParams.get("listId");
+  const { listId } = useParams();
   const { username } = useSelector((state) => state.user.user);
 
   const { lists } = useLists();

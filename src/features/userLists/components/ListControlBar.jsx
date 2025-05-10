@@ -13,10 +13,7 @@ import { useSelector } from "react-redux";
 const ListControlBar = ({ itemsList, list, listId, forEditList }) => {
   const { username } = useSelector((state) => state.user.user);
 
-  const linkToEditList = `/u/${username.replace(
-    " ",
-    "-"
-  )}/edit?listId=${listId}`;
+  const linkToEditList = `/u/${username.replace(" ", "-")}/list/${listId}/edit`;
 
   const {
     isGridView,
