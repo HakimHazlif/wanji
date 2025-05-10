@@ -95,7 +95,7 @@ const MediaReviews = ({ reviews, show, category }) => {
         <div>
           <div className="mb-6">
             <h3 className="heading-title-2 font-semibold ">
-              TMDB Users&apos; Reviews
+              TMDB User Reviews
             </h3>
           </div>
           <div className="grid grid-flow-row gap-3 ">
