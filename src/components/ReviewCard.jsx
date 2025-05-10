@@ -1,11 +1,10 @@
 import { useRef, useState } from "react";
 import { getImageViaPath, updateDateFormat } from "../utils/helper";
-import { FaStar } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";
-import { Box, Rating } from "@mui/material";
-import RatingPopup from "../features/userLists/components/RatingPopup";
 import ReviewPopup from "../features/reviews/components/ReviewPopup";
+import UserRateMini from "../features/userLists/buttons/UserRateMini";
 import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
+import { Box, Rating } from "@mui/material";
 
 const ReviewCard = ({
   review,
@@ -15,7 +14,6 @@ const ReviewCard = ({
   type = null,
 }) => {
   const { transitionNavigate } = useTransitionNavigate();
-  const [openRatingPopup, setOpenRatingPopup] = useState(false);
   const [openReviewPopup, setOpenReviewPopup] = useState(false);
   const [isReadMore, setIsReadMore] = useState(false);
   const { author, author_details, content, created_at, url } = review;
@@ -29,11 +27,6 @@ const ReviewCard = ({
     season: null,
   };
 
-  const formattedContent = content
-    .split("\r\n\r\n")
-    .map((paragraph) => `<p>${paragraph}</p>`)
-    .join("");
-
   const avatar =
     author_details?.avatar_path?.slice(0, 5) === "https"
       ? author_details?.avatar_path
@@ -41,57 +34,7 @@ const ReviewCard = ({
 
   const getFirstLetterFromAuthor = author[0];
 
-  const renderRating = () => {
-    const rating = isProfileList ? null : author_details?.rating ?? 0;
-
-    return (
-      <>
-        {rating !== null && (
-          <div
-            className={`flex items-center gap-2  ${
-              isUser ? "cursor-pointer" : ""
-            }`}
-            onClick={() => {
-              isUser && setOpenRatingPopup(true);
-            }}
-          >
-            <Box className="flex items-center">
-              <Rating
-                name="rating"
-                value={Math.floor(rating / 2)}
-                precision={0.5}
-                readOnly
-                max={5}
-                size="small"
-                sx={{
-                  "& .MuiRating-icon": {
-                    color: "#9CA3AF",
-                  },
-                  "& .MuiRating-iconFilled": {
-                    color: "#FFA726",
-                  },
-                }}
-              />
-            </Box>
-            <div className="px-2 py-0.5 text-xs rounded-sm bg-orange-amber text-gray-800 font-semibold">
-              {rating === 0 ? (
-                <FaStar className="text-white" size={14} />
-              ) : (
-                rating.toFixed(1)
-              )}
-            </div>
-          </div>
-        )}
-        {openRatingPopup && (
-          <RatingPopup
-            setClosePopup={() => setOpenRatingPopup(false)}
-            item={item}
-            showRate={rating}
-          />
-        )}
-      </>
-    );
-  };
+  const rating = isProfileList ? null : author_details?.rating ?? 0;
 
   return (
     <div
@@ -166,7 +109,45 @@ const ReviewCard = ({
 
           <div className="w-full">
             <div className="mb-5 flex w-full justify-between">
-              {renderRating()}
+              {rating !== null && isUser ? (
+                <UserRateMini
+                  item={item}
+                  addStars={true}
+                  starsColorFilled="#ffbf00"
+                  buttonStyle="px-2 py-0.5 bg-orange-amber text-xs text-slate-800 font-medium rounded-sm"
+                />
+              ) : (
+                <div className="flex items-center justify-center gap-2 cursor-pointer">
+                  <Box className="flex items-center">
+                    <Rating
+                      value={Number(rating) / 2}
+                      precision={0.1}
+                      readOnly
+                      max={5}
+                      sx={{
+                        "& .MuiRating-icon": {
+                          fontSize: `18px`,
+                          "@media (min-width: 425px)": { fontSize: "20px" },
+                          "@media (min-width: 640px)": { fontSize: "22px" },
+                          "@media (min-width: 768px)": { fontSize: "23px" },
+                          "@media (min-width: 1024px)": { fontSize: "23px" },
+                        },
+                        "& .MuiRating-iconEmpty": {
+                          color: "#ffffff40",
+                        },
+                        "& .MuiRating-iconFilled": {
+                          color: "#ffbf00",
+                        },
+                      }}
+                    />
+                  </Box>
+
+                  <div className="px-2 py-0.5 bg-orange-amber text-xs text-slate-800 font-medium rounded-sm">
+                    <span>{rating}</span>
+                  </div>
+                </div>
+              )}
+
               {url && (
                 <a
                   href={url}
@@ -183,12 +164,6 @@ const ReviewCard = ({
             </div>
             <div>
               <div className="w-full">
-                {/* <div
-                  className={`w-full md:text-base text-sm ${
-                    !isReadMore && "line-clamp-4"
-                  } space-y-4`}
-                  dangerouslySetInnerHTML={{ __html: formattedContent }}
-                /> */}
                 <p
                   className={`whitespace-pre-wrap w-full md:text-base text-sm ${
                     !isReadMore && "line-clamp-4"

@@ -59,7 +59,7 @@ const MediaReviews = ({ reviews, show, category }) => {
         </span>
       </div>
       {uid && (
-        <div className="mb-20">
+        <div className="mb-10">
           <div className="mb-6">
             <h3 className="heading-title-2 font-semibold ">My Review</h3>
           </div>
@@ -77,10 +77,10 @@ const MediaReviews = ({ reviews, show, category }) => {
       )}
 
       {usersReview?.length > 0 && (
-        <div className="mb-14">
+        <div className="mb-10">
           <div className="mb-6">
             <h3 className="heading-title-2 font-semibold ">
-              Community Reviews
+              Wanji User Reviews
             </h3>
           </div>
           <div className="grid grid-flow-row gap-3 w-full">

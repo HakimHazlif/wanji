@@ -5,7 +5,12 @@ import { Box, Rating } from "@mui/material";
 import RatingPopup from "../components/RatingPopup";
 import { useSession } from "../../../context/SessionContext";
 
-const UserRateMini = ({ item, addStars = false, buttonStyle }) => {
+const UserRateMini = ({
+  item,
+  addStars = false,
+  buttonStyle,
+  starsColorFilled = "#ff7f50",
+}) => {
   const { handleLoginAction } = useSession();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
@@ -27,7 +32,7 @@ const UserRateMini = ({ item, addStars = false, buttonStyle }) => {
     <div onClick={(e) => e.stopPropagation()}>
       <button
         className="flex items-center justify-center gap-2 cursor-pointer"
-        onClick={() => handleLoginAction(handleOpenPopup)}
+        onClick={(e) => handleLoginAction(() => handleOpenPopup(e))}
       >
         {addStars && (
           <Box className="flex items-center">
@@ -48,7 +53,7 @@ const UserRateMini = ({ item, addStars = false, buttonStyle }) => {
                   color: "#ffffff40",
                 },
                 "& .MuiRating-iconFilled": {
-                  color: "#ff7f50",
+                  color: starsColorFilled,
                 },
               }}
             />
