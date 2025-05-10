@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
-import { useReview } from "../../reviews/hooks/useReview";
+import { useReview } from "../hooks/useReview";
 import { useRatingList } from "../../userLists/hooks/useRatingList";
-import { useMediaReviews } from "../../reviews/hooks/useMediaReviews";
+import { useMediaReviews } from "../hooks/useMediaReviews";
 import { useMemo } from "react";
 import Spinner from "../../../ui/Spinner";
 import ReviewCard from "../../../components/ReviewCard";
-import UserReview from "../../reviews/components/UserReview";
+import UserReview from "./UserReview";
 
 const MediaReviews = ({ reviews, show, category }) => {
   const { username, avatar, uid } = useSelector((state) => state.user.user);

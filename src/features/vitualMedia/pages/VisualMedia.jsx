@@ -2,7 +2,7 @@ import { useVitualMedia } from "../hooks/useVitualMedia";
 import MediaIntro from "../components/MediaIntro";
 import MediaDetails from "../components/MediaDetails";
 import ListScroll from "../../../components/ListScroll";
-import MediaReviews from "../components/MediaReviews";
+import MediaReviews from "../../reviews/components/MediaReviews";
 import Spinner from "../../../ui/Spinner";
 import { getPictureUrlFormat } from "../../../utils/helper";
 import MediaCard from "../../../ui/MediaCard";

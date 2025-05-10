@@ -11,9 +11,7 @@ const ReviewInput = ({
       </label>
       <textarea
         value={reviewInput}
-        onChange={(e) =>
-          setReviewInput(e.target.value.replace(/\n/g, "\r\n\r\n"))
-        }
+        onChange={(e) => setReviewInput(e.target.value)}
         name=""
         id=""
         rows={8}

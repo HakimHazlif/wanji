@@ -183,12 +183,19 @@ const ReviewCard = ({
             </div>
             <div>
               <div className="w-full">
-                <div
+                {/* <div
                   className={`w-full md:text-base text-sm ${
                     !isReadMore && "line-clamp-4"
                   } space-y-4`}
                   dangerouslySetInnerHTML={{ __html: formattedContent }}
-                />
+                /> */}
+                <p
+                  className={`whitespace-pre-wrap w-full md:text-base text-sm ${
+                    !isReadMore && "line-clamp-4"
+                  } space-y-4`}
+                >
+                  {content}
+                </p>
 
                 {content.length > 300 && (
                   <button
