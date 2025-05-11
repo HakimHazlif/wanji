@@ -29,7 +29,7 @@ const LoginForm = () => {
 
         dispatch(login({ email, password }))
           .unwrap()
-          .then(() => navigate("/"));
+          .then(() => navigate(-1));
 
         setSubmitting(false);
       }}
