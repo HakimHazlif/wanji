@@ -101,7 +101,7 @@ export function ratePercentage(rate) {
 }
 
 export function formatNumber(num) {
-  return num % 1 !== 0 ? num.toFixed(1) : num;
+  return Number.isInteger(num) ? num.toString() : num.toFixed(1);
 }
 
 export function getPictureUrlFormat(paramId, width = 1280) {

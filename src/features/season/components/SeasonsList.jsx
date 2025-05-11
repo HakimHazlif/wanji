@@ -1,5 +1,9 @@
 import { useVitualMedia } from "../../vitualMedia/hooks/useVitualMedia";
-import { getPictureUrlFormat, getYearMonthFormat } from "../../../utils/helper";
+import {
+  formatNumber,
+  getPictureUrlFormat,
+  getYearMonthFormat,
+} from "../../../utils/helper";
 import ListScroll from "../../../components/ListScroll";
 import { FaStar } from "react-icons/fa";
 import EmptyPoster from "../../../components/EmptyPoster";
@@ -40,9 +44,11 @@ const SeasonsList = () => {
                   <span className="text-[12px] text-slate-400 font-medium">
                     {getYearMonthFormat(season.air_date)}
                   </span>
-                  <div className="rounded-md bg-orange-amber w-[45px] h-6  flex items-center justify-center gap-1 text-xs font-bold">
+                  <div className="rounded-md bg-orange-amber w-[45px] h-6 flex items-center justify-center gap-1 text-xs font-bold">
                     <FaStar />
-                    <p>{season.vote_average.toFixed(1)}</p>
+                    <p className="text-gray-600">
+                      {formatNumber(season.vote_average)}
+                    </p>
                   </div>
                 </div>
 

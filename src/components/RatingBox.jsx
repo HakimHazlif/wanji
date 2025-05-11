@@ -15,7 +15,6 @@ const RatingBox = ({
     "@media (min-width: 1024px)": { fontSize: "30px" },
   },
   initialStars = 10,
-  minWidth = 640,
 }) => {
   const [maxRating, setMaxRating] = useState(initialStars);
 
@@ -58,7 +57,9 @@ const RatingBox = ({
           }}
         />
       </Box>
-      <span className={styleOfSpan}>{formatNumber(rating)}</span>
+      <span className={`text-center ${styleOfSpan}`}>
+        {formatNumber(rating)}
+      </span>
     </div>
   );
 };

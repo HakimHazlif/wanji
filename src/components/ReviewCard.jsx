@@ -1,5 +1,9 @@
 import { useRef, useState } from "react";
-import { getImageViaPath, updateDateFormat } from "../utils/helper";
+import {
+  formatNumber,
+  getImageViaPath,
+  updateDateFormat,
+} from "../utils/helper";
 import { FiExternalLink } from "react-icons/fi";
 import ReviewPopup from "../features/reviews/components/ReviewPopup";
 import UserRateMini from "../features/userLists/buttons/UserRateMini";
@@ -143,7 +147,7 @@ const ReviewCard = ({
                   </Box>
 
                   <div className="w-[32px] text-center text-sm rounded-sm bg-orange-amber font-semibold text-gray-800">
-                    <span>{rating}</span>
+                    <span>{formatNumber(rating)}</span>
                   </div>
                 </div>
               )}

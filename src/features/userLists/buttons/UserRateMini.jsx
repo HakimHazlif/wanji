@@ -4,6 +4,7 @@ import { useListsContext } from "../../../context/ListsContext";
 import { Box, Rating } from "@mui/material";
 import RatingPopup from "../components/RatingPopup";
 import { useSession } from "../../../context/SessionContext";
+import { formatNumber } from "../../../utils/helper";
 
 const UserRateMini = ({
   item,
@@ -62,7 +63,7 @@ const UserRateMini = ({
         <div className={buttonStyle}>
           {!addStars && <FaStar className="text-white" />}
           {addStars && rating === 0 && <span>0</span>}
-          {rating > 0 && <span>{rating}</span>}
+          {rating > 0 && <span>{formatNumber(rating)}</span>}
         </div>
       </button>
       {isPopupOpen && (
