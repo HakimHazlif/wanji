@@ -14,7 +14,7 @@ export function useSpecificItems(id, type) {
   const isIdExist = listName === "for_you" ? (id ? true : false) : true;
 
   const { data: itemsList, isLoading: isItemsLoading } = useQuery({
-    queryKey: ["specificMovies", listName, page],
+    queryKey: ["specificMovies", listName, page, type],
     queryFn: () => getItemsByList(listName, page, id, type),
     enabled: isIdExist && !!page && !!listName && !!type,
     onError: () => {
