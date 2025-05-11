@@ -19,7 +19,8 @@ const Genre = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
-  const totalPages = genreList?.total_pages > 50 ? 50 : genreList?.total_pages;
+  const totalPages = genreList?.total_pages;
+  //  > 50 ? 50 : genreList?.total_pages;
 
   if (isLoading) return <Spinner />;
 
@@ -30,7 +31,7 @@ const Genre = () => {
           getImageViaPath(genreList?.results?.[0]?.backdrop_path, 1280) || null
         }
       />
-      <section className="padding-x py-14">
+      <section className="padding-x py-32">
         <MediaSectionHeader
           title={`${updatedGenre} ${
             category === "movie" ? "Movies" : "TV Shows"

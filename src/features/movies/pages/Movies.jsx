@@ -34,7 +34,8 @@ const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const movieTag = searchParams.get("movies-tag");
   const currentPage = Number(searchParams.get("page")) || 1;
-  const totalPages = itemsList?.total_pages > 50 ? 50 : itemsList?.total_pages;
+  const totalPages = itemsList?.total_pages;
+  // > 50 ? 50 : itemsList?.total_pages;
 
   useEffect(() => {
     switch (movieTag) {

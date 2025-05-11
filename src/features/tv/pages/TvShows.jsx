@@ -33,7 +33,8 @@ const Shows = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const tvTag = searchParams.get("tv-tag");
   const currentPage = Number(searchParams.get("page")) || 1;
-  const totalPages = itemsList?.total_pages > 50 ? 50 : itemsList?.total_pages;
+  const totalPages = itemsList?.total_pages;
+  // > 50 ? 50 : itemsList?.total_pages;
 
   useEffect(() => {
     switch (tvTag) {
