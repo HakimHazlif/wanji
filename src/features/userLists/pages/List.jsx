@@ -38,7 +38,6 @@ const List = () => {
     }
     return null;
   }, [list, remainLists, watchlist, favoriteList, selectedListId, ratingList]);
-  // console.log(targetList);
 
   const listData = useMemo(() => {
     if (list === "Lists" && !selectedListId)

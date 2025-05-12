@@ -123,8 +123,6 @@ const ListView = ({ targetList, forEditList = false }) => {
     return sortedList;
   }, [filterdList, selectedOption]);
 
-  console.log(sortedList);
-
   useEffect(() => {
     const itemsLength = itemsList?.length ?? 0;
     const ListLength = list?.length ?? 0;

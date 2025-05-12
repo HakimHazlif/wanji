@@ -27,8 +27,6 @@ const MediaCardRow = ({
   const title = show?.title || show?.name;
   const poster = show?.poster_path || show?.still_path;
 
-  // console.log(show);
-
   const item = {
     itemId: id,
     type: category,

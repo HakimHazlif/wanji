@@ -22,12 +22,6 @@ const FavoriteButton = ({
 
   const isFavorited = itemsStatusMap?.[type]?.get(itemId)?.inFavorites ?? false;
 
-  // if (type === "tv" && itemId === 2261) {
-  //   console.log({ isFavorited, itemsStatusMap });
-  // }
-
-  // const isFavorited = typeMap?.get(String(itemId))?.get("inFavorites") ?? false;
-
   const { favoriteList, isLoading } = useLists();
   const { isLoading: isAdding, addVisualMedia } = useAddVisualMedia(type);
   const { isLoading: isDeleting, deleteVisualMedia } =
