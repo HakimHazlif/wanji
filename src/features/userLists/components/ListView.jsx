@@ -21,7 +21,7 @@ const ListView = ({ targetList, forEditList = false }) => {
   const { isLoading: isDeleting, deleteVisualMedia } = useDeleteVisualMedia();
   const { ratingList } = useRatingList();
 
-  const listId = targetList?.id ?? uid;
+  const listId = targetList?.id ?? uid; // uid for ratingList
   const list = targetList?.items_list ?? ratingList;
 
   const {
@@ -123,6 +123,8 @@ const ListView = ({ targetList, forEditList = false }) => {
     return sortedList;
   }, [filterdList, selectedOption]);
 
+  console.log(sortedList);
+
   useEffect(() => {
     const itemsLength = itemsList?.length ?? 0;
     const ListLength = list?.length ?? 0;
@@ -168,13 +170,7 @@ const ListView = ({ targetList, forEditList = false }) => {
                     <MediaCard
                       key={item?.id || index}
                       show={item}
-                      parentShowId={
-                        item?.air_date &&
-                        targetList?.length > 0 &&
-                        targetList?.filter(
-                          (show) => show?.item_id == item?.id
-                        )?.[0]?.parent_id
-                      }
+                      parentShowId={item?.parent_id}
                       category={
                         item?.title
                           ? "movie"
@@ -197,13 +193,7 @@ const ListView = ({ targetList, forEditList = false }) => {
                     <MediaCardRow
                       key={item?.id || index}
                       show={item}
-                      parentShowId={
-                        item?.air_date &&
-                        targetList?.length > 0 &&
-                        targetList?.filter(
-                          (show) => show?.item_id == item?.id
-                        )?.[0]?.parent_id
-                      }
+                      parentShowId={item?.parent_id}
                       category={
                         item?.title
                           ? "movie"

@@ -23,7 +23,7 @@ const MediaCardRowHeader = ({ link, show, category, item }) => {
   } = show;
   const title = show?.title || show?.name;
 
-  console.log(link);
+  // console.log(link);
 
   function handleDate() {
     if (show["release_date"]) return getYearFormat(show?.release_date);

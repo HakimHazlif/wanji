@@ -23,7 +23,7 @@ const MediaCard = memo(function MediaCard({
   show,
   category,
   additions = true,
-  parentShowId = null,
+  parentShowId = null, // for reuseabl this MediaCard
   deleteVisualMedia = null,
   forEditList = false,
   isDeleting = false,
@@ -47,7 +47,7 @@ const MediaCard = memo(function MediaCard({
   function handleNavigate() {
     if (category === "episode")
       transitionNavigate(
-        `/tv/${parentShowId}}/season/${season_number}/episode/${episode_number}`
+        `/tv/${parentShowId}/season/${season_number}/episode/${episode_number}`
       );
     else transitionNavigate(`/${category}/${id}`);
   }
