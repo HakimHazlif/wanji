@@ -101,6 +101,7 @@ export function ratePercentage(rate) {
 }
 
 export function formatNumber(num) {
+  if (!num) return;
   return Number.isInteger(num) ? num.toString() : num.toFixed(1);
 }
 

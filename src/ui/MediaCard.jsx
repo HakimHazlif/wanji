@@ -1,4 +1,5 @@
 import {
+  formatNumber,
   getPictureUrlFormat,
   getYearFormat,
   updateDateFormat,
@@ -42,7 +43,6 @@ const MediaCard = memo(function MediaCard({
     else if (show?.first_air_date) return getYearFormat(show?.first_air_date);
     else if (show?.air_date) return updateDateFormat(show?.air_date);
   }, [show?.release_date, show?.air_date, show?.first_air_date]);
-  const roundedRate = useMemo(() => rate?.toFixed(1), [rate]);
 
   function handleNavigate() {
     if (category === "episode")
@@ -82,7 +82,7 @@ const MediaCard = memo(function MediaCard({
             <div className="flex md:gap-3 gap-2">
               <div className="rounded-md bg-orange-amber text-gray-700 w-[45px] h-6 flex items-center justify-center gap-1 text-xs font-bold">
                 <FaStar className="text-white" />
-                <p>{roundedRate}</p>
+                <p>{formatNumber(rate)}</p>
               </div>
 
               <Suspense fallback={<SuspenseRateMini />}>
