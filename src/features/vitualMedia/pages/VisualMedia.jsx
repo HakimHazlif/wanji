@@ -12,6 +12,7 @@ import { useParams } from "react-router-dom";
 import CreditCard from "../../person/components/CreditCard";
 import MediaOverview from "../components/MediaOverview";
 import { useItemStatus } from "../../userLists/hooks/useItemStatus";
+import { useItemsStatus } from "../../userLists/hooks/useItemsStatus";
 
 const VisualMedia = () => {
   const { isLoading, details, similar, images, credits, reviews } =
@@ -19,9 +20,12 @@ const VisualMedia = () => {
 
   const { category } = useParams();
 
-  const { isLoading: isFeaturesLoading } = useItemStatus();
+  const similarIds = similar?.map((media) => media.id);
 
-  if (isLoading || isFeaturesLoading) return <Spinner />;
+  const { isLoading: isFeaturesLoading } = useItemStatus();
+  const { isLoading: isStatusLoading } = useItemsStatus(similarIds, category);
+
+  if (isLoading || isFeaturesLoading || isStatusLoading) return <Spinner />;
 
   return (
     <div className="pb-20 padding-x">
