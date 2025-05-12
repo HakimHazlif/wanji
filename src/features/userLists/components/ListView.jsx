@@ -229,7 +229,7 @@ const ListView = ({ targetList, forEditList = false }) => {
       </div>
 
       {hasNextPage && (
-        <div className="flex justify-center w-full">
+        <div className="flex justify-center w-full mt-10">
           <LoadMoreButton
             isFetching={isFetchingNextPage}
             fetchMore={fetchNextPage}

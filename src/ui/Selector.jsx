@@ -14,8 +14,8 @@ const Selector = ({ value, onChange, options }) => {
         onChange={onChange}
         className="bg-bluish-black outline-none shadow-none text-white rounded-full py-[10px] px-4 pr-8 appearance-none lg:text-base md:text-sm text-xs"
       >
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
+        {options.map((option, index) => (
+          <option key={option.label + index} value={option.value}>
             {option.label}
           </option>
         ))}

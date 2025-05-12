@@ -38,6 +38,7 @@ const List = () => {
     }
     return null;
   }, [list, remainLists, watchlist, favoriteList, selectedListId, ratingList]);
+  // console.log(targetList);
 
   const listData = useMemo(() => {
     if (list === "Lists" && !selectedListId)
@@ -46,14 +47,15 @@ const List = () => {
         createdDate: null,
         listName: list,
         description:
-          "Create and customize lists to organize your movies and TV shows however you like. Whether by genre, mood, or theme, these lists give you full control over curating and managing your collection.",
+          "A customizable space to organize your movies and TV shows by genre, mood, theme, or any system that fits your style. Perfect for curating content the way you like.",
       };
     if (list === "Ratings") {
       return {
         listId: null,
         createdDate: null,
         listName: list,
-        description: ".",
+        description:
+          "A space to record your personal ratings for movies, shows and episodes you've watched. Reflect on what you enjoyed, compare opinions, and build a history of your viewing experience.",
       };
     }
 
