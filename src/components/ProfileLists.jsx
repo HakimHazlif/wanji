@@ -85,6 +85,8 @@ const ProfileLists = () => {
       review: reviewsListItems?.[index]?.review,
       created_at: reviewsListItems?.[index]?.created_at,
     }));
+
+    // if I add reviews for episode should use here mapItemsWithParentId
   }, [shortReviews, reviewsListItems]);
 
   function navigateToPopularMovies() {

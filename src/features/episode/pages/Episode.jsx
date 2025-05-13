@@ -20,9 +20,7 @@ const Episode = () => {
     episodeCredits,
   } = useEpisode();
 
-  // console.log(episodeDetails);
   const { id, episodeNum, seasonNum } = useParams();
-  // const { id: itemId } = episodeDetails;
 
   const { isLoading: isFeaturesLoading } = useItemStatus(
     episodeDetails?.id,

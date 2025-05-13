@@ -36,6 +36,8 @@ const ProfileReviews = ({ reviews }) => {
             <ReviewCard
               key={index}
               review={review}
+              show={reviews[index]}
+              isUser={true}
               isProfileList={true}
               type={review.type}
             />
