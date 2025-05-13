@@ -18,11 +18,11 @@ const VisualMedia = () => {
   const { isLoading, details, similar, images, credits, reviews } =
     useVitualMedia();
 
-  const { category } = useParams();
+  const { category, id } = useParams();
 
   const similarIds = similar?.map((media) => media.id);
 
-  const { isLoading: isFeaturesLoading } = useItemStatus();
+  const { isLoading: isFeaturesLoading } = useItemStatus(id, category);
   const { isLoading: isStatusLoading } = useItemsStatus(similarIds, category);
 
   if (isLoading || isFeaturesLoading || isStatusLoading) return <Spinner />;

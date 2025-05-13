@@ -52,7 +52,7 @@ const ItemsList = ({ list, item }) => {
                 rating: null,
                 remainLists: new Set([list.id]),
               });
-            else newMap.get(itemId).remainLists.add(list.id);
+            else newMap.get(itemId)?.remainLists?.add(list.id);
 
             return {
               ...prev,
@@ -81,7 +81,7 @@ const ItemsList = ({ list, item }) => {
                   rating: null,
                   remainLists: new Set([list.id]),
                 });
-              else newMap.get(itemId).remainLists.delete(list.id);
+              else newMap.get(itemId)?.remainLists?.delete(list.id);
 
               return {
                 ...prev,

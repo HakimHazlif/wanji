@@ -92,18 +92,26 @@ export async function fetchItemStatus(
   type,
   watchlistId,
   favoriteListId,
-  userId
+  userId,
+  parentId = null
 ) {
   if (!id || !type || !userId) return new Map();
 
   try {
-    const [listsResponse, ratingsResponse] = await Promise.all([
-      supabase
-        .from("lists")
-        .select("id, items_list!inner(item_id)")
-        .eq("user_id", userId)
-        .eq("items_list.item_id", id),
+    let listsQuery = supabase
+      .from("lists")
+      .select("id, items_list!inner(item_id)")
+      .eq("user_id", userId)
+      .eq("items_list.item_id", id);
 
+    if (parentId === null) {
+      listsQuery = listsQuery.is("items_list.parent_id", null);
+    } else if (parentId !== undefined) {
+      listsQuery = listsQuery.eq("items_list.parent_id", parentId);
+    }
+
+    const [listsResponse, ratingsResponse] = await Promise.all([
+      listsQuery,
       supabase
         .from("rating")
         .select("rate")
@@ -130,6 +138,8 @@ export async function fetchItemStatus(
       rating: ratingsResponse?.data[0]?.rate ?? null,
       remainLists: listIds,
     });
+
+    console.log(itemMap);
 
     return itemMap;
   } catch (error) {

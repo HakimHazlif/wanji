@@ -9,11 +9,14 @@ import { FaInfoCircle, FaPlus } from "react-icons/fa";
 import { MAX_NAME_LENGTH } from "../../../constants/inputRules";
 import SpinnerMini from "../../../ui/SpinnerMini";
 import ItemsList from "./ItemsList";
+import { useItemStatus } from "../hooks/useItemStatus";
 
 const ListsMenu = ({ isPopupOpen, setIsPopupOpen, otherProps }) => {
   const { image, showTitle, item } = otherProps;
   const { itemId, type, parentId, episode, season } = item;
   const { setItemsStatusMap } = useListsContext();
+
+  const { isLoading: isStatusLoading } = useItemStatus(itemId, type, parentId);
 
   const [newListName, setNewListName] = useState("");
   const popupRef = useRef();
@@ -71,6 +74,8 @@ const ListsMenu = ({ isPopupOpen, setIsPopupOpen, otherProps }) => {
     }
   }
 
+  const loading = isLoading || isCreating || isAdding || isStatusLoading;
+
   useEffect(() => {
     function handleClickOutside(e) {
       if (popupRef.current && !popupRef.current.contains(e.target))
@@ -121,7 +126,7 @@ const ListsMenu = ({ isPopupOpen, setIsPopupOpen, otherProps }) => {
             <div className="relative flex-1">
               <input
                 type="text"
-                disabled={isLoading || isCreating || isAdding}
+                disabled={loading}
                 value={newListName}
                 maxLength={MAX_NAME_LENGTH}
                 onChange={(e) => setNewListName(e.target.value)}
@@ -134,9 +139,7 @@ const ListsMenu = ({ isPopupOpen, setIsPopupOpen, otherProps }) => {
             </div>
             <button
               type="submit"
-              disabled={
-                !newListName.trim() || isLoading || isCreating || isAdding
-              }
+              disabled={!newListName.trim() || loading}
               className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isCreating ? <SpinnerMini iconSize="text-xl" /> : <FaPlus />}

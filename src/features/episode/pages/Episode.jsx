@@ -1,9 +1,11 @@
+import { useParams } from "react-router-dom";
 import ListScroll from "../../../components/ListScroll";
 import MediaImages from "../../../components/MediaImages";
 import HeaderBackDrop from "../../../ui/HeaderBackDrop";
 import Spinner from "../../../ui/Spinner";
 import { getPictureUrlFormat } from "../../../utils/helper";
 import CreditCard from "../../person/components/CreditCard";
+import { useItemStatus } from "../../userLists/hooks/useItemStatus";
 import EpisodeCard from "../components/EpisodeCard";
 import EpisodeInfo from "../components/EpisodeInfo";
 
@@ -18,13 +20,22 @@ const Episode = () => {
     episodeCredits,
   } = useEpisode();
 
-  if (isLoading) return <Spinner />;
+  // console.log(episodeDetails);
+  const { id, episodeNum, seasonNum } = useParams();
+  // const { id: itemId } = episodeDetails;
 
-  const { episode_number, season_number } = episodeDetails;
+  const { isLoading: isFeaturesLoading } = useItemStatus(
+    episodeDetails?.id,
+    "episode",
+    id
+  );
+
+  if (isLoading || isFeaturesLoading) return <Spinner />;
+
   // const showId = episodesList?.[0]?.show_id;
 
   const episodes = episodesList?.filter(
-    (episode) => episode.episode_number !== episode_number
+    (episode) => episode.episode_number !== Number(episodeNum)
   );
 
   return (
@@ -87,7 +98,7 @@ const Episode = () => {
       <section className="pt-28">
         <div className="mb-10 border-b border-slate-700 pb-4 flex justify-between items-center">
           <h2 className="heading-title-1">
-            The Reset of The Episodes of Season {season_number}
+            The Reset of The Episodes of Season {seasonNum}
           </h2>
         </div>
         <div className="grid grid-flow-row gap-8">
