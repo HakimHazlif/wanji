@@ -153,7 +153,12 @@ const ListsMenu = ({ isPopupOpen, setIsPopupOpen, otherProps }) => {
           "
           >
             {remainLists?.map((list) => (
-              <ItemsList list={list} key={list.id} item={item} />
+              <ItemsList
+                list={list}
+                key={list.id}
+                item={item}
+                isLoading={isStatusLoading}
+              />
             ))}
           </div>
         </div>

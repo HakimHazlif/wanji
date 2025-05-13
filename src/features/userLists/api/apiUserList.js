@@ -139,8 +139,6 @@ export async function fetchItemStatus(
       remainLists: listIds,
     });
 
-    console.log(itemMap);
-
     return itemMap;
   } catch (error) {
     console.error("Error fetching item status:", error);

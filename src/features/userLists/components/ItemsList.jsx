@@ -12,7 +12,7 @@ import { SlOptionsVertical } from "react-icons/sl";
 import ItemsListOptions from "../../../ui/ItemsListOptions";
 import DeleteListConfirm from "../../../ui/DeleteListConfirm";
 
-const ItemsList = ({ list, item }) => {
+const ItemsList = ({ list, item, isLoading }) => {
   const buttonRef = useRef();
   const { itemId, type, parentId, episode, season } = item;
   const { itemsStatusMap, setItemsStatusMap } = useListsContext();
@@ -115,7 +115,7 @@ const ItemsList = ({ list, item }) => {
 
   let content;
 
-  if (isAdding || isDeleting) {
+  if (isAdding || isDeleting || isDeletingList || isLoading) {
     content = <SpinnerMini size={25} />;
   } else {
     if (isAdded) {
