@@ -8,7 +8,7 @@ export function useRatingList() {
 
   const { data, isLoading } = useQuery({
     queryKey: ["ratingList", uid],
-    queryFn: () => getRatingList({ userId: uid }),
+    queryFn: () => getRatingList(uid),
     enabled: !!uid,
     onError: () => {
       toast.error("Failed to load ratings");

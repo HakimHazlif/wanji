@@ -169,17 +169,16 @@ export async function fetchLastFavorite(favoriteId) {
   return { movieId: movie?.[0]?.item_id, tvId: tvShow?.[0]?.item_id };
 }
 
-export async function getRatingList({ userId }) {
-  if (userId) {
-    const { data: rating, error } = await supabase
-      .from("rating")
-      .select("*")
-      .eq("user_id", userId);
+export async function getRatingList(userId) {
+  if (!userId) throw new Error("You are not logged in");
+  const { data: rating, error } = await supabase
+    .from("rating")
+    .select("*")
+    .eq("user_id", userId);
 
-    if (error) throw new Error(error);
+  if (error) throw new Error(error);
 
-    return { rating };
-  }
+  return { rating };
 }
 
 export async function getVisualMediaRating({ itemId, type, userId }) {
@@ -258,9 +257,9 @@ export const fetchShortLists = async (
 };
 
 export const fetchItemsList = async (listId, list, startPoint = 0) => {
-  if (!listId) return "listId is undefinded";
+  if (!listId) throw new Error("list ID is undefinded");
 
-  if (list?.length === 0 || list?.length <= startPoint) {
+  if (!list || list?.length === 0 || list?.length <= startPoint) {
     return { items: [], listId, nextPoint: null };
   }
 
@@ -288,4 +287,15 @@ export const fetchItemsList = async (listId, list, startPoint = 0) => {
   });
 
   return { items: items, listId, nextPoint: startPoint + items.length };
+};
+
+export const clearAllItemsFromList = async ({ id }) => {
+  if (!id) throw new Error("List ID is undefinded");
+
+  const { error } = await supabase
+    .from("items_list")
+    .delete()
+    .eq("list_id", id);
+
+  if (error) throw new Error("The clearing process has failed");
 };

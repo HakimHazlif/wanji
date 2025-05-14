@@ -125,12 +125,13 @@ const ListView = ({ targetList, forEditList = false }) => {
 
   useEffect(() => {
     const itemsLength = itemsList?.length ?? 0;
-    const ListLength = list?.length ?? 0;
+    const listLength = list?.length ?? 0;
+    console.log("from first:", listLength, itemsLength);
 
-    if (itemsLength + 1 === ListLength) {
+    if (itemsLength + 1 === listLength || listLength > itemsLength)
       fetchNextPage();
-    }
-    if (itemsLength - 1 === ListLength) {
+
+    if (itemsLength - 1 === listLength || listLength < itemsLength) {
       queryClient.removeQueries(["itemsList", listId]);
       refetch({ refetchPage: (page, index) => index === 0 });
     }
@@ -144,7 +145,14 @@ const ListView = ({ targetList, forEditList = false }) => {
     queryClient,
   ]);
 
-  if (isLoading) return <Spinner />;
+  // useEffect(() => {
+  //   console.log('from second:',listLength, itemsLength);
+
+  //   if (listLength === 0)
+
+  // }, [])
+
+  // if (isLoading) return <Spinner />;
 
   if (!listId || !itemsList || !itemsList?.length || !itemsList[0])
     return <EmptyList />;
@@ -158,63 +166,71 @@ const ListView = ({ targetList, forEditList = false }) => {
         forEditList={forEditList}
       />
 
-      <div>
-        {sortedList?.length > 0 ? (
-          isGridView ? (
-            <MediaGrid>
-              {sortedList?.length > 0 &&
-                sortedList?.map((item, index) => {
-                  return (
-                    <MediaCard
-                      key={item?.id || index}
-                      show={item}
-                      parentShowId={item?.parent_id}
-                      category={
-                        item?.title
-                          ? "movie"
-                          : item?.air_date
-                          ? "episode"
-                          : "tv"
-                      }
-                      forEditList={forEditList}
-                      deleteVisualMedia={forEditList ? handleDeleteItem : null}
-                      isDeleting={isDeleting}
-                    />
-                  );
-                })}
-            </MediaGrid>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <div>
+          {sortedList?.length > 0 ? (
+            isGridView ? (
+              <MediaGrid>
+                {sortedList?.length > 0 &&
+                  sortedList?.map((item, index) => {
+                    return (
+                      <MediaCard
+                        key={item?.id || index}
+                        show={item}
+                        parentShowId={item?.parent_id}
+                        category={
+                          item?.title
+                            ? "movie"
+                            : item?.air_date
+                            ? "episode"
+                            : "tv"
+                        }
+                        forEditList={forEditList}
+                        deleteVisualMedia={
+                          forEditList ? handleDeleteItem : null
+                        }
+                        isDeleting={isDeleting}
+                      />
+                    );
+                  })}
+              </MediaGrid>
+            ) : (
+              <MediaGrid>
+                {sortedList?.length > 0 &&
+                  sortedList?.map((item, index) => {
+                    return (
+                      <MediaCardRow
+                        key={item?.id || index}
+                        show={item}
+                        parentShowId={item?.parent_id}
+                        category={
+                          item?.title
+                            ? "movie"
+                            : item?.air_date
+                            ? "episode"
+                            : "tv"
+                        }
+                        forEditList={forEditList}
+                        deleteVisualMedia={
+                          forEditList ? handleDeleteItem : null
+                        }
+                        isDeleting={isDeleting}
+                      />
+                    );
+                  })}
+              </MediaGrid>
+            )
           ) : (
-            <MediaGrid>
-              {sortedList?.length > 0 &&
-                sortedList?.map((item, index) => {
-                  return (
-                    <MediaCardRow
-                      key={item?.id || index}
-                      show={item}
-                      parentShowId={item?.parent_id}
-                      category={
-                        item?.title
-                          ? "movie"
-                          : item?.air_date
-                          ? "episode"
-                          : "tv"
-                      }
-                      forEditList={forEditList}
-                      deleteVisualMedia={forEditList ? handleDeleteItem : null}
-                      isDeleting={isDeleting}
-                    />
-                  );
-                })}
-            </MediaGrid>
-          )
-        ) : (
-          <div className="bg-bluish-black flex justify-center items-center rounded-md w-full h-[200px] mt-8">
-            <p className="text-gray-300 font-medium">
-              There are no {filteredOption} listed here
-            </p>
-          </div>
-        )}
-      </div>
+            <div className="bg-bluish-black flex justify-center items-center rounded-md w-full h-[200px] mt-8">
+              <p className="text-gray-300 font-medium">
+                There are no {filteredOption} listed here
+              </p>
+            </div>
+          )}
+        </div>
+      )}
 
       {hasNextPage && (
         <div className="flex justify-center w-full mt-10">

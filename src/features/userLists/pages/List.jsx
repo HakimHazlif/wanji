@@ -112,7 +112,7 @@ const List = () => {
         </div>
       </section>
 
-      {!isListsPage && (
+      {!isListsPage && list !== "Ratings" && (
         <div className="mb-20 flex gap-5 items-center">
           <AddingSearchBar list={targetList} />
         </div>

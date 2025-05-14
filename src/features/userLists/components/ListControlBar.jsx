@@ -9,9 +9,19 @@ import MiniMultiRadio from "../../../components/MiniMultiRadio";
 import { IoFilter } from "react-icons/io5";
 import { BiSort } from "react-icons/bi";
 import { useSelector } from "react-redux";
+import { GrClearOption } from "react-icons/gr";
+import { useParams } from "react-router-dom";
+import DeleteListConfirm from "../../../ui/DeleteListConfirm";
+import { useState } from "react";
+import { useClearList } from "../hooks/useClearList";
 
 const ListControlBar = ({ itemsList, list, listId, forEditList }) => {
+  const [openClearConfirm, setOpenClearConfirm] = useState(false);
   const { username } = useSelector((state) => state.user.user);
+
+  const { clearList, isLoading } = useClearList();
+
+  const { list: listParam } = useParams();
 
   const linkToEditList = `/u/${username.replace(" ", "-")}/list/${listId}/edit`;
 
@@ -42,6 +52,10 @@ const ListControlBar = ({ itemsList, list, listId, forEditList }) => {
     },
   ];
 
+  function clearAllItems() {
+    clearList({ id: listId });
+  }
+
   return (
     <div className="flex justify-between items-center border-b border-slate-600 pb-5">
       <div>
@@ -56,11 +70,21 @@ const ListControlBar = ({ itemsList, list, listId, forEditList }) => {
 
       <div className="flex items-center lg:gap-4 gap-2">
         <div className="md:flex hidden items-center lg:gap-4 gap-2">
-          {!forEditList && (
+          {!forEditList && listParam !== "Ratings" && (
             <EditNavigateButton navigateLink={linkToEditList}>
               <FaPencil />
               <span>Edit List</span>
             </EditNavigateButton>
+          )}
+
+          {forEditList && listParam !== "Ratings" && (
+            <button
+              className="flex gap-2 items-center justify-center font-medium py-[10px] px-8 bg-bluish-black hover:bg-bluish-black/50 duration-200 transition-colors rounded-full lg:text-base md:text-sm text-xs"
+              onClick={() => setOpenClearConfirm((prev) => !prev)}
+            >
+              <GrClearOption />
+              <span>Clear All</span>
+            </button>
           )}
 
           <Selector
@@ -77,13 +101,22 @@ const ListControlBar = ({ itemsList, list, listId, forEditList }) => {
         </div>
 
         <div className="md:hidden flex items-center md:gap-4 gap-2">
-          {!forEditList && (
+          {!forEditList && listParam !== "Ratings" && (
             <EditNavigateButton
               navigateLink={linkToEditList}
               style="w-9 h-9 bg-bluish-black hover:bg-bluish-black/50"
             >
               <FaPencil size={18} />
             </EditNavigateButton>
+          )}
+
+          {forEditList && listParam !== "Ratings" && (
+            <button
+              className="flex gap-2 items-center justify-center font-medium w-9 h-9 bg-bluish-black hover:bg-bluish-black/50 duration-200 transition-colors rounded-full lg:text-base md:text-sm text-xs"
+              onClick={() => setOpenClearConfirm((prev) => !prev)}
+            >
+              <GrClearOption size={18} />
+            </button>
           )}
 
           <div className="w-9 h-9 rounded-full flex justify-center items-center bg-bluish-black hover:bg-bluish-black/50">
@@ -122,6 +155,16 @@ const ListControlBar = ({ itemsList, list, listId, forEditList }) => {
           <FaListUl size={20} />
         </button>
       </div>
+
+      {openClearConfirm && (
+        <DeleteListConfirm
+          onClose={() => setOpenClearConfirm(false)}
+          onDelete={clearAllItems}
+          name="all the items"
+          type="deleteItem"
+          isDeleting={isLoading}
+        />
+      )}
     </div>
   );
 };
