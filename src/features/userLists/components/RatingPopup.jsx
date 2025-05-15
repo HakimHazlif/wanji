@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { useUpadetRating } from "../hooks/useUpadetRating";
 import { useAddRating } from "../hooks/useAddRating";
 import { IoClose } from "react-icons/io5";
-import { Rating } from "@mui/material";
+// import { Rating } from "@mui/material";
+import Rating from "../../../ui/Rating";
 import SpinnerMini from "../../../ui/SpinnerMini";
 
 const RatingPopup = ({ setClosePopup, item, showRate = 0 }) => {
@@ -13,7 +14,6 @@ const RatingPopup = ({ setClosePopup, item, showRate = 0 }) => {
   const { setItemsStatusMap } = useListsContext();
 
   const [rating, setRating] = useState(Number(showRate));
-  const [hover, setHover] = useState(0);
   const popupRef = useRef();
 
   const { itemId, type, parentId, season, episode } = item;
@@ -122,29 +122,14 @@ const RatingPopup = ({ setClosePopup, item, showRate = 0 }) => {
 
           <div className="flex flex-col items-center gap-4">
             <Rating
-              name="rating"
+              maxRating={10}
               value={rating}
               precision={0.5}
-              max={10}
-              size="large"
-              onChange={(_, newValue) => setRating(newValue)}
-              onChangeActive={(_, newHover) => setHover(newHover)}
-              sx={{
-                "& .MuiRating-icon": {
-                  color: "#9CA3AF",
-                },
-                "& .MuiRating-iconFilled": {
-                  color: "#FFA726",
-                },
-                "& .MuiRating-iconHover": {
-                  color: "#FFB74D",
-                },
-              }}
+              onChange={setRating}
+              size={30}
             />
 
-            <div className="text-lg font-medium text-white">
-              {hover > 0 ? hover : rating}/10
-            </div>
+            <div className="text-lg font-medium text-white">{rating}/10</div>
 
             <button
               onClick={handleSubmit}

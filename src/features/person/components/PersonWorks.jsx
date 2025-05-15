@@ -1,51 +1,42 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { usePerson } from "../hooks/usePerson";
 import WorkCard from "./WorkCard";
 import EmptyDepartment from "../../../ui/EmptyDepartment";
 import WorksControlBar from "./WorksControlBar";
 import { usePersonWorksContext } from "../../../context/PersonWorksContext";
 import Spinner from "../../../ui/Spinner";
+import LoadMoreButton from "../../../components/LoadMoreButton";
 
 const PersonWorks = () => {
   const { activeTab, departmentFilter, sortBy } = usePersonWorksContext();
 
-  const { personMovies, personTv, personDetails, isLoading } = usePerson();
+  const { personDetails, isLoading, castMovies, crewMovies, castTv, crewTv } =
+    usePerson();
 
-  console.log({ personMovies, personTv });
+  const [firstIndex, setFirstIndex] = useState(0);
+  const [media, setMedia] = useState([]);
 
   const filteredWorks = useMemo(() => {
-    const castMovies = personMovies?.cast || [];
-    const crewMovies = personMovies?.crew || [];
-    const castTvShows = personTv?.cast || [];
-    const crewTvhows = personTv?.crew || [];
-
     let works;
 
     if (departmentFilter === "all") {
       works =
         activeTab === "movies"
           ? [...castMovies, ...crewMovies]
-          : [...castTvShows, ...crewTvhows];
+          : [...castTv, ...crewTv];
     } else if (departmentFilter === "Acting") {
-      works = activeTab === "movies" ? castMovies : castTvShows;
+      works = activeTab === "movies" ? castMovies : castTv;
     } else {
-      const crewWorks = activeTab === "movies" ? crewMovies : crewTvhows;
+      const crewWorks = activeTab === "movies" ? crewMovies : crewTv;
 
       works = crewWorks?.filter((work) => work.department === departmentFilter);
     }
 
     return works;
-  }, [
-    personMovies?.cast,
-    personMovies?.crew,
-    personTv?.cast,
-    personTv?.crew,
-    activeTab,
-    departmentFilter,
-  ]);
+  }, [castMovies, crewMovies, castTv, crewTv, activeTab, departmentFilter]);
 
   const sortedWorks = useMemo(() => {
-    return filteredWorks?.sort((a, b) => {
+    const sortedWorks = filteredWorks?.sort((a, b) => {
       switch (sortBy) {
         case "date-latest":
           return (
@@ -68,8 +59,19 @@ const PersonWorks = () => {
           );
       }
     });
+
+    setMedia(sortedWorks?.slice(0, 20));
+    setFirstIndex(20);
+    return sortedWorks;
   }, [filteredWorks, sortBy]);
 
+  function handleGetMoreMedia() {
+    const newMedia = sortedWorks?.slice(firstIndex, firstIndex + 20);
+    setMedia((prev) => [...prev, ...newMedia]);
+    setFirstIndex((prev) => prev + 20);
+  }
+
+  console.log({ firstIndex, worksLength: sortedWorks?.length });
   return (
     <section className="space-y-6 ">
       <WorksControlBar />
@@ -77,15 +79,25 @@ const PersonWorks = () => {
         <Spinner />
       ) : (
         <section className="pt-10">
-          {sortedWorks?.length > 0 ? (
-            <div className="grid grid-flow-row gap-8">
-              {sortedWorks.map((work) => (
-                <WorkCard
-                  key={work.credit_id}
-                  show={work}
-                  category={work["title"] ? "movie" : "tv"}
-                />
-              ))}
+          {media?.length > 0 ? (
+            <div>
+              <div className="grid grid-flow-row gap-8">
+                {media.map((work) => (
+                  <WorkCard
+                    key={work.credit_id}
+                    show={work}
+                    category={work["title"] ? "movie" : "tv"}
+                  />
+                ))}
+              </div>
+              <div className="flex justify-center mt-10">
+                {firstIndex < sortedWorks?.length && (
+                  <LoadMoreButton
+                    fetchMore={handleGetMoreMedia}
+                    isFetching={false}
+                  />
+                )}
+              </div>
             </div>
           ) : (
             <EmptyDepartment name={personDetails?.name} />

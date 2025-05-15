@@ -111,6 +111,7 @@ const MediaIntro = () => {
             <RatingBox
               rating={vote_average}
               styleOfSpan="w-[40px] py-0.5 rounded-sm bg-orange-amber text-gray-800 font-semibold lg:text-base md:text-sm text-xs"
+              size={30}
             />
 
             <ul className="flex-1 flex flex-wrap gap-2 gap-y-1 mt-3">

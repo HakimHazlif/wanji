@@ -109,13 +109,6 @@ const EpisodeCard = ({ episode }) => {
           <RatingBox
             rating={vote_average}
             styleOfSpan="px-2 text-sm rounded-sm bg-orange-coral font-semibold text-gray-800"
-            starsSize={{
-              fontSize: `18px`,
-              "@media (min-width: 425px)": { fontSize: "20px" },
-              "@media (min-width: 640px)": { fontSize: "22px" },
-              "@media (min-width: 768px)": { fontSize: "23px" },
-              "@media (min-width: 1024px)": { fontSize: "23px" },
-            }}
             initialStars={5}
           />
 

@@ -1,17 +1,12 @@
 import { FaStar } from "react-icons/fa";
 import { useState } from "react";
 import { useListsContext } from "../../../context/ListsContext";
-import { Box, Rating } from "@mui/material";
 import RatingPopup from "../components/RatingPopup";
 import { useSession } from "../../../context/SessionContext";
 import { formatNumber } from "../../../utils/helper";
+import Rating from "../../../ui/Rating";
 
-const UserRateMini = ({
-  item,
-  addStars = false,
-  buttonStyle,
-  starsColorFilled = "#ff7f50",
-}) => {
+const UserRateMini = ({ item, addStars = false, buttonStyle }) => {
   const { handleLoginAction } = useSession();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
@@ -36,8 +31,14 @@ const UserRateMini = ({
         onClick={(e) => handleLoginAction(() => handleOpenPopup(e))}
       >
         {addStars && (
-          <Box className="flex items-center">
+          <div className="flex items-center">
             <Rating
+              value={Number(rating) / 2}
+              precision={0.1}
+              readOnly={true}
+              size={20}
+            />
+            {/* <Rating
               value={Number(rating) / 2}
               precision={0.1}
               readOnly
@@ -57,8 +58,8 @@ const UserRateMini = ({
                   color: starsColorFilled,
                 },
               }}
-            />
-          </Box>
+            /> */}
+          </div>
         )}
         <div className={buttonStyle}>
           {!addStars && <FaStar className="text-white" />}
