@@ -9,6 +9,7 @@ import ReviewInput from "./ReviewInput";
 import WatchedDateInputs from "./WatchedDateInputs";
 import { useDeleteReview } from "../hooks/useDeleteReview";
 import DeleteListConfirm from "../../../ui/DeleteListConfirm";
+import SpinnerMini from "../../../ui/SpinnerMini";
 
 const ReviewPopup = ({
   show,
@@ -215,7 +216,7 @@ const ReviewPopup = ({
 
           <button
             onClick={addRewatchedDate}
-            className="px-8 py-2 bg-slate-700 rounded-lg hover:bg-slate-600 transition-colors duration-200 mt-2"
+            className="px-8 py-2 bg-slate-700 rounded-lg hover:bg-slate-600 transition-colors duration-200 mt-2 "
           >
             Add Date
           </button>
@@ -228,7 +229,13 @@ const ReviewPopup = ({
               disabled={!reviewInput || isAdding || isUpdating}
               className="max-sm:w-3/5 px-6 py-2 bg-orange-amber text-gray-900 font-medium rounded-lg hover:bg-amber-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
-              {forUpdateReview ? "Update Review" : "Add Review"}
+              {isAdding || isUpdating ? (
+                <SpinnerMini />
+              ) : forUpdateReview ? (
+                "Update Review"
+              ) : (
+                "Add Review"
+              )}
             </button>
             <button
               onClick={onClose}
