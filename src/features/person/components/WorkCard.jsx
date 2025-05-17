@@ -64,10 +64,7 @@ const WorkCard = ({ show, category }) => {
 
           {overview && (
             <div className="text-sm text-slate-400 mb-2">
-              <Ellipsis
-                text={overview}
-                lines="lg:line-clamp-3 md:line-clamp-2 line-clamp-3"
-              />
+              <Ellipsis text={overview} lines="md:line-clamp-2 line-clamp-3" />
             </div>
           )}
         </div>

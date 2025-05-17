@@ -5,7 +5,8 @@ import UserRateMini from "../../userLists/buttons/UserRateMini";
 const WorkCardDetails = ({ handleNavigate, show, category, item }) => {
   const {
     character,
-    episode_count,
+    episodesAsCast,
+    episodesAsCrew,
     job,
     popularity,
     vote_average: rate,
@@ -32,30 +33,39 @@ const WorkCardDetails = ({ handleNavigate, show, category, item }) => {
         {category === "movie" ? <li>Movie</li> : <li>Tv show</li>}
       </ul>
 
-      <div className="flex flex-wrap gap-3 font-medium gap-y-2">
-        {character && (
+      {character && (
+        <div className="flex flex-wrap gap-3 font-medium gap-y-0">
           <h3 className="md:font-bold md:text-base text-sm">
             <span className="text-gray-400 font-medium">Character:</span>{" "}
-            {character}
+            {character}{" "}
+            {episodesAsCast && (
+              <span className="md:text-base text-sm text-gray-300 font-medium ">
+                ({episodesAsCast}{" "}
+                {episodesAsCast === 1 ? "episode" : "episodes"})
+              </span>
+            )}
           </h3>
-        )}
-        {job && (
-          <h3 className="md:font-bold md:text-base text-sm">
-            <span className="text-gray-400 font-medium">Crew Job:</span> {job}
-          </h3>
-        )}
-        {episode_count && (
-          <p className="md:text-base text-sm text-gray-300 font-medium ">
-            Had worked on {episode_count}{" "}
-            {episode_count === 1 ? "episode" : "episodes"}
-          </p>
-        )}
+        </div>
+      )}
 
-        <p className="md:font-bold font-medium md:text-base text-sm">
-          <span className="text-gray-400 font-medium">Popularity:</span>{" "}
-          {popularity}
-        </p>
-      </div>
+      {job && (
+        <div className="flex flex-wrap gap-3 font-medium gap-y-0">
+          <h3 className="md:font-bold md:text-base text-sm">
+            <span className="text-gray-400 font-medium">Crew Job:</span> {job}{" "}
+            {episodesAsCrew && (
+              <span className="md:text-base text-sm text-gray-300 font-medium ">
+                ({episodesAsCrew}{" "}
+                {episodesAsCrew === 1 ? "episode" : "episodes"})
+              </span>
+            )}
+          </h3>
+        </div>
+      )}
+
+      <p className="md:font-bold font-medium md:text-base text-sm">
+        <span className="text-gray-400 font-medium">Popularity:</span>{" "}
+        {popularity}
+      </p>
 
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 my-2">
         <RatingBox

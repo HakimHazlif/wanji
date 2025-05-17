@@ -20,34 +20,55 @@ export function usePerson() {
   const personTv = personData?.tvCredits;
   const personImages = personData?.images;
 
-  const castMovies = useMemo(
-    () => personMovies?.cast ?? [],
-    [personMovies?.cast]
-  );
-  const crewMovies = useMemo(
-    () => personMovies?.crew ?? [],
-    [personMovies?.crew]
-  );
-  const castTv = useMemo(() => personTv?.cast ?? [], [personTv?.cast]);
-  const crewTv = useMemo(() => personTv?.crew ?? [], [personTv?.crew]);
+  const movies = useMemo(() => {
+    const castMovies = personMovies?.cast ?? [];
+    const crewMovies = personMovies?.crew ?? [];
+
+    const crewMap = new Map(crewMovies.map((movie) => [movie?.id, movie]));
+
+    return castMovies.map((movie) => ({
+      ...movie,
+      department: crewMap.has(movie?.id)
+        ? ["Acting", crewMap.get(movie?.id)?.department]
+        : ["Acting"],
+      job: crewMap.has(movie?.id) ? crewMap.get(movie?.id)?.job : "",
+    }));
+  }, [personMovies?.cast, personMovies?.crew]);
+
+  const tvShows = useMemo(() => {
+    const castTv = personTv?.cast ?? [];
+    const crewTv = personTv?.crew ?? [];
+
+    const crewMap = new Map(crewTv.map((tv) => [tv?.id, tv]));
+
+    return castTv.map((tv) => ({
+      ...tv,
+      department: crewMap.has(tv?.id)
+        ? ["Acting", crewMap.get(tv?.id)?.department]
+        : ["Acting"],
+      job: crewMap.has(tv?.id) ? crewMap.get(tv?.id)?.job : "",
+      episodesAsCast: tv.episode_count,
+      episodesAsCrew: crewMap.has(tv?.id)
+        ? crewMap.get(tv?.id)?.episode_count
+        : 0,
+    }));
+  }, [personTv?.cast, personTv?.crew]);
 
   const itemIds = useMemo(() => {
-    const moviesIds = [
-      ...new Set([...castMovies, ...crewMovies].map((movie) => movie.id)),
-    ];
-    const tvIds = [...new Set([...castTv, ...crewTv].map((tv) => tv.id))];
+    const moviesIds = [...new Set([...movies].map((movie) => movie.id))];
+    const tvIds = [...new Set([...tvShows].map((tv) => tv.id))];
 
     return {
       moviesIds,
       tvIds,
     };
-  }, [castMovies, crewMovies, castTv, crewTv]);
+  }, [movies, tvShows]);
 
   const { isLoading: isMovieStatusLoading } = useItemsStatus(
-    itemIds.moviesIds,
+    itemIds?.moviesIds,
     "movie"
   );
-  const { isLoading: isTvStatusLoading } = useItemsStatus(itemIds.tvIds, "tv");
+  const { isLoading: isTvStatusLoading } = useItemsStatus(itemIds?.tvIds, "tv");
 
   return {
     personDetails,
@@ -55,9 +76,7 @@ export function usePerson() {
     personMovies,
     personTv,
     isLoading: isPersonLoading || isMovieStatusLoading || isTvStatusLoading,
-    castMovies,
-    crewMovies,
-    castTv,
-    crewTv,
+    movies,
+    tvShows,
   };
 }

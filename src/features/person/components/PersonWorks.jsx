@@ -10,8 +10,7 @@ import LoadMoreButton from "../../../components/LoadMoreButton";
 const PersonWorks = () => {
   const { activeTab, departmentFilter, sortBy } = usePersonWorksContext();
 
-  const { personDetails, isLoading, castMovies, crewMovies, castTv, crewTv } =
-    usePerson();
+  const { personDetails, isLoading, movies, tvShows } = usePerson();
 
   const [firstIndex, setFirstIndex] = useState(0);
   const [media, setMedia] = useState([]);
@@ -20,20 +19,20 @@ const PersonWorks = () => {
     let works;
 
     if (departmentFilter === "all") {
-      works =
-        activeTab === "movies"
-          ? [...castMovies, ...crewMovies]
-          : [...castTv, ...crewTv];
-    } else if (departmentFilter === "Acting") {
-      works = activeTab === "movies" ? castMovies : castTv;
+      works = activeTab === "movies" ? movies : tvShows;
     } else {
-      const crewWorks = activeTab === "movies" ? crewMovies : crewTv;
+      const items = activeTab === "movies" ? movies : tvShows;
 
-      works = crewWorks?.filter((work) => work.department === departmentFilter);
+      works = items?.filter(
+        (work) =>
+          work.department[0] === departmentFilter ||
+          work.department[1] === departmentFilter
+        // work.department array has always 1 or 2 elements
+      );
     }
 
     return works;
-  }, [castMovies, crewMovies, castTv, crewTv, activeTab, departmentFilter]);
+  }, [activeTab, departmentFilter, movies, tvShows]);
 
   const sortedWorks = useMemo(() => {
     const sortedWorks = filteredWorks?.sort((a, b) => {
