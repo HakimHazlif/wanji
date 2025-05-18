@@ -8,20 +8,35 @@ import ShowStatus from "../ui/ShowStatus";
 import RatingBox from "./RatingBox";
 import UserRateMini from "../features/userLists/buttons/UserRateMini";
 import CreditView from "../ui/CreditView";
+import { useListsContext } from "../context/ListsContext";
+import { sumAverages } from "../features/rating/utils/calculations";
 
 const MediaCardRowHeader = ({ link, show, category, item }) => {
   const {
+    id,
     runtime,
     number_of_seasons,
     number_of_episodes,
     episode_number,
     season_number,
     status,
-    vote_average: rate,
+    vote_average,
+    vote_count,
     credits,
     created_by,
   } = show;
   const title = show?.title || show?.name;
+
+  const { ratingAverages } = useListsContext();
+
+  const ratingData = ratingAverages?.[item?.type]?.get(id) || {
+    average: 0,
+    count: 0,
+  };
+  const rate = sumAverages([
+    ratingData,
+    { average: vote_average, count: vote_count },
+  ]);
 
   function handleDate() {
     if (show["release_date"]) return getYearFormat(show?.release_date);

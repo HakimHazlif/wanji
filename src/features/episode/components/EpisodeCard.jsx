@@ -11,6 +11,8 @@ import FavoriteButton from "../../userLists/buttons/FavoriteButton";
 import RatingBox from "../../../components/RatingBox";
 import UserRateMini from "../../userLists/buttons/UserRateMini";
 import AddToListButton from "../../userLists/buttons/AddToListButton";
+import { sumAverages } from "../../rating/utils/calculations";
+import { useListsContext } from "../../../context/ListsContext";
 
 const EpisodeCard = ({ episode }) => {
   const { transitionNavigate } = useTransitionNavigate();
@@ -25,8 +27,20 @@ const EpisodeCard = ({ episode }) => {
     show_id,
     still_path,
     vote_average,
+    vote_count,
     crew,
   } = episode;
+
+  const { ratingAverages } = useListsContext();
+
+  const ratingData = ratingAverages?.["episode"]?.get(id) || {
+    average: 0,
+    count: 0,
+  };
+  const rate = sumAverages([
+    ratingData,
+    { average: vote_average, count: vote_count },
+  ]);
 
   const item = {
     itemId: id,
@@ -107,7 +121,7 @@ const EpisodeCard = ({ episode }) => {
         </ul>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2 my-2">
           <RatingBox
-            rating={vote_average}
+            rating={rate}
             styleOfSpan="px-2 text-sm rounded-sm bg-orange-coral font-semibold text-gray-800"
             initialStars={5}
           />

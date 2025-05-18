@@ -15,6 +15,8 @@ import { useTransitionNavigate } from "../hooks/useTransitionNavigate";
 import WatchlistButton from "../features/userLists/buttons/WatchlistButton";
 import FavoriteButton from "../features/userLists/buttons/FavoriteButton";
 import SuspenseRateMini from "./SuspenseRateMini";
+import { useListsContext } from "../context/ListsContext";
+import { sumAverages } from "../features/rating/utils/calculations";
 const UserRateMini = lazy(() =>
   import("../features/userLists/buttons/UserRateMini")
 );
@@ -31,12 +33,23 @@ const MediaCard = memo(function MediaCard({
   const { transitionNavigate } = useTransitionNavigate();
   const [deletePopup, setDeletePopup] = useState(false);
 
-  const rate = show?.vote_average;
+  const { vote_average, vote_count } = show;
   const episode_number = show?.episode_number;
   const season_number = show?.season_number;
   const id = show?.id || show?.item_id;
   const title = show?.title || show?.name;
   const poster = show?.poster_path || show?.still_path;
+
+  const { ratingAverages } = useListsContext();
+
+  const ratingData = ratingAverages?.[category]?.get(id) || {
+    average: 0,
+    count: 0,
+  };
+  const rate = sumAverages([
+    ratingData,
+    { average: vote_average, count: vote_count },
+  ]);
 
   const formattedDate = useMemo(() => {
     if (show?.release_date) return getYearFormat(show?.release_date);

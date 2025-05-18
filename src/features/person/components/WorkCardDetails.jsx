@@ -1,19 +1,34 @@
 import RatingBox from "../../../components/RatingBox";
+import { useListsContext } from "../../../context/ListsContext";
 import { updateDateFormat } from "../../../utils/helper";
+import { sumAverages } from "../../rating/utils/calculations";
 import UserRateMini from "../../userLists/buttons/UserRateMini";
 
 const WorkCardDetails = ({ handleNavigate, show, category, item }) => {
   const {
+    id,
     character,
     episodesAsCast,
     episodesAsCrew,
     job,
     popularity,
-    vote_average: rate,
+    vote_average,
+    vote_count,
   } = show;
   const title = show?.title || show?.name;
   const originalTitle = show?.original_title || show?.original_name;
   const newDate = show?.release_date || show?.first_air_date;
+
+  const { ratingAverages } = useListsContext();
+
+  const ratingData = ratingAverages?.[category]?.get(id) || {
+    average: 0,
+    count: 0,
+  };
+  const rate = sumAverages([
+    ratingData,
+    { average: vote_average, count: vote_count },
+  ]);
 
   return (
     <>

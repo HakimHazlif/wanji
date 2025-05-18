@@ -11,6 +11,11 @@ function ListsContextProvider({ children }) {
     tv: new Map(),
     episode: new Map(),
   });
+  const [ratingAverages, setRatingAverages] = useState({
+    movie: new Map(),
+    tv: new Map(),
+    episode: new Map(),
+  });
 
   const { movies } = useMovies();
   const { tvShows } = useTvShows();
@@ -69,6 +74,8 @@ function ListsContextProvider({ children }) {
         topRatedTv,
         onTheAir,
         airingTodayTV,
+        ratingAverages,
+        setRatingAverages,
       }}
     >
       {children}
