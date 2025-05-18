@@ -24,7 +24,6 @@ export function useFetchInfiniteItems(listId, itemsList) {
       fetchItemsList(listId, itemsList, pageParam),
     getNextPageParam: (lastPage) => {
       const items = lastPage?.items ?? [];
-      console.log(items);
       movieIds = items.filter((el) => el["release_date"]).map((el) => el.id);
       tvIds = items.filter((el) => el["first_air_date"]).map((el) => el.id);
       episodeIds = items.filter((el) => el["air_date"]).map((el) => el.id);

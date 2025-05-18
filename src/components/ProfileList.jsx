@@ -49,8 +49,6 @@ const ProfileList = ({ listName }) => {
     [shortList, profileList]
   );
 
-  console.log({ shortListItems, profileList, shortList });
-
   function navigateToPopularMovies() {
     transitionNavigate("/movies?movies-tag=popular&page=1");
   }

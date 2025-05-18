@@ -126,7 +126,6 @@ const ListView = ({ targetList, forEditList = false }) => {
   useEffect(() => {
     const itemsLength = itemsList?.length ?? 0;
     const listLength = list?.length ?? 0;
-    console.log("from first:", listLength, itemsLength);
 
     if (itemsLength + 1 === listLength || listLength > itemsLength)
       fetchNextPage();
@@ -144,15 +143,6 @@ const ListView = ({ targetList, forEditList = false }) => {
     refetch,
     queryClient,
   ]);
-
-  // useEffect(() => {
-  //   console.log('from second:',listLength, itemsLength);
-
-  //   if (listLength === 0)
-
-  // }, [])
-
-  // if (isLoading) return <Spinner />;
 
   if (!listId || !itemsList || !itemsList?.length || !itemsList[0])
     return <EmptyList />;

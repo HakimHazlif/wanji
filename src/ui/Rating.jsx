@@ -26,12 +26,6 @@ const Rating = ({
     const star = e.currentTarget;
     const { width, left } = star.getBoundingClientRect();
     const percent = (e.clientX - left) / width + correction;
-    console.log({
-      width,
-      left,
-      clientX: e.clientX,
-      percent,
-    });
 
     let newValue = i + percent;
 

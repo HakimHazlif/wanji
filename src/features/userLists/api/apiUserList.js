@@ -208,8 +208,6 @@ export const fetchShortList = async (list) => {
         : `${URL_Base}${item.type}/${item.item_id}?append_to_response=credits&language=en-US`
     ) || [];
 
-  console.log(itemsUrls);
-
   const results = await axios.all(
     itemsUrls.map((url) => axios.get(url, options))
   );

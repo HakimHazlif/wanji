@@ -12,8 +12,6 @@ export function useShortList(list, listName) {
     episodeIds: [],
   });
 
-  console.log(list);
-
   const { data: shortList, isLoading } = useQuery({
     queryKey: ["shortLists", listName, uid],
     queryFn: () => fetchShortList(list),

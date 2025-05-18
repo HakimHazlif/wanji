@@ -70,7 +70,6 @@ const PersonWorks = () => {
     setFirstIndex((prev) => prev + 20);
   }
 
-  console.log({ firstIndex, worksLength: sortedWorks?.length });
   return (
     <section className="space-y-6 ">
       <WorksControlBar />
