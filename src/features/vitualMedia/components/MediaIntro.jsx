@@ -16,11 +16,15 @@ import { useState } from "react";
 import VideoPlayer from "../../../components/VideoPlayer";
 import { FaPlay } from "react-icons/fa";
 import RatingBox from "../../../components/RatingBox";
+import { useRatingAverage } from "../../rating/hooks/useRatingAverage";
+import { sumAverages } from "../../rating/utils/calculations";
 
 const MediaIntro = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
 
   const { details, videos } = useVitualMedia();
+  const { mediaAverage } = useRatingAverage();
+
   const { category } = useParams();
 
   const {
@@ -29,6 +33,7 @@ const MediaIntro = () => {
     overview,
     poster_path,
     vote_average,
+    vote_count,
     status,
     number_of_seasons,
     number_of_episodes,
@@ -37,6 +42,10 @@ const MediaIntro = () => {
   const title = details?.title || details?.name;
   const originalTitle = details?.original_title || details?.original_name;
   const runtime = details?.runtime || details?.[0]?.episode_run_time;
+  const rate = sumAverages([
+    { average: vote_average, count: vote_count },
+    mediaAverage,
+  ]);
 
   const item = {
     itemId: id,
@@ -109,7 +118,7 @@ const MediaIntro = () => {
               )}
             </ul>
             <RatingBox
-              rating={vote_average}
+              rating={rate}
               styleOfSpan="w-[40px] py-0.5 rounded-sm bg-orange-amber text-gray-800 font-semibold lg:text-base md:text-sm text-xs"
               size={30}
             />

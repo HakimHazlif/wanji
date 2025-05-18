@@ -12,8 +12,6 @@ const ProfileReviews = () => {
 
   const shortListData = reviewsList?.slice(0, 4);
 
-  console.log(shortListData);
-
   const { shortList: shortReviews, isLoading } = useShortList(
     shortListData,
     "reviews"

@@ -8,6 +8,8 @@ import WatchlistButton from "../../userLists/buttons/WatchlistButton";
 import FavoriteButton from "../../userLists/buttons/FavoriteButton";
 import AddToListButton from "../../userLists/buttons/AddToListButton";
 import RateUser from "../../userLists/buttons/RateUser";
+import { useRatingAverage } from "../../rating/hooks/useRatingAverage";
+import { sumAverages } from "../../rating/utils/calculations";
 
 const EpisodeInfo = () => {
   const { episodeDetails } = useEpisode();
@@ -20,10 +22,18 @@ const EpisodeInfo = () => {
     air_date,
     runtime,
     vote_average,
+    vote_count,
     overview,
   } = episodeDetails;
 
   const { id: parentId } = useParams();
+
+  const { mediaAverage } = useRatingAverage("episode");
+
+  const rate = sumAverages([
+    mediaAverage,
+    { average: vote_average, count: vote_count },
+  ]);
 
   const item = {
     itemId: id,
@@ -47,7 +57,7 @@ const EpisodeInfo = () => {
             <li>{runtime} min</li>
           </ul>
           <RatingBox
-            rating={vote_average}
+            rating={rate}
             styleOfSpan="px-2 py-0.5 rounded-sm bg-orange-amber text-white font-semibold"
             minWidth={1024}
           />
