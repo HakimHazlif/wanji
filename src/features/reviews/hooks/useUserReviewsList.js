@@ -9,6 +9,7 @@ export function useUserReviewsList() {
   const { data, isLoading } = useQuery({
     queryKey: ["userReviewsList", uid],
     queryFn: () => fetchUserReviewsList(uid),
+    enabled: !!uid,
     onError: () => {
       toast.error("Failed to load user review");
     },

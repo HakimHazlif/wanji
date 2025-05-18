@@ -8,7 +8,7 @@ export function useReview() {
   const { id, category } = useParams();
 
   const { data, isLoading } = useQuery({
-    queryKey: ["review"],
+    queryKey: ["review", id],
     queryFn: () => fetchUserReview(uid, id, category),
     enabled: uid !== "",
     onError: () => {

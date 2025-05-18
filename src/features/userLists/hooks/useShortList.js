@@ -2,18 +2,22 @@ import { useQuery } from "react-query";
 import { fetchShortList } from "../api/apiUserList";
 import { useItemsStatus } from "./useItemsStatus";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 export function useShortList(list, listName) {
+  const { uid } = useSelector((state) => state.user.user);
   const [items, setItems] = useState({
     movieIds: [],
     tvIds: [],
     episodeIds: [],
   });
 
+  console.log(list);
+
   const { data: shortList, isLoading } = useQuery({
-    queryKey: ["shortLists", listName],
+    queryKey: ["shortLists", listName, uid],
     queryFn: () => fetchShortList(list),
-    enabled: !!list && list?.length > 0,
+    enabled: !!list && list?.length > 0 && !!uid,
     onSuccess: (data) => {
       setItems({
         movieIds: [

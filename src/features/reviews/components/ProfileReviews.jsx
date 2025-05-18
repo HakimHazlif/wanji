@@ -10,25 +10,24 @@ const ProfileReviews = () => {
   const { avatar, username } = useSelector((state) => state.user.user);
   const { reviewsList } = useUserReviewsList();
 
-  const reviewsListItems = useMemo(
-    () => reviewsList?.slice(0, 4) ?? [],
-    [reviewsList]
-  );
+  const shortListData = reviewsList?.slice(0, 4);
+
+  console.log(shortListData);
 
   const { shortList: shortReviews, isLoading } = useShortList(
-    reviewsListItems,
+    shortListData,
     "reviews"
   );
 
   const shortReviewsItems = useMemo(() => {
     return shortReviews?.map((item, index) => ({
       ...item,
-      review: reviewsListItems?.[index]?.review,
-      created_at: reviewsListItems?.[index]?.created_at,
+      review: reviewsList?.[index]?.review,
+      created_at: reviewsList?.[index]?.created_at,
     }));
 
     // if I would add reviews for episode, should use here mapItemsWithParentId
-  }, [shortReviews, reviewsListItems]);
+  }, [shortReviews, reviewsList]);
 
   const reviewList = useMemo(() => {
     const usersReviewList = shortReviewsItems?.map((review) => {

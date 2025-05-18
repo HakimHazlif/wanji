@@ -227,7 +227,7 @@ const ReviewPopup = ({
             <button
               onClick={handleSubmit}
               disabled={!reviewInput || isAdding || isUpdating}
-              className="max-sm:w-3/5 px-6 py-2 bg-orange-amber text-gray-900 font-medium rounded-lg hover:bg-amber-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="max-sm:w-3/5 w-[160px] px-6 py-2 bg-orange-amber text-gray-900 font-medium rounded-lg hover:bg-amber-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex justify-center items-center"
             >
               {isAdding || isUpdating ? (
                 <SpinnerMini />
