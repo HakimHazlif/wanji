@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { Suspense } from "react";
 import Header from "./Header";
 import Spinner from "../ui/Spinner";
+import Footer from "./Footer";
 
 const AppLayout = () => {
   // const location = useLocation();
@@ -13,6 +14,7 @@ const AppLayout = () => {
           <Outlet />
         </Suspense>
       </main>
+      <Footer />
     </>
   );
 };

@@ -6,6 +6,8 @@ import { IoMdSearch } from "react-icons/io";
 import Spinner from "../ui/Spinner";
 
 const SearchBar = () => {
+  const inputRef = useRef(null);
+
   // const { searchData, getSearchData } = useSearch();
   const [selectedValue, setSelectedValue] = useState("multi");
   const [searchQuery, setSearchQuery] = useState("");
@@ -61,50 +63,61 @@ const SearchBar = () => {
     return () => document.removeEventListener("mousedown", closeResults);
   }, []);
 
-  return (
-    <>
-      <div
-        className="relative flex items-center bg-white rounded-3xl p-1 w-full"
-        ref={searchbarRef}
-      >
-        <IoMdSearch className="text-slate-500 mx-2" size={30} />
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const hash = window.location.hash;
+      if (hash === "#search") {
+        setTimeout(() => {
+          inputRef.current?.focus();
+        }, 300);
+      }
+    }
+  }, []);
 
-        <label htmlFor="search-input" className="hidden">
-          Search
-        </label>
-        <input
-          type="text"
-          id="search-input"
-          name="search"
-          placeholder="Search here..."
-          className="border-none py-2 pl-1 pr-2 flex-1 rounded-r-3xl rounded-l-3xl outline-none text-black"
-          value={searchQuery}
-          onChange={handleChange}
-        />
-        <SearchFilter
-          selectedValue={selectedValue}
-          handleSelectOpetion={handleSelectOpetion}
-        />
-        {isOpenResults && (
-          <ul className="absolute w-full h-[300px] top-full left-0 bg-slate-100 rounded-lg flex flex-col z-20 overflow-y-scroll overflow-x-hidden scrollbar-hide">
-            {!isLoading ? (
-              results.map((result) => (
-                <SearchItem
-                  key={result.id}
-                  image={result.profile_path || result.poster_path}
-                  title={result.title || result.name}
-                  originalTitle={result.original_title || result.original_name}
-                  mediaType={result.media_type || selectedValue}
-                  id={result.id}
-                />
-              ))
-            ) : (
-              <Spinner />
-            )}
-          </ul>
-        )}
-      </div>
-    </>
+  return (
+    <div
+      id="search"
+      className="relative flex items-center bg-white rounded-3xl p-1 w-full"
+      ref={searchbarRef}
+    >
+      <IoMdSearch className="text-slate-500 mx-2" size={30} />
+
+      <label htmlFor="search-input" className="hidden">
+        Search
+      </label>
+      <input
+        ref={inputRef}
+        type="text"
+        id="search-input"
+        name="search"
+        placeholder="Search here..."
+        className="border-none py-2 pl-1 pr-2 flex-1 rounded-r-3xl rounded-l-3xl outline-none text-black"
+        value={searchQuery}
+        onChange={handleChange}
+      />
+      <SearchFilter
+        selectedValue={selectedValue}
+        handleSelectOpetion={handleSelectOpetion}
+      />
+      {isOpenResults && (
+        <ul className="absolute w-full h-[300px] top-full left-0 bg-slate-100 rounded-lg flex flex-col z-20 overflow-y-scroll overflow-x-hidden scrollbar-hide">
+          {!isLoading ? (
+            results.map((result) => (
+              <SearchItem
+                key={result.id}
+                image={result.profile_path || result.poster_path}
+                title={result.title || result.name}
+                originalTitle={result.original_title || result.original_name}
+                mediaType={result.media_type || selectedValue}
+                id={result.id}
+              />
+            ))
+          ) : (
+            <Spinner />
+          )}
+        </ul>
+      )}
+    </div>
   );
 };
 
