@@ -7,7 +7,7 @@ import HeaderBackDrop from "../../../ui/HeaderBackDrop";
 import { bgPopcorn } from "../../../assets/icons";
 import EditingName from "../../../components/EditingName";
 import CreatedByAuth from "../../../components/CreatedByAuth";
-import AddingSearchBar from "../../../components/AddingSearchbar";
+import AddingSearchBar from "../../../components/AddingSearchBar";
 import ListView from "../components/ListView";
 import CreateListButton from "../../../ui/CreateListButton";
 import CustomLists from "../../../ui/CustomLists";
