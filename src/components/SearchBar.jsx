@@ -80,7 +80,7 @@ const SearchBar = () => {
       className="relative flex items-center bg-white rounded-3xl p-1 w-full"
       ref={searchbarRef}
     >
-      <IoMdSearch className="text-slate-500 mx-2" size={30} />
+      <IoMdSearch className="text-slate-500 mx-2 xs:max-w-6 hidden" size={30} />
 
       <label htmlFor="search-input" className="hidden">
         Search

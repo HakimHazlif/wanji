@@ -27,7 +27,7 @@ const SearchFilter = ({ selectedValue, handleSelectOpetion }) => {
         className="sm:w-[120px] xs:w-[100px] w-[80px] relative z-40"
         onClick={() => setOpenOptions((prev) => !prev)}
       >
-        <div className="flex xs:justify-between justify-center xs:gap-2 gap-0 items-center bg-slate-300 border-none rounded-t-3xl rounded-b-3xl py-2 xs:px-3 px-0 text-black cursor-pointer sm:text-base xs:text-sm text-xs">
+        <div className="flex justify-between xs:gap-2 gap-0 items-center bg-slate-300 border-none rounded-t-3xl rounded-b-3xl py-2 xs:px-3 px-2 text-black cursor-pointer sm:text-base xs:text-sm text-xs">
           <span className="capitalize text-nowrap">
             {selectedValue === "tv" && "TV Show"}
             {selectedValue === "multi" && "All"}
