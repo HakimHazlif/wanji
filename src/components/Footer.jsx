@@ -78,7 +78,7 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row items-center justify-center gap-5 space-y-4 md:space-y-0">
             <div className="flex items-center space-x-4">
-              <div className="text-xs text-slate-400">
+              <div className="text-xs text-slate-400 md:text-start text-center">
                 <p>
                   This product uses the TMDB API but is not endorsed or
                   certified by TMDB.
